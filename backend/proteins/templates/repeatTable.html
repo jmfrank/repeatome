@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{% load static %}
+{% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
+<link rel='icon' href="{% static 'icon_img.png' %}">
+<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
+<link rel='stylesheet' href="{% static 'style/base.css' %}">
+<link rel='stylesheet' href="{% static 'style/base_style.css' %}">
+<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
+<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
+<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
+<link rel='stylesheet' href="{% static 'style/forms.css' %}">
+<link rel='stylesheet' href="{% static 'style/login.css' %}">
+<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
+<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'style/widgets.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+
+
+<table class="table table-sm table-striped {{classes}}" id="{{ id|default:'repeatTable' }}" style="width:100%; overflow-x:auto;">
+   <thead>
+       <tr class="table-header">
+           <th class="repeat">Repeat</th>
+           <th>Aliases</th>
+           <th>Motif</th>
+           <th>Proteomics</th>
+           <th>Parent Organism</th>
+       </tr>
+   </thead>
+   <tbody>
+       {% for repeat in repeats %}
+           <tr class="data">
+               <td class="repeat"><a href="/repeatTable/{{repeat.name}}">{{repeat.name}}</a></td>
+               <td class="text-center">{{repeat.aliases}}</td>
+               <td class="text-center">{{repeat.motif}}</td>
+               <td class="text-center">{{repeat.proteomics}}</td>
+               <td class="text-center">{{repeat.parental_organism.scientific_name}}</td>
+               {% comment %} <td class="text-center">{{repeat.references}}</td> {% endcomment %}
+           </tr>
+       {% endfor %}
+   </tbody>
+</table>
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+
+
+
+
+<script type="text/javascript">
+   $(function(){
+
+
+       $('.displaybuttons input').change(function(){
+           var display_type = $(this).val()
+           $("#" +  display_type + "display").show()
+           $("#" +  display_type + "display").siblings('div').hide()
+       })
+   });
+
+
+</script>
+
+
+{% endblock javascript %}

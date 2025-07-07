@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "start": "pnpm --stream -r start",
+    "build": "pnpm -r --parallel build",
+    "heroku-postbuild": "pnpm --filter fpbase build",
+    "start:dev": "pnpm --stream -r run start:dev",
+    "clean": "rm -rf node_modules && pnpm -r exec -- rm -rf node_modules && pnpm -r run clean"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "frontend"
+  ],
+  "engines": {
+    "node": "23.x"
+  },
+  "dependencies": {
+    "psql": "^0.0.1"
+  }
+}

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{% load static %}
+{% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
+<link rel='icon' href="{% static 'icon_img.png' %}">
+
+<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
+<link rel='stylesheet' href="{% static 'style/base.css' %}">
+<link rel='stylesheet' href="{% static 'style/base_style.css' %}">
+<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
+<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
+<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
+<link rel='stylesheet' href="{% static 'style/forms.css' %}">
+<link rel='stylesheet' href="{% static 'style/login.css' %}">
+<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
+<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'style/widgets.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+
+
+<table class="table table-sm table-striped {{classes}}" id="{{ id|default:'proteinTable' }}" style="width:100%; overflow-x:auto;">
+   <thead>
+       <tr class="table-header">
+           <th class="protein">gene</th>
+           <th>satellite</th>
+           <th>validation_grade</th>
+           <th>prediction_method</th>
+           <th>microscopy_result</th>
+           <th>motif_enrichment</th>
+           <th>motif_q_score</th>
+           <th>existing_images</th>
+           <th>existing_images_link</th>
+           <th>imaging_results</th>
+           <th>notes</th>
+           <th>PDB</th>
+           <th>AF3</th>
+           <th>UNIPROT</th>
+           <th>ENSEMBL</th>
+           <th>proteinatlas</th>
+       </tr>
+   </thead>
+   <tbody>
+       {% for protein in proteins %}
+           <tr class="data">
+               <td class="protein"><a href="/proteinTable/{{protein.gene}}">{{protein.gene}}</a></td>
+               <td class="text-center">{{protein.satellite}}</td>
+               <td class="text-center">{{protein.validation_grade}}</td>
+               <td class="text-center">{{protein.prediction_method}}</td>
+               <td class="text-center">{{protein.microscopy_result}}</td>
+               <td class="text-center">{{protein.motif_enrichment}}</td>
+               <td class="text-center">{{protein.motif_q_score}}</td>
+               <td class="text-center">{{protein.existing_images}}</td>
+               <td class="text-center">{{protein.existing_images_link}}</td>
+               <td class="text-center">{{protein.imaging_results}}</td>
+               <td class="text-center">{{protein.notes}}</td>
+               <td class="text-center">{{protein.PDB}}</td>
+               <td class="text-center">{{protein.AF3}}</td>
+               <td class="text-center">{{protein.UNIPROT}}</td>
+               <td class="text-center">{{protein.ENSEMBL}}</td>
+               <td class="text-center">{{protein.proteinatlas}}</td>
+           </tr>
+       {% endfor %}
+   </tbody>
+</table>
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+
+
+
+
+<script type="text/javascript">
+   $(function(){
+
+
+       $('.displaybuttons input').change(function(){
+           var display_type = $(this).val()
+           $("#" +  display_type + "display").show()
+           $("#" +  display_type + "display").siblings('div').hide()
+       })
+   });
+
+
+</script>
+
+
+{% endblock javascript %}

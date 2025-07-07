@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(47, 18, 69);
+    /* color: rgb(101, 63, 130); */
+    color: rgb(205, 176, 227)
+}
+
+.navbar {
+    background-color: purple;
+    display: flex;
+    flex-direction: row;
+}
+
+table, th, td {
+    border: 2px solid;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* COLORS */
+/* too dark: rgb(47, 18, 69) */
+/* base color (dark purple): rgb(72, 40, 96) */
+
+

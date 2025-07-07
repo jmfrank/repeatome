@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% load i18n favit_tags %}
+{% load flag_object from protein_tags %}
+{% load render_bundle from webpack_loader %}
+
+
+{% block title %}{{ protein.gene|safe  }} :: Repeatome Database {% endblock %}
+{% block meta-description %}{{ protein.gene }}{% endblock %}
+
+{% block extrahead %}
+{% load static %}
+<link rel='stylesheet' href="{% static 'base_style.css' %}">
+<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
+<link rel='stylesheet' href="{% static 'style/base.css' %}">
+<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
+<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
+<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
+<link rel='stylesheet' href="{% static 'style/forms.css' %}">
+<link rel='stylesheet' href="{% static 'style/login.css' %}">
+<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
+<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'litemol/LiteMol-plugin-blue.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'base_proj.js' %}"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script type='module' src="{% static 'react_seq.js' %}"></script>
+<script src="{% static 'litemol/LiteMol-plugin.js' %}"></script>
+<script src="{% static 'litemol/LiteMol-plugin-2.js' %}"></script>
+<script type='module' src="{% static 'litemol/litemol_proj.js' %}"></script>
+
+<!-- PDB Viewer -->
+<meta
+  name="viewport"
+  content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+/>
+
+<!-- Molstar CSS & JS -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar.css"
+/>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar-plugin.js"
+></script>
+{% endblock extrahead %}
+
+{% block container-class %}container protein{% endblock %}
+
+{% block content %}
+  <h1 class="text-center name display-4">{{ protein.gene | safe }}</h1>
+  <div class="text-center aliases" style="font-size: 20px;">a.k.a {{ protein.aliases_as_str | safe }}</div>
+  <div class="text-center gene_family" style="font-size: 24px;">{{protein.gene_family.gene_family | safe}}</div>
+   <div class="table mt-3">
+     <table class="table mobile flip-scroll">
+       <thead>
+         <tr class="table-header ">
+           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#organism">Organism</a></th>
+           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#molecular-weight">Molecular Weight</a></th>
+           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#cofactor">Cofactor</a></th>
+           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#oligomerization">Oligomerization</a></th>
+         </tr>
+       </thead>
+       <tbody>
+
+
+         <tr >
+           <td>{{protein.gene_family.parent_organism.scientific_name | safe}}</td>
+           <td>{{protein.molecular_weight_str | safe}}</td>
+           <td>{{protein.cofactor_as_str | safe}}</td>
+           <td>{{protein.oligomerization | safe}}</td>
+         </tr>
+
+
+       </tbody>
+     </table>
+   </div>
+
+   <div class="attributes">
+     <h3>Repeats</h3>
+   </div>
+
+   <div class="table mt-3">
+     <table class="table table-striped flip-scroll states-table">
+       <thead>
+         <tr class="table-header">
+           <th>Satellite</th>
+           <th>Aliases</th>
+           <th>Motif</th>
+           <th>Proteomics</th>
+           <th>Parent Organism</th>
+         </tr>
+       </thead>
+       <tbody>
+        {% for repeat in protein.repeats.all %}
+         <tr>
+           <td><a href="/repeatTable/{{repeat.name}}">{{repeat.name | safe}}</td>
+           <td>{{ repeat.aliases_as_str | safe }}</td>
+           <td>{{ repeat.motif | safe }}</td>
+           <td>{{ repeat.proteomics | safe }}</td>
+           <td>{{ repeat.parental_organism.scientific_name | safe }}</td>
+         </tr>
+         {%endfor%}
+       </tbody>
+     </table>
+   </div>
+
+   <div class="attributes">
+     <h3>Attributes</h3>
+   </div>
+
+
+   <div class="table mt-3">
+     <table class="table table-striped flip-scroll states-table">
+       <thead>
+         <tr class="table-header">
+           <th>Gene type</th>
+           <th>DNA binding domain</th>
+           <th>Signaling pathway</th>
+         </tr>
+       </thead>
+       <tbody>
+         <tr >
+           <td>{{ protein.gene_type_as_str | safe}}</td>
+           <td>{{ protein.dna_binding_domain | safe }}</td>
+           <td>{{ protein.signaling_pathway | safe }}</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+
+
+     {% comment %} {% if protein.protein_sequence %} {% endcomment %}
+     {% comment %} <div class="float-sm-right text-info"><a href="{% url 'proteins:blast' %}?query={{protein.seq}}">BLAST</a></div>
+     {% endif %}
+     {% if protein.lineage and protein.lineage.parent %}
+     <p class="text-muted">{{protein.name | safe}} was derived from <a href="{{protein.lineage.parent.protein.get_absolute_url}}">{{protein.lineage.parent.protein}}</a> with the following mutations: <span class="mut-rel-parent hidden">{{protein.lineage.mutation}}</span><span class="mut-rel-root">{{protein.lineage.rootmut}}</span><br>
+         {% if protein.lineage.root_node != protein.lineage.parent and protein.lineage.mutation != protein.lineage.rootmut %}<span class="small">
+         amino acid numbers relative to <span class="mut-rel-parent hidden">{{protein.lineage.parent.protein}}</span><span class="mut-rel-root">{{protein.lineage.root_node}}</span>. <a href="" onclick="myFunction(event)" class="mut-rel-parent hidden text-secondary">show relative to {{protein.lineage.root_node}}</a><a href="" onclick="myFunction(event)" class="mut-rel-root text-secondary">show relative to {{protein.lineage.parent.protein}}</a></span>
+         {% endif %}
+         </p>
+         <script>
+           function myFunction(event){
+             event.preventDefault();
+             if (event.target.classList.contains('mut-rel-parent')){
+               var tohide = 'mut-rel-parent';
+               var toshow = 'mut-rel-root';
+             } else {
+               var tohide = 'mut-rel-root';
+               var toshow = 'mut-rel-parent';
+             }
+             var x = document.getElementsByClassName(tohide);
+             var i;
+             for (i = 0; i < x.length; i++) {
+                 x[i].classList.add("hidden");
+             }
+             x = document.getElementsByClassName(toshow);
+             for (i = 0; i < x.length; i++) {
+               x[i].classList.remove("hidden");
+             }
+           }
+         </script>
+     {% endif %} {% endcomment %}
+     <div class="sequence mt-3">
+			<div class="row">
+			  	<div class="col">
+				  <h3 class='d-inline'>{{ protein.gene | safe }} Sequence</h3>
+        </div>
+      </div>
+      {% if protein.protein_sequence %}
+        <div class="mt-2">
+          {% if protein.seq_comment %}
+          <p class='text-info small mb-1'><span class='font-weight-bold'>Note</span>: {{ protein.seq_comment | safe}}</p>
+          {% endif %}
+          <div class='aminosequence container'>{{ protein.protein_sequence }}</div>
+        </div>
+      {% else %}
+          <p>no sequence available ... <a href="{% url 'proteins:update' slug=protein.gene %}" class='text-secondary'>add one!</a></p>
+      {% endif %}
+
+			{% if protein.ENSEMBL or protein.UNIPROT or protein.PDB or protein.AF3 or protein.jaspar %}
+			<div class="row text-right justify-content-end">
+					{% if protein.ENSEMBL %}
+					<div class="col-md-3 col-sm-6">
+					<small>Ensembl: <a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.ENSEMBL }}" target="_blank" rel="noopener">{{ protein.ENSEMBL | default:''}}</a></small>
+					</div>
+					{% endif %}
+
+          {% if protein.ENSEMBL %}
+          <div class="col-md-3 col-sm-6">
+          <small>proteinatlas: <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank" rel="noopener">{{ protein.ENSEMBL | default:''}}</a></small>
+          </div>
+          {% endif %}
+
+
+					{% if protein.UNIPROT %}
+					<div class="col-md-3 col-sm-6">
+					<small>UniProt: <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank" rel="noopener">{{ protein.UNIPROT | default:''}}</a></small>
+					</div>
+					{% endif %}
+
+					{% if protein.PDB %}
+					<div class="col-md-3 col-sm-6">
+					<small>PDB: <a href="https://www.rcsb.org/structure/{{ protein.PDB }}" target="_blank" rel="noopener">{{ protein.PDB | default:''}}</a></small>
+					</div>
+					{% endif %}
+
+          {% if protein.AF3 %}
+					<div class="col-md-3 col-sm-6">
+					<small>AF3: <a href="https://alphafold.ebi.ac.uk/entry/{{ protein.AF3 }}" target="_blank" rel="noopener">{{ protein.AF3 | default:''}}</a></small>
+					</div>
+					{% endif %}
+
+          {% if protein.jaspar %}
+					<div class="col-md-3 col-sm-6">
+					<small>Jaspar: <a href="https://jaspar.elixir.no/matrix/{{ protein.jaspar }}" target="_blank" rel="noopener">{{ protein.jaspar | default:''}}</a></small>
+					</div>
+					{% endif %}
+
+			</div>
+			{% endif %}
+		</div>
+
+
+   {% if protein.PDB %}
+     {% include "proteins/_structure_section.html" with protein=protein %}
+   {% endif %}
+
+   {% comment %} <div class="excerpts">
+     <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>
+     {% if excerpts %}
+       {% for excerpt in excerpts  %}
+         {% if excerpt.status != 'rejected' %}
+         <blockquote class="gray">
+           <div class='flag'>
+             {% flag_object excerpt %}
+           </div>
+           <p class='excerpt-content'>{{excerpt.content}}</p>
+           {% if excerpt.reference %}
+             <a href="{{excerpt.reference.get_absolute_url}}"><h4>{{excerpt.reference.citation}}<a href="https://doi.org/{{ excerpt.reference.doi }}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt text-info small ml-2"></i></a></h4></a>
+           {% endif %}
+         </blockquote>
+         {% endif %}
+       {% endfor %}
+     {% else %}
+
+
+       <p class='text-muted'>No excerpts have been added for {{protein.name | safe }}<br><em class='text-muted small'>Excerpts are snippets from publications that capture key information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).</em></p>
+
+
+     {% endif %}
+     <a class='text-info' data-toggle="modal" data-target="#excerptModal"><button class='btn btn-sm btn-secondary mt-1'><i class="fas fa-quote-left mr-2"></i>Add an excerpt</button></a>
+   </div> {% endcomment %}
+
+
+
+
+       <div class="primary-ref references mt-2">
+           <h3>Primary Reference</h3>
+           {% if protein.primary_reference %}
+               {% include "_reference.html" with ref=protein.primary_reference %}
+           {% endif %}
+       </div>
+
+
+       <div class="additional-ref references">
+           <h3>Additional References</h3>
+           <ol>
+               {% if protein.references %}
+               {% for ref in protein.references.all %}
+                   <li class="mt-2 mb-2">{% include "_reference.html" %}</li>
+               {% endfor %}
+               {% else %}
+                   <p style='color: #888;'>No additional references have been added.<p>
+               {% endif %}
+               <a class='text-info' data-toggle="modal" data-target="#referenceModal"><button class='btn btn-sm btn-secondary mt-1'><i class="fas fa-book mr-2"></i>Add a reference</button></a>
+           </ol>
+       </div>
+
+
+
+
+   <div class="external-resources">
+     <h3>External Resources</h3>
+     <ul>
+     {#             <li>Search <a href="https://bionumbers.hms.harvard.edu/search.aspx?task=searchbytrmorg&trm={{ protein.gene | urlencode }}" target="_blank" rel="noopener">BioNumbers</a> for {{ protein.name }}</li> #}
+       <li>Search <a href="https://www.addgene.org/search/advanced/?q={{ protein.gene | urlencode }}" target="_blank" rel="noopener">Addgene</a> for {{ protein.gene | safe}}</li>
+       <li>Search <a href="https://knowledge.brc.riken.jp/resource/dna/list?query={{ protein.gene | urlencode }}" target="_blank" rel="noopener">RIKEN BRC</a> for {{ protein.gene | safe}}</li>
+     </ul>
+   </div>
+
+
+
+
+{% endblock content %}
