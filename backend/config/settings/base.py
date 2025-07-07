@@ -143,7 +143,7 @@ DEFAULT_FROM_EMAIL = "FPbase <info@mg.fpbase.org>"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpbase15',  # Replace with your database name
+        'NAME': 'fpbase',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
