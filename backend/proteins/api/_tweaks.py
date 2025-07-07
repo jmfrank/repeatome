@@ -3,10 +3,15 @@
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.fields import SkipField, empty, set_value
+from rest_framework.fields import SkipField, empty
 from rest_framework.relations import PKOnlyObject
 from rest_framework.serializers import as_serializer_error
 from rest_framework.settings import api_settings
+
+def set_value(dictionary, keys, value):
+    for key in keys[:-1]:
+        dictionary = dictionary.setdefault(key, {})
+    dictionary[keys[-1]] = value
 
 
 class ContextPassing:

@@ -88,16 +88,6 @@ class ProteinTF(models.Model):
     )
     primary_reference = models.ForeignKey(
         Reference,
-        # related_name="references",
-        verbose_name="reference",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        help_text="Primary reference for protein",
-        to_field='doi'
-    )
-    primary_reference = models.ForeignKey(
-        Reference,
         related_name="primary_reference",
         verbose_name="reference",
         on_delete=models.SET_NULL,

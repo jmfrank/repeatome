@@ -101,6 +101,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "fpbase.middleware.CanonicalDomainMiddleware",
+    # Comment out below for python 3.11. Uncomment for python 3.13
     "allauth.account.middleware.AccountMiddleware",
 ]
 
@@ -139,7 +140,17 @@ DEFAULT_FROM_EMAIL = "FPbase <info@mg.fpbase.org>"
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
-DATABASES = {"default": env.db("DATABASE_URL", default="postgres://carissap39:testDB123*@127.0.0.1:5432/gripsDB")}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fpbase15',  # Replace with your database name
+        'USER': 'postgres',      # Replace with your database username
+        # 'PASSWORD': 'mypassword', # Replace with your database password
+        'HOST': 'localhost',   # Typically 'localhost' for local development
+        'PORT': '5432',        # Default PostgreSQL port
+    }
+}
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -216,7 +227,9 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     str(ROOT_DIR.parent / "frontend" / "dist"),
     str(ROOT_DIR.parent / "frontend" / "static"),
-    os.path.join(os.environ['APPDATA'], 'Python', 'Python313', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+    # What do we need from this folder?
+    # os.path.join(os.environ['APPDATA'], 'Python', 'Python313', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+    os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static'),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
