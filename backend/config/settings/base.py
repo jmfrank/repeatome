@@ -225,10 +225,7 @@ STATIC_URL = "/static/"
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(ROOT_DIR.parent / "frontend" / "dist"),
-    str(ROOT_DIR.parent / "frontend" / "static"),
-    # What do we need from this folder?
-    # os.path.join(os.environ['APPDATA'], 'Python', 'Python313', 'site-packages', 'django', 'contrib', 'admin', 'static'),
-    os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+    str(ROOT_DIR.parent / "frontend" / "static")
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders

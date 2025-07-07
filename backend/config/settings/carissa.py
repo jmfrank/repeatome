@@ -21,6 +21,13 @@ DATABASES = {"default": env.db("DATABASE_URL", default="postgres://carissap39:te
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
+STATICFILES_DIRS = [
+    str(ROOT_DIR.parent / "frontend" / "dist"),
+    str(ROOT_DIR.parent / "frontend" / "static"),
+    os.path.join(os.environ['APPDATA'], 'Python', 'Python313', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+]
+
+
 # DEBUG
 # ------------------------------------------------------------------------------
 DEBUG = env.bool("DJANGO_DEBUG", default=True)

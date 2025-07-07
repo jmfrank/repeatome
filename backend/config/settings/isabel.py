@@ -30,6 +30,12 @@ DATABASES = {
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
+STATICFILES_DIRS = [
+    str(ROOT_DIR.parent / "frontend" / "dist"),
+    str(ROOT_DIR.parent / "frontend" / "static"),
+    os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+]
+
 # DEBUG
 # ------------------------------------------------------------------------------
 DEBUG = env.bool("DJANGO_DEBUG", default=True)
