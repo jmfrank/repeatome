@@ -101,7 +101,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "fpbase.middleware.CanonicalDomainMiddleware",
-    # Comment out below for python 3.11. Uncomment for python 3.13
     "allauth.account.middleware.AccountMiddleware",
 ]
 
