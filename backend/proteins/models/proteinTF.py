@@ -161,3 +161,8 @@ class ProteinTF(models.Model):
 
         return jaspar_ids
     
+    def jaspars_length(self):
+      if not self.jaspars:
+         return 0
+      return len(self.jaspars)
+    
