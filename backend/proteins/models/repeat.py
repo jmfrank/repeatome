@@ -56,13 +56,12 @@ class Repeat(models.Model):
     
     def get_hmm(self):
         if self.dfam_id:
-            # hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
-            hmm_url = f"https://dfam.org/api/families/DF000000148/hmm?format=logo"
+            hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
             r = requests.get(hmm_url)
             if r.status_code != 200:
                print(f"EROR: {r.status_code} returned from {hmm_url}")
                raise Exception(f"HMM not found for {self.dfam_id}")
 
-            print(f"get_hmm returned {r.text}")
+            # print(f"get_hmm returned {r.text}")
             return r.text
         return "ERROR"
