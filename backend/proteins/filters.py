@@ -3,7 +3,7 @@ from Bio import Seq
 from django import forms
 from django_filters import rest_framework as filters
 
-from .models import Organism, Protein, Spectrum, State
+from .models import Organism, ProteinTF, Spectrum, State
 from .validators import cdna_sequence_validator
 
 
@@ -79,23 +79,23 @@ class CharArrayFilter(filters.BaseCSVFilter, filters.CharFilter):
 
 
 class ProteinFilter(filters.FilterSet):
-    spectral_brightness = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright",
-        help_text="fold brightness relative to spectral neighbors",
-    )
-    spectral_brightness__gt = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright_gt",
-        lookup_expr="gt",
-        help_text="fold brightness relative to spectral neighbors",
-    )
-    spectral_brightness__lt = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright_lt",
-        lookup_expr="lt",
-        help_text="fold brightness relative to spectral neighbors",
-    )
+    # spectral_brightness = django_filters.NumberFilter(
+    #     field_name="spectral_brightness",
+    #     method="get_specbright",
+    #     help_text="fold brightness relative to spectral neighbors",
+    # )
+    # spectral_brightness__gt = django_filters.NumberFilter(
+    #     field_name="spectral_brightness",
+    #     method="get_specbright_gt",
+    #     lookup_expr="gt",
+    #     help_text="fold brightness relative to spectral neighbors",
+    # )
+    # spectral_brightness__lt = django_filters.NumberFilter(
+    #     field_name="spectral_brightness",
+    #     method="get_specbright_lt",
+    #     lookup_expr="lt",
+    #     help_text="fold brightness relative to spectral neighbors",
+    # )
     seq__cdna_contains = django_filters.CharFilter(
         field_name="seq",
         method="translate_cdna",
@@ -107,8 +107,8 @@ class ProteinFilter(filters.FilterSet):
     name__icontains = django_filters.CharFilter(
         field_name="name", method="name_or_alias_icontains", lookup_expr="icontains"
     )
-    switch_type__ne = django_filters.ChoiceFilter(choices=Protein.SWITCHING_CHOICES, method="switch_type__notequal")
-    cofactor__ne = django_filters.ChoiceFilter(choices=Protein.COFACTOR_CHOICES, method="cofactor__notequal")
+    # switch_type__ne = django_filters.ChoiceFilter(choices=Protein.SWITCHING_CHOICES, method="switch_type__notequal")
+    # cofactor__ne = django_filters.ChoiceFilter(choices=Protein.COFACTOR_CHOICES, method="cofactor__notequal")
     parent_organism__ne = django_filters.ModelChoiceFilter(
         queryset=Organism.objects.all(), method="parent_organism__notequal"
     )
@@ -124,40 +124,41 @@ class ProteinFilter(filters.FilterSet):
     #     method='name_or_alias_istartswith', lookup_expr='istartswith')
 
     class Meta:
-        model = Protein
+        model = ProteinTF
         form = ProteinFilterForm
-        order_by = "default_state__em_max"
+        order_by = "repeats"
         fields = {
-            "name": ["icontains", "iendswith", "istartswith", "iexact"],
+            "gene": ["icontains", "iendswith", "istartswith", "iexact"],
             # 'aliases': ['contains'],
-            "seq": ["icontains", "iendswith", "istartswith", "cdna_contains"],
-            "default_state__ex_max": ["around", "range", "lte", "gte", "exact"],
-            "default_state__em_max": ["around", "range", "lte", "gte", "exact"],
-            "default_state__lifetime": ["gte", "lte", "range", "exact"],
-            "default_state__maturation": ["gte", "lte", "range", "exact"],
-            "default_state__ext_coeff": ["gte", "lte", "range", "exact"],
-            "default_state__qy": ["gte", "lte", "range", "exact"],
-            "default_state__brightness": ["gte", "lte", "range", "exact"],
-            "default_state__pka": ["gte", "lte", "range", "exact"],
-            "default_state__bleach_measurements__rate": [
-                "gte",
-                "lte",
-                "range",
-                "exact",
-            ],
-            "agg": ["exact"],
-            "uuid": ["iexact"],
-            "genbank": ["iexact"],
-            "pdb": ["contains"],
-            "uniprot": ["iexact"],
-            "status": ["exact"],
-            "switch_type": ["exact", "ne"],
-            "cofactor": ["exact", "ne"],
+            # "protein_sequence": ["icontains", "iendswith", "istartswith", "cdna_contains"],
+            "protein_sequence": ["icontains", "iendswith", "istartswith"],
+            # "default_state__ex_max": ["around", "range", "lte", "gte", "exact"],
+            # "default_state__em_max": ["around", "range", "lte", "gte", "exact"],
+            # "default_state__lifetime": ["gte", "lte", "range", "exact"],
+            # "default_state__maturation": ["gte", "lte", "range", "exact"],
+            # "default_state__ext_coeff": ["gte", "lte", "range", "exact"],
+            # "default_state__qy": ["gte", "lte", "range", "exact"],
+            # "default_state__brightness": ["gte", "lte", "range", "exact"],
+            # "default_state__pka": ["gte", "lte", "range", "exact"],
+            # "default_state__bleach_measurements__rate": [
+            #     "gte",
+            #     "lte",
+            #     "range",
+            #     "exact",
+            # ],
+            # "agg": ["exact"],
+            "id": ["exact"],
+            "ENSEMBL": ["iexact"],
+            "PDB": ["contains"],
+            "UNIPROT": ["iexact"],
+            # "status": ["exact"],
+            # "switch_type": ["exact", "ne"],
+            # "cofactor": ["exact", "ne"],
             "parent_organism": ["exact", "ne"],
             "primary_reference__year": ["gte", "gt", "lt", "lte", "range", "exact"],
             "primary_reference__author__family": ["icontains"],
-            "slug": ["exact"],
-            "id": ["exact"],
+            # "slug": ["exact"],
+            # "id": ["exact"],
         }
         form_fields = dict(**fields, spectral_brightness=["gt", "lt"])
         operators = {
@@ -174,37 +175,31 @@ class ProteinFilter(filters.FilterSet):
             "icontains": "contains",
             "iendswith": "ends with",
             "istartswith": "starts with",
-            "cdna_contains": "cDNA could contain",
+            # "cdna_contains": "cDNA could contain",
         }
         labels = {
-            "default_state__ex_max": "Excitation Maximum",
-            "default_state__em_max": "Emission Maximum",
-            "default_state__lifetime": "Lifetime (ns)",
-            "default_state__maturation": "Maturation (min)",
-            "default_state__ext_coeff": "Extinction Coefficient",
-            "default_state__qy": "Quantum Yield",
-            "default_state__brightness": "Brightness",
-            "default_state__pka": "pKa",
-            "uniprot": "UniProtKB ID",
-            "genbank": "GenBank ID",
-            "pdb": "PDB ID",
-            "uuid": "FPbase ID",
-            "seq": "Sequence",
-            "name": "Name or Alias",
-            "agg": "Oligomerization",
+            # "default_state__ex_max": "Excitation Maximum",
+            # "default_state__em_max": "Emission Maximum",
+            # "default_state__lifetime": "Lifetime (ns)",
+            # "default_state__maturation": "Maturation (min)",
+            # "default_state__ext_coeff": "Extinction Coefficient",
+            # "default_state__qy": "Quantum Yield",
+            # "default_state__brightness": "Brightness",
+            # "default_state__pka": "pKa",
+            "UNIPROT": "UniProtKB ID",
+            "ENSEMBL": "GenBank ID",
+            "PDB": "PDB ID",
+            "id": "RepeatOme ID",
+            "protein_sequence": "Sequence",
+            "gene": "Name or Alias",
+            # "agg": "Oligomerization",
             "primary_reference__year": "Year published",
-            "default_state__bleach_measurements__rate": "Photostability (s)",
+            # "default_state__bleach_measurements__rate": "Photostability (s)",
             "primary_reference__author__family": "Author",
         }
 
     def name_or_alias_icontains(self, queryset, name, value):
         return queryset.filter(name__icontains=value) | queryset.filter(aliases__icontains=value)
-
-    def switch_type__notequal(self, queryset, name, value):
-        return queryset.exclude(switch_type=value)
-
-    def cofactor__notequal(self, queryset, name, value):
-        return queryset.exclude(cofactor=value)
 
     def parent_organism__notequal(self, queryset, name, value):
         return queryset.exclude(parent_organism=value)
@@ -218,20 +213,20 @@ class ProteinFilter(filters.FilterSet):
     # def name_or_alias_istartswith(self, queryset, name, value):
     #     return queryset.filter(name__istartswith=value) | queryset.filter(aliases__istartswith=value)
 
-    def get_specbright(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness == value]
-        return queryset.filter(id__in=ids)
+    # def get_specbright(self, queryset, name, value):
+    #     qsALL = list(queryset.all())
+    #     ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness == value]
+    #     return queryset.filter(id__in=ids)
 
-    def get_specbright_lt(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness < value]
-        return queryset.filter(id__in=ids)
+    # def get_specbright_lt(self, queryset, name, value):
+    #     qsALL = list(queryset.all())
+    #     ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness < value]
+    #     return queryset.filter(id__in=ids)
 
-    def get_specbright_gt(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness > value]
-        return queryset.filter(id__in=ids)
+    # def get_specbright_gt(self, queryset, name, value):
+    #     qsALL = list(queryset.all())
+    #     ids = [P.id for P in qsALL if P.default_state and P.default_state.local_brightness > value]
+    #     return queryset.filter(id__in=ids)
 
     def translate_cdna(self, queryset, name, value):
         return queryset.filter(seq__icontains=Seq.translate(value))

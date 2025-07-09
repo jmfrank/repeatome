@@ -17,6 +17,7 @@ urlpatterns = [
     # detail view: /:slug
     path("proteinTable/", views.ProteinTable, name="proteinTable"),
     path("repeatTable/", views.RepeatTable, name="repeatTable"),
+    path("organismTable/", views.OrganismTable, name="organismTable"),
     re_path(r"^search/", views.protein_search, name="search"),
     re_path(r"^blast/", views.blast_view, name="blast"),
     re_path(
