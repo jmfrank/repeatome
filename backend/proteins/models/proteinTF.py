@@ -1,13 +1,14 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 import requests
-
+from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
 from references.models import Reference
 from proteins.models.gene_family import GeneFamily
 from proteins.models.organism import Organism
 from proteins.models.repeat import Repeat
 from references.models import Reference
+
 
 class ProteinRepeats(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
@@ -17,6 +18,7 @@ class ProteinRepeats(models.Model):
     class Meta:
         unique_together = ('protein', 'repeat')
 
+
 class ProteinReferences(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
     reference = models.ForeignKey(Reference, on_delete=models.CASCADE, to_field='doi', db_column='doi')
@@ -24,6 +26,7 @@ class ProteinReferences(models.Model):
 
     class Meta:
         unique_together = ('protein', 'reference')
+
 
 class ProteinTF(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
@@ -85,16 +88,6 @@ class ProteinTF(models.Model):
         null=True,
         on_delete=models.deletion.CASCADE,
         help_text="Parent organism of the gene",
-    )
-    primary_reference = models.ForeignKey(
-        Reference,
-        # related_name="references",
-        verbose_name="reference",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        help_text="Primary reference for protein",
-        to_field='doi'
     )
     primary_reference = models.ForeignKey(
         Reference,
@@ -171,3 +164,11 @@ class ProteinTF(models.Model):
 
         return jaspar_ids
     
+    def jaspars_length(self):
+      if not self.jaspars:
+         return 0
+      return len(self.jaspars)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.gene)
+        super().save(*args, **kwargs)

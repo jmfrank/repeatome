@@ -30,18 +30,20 @@
 <script type='module' src="{% static 'react_seq.js' %}"></script>
 
 <!-- Motif Sequence Viewer -->
- <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
- <script src="{% static 'motif_viewer/scroller.js' %}"></script>
- <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
-<script type="application/javascript">
-  $(document).ready(function() {
+<script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
+<script src="{% static 'motif_viewer/scroller.js' %}"></script>
+<link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+<script>
+  // Use jQuery.noConflict() to prevent conflicts
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
     var zoom         = 1;
     var column_width = 34;
-    console.log(document.querySelector('div[data-logo]').dataset.logo)
-    $('#logo').hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
-    //$('#logo2').hmm_logo({zoom: 1, height_toggle: 'enabled', help: 1, column_info: '#logo_info'});
+    // console.log(document.querySelector('div[data-logo]').dataset.logo);
+    $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
   });
 </script>
+
 {% endblock extrahead %}
 
 {% block container-class %}container repeat{% endblock %}

@@ -33,6 +33,23 @@
 <script src="{% static 'litemol/LiteMol-plugin-2.js' %}"></script>
 <script type='module' src="{% static 'litemol/litemol_proj.js' %}"></script>
 
+<!-- Motif Sequence Viewer -->
+<script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
+<script src="{% static 'motif_viewer/scroller.js' %}"></script>
+<link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+<script>
+  // Use jQuery.noConflict() to prevent conflicts
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+    var zoom         = 1;
+    var column_width = 34;
+    // console.log(document.querySelector('div[data-logo]').dataset.logo);
+    // $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+    $j("#logo1").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info1'});
+    $j("#logo2").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info2'});
+  });
+</script>
+
 <!-- PDB Viewer -->
 <meta
   name="viewport"
@@ -49,6 +66,8 @@
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar-plugin.js"
 ></script>
+
+
 {% endblock extrahead %}
 
 {% block container-class %}container protein{% endblock %}
@@ -228,9 +247,27 @@
 		</div>
 
 
-   {% if protein.PDB %}
-     {% include "proteins/_structure_section.html" with protein=protein %}
-   {% endif %}
+    {% if protein.PDB %}
+      {% include "proteins/_structure_section.html" with protein=protein %}
+    {% endif %}
+
+    {% for repeat in protein.repeats.all %}
+      <tr>
+            {% if repeat.dfam_id %}
+              <div class='row' id='struct-micro-names' style="padding:15px">
+                <h3>Repeat Motif</h3>
+              </div>
+              <td><a href="/repeatTable/{{repeat.name}}">{{repeat.name | safe}}</a></td>
+
+              <div class='logo-holder'>
+                <div class="logo-col" id="logo{{forloop.counter}}" data-logo="{{repeat.get_hmm}}"></div>
+                <!-- <div class="logo-col" id="logo_info{{forloop.counter}}"></div> -->
+              </div>
+            {% endif %}
+      </tr>
+      {%endfor%}
+
+
 
    {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>

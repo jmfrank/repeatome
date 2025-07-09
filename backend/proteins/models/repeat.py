@@ -59,7 +59,9 @@ class Repeat(models.Model):
             hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
             r = requests.get(hmm_url)
             if r.status_code != 200:
-                raise Exception(f"HMM not found for {self.dfam_id}")
+               print(f"EROR: {r.status_code} returned from {hmm_url}")
+               raise Exception(f"HMM not found for {self.dfam_id}")
 
+            # print(f"get_hmm returned {r.text}")
             return r.text
-        return None
+        return "ERROR"
