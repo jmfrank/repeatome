@@ -12,6 +12,10 @@ Local settings for FPbase project.
 from .base import *  # noqa
 import os
 
+# Data to import
+# ------------------------------------------------------------------------------
+IMPORT_DATA_FILE = "/Users/isabel/repeatome_data/satellite_binders_database_master.xlsx"
+
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
@@ -20,7 +24,8 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpbase15',  # Replace with your database name
+        #'NAME': 'fpbase15',  # This db is working.
+        'NAME': 'fpbase16',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
