@@ -1,3 +1,141 @@
+/* MOTIF HMM LOGO */
+.logo-holder {
+    /* display: flex;
+    flex-direction: row; */
+    width: 100%;
+    margin-bottom: 10px;
+    /* display: inline-block;
+    position: float; */
+    /* height: 100%; */
+    /* width: 100%; */
+    /* justify-content: space-between; */
+}
+
+#logo {
+    padding-right: 15px;
+    /* width: 80%; */
+    width: 100%;
+}
+
+#logo .logo_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 7px;
+}
+
+#logo .logo_form fieldset {
+    border: 0;
+}
+
+.logo_form fieldset label, .logo_form fieldset input, .logo_form fieldset button {
+    margin-left: 5px;
+    /* padding-right: 5px; */
+}
+
+.logo_form .logo_controls button {
+    margin-right: 5px;
+    padding: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+/* #logo_info {
+    width: 15%;
+} */
+
+#logo_info {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    margin-top: 10px;
+}
+
+#logo_info .logo_info_data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 40%;
+    padding-right: 15px;
+}
+
+#logo_info .logo_col_info {
+    flex-direction: row;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    /* width: 60%; */
+}
+
+.logo_col_info tr { display: block; float: left; }
+.logo_col_info th, .logo_col_info td { display: block; }
+
+@media(max-width: 768px) {
+    #logo_info .logo_info_data {
+        display: flex;
+        flex-direction: column;
+        /* flex-wrap: wrap; */
+        width: 40%;
+        padding-right: 15px;
+    }
+
+    #logo_info .logo_col_info {
+        display: flex;
+        flex-direction: column !important;
+        /* width: 60%; */
+    }
+
+    .logo_col_info tr { display: flex; flex-direction: row; }
+    .logo_col_info th, .logo_col_info td { display: flex; width: 100%; } 
+}
+
+@media(max-width: 992px) {
+    #logo_info .logo_info_data {
+        width: 50%;
+    }
+}
+
+/* STRUCTURE SECTION (LITEMOL) + MICROSCOPY */
+
+#struct-micro-names {
+    text-align: center;
+    padding-bottom: 10px;
+    /* justify-content: space-around; */
+    /* padding-left: 5px; */
+}
+
+#pdb-info {
+    /* margin: auto; */
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative !important;
+    height: 100%;
+}
+
+#pdb-info img {
+    width: 100%;
+}
+
+#jaspar-item {
+   border: 1px solid #ddd !important;
+   background-color: #f94474 !important;
+   margin: 10px !important;
+}
+
+#jaspar-image-container {
+   justify-content: left !important;
+   align-items: left !important;
+   position: relative !important;
+   object-fit: contain !important;
+}
+
+#jaspar-img {
+   width: 100% !important;
+   height:auto !important;
+   object-fit: contain !important;
+}
+
 .lm-plugin {
   z-index: 10;
   background: white !important;

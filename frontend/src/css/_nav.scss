@@ -5,6 +5,127 @@ $logo-color: #efe;
   transition-duration: 0.6s;
 }
 
+.navbar {
+  // height: 150px;
+  transition-duration: .3s;
+  -webkit-font-smoothing: antialiased!important;
+  -moz-osx-font-smoothing: grayscale!important;
+  box-shadow: 0 .1rem .2rem #0003
+}
+
+@media(min-width: 768px) {
+    .navbar {
+        // height:3.5rem
+    }
+}
+
+.navbar .dropdown-menu {
+    z-index: 1001
+}
+
+.logo_pic {
+    margin-left: 0px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+@media(min-width: 768px) {
+    .navbar {
+        padding:0;
+        margin-top: -5px;
+    }
+}
+
+.navbar-toggler {
+  margin-left: 10px;
+}
+
+.navbar-collapse {
+    margin-top: 5px;
+    align-items: center;
+    flex-basis: 100%;
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+@media(max-width: 767.98px) {
+    .navbar-brand {
+        float:right;
+        line-height: 1.6rem;
+        padding-left: 14px;
+    }
+    .navbar {
+        margin-top: 0px;
+    }
+    .navbar-collapse {
+        margin-top: 0px;
+    }
+    .navbar-toggler {
+        margin-top: 0px;
+    }
+    .logo_pic {
+        margin-left: -20px;
+        margin-top: 0px;
+    }
+}
+
+.navbar .navbar-brand span {
+    color: #efe;
+    font-family: Raleway,sans-serif!important;
+    font-size: 2.2rem;
+    font-weight: 100;
+    line-height: 2.6rem
+}
+
+@media(max-width: 767.98px) {
+    .navbar .navbar-brand span {
+        line-height:1.6rem
+    }
+}
+
+.navbar .navbar-brand span.brand-FP {
+    font-weight: 600;
+    margin-left: -.65rem
+}
+
+@media(max-width: 767.98px) {
+    .navbar .navbar-brand span.brand-FP {
+        font-size:2rem
+    }
+}
+
+.navbar .navbar-brand span.brand-version {
+    color: #fffc;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji!important;
+    font-size: .8rem;
+    font-style: italic;
+    font-weight: 600;
+    margin-left: .2rem;
+    position: relative;
+    text-shadow: 0 0 .5rem #fff6;
+    top: .2rem
+}
+
+@media(max-width: 767.98px) {
+    .navbar .navbar-brand span.brand-version {
+        font-size:.5rem
+    }
+}
+
+.navbar .navbar-brand .logo-svg {
+    vertical-align: inherit;
+    fill: #efe;
+    fill-rule: evenodd;
+    height: 2.5rem;
+    padding-top: .9rem
+}
+
+@media(max-width: 767.98px) {
+    .navbar .navbar-brand .logo-svg {
+        height:2.2rem
+    }
+}
+
 @include media-breakpoint-up(sm){
   ul.nav li.dropdown:hover{
     &> .dropdown-menu {
@@ -24,7 +145,7 @@ $logo-color: #efe;
 
 
 .navbar {
-  @include media-breakpoint-up(md) { height: $navbar-height; }
+  // @include media-breakpoint-up(md) { height: $navbar-height; }
 
   .dropdown-menu {
       z-index: 1001;

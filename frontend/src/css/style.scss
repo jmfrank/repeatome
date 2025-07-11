@@ -1,5 +1,5 @@
-
-
+/* COMPILING SCSS SCRIPTS: 
+    sass --watch frontend/src/css/style.scss frontend/static/base.css */
 
 @import "_options.scss";  // custom bootstrap overrides
 
@@ -14,6 +14,8 @@
 @import "_nav.scss";
 @import "_protein.scss";
 @import "_reference.scss";
+@import "_repeat.scss";
+@import "_organism.scss";
 @import "_spectra.scss";
 @import "_table.scss";
 @import "_ichart.scss";

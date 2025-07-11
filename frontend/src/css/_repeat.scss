@@ -10,7 +10,7 @@
   }
 }
 
-.protein {
+.repeat {
 	font-size: 0.9rem;
 
 	.name {
@@ -47,7 +47,7 @@
     margin-top: -12px;
  	}
 
-  .gene_family {
+  .organism {
     /* color: #adb5bd; */
     color: rgb(148, 123, 148);
     /* color: rgb(157, 141, 171); */
@@ -68,16 +68,6 @@
   	padding-bottom:0;
   }
 
-
-  .attribute-data .attr-name {
-    margin-left: 0.3rem;
-    color: black;
-  }
-
-  .attribute-data p {
-    margin-left: 0.6rem;
-    color: #868e96;
-  }
 
 	.attributes {
 
@@ -104,11 +94,11 @@
 	}
 }
 
-.protein_results ul {
+.repeat_results ul {
 //padding-left: 0;
 }
 
-.protein_result_item {
+.repeat_result_item {
 	&:hover{
 		text-decoration: none;
 	}
@@ -144,7 +134,6 @@
 	font-family: monospace;
 	color: $gray-700;
 	padding: 1rem;
-  background-color: rgb(224, 224, 224);
 	.formatted_aminosquence {
 		padding: 0;
 		margin: 0;
@@ -155,7 +144,7 @@
 	.sequence_count {
 		float: left;
 		text-align: right;
-		color: rgb(191, 133, 210);
+		color: red;
 		position: absolute;
 		margin: 0;
 		padding: 0;

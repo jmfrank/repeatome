@@ -10,18 +10,7 @@
 {% block extrahead %}
 {% load static %}
 <link rel='stylesheet' href="{% static 'base_style.css' %}">
-<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
-<link rel='stylesheet' href="{% static 'style/base.css' %}">
-<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
-<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
-<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
-<link rel='stylesheet' href="{% static 'style/forms.css' %}">
-<link rel='stylesheet' href="{% static 'style/login.css' %}">
-<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
-<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
-<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
-<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
-<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'base.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'base_proj.js' %}"></script>
@@ -114,7 +103,7 @@
    </div>
 
    <div class="table mt-3">
-     <table class="table table-striped flip-scroll states-table">
+     <table class="table flip-scroll">
        <thead>
          <tr class="table-header">
            <th>Protein</th>
