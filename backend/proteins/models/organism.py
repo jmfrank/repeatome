@@ -44,3 +44,15 @@ class Organism(models.Model):
 
     def url(self):
         return self.get_absolute_url()
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "scientific_name": self.scientific_name,
+            "division": self.division,
+            "common_name": self.common_name,
+            "species": self.species,
+            "genus": self.genus,
+            "rank": self.rank,
+        }
+

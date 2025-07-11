@@ -2,7 +2,7 @@
 {% load webp_picture from protein_tags %}
 {% load static %}
 
-{% block meta-description %}FPbase is a moderated, user-editable fluorescent protein database designed by microscopists.  Search, share, and organize information about fluorescent proteins and their characteristics.{% endblock %}
+{% block meta-description %}RepeatOme is a moderated, user-editable fluorescent protein database designed by microscopists.  Search, share, and organize information about fluorescent proteins and their characteristics.{% endblock %}
 
 
 {% block extrahead %}
@@ -12,9 +12,13 @@
     background-image: url("{% static 'images/home_img_2.png' %}");
   }
 </style>
-<script type='module' src="{% static 'algolia.js' %}"></script>
-<script src="{% static 'search_logic.js' %}"></script>
-<script type='module' src="{% static 'algolia.js' %}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic" />
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js@1.19.2/dist/umd/index.production.js" integrity="sha256-pJWTMvqlBlMBxdkM5bI1ScIVC7LFJoCplF0qQtcL62s=" crossorigin="anonymous"></script>
+<script>
+  const { autocomplete } = window['@algolia/autocomplete-js'];
+</script>
+<script type='module' src="{% static 'algolia2.js' %}" defer></script>
 <script src="{% static 'search_logic.js' %}"></script>
 {% endblock extrahead %}
 

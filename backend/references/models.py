@@ -60,6 +60,12 @@ class Author(TimeStampedModel):
     class Meta:
         unique_together = (("family", "initials"),)
 
+    def to_dict(self):
+        return {
+            "family": self.family,
+            "given": self.given,
+            "initials": self.initials,
+        }
 
 class Reference(TimeStampedModel):
     doi = models.CharField(
@@ -193,6 +199,27 @@ class Reference(TimeStampedModel):
     def url(self):
         return self.get_absolute_url()
 
+    def get_date(self):
+        return self.date.isoformat()
+
+    def to_dict(self):
+        data = {
+            "doi": self.doi,
+            "journal": self.journal,
+            "pmid": self.pmid,
+            "year": self.year,
+            "first_author": self.first_author,
+            "title": self.title,
+            "citation": self.citation,
+            "date": self.date.isoformat() if self.date else None,
+            "prot_primary": self.prot_primary(),
+            "prot_secondary": self.prot_secondary(),
+            "_excerpts": self._excerpts(),
+            "url": self.url(),
+        }
+        # for k, v in data.items():
+        #     print(f"{k}: {v} ({type(v)})")
+        return data
 
 class ReferenceAuthor(models.Model):
     reference = models.ForeignKey(Reference, on_delete=models.CASCADE)

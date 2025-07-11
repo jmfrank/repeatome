@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 import requests
 
+from django.urls import reverse
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
 
@@ -65,3 +66,6 @@ class Repeat(models.Model):
             # print(f"get_hmm returned {r.text}")
             return r.text
         return "ERROR"
+
+    def get_absolute_url(self):
+        return reverse("proteins:repeatTable-detail", args=[self.slug])
