@@ -13,6 +13,10 @@
 
 {% block extrahead %}
     <link rel="preload" href="{% static 'images/GFP_spinner.gif' %}" as="image">
+    <link rel='stylesheet' href="{% static 'base_style.css' %}">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="{% static 'algolia.js' %}"></script>
+    <script src="{% static 'search_logic.js' %}"></script>
 {% endblock extrahead %}
 
 
@@ -65,12 +69,13 @@
 
         <div class="container protein_results pl-0 pr-0">
             {% if filter.qs %}
-                <div id="ldisplay" {% if request.GET.display == 't' %}class="hidden"{% endif %}>
+                {% comment %} <div id="ldisplay" {% if request.GET.display == 't' %}class="hidden"{% endif %}>
                 {% with proteins=filter.qs %}
                     {% include '_proteinlozenges.html' %}
                 {% endwith %}
-                </div>
-                <div id="tdisplay" class="{% if request.GET.display == 'l' or not request.GET.display %}hidden{% endif %}">
+                </div> {% endcomment %}
+                {% comment %} class="{% if request.GET.display == 'l' or not request.GET.display %}hidden{% endif %}" {% endcomment %}
+                <div id="tdisplay">
                 {% with proteins=filter.qs %}
                     <div class="table-responsive">
                       {% include '_proteintable.html' %}

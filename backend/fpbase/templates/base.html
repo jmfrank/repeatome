@@ -47,7 +47,7 @@
       <meta property="og:image" content="{% block twitter_image %}https://www.fpbase.org{% static 'images/square_logo_white_on_green.gif' %}{% endblock twitter_image %}">
     {% endblock twitter_card %}
 
-    <link rel="shortcut icon" href="{% static 'logo_2.svg' %}">
+    <link rel="shortcut icon" href="{% static 'icon_logo.svg' %}">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -76,19 +76,15 @@
       </script>
 
     <link rel='stylesheet' href="{% static 'base_style.css' %}">
-    <link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
-    <link rel='stylesheet' href="{% static 'style/base.css' %}">
-    <link rel='stylesheet' href="{% static 'style/changelists.css' %}">
-    <link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
-    <link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
-    <link rel='stylesheet' href="{% static 'style/forms.css' %}">
-    <link rel='stylesheet' href="{% static 'style/login.css' %}">
-    <link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
-    <link rel='stylesheet' href="{% static 'style/responsive.css' %}">
-    <link rel='stylesheet' href="{% static 'style/rtl.css' %}">
-    <link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
-    <link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
-    <link rel='stylesheet' href="{% static 'style/widgets.css' %}">
+    <link rel='stylesheet' href="{% static 'base.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic" />
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js@1.19.2/dist/umd/index.production.js" integrity="sha256-pJWTMvqlBlMBxdkM5bI1ScIVC7LFJoCplF0qQtcL62s=" crossorigin="anonymous"></script>
+    <script>
+      const { autocomplete } = window['@algolia/autocomplete-js'];
+    </script>
+    <script type='module' src="{% static 'algolia2.js' %}" defer></script>
+    <script src="{% static 'search_logic.js' %}"></script>
     {% block extrahead %}
     {% endblock extrahead %}
   </head>
@@ -158,7 +154,11 @@
       <!-- place project specific Javascript -->
       {% render_bundle 'main' 'js' %}
       <script>
-        FPBASE.initAutocomplete();
+          import initAutocomplete from "{% static 'algolia2.js' %}";
+          window.mobilecheck = function () {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          };
+          initAutocomplete();
       </script>
 
 

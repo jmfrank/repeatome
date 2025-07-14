@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 import requests
+from django.urls import reverse
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
 from references.models import Reference
@@ -172,3 +173,9 @@ class ProteinTF(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.gene)
         super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse("proteins:proteinTable-detail", args=[self.gene])
+
+    def get_repeats(self):
+        return [p.name for p in self.repeats.all()]

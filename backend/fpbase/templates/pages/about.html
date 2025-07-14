@@ -2,29 +2,29 @@
 {% load webp_picture from protein_tags %}
 {% load static %}
 
-{% block title %}About FPbase: The Fluorescent Protein Database {% endblock %}
-{% block meta-description %}FPbase is a free and open-source, web-based, community-editable database for fluorescent proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
+{% block title %}About RepeatOme: The Repeat and Protein Database {% endblock %}
+{% block meta-description %}RepeatOme is a free and open-source, web-based, community-editable database for repeats and proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
 
 {% block content %}
-<h1 class='mb-4'><strong>FP</strong>base <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
+<h1 class='mb-4'><strong>Repeat</strong>Ome <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
 
-<h3><strong>A fluorescent protein database</strong></h3>
+<h3><strong>A repeat and protein database</strong></h3>
 
   <p>
-    FPbase is a free and open-source, community-editable database for fluorescent proteins (FPs) and their properties. The primary objective is to aggregate structured and searchable FP data that is of interest to the imaging community and FP developers. Each protein in the database has a dedicated page showing amino acid sequence, accession IDs (e.g. GenBank, UniProt), evolution lineages and mutations, fluorescence attributes, structural data, references that introduced or characterized the protein, and more. Excerpts from primary literature can be entered to store key information about a protein that is otherwise difficult to capture within the current database schema. (For more technical information about the structure of the FPbase database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.)
+    RepeatOme is a free and open-source, community-editable database for repeats and proteins and their properties. The primary objective is to aggregate structured and searchable repeat data that is of interest to the repeat developers. Each protein in the database has a dedicated page showing amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt), repeats, experimental data, structural data, references that introduced or characterized the protein, and more. Excerpts from primary literature can be entered to store key information about a protein that is otherwise difficult to capture within the current database schema. (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.)
   </p>
-  <p>FPbase additionally includes a variety of tools to:
+  <p>RepeatOme additionally includes a variety of tools to:
     <ul>
-      <li>explore the <a href="{% url 'proteins:lineage-list' %}">lineage and directed evolution of FPs</a></li>
-      <li>view <a href="{% url 'proteins:ichart' %}">relationships between FP properties</a></li>
-      <li><a href="{% url 'proteins:spectra' %}">compare spectra</a> with common filters and light sources</li>
+      {% comment %} <li>explore the <a href="{% url 'proteins:lineage-list' %}">lineage and directed evolution of FPs</a></li> {% endcomment %}
+      <li>view <a href="{% url 'proteins:ichart' %}">relationships between protein properties</a></li>
+      {% comment %} <li><a href="{% url 'proteins:spectra' %}">compare spectra</a> with common filters and light sources</li> {% endcomment %}
       <li>calculate <a href="{% url 'proteins:fret' %}">FRET relationships</a></li>
       <li>create and share curated <a href="{% url 'proteins:collections' %}">protein collections</a></li>
-      <li>build a spectra viewer customized for the specifications on your <a href="{% url 'proteins:microscopes' %}">microscope</a></li>
+      {% comment %} <li>build a spectra viewer customized for the specifications on your <a href="{% url 'proteins:microscopes' %}">microscope</a></li> {% endcomment %}
     </ul>
   </p>
   <p>
-    FPbase was designed and created in 2018 by Talley Lambert at Harvard Medical School.
+    RepeatOme was designed and created in 2025 by Matt Franklin at Altemose.
   </p>
 
 <h4><strong>A Caution About Overinterpretation and Comparison</strong></h4>
@@ -38,7 +38,7 @@
 <h3><strong>How to use this site</strong></h3>
 
 <h5><strong>Search</strong></h5>
-<p>There are many ways to find and compare fluorescent proteins on this site.  Of course, you can always just type the name of the protein you're looking for into the search box on the home page or the top right corner of this page.  To perform more complicated searches, use the <a href="{% url 'proteins:search' %}">advanced query builder</a>, where you can search using a number of fields (<em>e.g. Name, Sequence, EC, QY, Spectra, Oligomerization, Year Published, etc...</em>) and a variety of operators (<em>e.g. contains, greater than, etc...</em>):</p>
+<p>There are many ways to find and compare proteins and repeats on this site.  Of course, you can always just type the name of the protein you're looking for into the search box on the home page or the top right corner of this page.  To perform more complicated searches, use the <a href="{% url 'proteins:search' %}">advanced query builder</a>, where you can search using a number of fields (<em>e.g. Name, Sequence, Repeats, Year Published, etc...</em>) and a variety of operators (<em>e.g. contains, greater than, etc...</em>):</p>
 
 <div class="card">
   <div class="card-body">
@@ -52,10 +52,11 @@
 
 <p><strong>Table</strong></p>
 
-<p>The <a href="{% url 'proteins:table' %}">table</a> page shows all proteins in the databse, with each row representing a single protein "state" (that is, a multi-state protein such as a photoconvertible protein will appear in multiple rows of the table;  multistate proteins have small a parenthetical state name in the protein name).  You can sort this table by any of the paremeters, filter based on oligomerization or switching type, or enter text in the search field ot limit the proteins displayed.</p>
+<p>The <a href="{% url 'proteins:proteinTable' %}">table</a> page shows all proteins in the databse, with each row representing a single protein.  You can sort this table by any of the paremeters or enter text in the search field to limit the proteins displayed.</p>
+<p>The <a href="{% url 'proteins:repeatTable' %}">table</a> page shows all repeats in the databse, with each row representing a single repeat.  You can sort this table by any of the paremeters or enter text in the search field to limit the repeats displayed.</p>
 
 <p><strong>Interactive Chart</strong></p>
-<p>The <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> allows visualization of the many parameters of fluorescent proteins, along with the ability to filter down to a subset of proteins based on certain attributes.  Change the axes to explore the relationship between fluorescent protein properties.  Hover over the circles to identify each protein on the scatter plot, and click on the circles to go to the FPbase page for that protein.</p>
+<p>The <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> allows visualization of the many parameters of proteins, along with the ability to filter down to a subset of proteins based on certain attributes.  Change the axes to explore the relationship between protein properties.  Hover over the circles to identify each protein on the scatter plot, and click on the circles to go to the repeatOme page for that protein.</p>
 
 <div class="card">
   <div class="card-body">
@@ -66,13 +67,13 @@
 </div>
 
 <h5 class='mt-4'><strong>Collect</strong></h5>
-<p>Click the heart (<a class="btn example-like-button"><i class="fas fa-heart"></i></a>) icon at the top right of any protein page to quickly add it to your favorites, which can be seen on your profile page.  You may also <a href="{% url 'proteins:newcollection' %}">create collections of fluorescent proteins</a> for private use or for sharing publicly.  You may view your own collections in your profile, or <a href='{% url 'proteins:collections' %}'>view all public collections</a> created on FPbase.  On each protein page, you can click the book icon (<a class="btn example-like-button"><i class="fas fa-book"></i></a>) to add the current protein to one of your collections.</p>
+<p>Click the heart (<a class="btn example-like-button"><i class="fas fa-heart"></i></a>) icon at the top right of any protein page to quickly add it to your favorites, which can be seen on your profile page.  You may also <a href="{% url 'proteins:newcollection' %}">create collections of proteins</a> for private use or for sharing publicly.  You may view your own collections in your profile, or <a href='{% url 'proteins:collections' %}'>view all public collections</a> created on repeatOme.  On each protein page, you can click the book icon (<a class="btn example-like-button"><i class="fas fa-book"></i></a>) to add the current protein to one of your collections.</p>
 
 <h5 class='mt-4'><strong>Contribute</strong></h5>
-<p>If you would like to help expand the FPbase database, please consider contributing information to the database.  This can be as small as adding an additional reference to a protein, or creating new protein records altogether.  Please read the <a href="{% url "contributing" %}">guide to contributing</a> for more information.</p>
+<p>If you would like to help expand the repeatOme database, please consider contributing information to the database.  This can be as small as adding an additional reference to a protein, or creating new protein records altogether.  Please read the <a href="{% url "contributing" %}">guide to contributing</a> for more information.</p>
 
 <h3 class='mt-4'><strong>REST API</strong></h3>
-<p>FPbase includes a <a href="{%url 'api:api' %}">REST API</a> that allows programmatic retrieval of data in JSON, or CSV format.</p>
+<p>RepeatOme includes a <a href="{%url 'api:api' %}">REST API</a> that allows programmatic retrieval of data in JSON, or CSV format.</p>
 
 
 <h3 class='mt-4'><strong>Moderation</strong></h3>

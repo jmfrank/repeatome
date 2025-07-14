@@ -1,0 +1,16 @@
+#organismTable {
+    min-height: 100%;
+    position: relative;
+}
+
+#organismTable .table-header th {
+    /* float: left; */
+    text-align: left;
+    padding-left: 10px;
+}
+
+#organismTable .data td {
+    /* float: left; */
+    text-align: left;
+    padding-left: 15px;
+}

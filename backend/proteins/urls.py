@@ -17,6 +17,7 @@ urlpatterns = [
     # detail view: /:slug
     path("proteinTable/", views.ProteinTable, name="proteinTable"),
     path("repeatTable/", views.RepeatTable, name="repeatTable"),
+    path("organismTable/", views.OrganismTable, name="organismTable"),
     re_path(r"^search/", views.protein_search, name="search"),
     re_path(r"^blast/", views.blast_view, name="blast"),
     re_path(
@@ -143,18 +144,23 @@ urlpatterns = [
         ),
         name="newcollection",
     ),
-    path("organisms/", views.OrganismListView.as_view(), name="organism-list"),
-    path(
-        "organism/<int:pk>/",
-        views.OrganismDetailView.as_view(),
-        name="organism-detail",
-    ),
+    # path(
+    #     "organism/<int:pk>/",
+    #     views.OrganismDetailView.as_view(),
+    #     name="organism-detail",
+    # ),
     path("activity", views.ActivityView.as_view(), name="activity"),
     # re_path(
     #     r"^protein/(?P<slug>[-\w]+)/$",
     #     views.ProteinDetailView.as_view(),
     #     name="protein-detail",
-    # ),
+    # ),    
+    # path("organisms/", views.OrganismListView.as_view(), name="organism-list"),
+    path(
+        "organismTable/<int:pk>/",
+        views.OrganismDetailView.as_view(),
+        name="organismTable-detail",
+    ),
     re_path(
        r"^proteinTable/(?P<gene>[-\w]+)/$", # gene is SlugField with name of gene
        # {'my_id': '?P<my_id>'}
@@ -197,6 +203,11 @@ urlpatterns = [
         "autocomplete-protein/",
         views.ProteinAutocomplete.as_view(),
         name="protein-autocomplete",
+    ),
+    path(
+        "autocomplete-repeat/",
+        views.RepeatAutocomplete.as_view(),
+        name="repeat-autocomplete",
     ),
     path(
         "autocomplete-lineage/",

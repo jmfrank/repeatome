@@ -1,3 +1,6 @@
+a {
+  text-decoration: none !important;
+}
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .cover-wrapper {
@@ -13,9 +16,11 @@
 .cover-wrapper-inner {
   display: table-cell;
   vertical-align: middle;
-  @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
+  // @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
+  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
   @include media-breakpoint-down(sm) {
-    @include gradient-directional(rgba(darken($primary,5%), 0.6), rgba(lighten($primary, 15%),0.6), 160deg);
+    background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
+    // @include gradient-directional(rgba(darken($primary,5%), 0.6), rgba(lighten($primary, 15%),0.6), 160deg);
   }
 }
 
@@ -125,7 +130,8 @@ $search-colors: rgba($white,0.4);
 .home-body{
   padding-top: 0;
   height: 100vh;
-  @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
+  // @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
+  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
 }
 
 .home-stats{

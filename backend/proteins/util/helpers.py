@@ -101,17 +101,20 @@ def merge_proteins(merge_prot, into_prot):
 
 
 def getprot(protein_name, visible=False):
-    from proteins.models import Protein
+    from proteins.models import ProteinTF
 
     # assume that the slug is always the slugified name
     try:
         if visible:
-            return Protein.visible.get(slug=slugify(protein_name))
+            # return Protein.visible.get(slug=slugify(protein_name))
+            return ProteinTF.visible.get(gene=protein_name)
         else:
-            return Protein.objects.get(slug=slugify(protein_name))
+            # return Protein.objects.get(slug=slugify(protein_name))
+            return ProteinTF.objects.get(gene=protein_name)
     except Exception:
         pass
-    return Protein.objects.get(aliases__contains=[protein_name])
+
+    return ProteinTF.objects.get(aliases__contains=[protein_name])
 
 
 def getmut(protname2, protname1=None, ref=None):

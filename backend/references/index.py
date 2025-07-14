@@ -14,7 +14,7 @@ class ReferenceIndex(AlgoliaIndex):
         "first_author",
         "title",
         "citation",
-        "date",
+        "get_date",
         "prot_primary",
         "prot_secondary",
         "_excerpts",
