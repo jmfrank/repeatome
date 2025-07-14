@@ -20,6 +20,10 @@ export default async function initAutocomplete() {
         placeholder: 'Search a protein or repeat',
         openOnFocus: true,
         inputElement: document.querySelector('#algolia-search-input'),
+        onSubmit({ state }) {
+            console.log("STATE: ", state)
+            window.location.href = '/search/?q=' + state
+        },
         getSources({ query }) {
             return [
             {

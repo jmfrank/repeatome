@@ -17,7 +17,7 @@
     "node": "23.x"
   },
   "dependencies": {
-    "autocomplete": "^0.0.1",
+    "bootstrap": "^5.3.7",
     "psql": "^0.0.1"
   }
 }
