@@ -1,4 +1,3 @@
-# from bs4 import BeautifulSoup
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
 from ..models import Repeat, ProteinTF

@@ -78,7 +78,7 @@ def protein_search(request):
                     print('organism name')
                     page = (
                         Organism.objects.filter(scientific_name__istartswith=query)
-                        .annotate(np=Count("proteins"))
+                        .annotate(np=Count("proteinTF"))
                         .order_by("-np")
                     )
                     print(page)

@@ -29,8 +29,8 @@ from django.views.generic import (
     UpdateView,
 )
 
-from fpbase.celery import app
-from fpbase.util import is_ajax
+from repeatome.celery import app
+from repeatome.util import is_ajax
 
 from ..forms import MicroscopeForm, OpticalConfigFormSet
 from ..models import (

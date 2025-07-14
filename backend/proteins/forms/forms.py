@@ -91,7 +91,6 @@ class SequenceField(forms.CharField):
             value = value.replace(" ", "").upper()
         return super().to_python(value)
 
-
 class SelectAddWidget(forms.widgets.Select):
     template_name = "proteins/forms/widgets/select_add.html"
 

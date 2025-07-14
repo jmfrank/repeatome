@@ -3,7 +3,7 @@ from os import getenv
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from fpbase.decorators import login_required_message_and_redirect as login_required
+from repeatome.decorators import login_required_message_and_redirect as login_required
 
 from . import views
 
@@ -17,7 +17,7 @@ urlpatterns = [
     # detail view: /:slug
     path("proteinTable/", views.ProteinTable, name="proteinTable"),
     path("repeatTable/", views.RepeatTable, name="repeatTable"),
-    path("organismTable/", views.OrganismTable, name="organismTable"),
+    path("organismTable/", views.OrganismListView.as_view(), name="organismTable"),
     re_path(r"^search/", views.protein_search, name="search"),
     re_path(r"^blast/", views.blast_view, name="blast"),
     re_path(
@@ -144,17 +144,12 @@ urlpatterns = [
         ),
         name="newcollection",
     ),
-    # path(
-    #     "organism/<int:pk>/",
-    #     views.OrganismDetailView.as_view(),
-    #     name="organism-detail",
-    # ),
     path("activity", views.ActivityView.as_view(), name="activity"),
     # re_path(
     #     r"^protein/(?P<slug>[-\w]+)/$",
     #     views.ProteinDetailView.as_view(),
     #     name="protein-detail",
-    # ),    
+    # ),
     # path("organisms/", views.OrganismListView.as_view(), name="organism-list"),
     path(
         "organismTable/<int:pk>/",

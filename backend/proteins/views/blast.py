@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from fpbase.util import is_ajax
+from repeatome.util import is_ajax
 
 from ..util.blast import blast
 

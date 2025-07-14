@@ -8,7 +8,7 @@ from mptt.admin import MPTTModelAdmin
 from reversion.admin import VersionAdmin
 from reversion_compare.admin import CompareVersionAdmin
 
-from fpbase.util import uncache_protein_page
+from repeatome.util import uncache_protein_page
 from proteins.models import (
     BleachMeasurement,
     Camera,

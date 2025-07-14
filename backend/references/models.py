@@ -196,11 +196,11 @@ class Reference(TimeStampedModel):
     def _excerpts(self):
         return [exc.content for exc in self.excerpts.all()]
 
-    def url(self):
-        return self.get_absolute_url()
-
     def get_date(self):
         return self.date.isoformat()
+
+    def url(self):
+        return self.get_absolute_url()
 
     def to_dict(self):
         data = {
