@@ -1,5 +1,5 @@
 """
-Local settings for FPbase project.
+Isabel settings for Repeatome project.
 
 - Run in Debug mode
 

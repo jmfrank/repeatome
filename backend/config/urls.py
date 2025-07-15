@@ -11,8 +11,8 @@ from django.views.generic.base import RedirectView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from graphene_django.views import GraphQLView
 
-import fpbase.views
-from fpbase.sitemaps import (
+import repeatome.views
+from repeatome.sitemaps import (
     AuthorsSitemap,
     MicroscopeSitemap,
     OrganismsSitemap,
@@ -34,7 +34,7 @@ sitemaps = {
 }
 
 urlpatterns = [  # noqa: RUF005
-    path("", fpbase.views.HomeView.as_view(), name="home"),
+    path("", repeatome.views.HomeView.as_view(), name="home"),
     path(
         "about/",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -89,7 +89,7 @@ urlpatterns = [  # noqa: RUF005
         TemplateView.as_view(template_name="googleaecf5301782589e7.html"),
         name="verification",
     ),
-    path("contact/", fpbase.views.ContactView.as_view(), name="contact"),
+    path("contact/", repeatome.views.ContactView.as_view(), name="contact"),
     path(
         "thanks/",
         TemplateView.as_view(template_name="pages/thanks.html"),
@@ -99,7 +99,7 @@ urlpatterns = [  # noqa: RUF005
     # Django Admin, use {% url 'admin:index' %}
     re_path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("fpbase.users.urls", namespace="users")),
+    path("users/", include("repeatome.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # API base url
     # path("api/", include("proteins.api.urls", namespace="api")),
@@ -124,12 +124,12 @@ urlpatterns = [  # noqa: RUF005
     ),
     path("fav/", include("favit.urls")),
     path("avatar/", include("avatar.urls")),
-    re_path(r"^test500/", fpbase.views.test500),
+    re_path(r"^test500/", repeatome.views.test500),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("graphql/batch/", csrf_exempt(GraphQLView.as_view(batch=True))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler500 = "fpbase.views.server_error"
+handler500 = "repeatome.views.server_error"
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
@@ -151,8 +151,8 @@ if settings.DEBUG:
             default_views.page_not_found,
             kwargs={"exception": Exception("Page not Found")},
         ),
-        path("500/", fpbase.views.server_error),
-        path("test/", fpbase.views.testview),
+        path("500/", repeatome.views.server_error),
+        path("test/", repeatome.views.testview),
         path(
             "autocomplete/",
             TemplateView.as_view(template_name="pages/test_autocomplete.html"),

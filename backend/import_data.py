@@ -175,6 +175,7 @@ def import_protein():
             validation_grade=row['validation_grade'],
             prediction_method=row['prediction_method'],
             microscopy_result=parse_microscopy_result(row['microscopy_result']),
+            # TODO: Remove these 2 fields
             motif_enrichment=row['motif_enrichment'],
             motif_q_score=row['motif_q_score'],
             existing_images=row['existing_images'],
@@ -204,14 +205,21 @@ def import_protein():
         protein_obj = ProteinTF.objects.get(gene=gene)
 
         satellite_str = row['satellite']
+        # motif_q_score = row['motif_q_score']
+        # motif_enrichment = row['motif_enrichment']
         if satellite_str:
             satellites = [x.strip() for x in satellite_str.split(',')]
+            # motif_q_scores = [x.strip() for x in motif_q_score.split(',')]
+            # motif_enrichments = [x.strip() for x in motif_enrichment.split(',')]
+            # if len(motif_q_scores) != len(motif_enrichments):
+            #     raise Exception(f"Length of motif_q_score is not the same as motif_enrichment")
+            index = 0
             for satellite in satellites:
                 repeat_obj = Repeat.objects.get(name=satellite)
                 protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
                 protein_repeat_obj.save()
-                # sat_obj = Repeat.objects.get(name=satellite)
-                # obj.repeats.add(sat_obj)
+                # index += 1
 
 
 def delete_all_records():
