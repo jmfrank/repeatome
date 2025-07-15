@@ -34,7 +34,7 @@ from django.views.decorators.vary import vary_on_cookie
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from reversion.models import Revision, Version
 
-from fpbase.util import is_ajax, uncache_protein_page
+from repeatome.util import is_ajax, uncache_protein_page
 from proteins.extrest.entrez import get_cached_gbseqs
 from proteins.extrest.ga import cached_ga_popular
 from proteins.forms.forms import BaseStateFormSet
@@ -910,19 +910,6 @@ def bleach_comparison(request, pk=None):
         else:
             bcf = BleachComparisonForm()
     return render(request, template_name, {"formset": formset, "mainform": bcf})
-
-
-class OrganismListView(ListView):
-    """renders html for single reference page"""
-
-    queryset = Organism.objects.annotate(num_prot=Count("proteins"))
-
-
-class OrganismDetailView(DetailView):
-    """renders html for single reference page"""
-
-    queryset = Organism.objects.all().prefetch_related("proteins__states")
-
 
 def spectra_csv(request):
     try:

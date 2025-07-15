@@ -75,10 +75,14 @@
   color: #999;
 }
 
+.aa-Label {
+  margin-bottom: 0 !important;
+}
+
 .aa-Panel--scrollable {
     margin: 0;
     max-height: 650px;
-    max-height: 50vh;
+    // max-height: 48vh;
     overflow-x: hidden;
     overflow-y: scroll;
     padding: calc((16 * 1 * 1px) / 2);
@@ -95,9 +99,11 @@
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   border-radius: 3px;
   margin-top: 3px;
-  max-height: 50vh;
+  max-height: 45vh;
   z-index: 100;
-  overflow-y: visible;
+  overflow: auto !important;
+  overflow-x: hidden;
+  overflow-y: auto !important;
   scroll-behavior: smooth;
 
   .aa-empty{

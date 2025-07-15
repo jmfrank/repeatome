@@ -1,6 +1,6 @@
 from dal import autocomplete
 
-from ..models import Filter, Lineage, Protein, State
+from ..models import Filter, Lineage, ProteinTF, State, Repeat
 
 # from django.contrib.postgres.search import TrigramSimilarity
 
@@ -18,7 +18,7 @@ class ProteinAutocomplete(autocomplete.Select2QuerySetView):
         ]
 
     def get_queryset(self):
-        qs = Protein.objects.all()
+        qs = ProteinTF.objects.all()
         if self.q:
             qs = qs.filter(gene__icontains=self.q)
         return qs

@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from sentry_sdk import last_event_id
 
-from fpbase.forms import ContactForm
+from repeatome.forms import ContactForm
 from proteins.models import Protein, Spectrum, ProteinTF
 
 

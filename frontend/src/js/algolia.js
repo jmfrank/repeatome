@@ -1,5 +1,4 @@
-// import $ from "jquery"
-// import $ from 'https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js';
+import $ from "jquery"
 
 function checkObject(val, prop, str) {
   var propDict = {

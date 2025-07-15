@@ -3,13 +3,26 @@
 {% block extrahead %}
 {% load static %}
 {% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
-{% comment %} <link rel='icon' href="{% static 'icon_img.png' %}"> {% endcomment %}
+<link rel='icon' href="{% static 'icon_img.png' %}">
+<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
+<link rel='stylesheet' href="{% static 'style/base.css' %}">
 <link rel='stylesheet' href="{% static 'base_style.css' %}">
-<link rel='stylesheet' href="{% static 'base.css' %}">
+<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
+<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
+<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
+<link rel='stylesheet' href="{% static 'style/forms.css' %}">
+<link rel='stylesheet' href="{% static 'style/login.css' %}">
+<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
+<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'style/widgets.css' %}">
 {% endblock extrahead %}
 
 {% block content %}
 
+{% block container-class %}container repeat{% endblock %}
 
 <table class="table table-sm table-striped {{classes}}" id="{{ id|default:'repeatTable' }}" style="width:100%; overflow-x:auto;">
    <thead>

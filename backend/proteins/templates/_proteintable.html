@@ -14,7 +14,7 @@
 			{% if removebutton %}<th class='remove-button'>Remove</th>{% endif %}
 			<th class="protein">Name</th>
 			
-			<td class='hidden'>Aliases</td>
+			<td>Aliases</td>
 			{% if comparison %}
 			<th><span class="d-none d-lg-inline">Compare</span><span class="d-block d-lg-none"><i class="fas fa-plus ml-1"></i></span></th>
 			{% endif %}
@@ -28,12 +28,12 @@
 					<td class="remove-button">{% collection_remove_button protein %}</td>
 				{% endif %}
 				<td class="protein">
-					<a href="{{ protein.get_absolute_url }}">
+					<a href="{{ protein.get_absolute_url | safe }}">
 						{{ protein.gene | safe }}
 					</a>
 				</td>
 
-				<td class='hidden'>{{ state.protein.aliases }}</td>
+				<td>{{ protein.aliases_as_str }}</td>
 				{% if comparison %}
             	<td class="text-center">
               		<button class="btn btn-sm btn-outline-info btn-circle comparison-btn" data-flash='1' data-action-url="{% url 'proteins:update-comparison' %}" data-object='{{protein.slug}}' data-op='add'><i class="fas fa-plus"></i></button>

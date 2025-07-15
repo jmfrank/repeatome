@@ -1,15 +1,16 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-import requests
 from django.urls import reverse
+import requests
+
 from backend.fpseq.util import slugify
+
 from ..util.helpers import shortuuid
 from references.models import Reference
 from proteins.models.gene_family import GeneFamily
 from proteins.models.organism import Organism
 from proteins.models.repeat import Repeat
 from references.models import Reference
-
 
 class ProteinRepeats(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
@@ -18,7 +19,7 @@ class ProteinRepeats(models.Model):
 
     class Meta:
         unique_together = ('protein', 'repeat')
-
+    
 
 class ProteinReferences(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
@@ -27,7 +28,6 @@ class ProteinReferences(models.Model):
 
     class Meta:
         unique_together = ('protein', 'reference')
-
 
 class ProteinTF(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
@@ -83,7 +83,7 @@ class ProteinTF(models.Model):
         )
     parent_organism = models.ForeignKey(
         Organism,
-        related_name='parent_organism',
+        related_name='proteinTF',
         verbose_name="Parent organism",
         blank=True,
         null=True,
@@ -112,6 +112,13 @@ class ProteinTF(models.Model):
         null=True,
         through=ProteinRepeats
     )
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.gene)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse("proteins:proteinTable-detail", args=[self.gene])
     
     def gene_type_as_str(self):
         if not self.gene_type:
@@ -142,6 +149,9 @@ class ProteinTF(models.Model):
     def get_references(self):
         return self.reference_set.all()
     
+    def get_repeats(self):
+        return [p.name for p in self.repeats.all()]
+    
     def get_jaspar_ids(self, tax_group='vertebrates'):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
         headers = {"Accept": "application/json"}
@@ -165,17 +175,4 @@ class ProteinTF(models.Model):
 
         return jaspar_ids
     
-    def jaspars_length(self):
-      if not self.jaspars:
-         return 0
-      return len(self.jaspars)
     
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.gene)
-        super().save(*args, **kwargs)
-    
-    def get_absolute_url(self):
-        return reverse("proteins:proteinTable-detail", args=[self.gene])
-
-    def get_repeats(self):
-        return [p.name for p in self.repeats.all()]

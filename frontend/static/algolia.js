@@ -176,21 +176,24 @@ function highlightRefHits(high) {
 }
 
 export default async function initAutocomplete() {
-  const [{ default: algoliasearch }] = await Promise.all([
-    import("algoliasearch"),
-    import("autocomplete.js/dist/autocomplete.jquery.js")
-  ])
-
+//   const [{ default: algoliasearch }] = await Promise.all([
+//     import("algoliasearch"),
+//     import("autocomplete.js/dist/autocomplete.jquery.js")
+//   ])
+  console.log("got here")
   var algoliaClient = algoliasearch(
-    window.FPBASE.ALGOLIA.appID,
-    window.FPBASE.ALGOLIA.publicKey
+    window.REPEATOME.ALGOLIA.appID,
+    window.REPEATOME.ALGOLIA.publicKey
   )
-  var proteinIndex = algoliaClient.initIndex(window.FPBASE.ALGOLIA.proteinIndex)
+  var proteinIndex = algoliaClient.initIndex(window.REPEATOME.ALGOLIA.proteinIndex)
   var organismIndex = algoliaClient.initIndex(
-    window.FPBASE.ALGOLIA.organismIndex
+    window.REPEATOME.ALGOLIA.organismIndex
   )
   var referenceIndex = algoliaClient.initIndex(
-    window.FPBASE.ALGOLIA.referenceIndex
+    window.REPEATOME.ALGOLIA.referenceIndex
+  )
+  var repeatIndex = algoliaClient.initIndex(
+    window.REPEATOME.ALGOLIA.repeatIndex
   )
 
   function empty(context) {
@@ -222,7 +225,7 @@ export default async function initAutocomplete() {
           source: $.fn.autocomplete.sources.hits(proteinIndex, {
             hitsPerPage: 5
           }),
-          displayKey: "name",
+          displayKey: "gene",
           templates: {
             suggestion: function(suggestion) {
               let col
@@ -266,6 +269,27 @@ export default async function initAutocomplete() {
                 }[suggestion.switchType.toLowerCase()]
               }
               str = str + "<span class='info'>" + info + "</span>"
+              return (
+                "<a href='" + suggestion.url + "'><div>" + str + "</div></a>"
+              )
+            }
+          }
+        },
+        {
+          source: $.fn.autocomplete.sources.hits(repeatIndex, {
+            hitsPerPage: 3
+          }),
+          displayKey: "name",
+          templates: {
+            suggestion: function(suggestion) {
+              var str = suggestion._highlightResult.citation.value
+              str =
+                str +
+                "<img class='type' src='" +
+                window.FPBASE.imageDir +
+                "ref.png" +
+                "'>"
+              str = str + highlightRefHits(suggestion._highlightResult)
               return (
                 "<a href='" + suggestion.url + "'><div>" + str + "</div></a>"
               )

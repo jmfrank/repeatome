@@ -2,7 +2,7 @@
 {% load webp_picture from protein_tags %}
 {% load static %}
 
-{% block meta-description %}RepeatOme is a moderated, user-editable fluorescent protein database designed by microscopists.  Search, share, and organize information about fluorescent proteins and their characteristics.{% endblock %}
+{% block meta-description %}FPbase is a moderated, user-editable fluorescent protein database designed by microscopists.  Search, share, and organize information about fluorescent proteins and their characteristics.{% endblock %}
 
 
 {% block extrahead %}
@@ -12,6 +12,9 @@
     background-image: url("{% static 'images/home_img_2.png' %}");
   }
 </style>
+{% comment %} <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> {% endcomment %}
+<!-- CSS for autocomplete -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic" />
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js@1.19.2/dist/umd/index.production.js" integrity="sha256-pJWTMvqlBlMBxdkM5bI1ScIVC7LFJoCplF0qQtcL62s=" crossorigin="anonymous"></script>
@@ -32,7 +35,7 @@
     <noscript>
         <div class="container text-center mt-0 bg-dark text-white pt-3 pb-4"><p><strong>Javascript is disabled!&nbsp;  Many pages and features of FPbase will not work properly</strong></p>
           <form class="input-group home-search" method="get" action="/search/">
-            <input type="search" class="form-control" name="name__icontains" placeholder="Protein name, accession, doi, organism, author...">
+            <input type="search" class="form-control" name="gene__icontains" placeholder="Protein name, accession, doi, organism, author...">
             <span class="input-group-append">
               <button class="btn btn-secondary" type="submit">search</button>
             </span>
@@ -42,11 +45,14 @@
         <main role="main" class="cover-container container">
           <div class="row">
             <div class="col-md-7 mt-lg-5 search-col order-sm-2 search-col">
-              <h1 class="cover-heading text-center mb-4">Find a Protein or a Satellite</h1>
-                <form class="input-group" method="get" action="/search/">
-                  <input class="form-control algolia-searchbar" id="algolia-search-input" name="q" type="search" placeholder='Search' autocomplete="off"/>
-                </form>
-                <p class="m-t-4 advanced-search"><a href="{% url 'proteins:search' %}">advanced search</a></p>
+              <h1 class="cover-heading text-center mb-4">Find a Protein or a Satellite</h1>  
+              <div id='algolia-search-input'>
+                {% comment %} <form class="input-group" method="get" action="/search/">
+                  <input class="form-control algolia-searchbar" id='algolia-search-input' name="q" type="search" placeholder='Search' autocomplete="off"/> <!--autocomplete="off"-->
+                </form> {% endcomment %}
+                {% comment %} <div class='input-group algolia-searchbar' id="algolia-search-input"></div> {% endcomment %}
+              </div>
+              <p class="m-t-4 advanced-search"><a href="{% url 'proteins:search' %}">advanced search</a></p>
             </div>
             <div class="col-md-4  order-sm-1" id="protein-image">
               <div style="position: absolute;" class="no-glow"> {% comment %} top:-70px {% endcomment %}
@@ -74,3 +80,13 @@
 </div>
 <!-- cover-wrapper -->
 {% endblock body %}
+
+{%block javascript%}
+<script type='module'>
+  import initAutocomplete from "{% static 'algolia2.js' %}";
+  window.mobilecheck = function () {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+  initAutocomplete();
+</script>
+{%endblock javascript%}

@@ -9,7 +9,7 @@ import requests
 import tablib
 from django.utils.text import slugify
 
-from fpbase.users.models import User
+from repeatome.users.models import User
 from references.models import Reference
 
 from .. import forms

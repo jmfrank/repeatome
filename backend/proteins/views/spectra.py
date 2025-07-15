@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import CreateView
 
-from fpbase.util import is_ajax, uncache_protein_page
+from repeatome.util import is_ajax, uncache_protein_page
 
 from ..forms import SpectrumForm
 from ..models import Filter, Protein, Spectrum, State

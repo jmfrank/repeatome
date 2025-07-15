@@ -9,8 +9,6 @@
 {% block twitter_description %}Build complex queries to search for fluorescent proteins in FPbase using multiple filters.{% endblock twitter_description %}
 
 
-
-
 {% block extrahead %}
     <link rel="preload" href="{% static 'images/GFP_spinner.gif' %}" as="image">
     <link rel='stylesheet' href="{% static 'base_style.css' %}">
@@ -27,7 +25,7 @@
 <p class="text-muted">Add additional rows to refine your search.  Each row is considered as an 'AND' clause in the search.  If a given search parameter is unknown for a protein in the database, that protein will be excluded from the results. If you find that you are not getting results, relax your query.</p>
 <p class='text-muted'>Note: organic dyes are not yet searchable in the database, but spectra for a selection of organic dyes are available on the <a href="{% url 'proteins:spectra' %}">spectra page</a>.</p>
 
-<div class="hidden" id="crispy-form">
+<div class='hidden' id="crispy-form">
  {{ filter.form |crispy }}
 </div>
 
@@ -37,8 +35,8 @@
     <button type="submit" class="btn btn-sm btn-primary form-group"><i class="fas fa-search"></i> Search</button>
     <button type="button" class="btn btn-sm btn-info form-group" id="add-row-btn"><i class="fas fa-filter"></i> Add Filter</button>
 
-    {% if request.GET %}
-    <div class="btn-group float-sm-right displaybuttons btn-group-toggle mb-3" data-toggle="buttons" >
+    {% comment %} {% if request.GET %}
+    <div class="btn-group float-sm-right displaybuttons btn-group-toggle" data-toggle="buttons" > <!--removed mb-3 class-->
       <label class="btn btn-info btn-sm btn-secondary active">
         <input type="radio" name="display" id="lbutton" autocomplete="off" checked value='l'><i class="fas fa-th"></i> display blocks
       </label>
@@ -47,7 +45,7 @@
       </label>
     </div>
     </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
 </form>
 
 

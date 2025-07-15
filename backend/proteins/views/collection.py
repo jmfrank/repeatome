@@ -22,7 +22,7 @@ from django.views.generic import (
     UpdateView,
 )
 
-from fpbase.util import is_ajax
+from repeatome.util import is_ajax
 
 from ..forms import CollectionForm
 from ..models import ProteinCollection

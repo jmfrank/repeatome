@@ -118,6 +118,15 @@
 //   }
 // }
 
+td a {
+  color: $primary !important;
+}
+
+td a:hover {
+  color: rgb(131, 115, 176)  !important;
+  text-decoration: underline;
+}
+
 
 .flip-scroll {
   td, th {

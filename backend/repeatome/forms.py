@@ -1,10 +1,6 @@
 from allauth.account.forms import SignupForm
-# Use below for python 13
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
-# Use below for python 3.11
-# from captcha.fields import ReCaptchaField
-# from captcha.widgets import ReCaptchaV3
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms

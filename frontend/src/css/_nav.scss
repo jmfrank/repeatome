@@ -1,5 +1,14 @@
 $logo-color: #efe;
 
+.dropdown-menu {
+  position: absolute;
+  z-index: 1001;
+}
+
+.navbar {
+  height: auto !important;
+}
+
 .navbar-scroll-custom {
   transform: translateY(-$navbar-height - .5);
   transition-duration: 0.6s;
@@ -7,19 +16,26 @@ $logo-color: #efe;
 
 .navbar {
   // height: 150px;
+  position: relative;
+  z-index: 1000;
+  height: auto;
   transition-duration: .3s;
   -webkit-font-smoothing: antialiased!important;
   -moz-osx-font-smoothing: grayscale!important;
   box-shadow: 0 .1rem .2rem #0003
 }
 
-@media(min-width: 768px) {
-    .navbar {
-        // height:3.5rem
-    }
+.navbar .container {
+  height: 100%;
 }
 
-.navbar .dropdown-menu {
+// @media(min-width: 768px) {
+//     .navbar {
+//         height:3.5rem
+//     }
+// }
+
+.navbar .collapse {
     z-index: 1001
 }
 
@@ -211,7 +227,7 @@ $logo-color: #efe;
       transition: width 0.2s;
       &:focus-within  {
         @include media-breakpoint-up(md) {
-          width: 270px;
+          width: 220px;
         }
         @include media-breakpoint-up(lg) {
           width: 450px;

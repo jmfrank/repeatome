@@ -2,7 +2,7 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
-    name = "fpbase.users"
+    name = "repeatome.users"
     verbose_name = "Users"
 
     def ready(self):

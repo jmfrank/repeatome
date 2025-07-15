@@ -2,8 +2,8 @@ from django.core.cache import cache
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from fpbase.celery import app
-from fpbase.util import is_ajax
+from repeatome.celery import app
+from repeatome.util import is_ajax
 
 from ..models import Dye, State
 from ..tasks import calc_fret

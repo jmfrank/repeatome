@@ -1,8 +1,8 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 import requests
 
-from django.urls import reverse
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
 
@@ -38,6 +38,9 @@ class Repeat(models.Model):
     # ),
     references = models.TextField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse("proteins:repeatTable-detail", args=[self.slug])
+    
     def aliases_as_str(self):
         # print(self.aliases)
         if not self.aliases or not self.aliases == "''":
@@ -60,12 +63,7 @@ class Repeat(models.Model):
             hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
             r = requests.get(hmm_url)
             if r.status_code != 200:
-               print(f"EROR: {r.status_code} returned from {hmm_url}")
-               raise Exception(f"HMM not found for {self.dfam_id}")
+                raise Exception(f"HMM not found for {self.dfam_id}")
 
-            # print(f"get_hmm returned {r.text}")
             return r.text
-        return "ERROR"
-
-    def get_absolute_url(self):
-        return reverse("proteins:repeatTable-detail", args=[self.slug])
+        return None
