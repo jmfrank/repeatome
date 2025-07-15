@@ -22,15 +22,131 @@
  <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
  <script src="{% static 'motif_viewer/scroller.js' %}"></script>
  <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
-<script type="application/javascript">
-  $(document).ready(function() {
+<script>
+  // Use jQuery.noConflict() to prevent conflicts
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
     var zoom         = 1;
     var column_width = 34;
-    console.log(document.querySelector('div[data-logo]').dataset.logo)
-    $('#logo').hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
-    //$('#logo2').hmm_logo({zoom: 1, height_toggle: 'enabled', help: 1, column_info: '#logo_info'});
+    // console.log(document.querySelector('div[data-logo]').dataset.logo);
+    $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
   });
 </script>
+
+{{ repeat.get_motif_chart_q_score_data|json_script:'chart1-data' }}
+{{ repeat.get_motif_chart_enrichment_data|json_script:'chart2-data' }}
+
+
+<!--Motif Q-Score and Enrichment Graph-->
+<script>
+
+var chart1_raw_data = JSON.parse(document.getElementById('chart1-data').textContent)
+var chart2_raw_data = JSON.parse(document.getElementById('chart2-data').textContent)
+
+window.onload = function () {
+
+  // var chart1_datapoints = [];
+  // for (var i = 0; i < chart1_raw_data.length; i++) {
+  //     chart1_datapoints.push({
+  //         label: chart1_raw_data[i].label,
+  //         y: chart1_raw_data[i].y
+  //     });
+  // }
+
+  // var chart2_datapoints = [];
+  // for (var i = 0; i < chart2_raw_data.length; i++) {
+  //     chart2_datapoints.push({
+  //         label: chart2_raw_data[i].label,
+  //         y: chart2_raw_data[i].y
+  //     });
+  // }
+
+  var qScoreChart = new CanvasJS.Chart("qScoreChartContainer", {
+    animationEnabled: true,
+    title:{
+      text: "Crude Oil Reserves vs Production, 2016"
+    },	
+    axisX: {
+      interval: 1
+    },
+    axisY: {
+      title: "Motif Q-Score3",
+      titleFontColor: "#4F81BC",
+      lineColor: "#4F81BC",
+      labelFontColor: "#4F81BC",
+      tickColor: "#4F81BC"
+    },
+    toolTip: {
+      shared: true
+    },
+    legend: {
+      cursor:"pointer",
+      itemclick: toggleDataSeries
+    },
+    data: [{
+      type: "column",
+      name: "Motif Q-Score1",
+      legendText: "Motif Q-Score2",
+      showInLegend: true, 
+      dataPoints: chart1_raw_data
+    }]
+  });
+  qScoreChart.render();
+
+
+  
+function toggleDataSeries(e) {
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else {
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+}
+
+var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
+    animationEnabled: true,
+    title:{
+      text: "Crude Oil Reserves vs Production, 2016"
+    },	
+    axisX: {
+      interval: 1
+    },
+    axisY: {
+      title: "Motif Enrichment3",
+      titleFontColor: "#4F81BC",
+      lineColor: "#4F81BC",
+      labelFontColor: "#4F81BC",
+      tickColor: "#4F81BC"
+    },
+    toolTip: {
+      shared: true
+    },
+    legend: {
+      cursor:"pointer",
+      itemclick: toggleDataSeries
+    },
+    data: [{
+      type: "column",
+      name: "Motif Enrichment1",
+      legendText: "Motif Enrichment2",
+      showInLegend: true, 
+      dataPoints: chart2_raw_data
+    }]
+  });
+  enrichmentScoreChart.render();
+
+
+}
+
+
+
+</script>
+
+
+
+
 {% endblock extrahead %}
 
 {% block container-class %}container repeat{% endblock %}
@@ -126,6 +242,15 @@
        </tbody>
      </table>
    </div>
+
+  <!--Motif Q-Score & Enrichment Graph-->
+
+  <div id="qScoreChartContainer" style="height: 370px; width: 100%;"></div>
+  <div id="enrichmentChartContainer" style="height: 370px; width: 100%;"></div>
+
+  <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+
 
      {% comment %} <div class="sequence mt-3">
 			<div class="row">

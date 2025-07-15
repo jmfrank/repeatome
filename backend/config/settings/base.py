@@ -1,5 +1,5 @@
 """
-Base settings for FPbase project.
+Base settings for Repeatome project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-APPS_DIR = ROOT_DIR / "fpbase"
+APPS_DIR = ROOT_DIR / "repeatome"
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -58,6 +58,7 @@ DJANGO_APPS = [
     "drf_spectacular",
 ]
 
+
 THIRD_PARTY_APPS = [
     "crispy_forms",  # Form layouts
     # "crispy_bootstrap4",
@@ -79,7 +80,7 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     # custom users app
-    "fpbase.users.apps.UsersConfig",
+    "repeatome.users.apps.UsersConfig",
     # Your stuff: custom apps go here
     "proteins.apps.ProteinsConfig",
     "references.apps.ReferencesConfig",
@@ -94,19 +95,19 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "fpbase.middleware.BlackListMiddleware",
+    "repeatome.middleware.BlackListMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "fpbase.middleware.CanonicalDomainMiddleware",
+    "repeatome.middleware.CanonicalDomainMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
-MIGRATION_MODULES = {"sites": "fpbase.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "repeatome.contrib.sites.migrations"}
 
 # DEBUG
 # ------------------------------------------------------------------------------
@@ -142,7 +143,7 @@ DEFAULT_FROM_EMAIL = "FPbase <info@mg.fpbase.org>"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpbase',  # Replace with your database name
+        'NAME': 'repeatome',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
@@ -202,8 +203,8 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
                 # Your stuff: custom template context processors go here
-                "fpbase.context_processors.api_keys",
-                "fpbase.context_processors.canonical",
+                "repeatome.context_processors.api_keys",
+                "repeatome.context_processors.canonical",
             ],
         },
     }
@@ -212,7 +213,9 @@ TEMPLATES = [
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-
+# CRISPY_TEMPLATE_PACK = "uni_form"
+# INSTALLED_APPS.append("crispy_forms")
+INSTALLED_APPS.append("crispy_bootstrap4")
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -298,11 +301,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
-ACCOUNT_ADAPTER = "fpbase.users.adapters.AccountAdapter"
-SOCIALACCOUNT_ADAPTER = "fpbase.users.adapters.SocialAccountAdapter"
+ACCOUNT_ADAPTER = "repeatome.users.adapters.AccountAdapter"
+SOCIALACCOUNT_ADAPTER = "repeatome.users.adapters.SocialAccountAdapter"
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
-ACCOUNT_FORMS = {"signup": "fpbase.forms.CustomSignupForm"}
+ACCOUNT_FORMS = {"signup": "repeatome.forms.CustomSignupForm"}
 
 # Custom user app defaults
 # Select the correct user model
@@ -328,8 +331,8 @@ REST_FRAMEWORK = {
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
-    "TITLE": "fpbase API",
-    "DESCRIPTION": "Documentation of API endpoints of fpbase",
+    "TITLE": "Repeatome API",
+    "DESCRIPTION": "Documentation of API endpoints of repeatome",
     "VERSION": "1.0.0",
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }
@@ -374,11 +377,16 @@ GOOGLE_API_PRIVATE_KEY_ID = env("GOOGLE_API_PRIVATE_KEY_ID", default="")
 MAXMIND_API_KEY = env("MAXMIND_API_KEY", default="")
 
 ALGOLIA_SUFFIX = "dev" if (DEBUG or ("staging" in env("SENTRY_PROJECT", default=""))) else "prod"
-ALGOLIA_PUBLIC_KEY = "421b453d4f93e332ebd0c7f3ace29476"
+ALGOLIA_PUBLIC_KEY = "7a38c6848180ee8d3723175b5ec3cc4e"
+# ALGOLIA = {
+#     "APPLICATION_ID": "9WAWQMVNTB",
+#     "API_KEY": env("ALGOLIA_API_KEY", default=""),
+#     "INDEX_SUFFIX": ALGOLIA_SUFFIX,
+# }
 ALGOLIA = {
-    "APPLICATION_ID": "9WAWQMVNTB",
-    "API_KEY": env("ALGOLIA_API_KEY", default=""),
-    "INDEX_SUFFIX": ALGOLIA_SUFFIX,
+  'APPLICATION_ID': 'I8J408MSCM',
+  'API_KEY': 'fd964ed4d843540757466641a33f08ee', # Your Write API Key
+  "INDEX_SUFFIX": ALGOLIA_SUFFIX,
 }
 
 if ALGOLIA["API_KEY"]:
@@ -392,7 +400,7 @@ CELERY_RESULT_BACKEND = REDIS_URL
 
 
 INSTALLED_APPS += ["graphene_django"]
-GRAPHENE = {"SCHEMA": "fpbase.schema.schema"}
+GRAPHENE = {"SCHEMA": "repeatome.schema.schema"}
 
 # CORS
 # -------
@@ -406,3 +414,5 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 BLOCKED_IPS = env.list("IP_BLACKLIST", default=[])
+
+# INSTALLED_APPS += ["app.apps.AppConfig"]
