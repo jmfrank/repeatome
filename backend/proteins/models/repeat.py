@@ -5,6 +5,7 @@ import requests
 
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
+import json
 
 class Repeat(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
@@ -53,7 +54,27 @@ class Repeat(models.Model):
         
     def get_proteins(self):
         return self.proteintf_set.all()
-    
+
+    def get_motif_chart_q_score_data(self):
+        datapoints = []
+        for protein in self.get_proteins():
+            datapoints.append({
+                "label": protein.gene,
+                "y": float(protein.motif_q_score)
+            })
+        # return json.dumps(datapoints)
+        return datapoints
+
+    def get_motif_chart_enrichment_data(self):
+        datapoints = []
+        for protein in self.get_proteins():
+            datapoints.append({
+                "label": protein.gene,
+                "y": float(protein.motif_enrichment)
+            })
+        # return json.dumps(datapoints)
+        return datapoints
+
     # def get_HMM(self):
     #     with pyhmmer.plan7.HMMFile("data/hmms/txt/PKSI-AT.hmm") as hmm_file:
     #         hmm = hmm_file.read()

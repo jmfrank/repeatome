@@ -174,5 +174,25 @@ class ProteinTF(models.Model):
             jaspar_ids = []
 
         return jaspar_ids
+
+    def jaspars_length(self):
+      if not self.jaspars:
+         return 0
+      return len(self.jaspars)
+    
+    def repeats_length(self):
+        if not self.repeats:
+            return 0
+        return len(self.repeats)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.gene)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse("proteins:proteinTable-detail", args=[self.gene])
+
+    def get_repeats(self):
+        return [p.name for p in self.repeats.all()]
     
     

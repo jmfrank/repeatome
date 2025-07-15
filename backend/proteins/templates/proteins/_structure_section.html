@@ -1,6 +1,12 @@
 {% load static %}
 <div class='row' id='struct-micro-names'>
-  <div class='col-12 col-md-6 order-md-1'><h3>Structure</h3></div>
+  <div class='col-12 col-md-6 order-md-1'>
+    <h3>Structure</h3>
+    <div class="litmol-tab">
+        <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" id="defaultOpen">PDB</button>
+        <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')">AF3</button>
+      </div>
+  </div>
   <div class='col-12 col-md-6 order-md-2'><h3>Microscopy Result</h3></div>
 </div>
 <div class='row' id="protein-structure">
@@ -41,70 +47,183 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/pdbe-molstar@dev/build/pdbe-molstar-plugin.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/pdbe-molstar@dev/build/pdbe-molstar-plugin.js"></script>
 
 <script>
-  // Create plugin instance
-  const viewerInstance = new PDBeMolstarPlugin();
+// Litmol tabs to switch between showing litmol viewer for PDB or AF3
+var $j = jQuery.noConflict();
 
+function openLitmol(evt, litmolViewerType) {
 
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("litmol-tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("litmol-tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  console.log('in openLitmol: litmolViewerType = ' + litmolViewerType)
+  // document.getElementById(litmolViewerType).style.display = "block";
+  evt.currentTarget.className += " active";
+
+  //  Get element from HTML/Template to place the viewer
+  if (litmolViewerType == 'PDB') {
+    moleculeId = '{{protein.PDB_lower}}'
+  } else {
+    moleculeId = '{{protein.UNIPROT}}'
+  }
+  $j('#litemol-viewer').data('moleculeId', moleculeId)
+  console.log('litemol-viewer.data1 = ' + $j('#litemol-viewer').data('moleculeId'));
+
+  // Refresh litemol-viewer
   // Set options (uncomment lines to explore various options)
-  const options = {
-    // DATA
-    moleculeId: '{{ protein.PDB_lower }}', // PDB ID or URL to a structure file
-    assemblyId: '1',
-    // APPEARANCE
-    // visualStyle: 'cartoon', // cartoon | ball-and-stick | carbohydrate | ellipsoid | gaussian-surface | molecular-surface | point | putty | spacefill
-    // hideStructure: ['het', 'water'],
-    // loadMaps: true,
-    // mapSettings: { '2fo-fc': { opacity: 0.8, wireframe: true } },
-    // bgColor: { r: 60, g: 0, b: 100 };
-    //bgColor: '#77bbff';
+  var options = null
+  if (litmolViewerType == 'PDB') {
+    options = {
+      // DATA
+      // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
+      moleculeId: moleculeId,
+      assemblyId: '1',
+      // INTERFACE
+      hideControls: true,
+      hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
+      sequencePanel: false,
+      leftPanel: false,
+      rightPanel: false,
+      topPanel: false,
+      bottomPanel: false,
+      pdbeLink: true,
+      loadingOverlay: false,
+      expanded: false,
+      landscape: false,
+      layoutShowControls: false,
+      reactive: false,
+    };
+  } else {
+    options = {
+      // DATA
+      // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
+      moleculeId: moleculeId,
+      assemblyId: '1',
+      // INTERFACE
+      hideControls: true,
+      hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
+      sequencePanel: false,
+      leftPanel: false,
+      rightPanel: false,
+      topPanel: false,
+      bottomPanel: false,
+      pdbeLink: true,
+      loadingOverlay: false,
+      expanded: false,
+      landscape: false,
+      layoutShowControls: false,
+      reactive: false,
+      alphafoldView: true,
+      customData: {
+        url: 'https://alphafold.ebi.ac.uk/files/AF-{{protein.UNIPROT}}-F1-model_v4.cif',
+        format: 'cif',
+      }
+    }
+  }
 
-    // highlightColor: '#ffff00',
-    // selectColor: '#77bbff',
-    // lighting: 'flat', // flat | matte | glossy | metallic | plastic
-
-    // BEHAVIOR
-    // validationAnnotation: true,
-    // domainAnnotation: true,
-    // symmetryAnnotation: true,
-    // pdbeUrl: 'https://www.ebi.ac.uk/pdbe/',
-    // pdbeUrl: 'https://www.rcsb.org/3d-view/',
-    // encoding: 'cif', // cif | bcif
-    // lowPrecisionCoords: true,
-    // selectInteraction: false,
-    // granularity: 'chain', // element | residue | chain | entity | model | operator | structure | elementInstances | residueInstances | chainInstances
-    // subscribeEvents: true,
-
-
-    // INTERFACE
-    hideControls: true,
-    hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
-    sequencePanel: false,
-    leftPanel: false,
-    rightPanel: false,
-    topPanel: false,
-    bottomPanel: false,
-    pdbeLink: true,
-    loadingOverlay: false,
-    expanded: false,
-    landscape: false,
-    layoutShowControls: false,
-    reactive: false,
-  };
-
-
-  // Get element from HTML/Template to place the viewer
+    // Get element from HTML/Template to place the viewer
   const viewerContainer = document.getElementById('litemol-viewer');
-
 
   // Call render method to display the 3D view
   viewerInstance.render(viewerContainer, options);
+
+}
+
+// Create litmodel plugin instance
+const viewerInstance = new PDBeMolstarPlugin();
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+// Set options (uncomment lines to explore various options)
+const options = {
+  // DATA
+  // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
+  moleculeId: '{{protein.PDB_lower}}',
+  assemblyId: '1',
+  // APPEARANCE
+  // visualStyle: 'cartoon', // cartoon | ball-and-stick | carbohydrate | ellipsoid | gaussian-surface | molecular-surface | point | putty | spacefill
+  // hideStructure: ['het', 'water'],
+  // loadMaps: true,
+  // mapSettings: { '2fo-fc': { opacity: 0.8, wireframe: true } },
+  // bgColor: { r: 60, g: 0, b: 100 };
+  //bgColor: '#77bbff';
+
+  // highlightColor: '#ffff00',
+  // selectColor: '#77bbff',
+  // lighting: 'flat', // flat | matte | glossy | metallic | plastic
+
+  // BEHAVIOR
+  // validationAnnotation: true,
+  // domainAnnotation: true,
+  // symmetryAnnotation: true,
+  // pdbeUrl: 'https://www.ebi.ac.uk/pdbe/',
+  // pdbeUrl: 'https://www.rcsb.org/3d-view/',
+  // encoding: 'cif', // cif | bcif
+  // lowPrecisionCoords: true,
+  // selectInteraction: false,
+  // granularity: 'chain', // element | residue | chain | entity | model | operator | structure | elementInstances | residueInstances | chainInstances
+  // subscribeEvents: true,
+
+
+  // INTERFACE
+  hideControls: true,
+  hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
+  sequencePanel: false,
+  leftPanel: false,
+  rightPanel: false,
+  topPanel: false,
+  bottomPanel: false,
+  pdbeLink: true,
+  loadingOverlay: false,
+  expanded: false,
+  landscape: false,
+  layoutShowControls: false,
+  reactive: false,
+};
+
+// Get element from HTML/Template to place the viewer
+const viewerContainer = document.getElementById('litemol-viewer');
+
+// Call render method to display the 3D view
+viewerInstance.render(viewerContainer, options);
+
 </script>
+
 
 <!-- <div class='text-center col-12 col-md-6 order-md-1'><h3>JASPAR Motif</h3></div> -->
 <div class='row' id='struct-micro-names'>
+  <h3>DNA Binding Motif</h3>
+</div>
+
+<div class='row' id='struct-micro-names'>
+  {% for jaspar_item in protein.jaspar %}
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="col-12 col-md-6 order-md-2" style="padding:2px">
+    {% else %}
+    <div class="col-12 col-md-6 order-md-1" style="padding:2px">
+    {% endif %}
+      <div id="jaspar-item" style="padding:0px; border: 1px solid #ddd;">
+        <div class="form-group mb-2" style="padding:0px; margin-top:5px;">
+          JASPAR ID: <a href="https://jaspar.elixir.no/matrix/{{jaspar_item}}" target="_blank" rel="noopener">{{jaspar_item}}</a>
+        </div>
+        <div id="jaspar-image-container" style="padding:0px">
+            <img id="jaspar-img" src="https://jaspar.elixir.no/static/logos/all/svg/{{jaspar_item}}.svg" alt="{{ protein.gene }}"/>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- <div class='row' id='struct-micro-names'>
   <div class='col-12 col-md-6 order-md-1'><h3>DNA Binding Motif</h3></div>
   <div class='col-12 col-md-6 order-md-2'><h3>Repeat Motif</h3></div>
 </div>
@@ -123,4 +242,4 @@
     {% endfor %}
   </div>
   <div class='col-12 col-md-6 order-md-2'>PLACEHOLDER FOR DFAM items</div>
-</div>
+</div> -->
