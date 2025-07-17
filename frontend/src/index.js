@@ -25,7 +25,7 @@ import LineageChart from "./js/lineage.js"
 import initFRET from "./js/fret.js"
 import * as Sentry from "@sentry/browser";
 
-window.FPBASE = window.FPBASE || {}
+window.repeatome = window.repeatome || {}
 
 
 (async () => {
@@ -43,8 +43,8 @@ window.FPBASE = window.FPBASE || {}
         replaysOnErrorSampleRate: 1.0,
       })
 
-      if (window.FPBASE.user) {
-        Sentry.setUser(window.FPBASE.user);
+      if (window.repeatome.user) {
+        Sentry.setUser(window.repeatome.user);
       }
 
       window.Sentry = Sentry;
@@ -54,8 +54,8 @@ window.FPBASE = window.FPBASE || {}
   }
 })();
 
-window.FPBASE = {
-  ...window.FPBASE,
+window.repeatome = {
+  ...window.repeatome,
   initAutocomplete,
   FPPropChart,
   LineageChart,
