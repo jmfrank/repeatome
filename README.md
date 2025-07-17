@@ -55,6 +55,13 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
     ```
 
 1. Install a local postgreSQL database (for mac: [postgres.app](https://postgresapp.com/))
+
+1. Create django settings file in backend/config/settings. Import base.py and override variables as needed.
+
+1. Set environment variable to indicate which settings file to use
+
+    export DJANGO_SETTINGS_MODULE=config.settings.production
+
 1. Create database, and apply migrations
 
     ```bash

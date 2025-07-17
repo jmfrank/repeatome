@@ -33,8 +33,8 @@
   });
 </script>
 
-{{ repeat.get_motif_chart_q_score_data|json_script:'chart1-data' }}
-{{ repeat.get_motif_chart_enrichment_data|json_script:'chart2-data' }}
+  {{ repeat.get_motif_chart_q_score_data|json_script:'chart1-data' }}
+  {{ repeat.get_motif_chart_enrichment_data|json_script:'chart2-data' }}
 
 
 <!--Motif Q-Score and Enrichment Graph-->
@@ -64,20 +64,28 @@ window.onload = function () {
   var qScoreChart = new CanvasJS.Chart("qScoreChartContainer", {
     animationEnabled: true,
     title:{
-      text: "Crude Oil Reserves vs Production, 2016"
+      text: "Motif Q-Score vs Gene"
     },	
     axisX: {
       interval: 1
     },
     axisY: {
-      title: "Motif Q-Score3",
+      title: "Motif Q-Score",
       titleFontColor: "#4F81BC",
       lineColor: "#4F81BC",
       labelFontColor: "#4F81BC",
-      tickColor: "#4F81BC"
+      tickColor: "#4F81BC",
+      labelFormatter: function (e) {
+        // Display the absolute value as the index label
+        return e.value * -1; 
+      },
     },
     toolTip: {
-      shared: true
+      shared: true,
+      contentFormatter: function(e) {
+        var yValue = (e.entries[0].dataPoint.y) * -1; // Get the absolute value
+        return e.entries[0].dataPoint.label + "<br/>Motif Q-Score: " + yValue;
+      }
     },
     legend: {
       cursor:"pointer",
@@ -85,9 +93,9 @@ window.onload = function () {
     },
     data: [{
       type: "column",
-      name: "Motif Q-Score1",
-      legendText: "Motif Q-Score2",
-      showInLegend: true, 
+      name: "Motif Q-Score",
+      legendText: "Gene",
+      showInLegend: true,
       dataPoints: chart1_raw_data
     }]
   });
@@ -108,20 +116,24 @@ function toggleDataSeries(e) {
 var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     animationEnabled: true,
     title:{
-      text: "Crude Oil Reserves vs Production, 2016"
+      text: "Motif Enrichment vs Gene"
     },	
     axisX: {
       interval: 1
     },
     axisY: {
-      title: "Motif Enrichment3",
+      title: "Motif Enrichment",
       titleFontColor: "#4F81BC",
       lineColor: "#4F81BC",
       labelFontColor: "#4F81BC",
       tickColor: "#4F81BC"
     },
     toolTip: {
-      shared: true
+      shared: true,
+      contentFormatter: function(e) {
+        var yValue = (e.entries[0].dataPoint.y); // Get the absolute value
+        return e.entries[0].dataPoint.label + "<br/>Motif Enrichment: " + yValue;
+      }
     },
     legend: {
       cursor:"pointer",
@@ -129,8 +141,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     },
     data: [{
       type: "column",
-      name: "Motif Enrichment1",
-      legendText: "Motif Enrichment2",
+      name: "Motif Enrichment",
+      legendText: "Gene",
       showInLegend: true, 
       dataPoints: chart2_raw_data
     }]

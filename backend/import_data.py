@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import django
 
 # Must call setup before improrting any Django models
@@ -7,8 +6,11 @@ django.setup()
 from django.conf import settings
 from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats
 from proteins.util.helpers import shortuuid
+import json
+import requests
 import os
 import pandas as pd
+import sys
 
 
 def parse_array(x):
@@ -148,6 +150,58 @@ def import_repeat():
             )
             obj.save()
         
+
+def load_jaspar_from_url(gene, tax_group):
+        base_url = "https://jaspar.genereg.net/api/v1/matrix/"
+        headers = {"Accept": "application/json"}
+        jaspar_ids = []
+        # print(gene_name)
+        params = {
+            "search": gene.strip(),
+            "tax_group": tax_group,
+            "format": "json"
+        }
+        response = requests.get(base_url, headers=headers, params=params)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to get data for {gene}: HTTP {response.status_code}")
+            return {
+                'count': 0, 
+                'error_code': response.status_code, 
+                'error_msg': response.txt, 
+                'next': None,
+                'previous': None, 
+                'results': []
+            }
+
+
+def get_jaspar_ids(gene, tax_group, use_cache):
+        
+        cache_folder = '.cache'
+
+        jaspar_json = None
+        # If use_cache then try to load from cache first
+        # If not found in cache then try loading from the url
+        if use_cache:
+            cache_file = f"{cache_folder}/{gene}.json"
+            if os.path.exists(cache_file):
+                print(f"Loading jaspar data from cache")
+                with open(cache_file, 'r') as stream:
+                    jaspar_json = json.load(stream)
+
+        if jaspar_json is None:
+            if not os.path.exists(cache_folder):
+                os.makedirs(cache_folder)
+            print(f"Loading jaspar data from url")
+            jaspar_json = load_jaspar_from_url(gene, tax_group)
+            with open(cache_file, 'w') as stream:
+                json.dump(jaspar_json, stream, indent=2)
+
+        jaspar_ids = [entry['matrix_id'] for entry in jaspar_json.get('results', [])]
+        return jaspar_ids
+
+
 def import_protein():
 
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
@@ -165,6 +219,9 @@ def import_protein():
         if parent_organism:
             parent_organism = int(parent_organism)
             parent_organism_obj = get_organism_obj(parent_organism)
+
+        # Get list of jaspar matrix_ids either from local .cache folder or from url
+        jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
 
         obj = ProteinTF(
             gene=gene,
@@ -192,7 +249,8 @@ def import_protein():
             AF3=row['AF3'],
             proteomics_url=row['proteomics_url'],
             rna_url=row['rna_url'],
-            jaspar=parse_array(row['jaspar']),
+            # jaspar=parse_array(row['jaspar']),
+            jaspar=jasper_ids,
             protein_sequence=row['protein_sequence'],
             molecular_weight=row['molecular_weight'],
             cofactor=parse_array(row['cofactor']),
@@ -222,6 +280,23 @@ def import_protein():
                 # index += 1
 
 
+def update_jaspar():
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+
+    for gene in sorted(set(df[df['gene'].notnull()]['gene'].values)):
+        if not gene:
+            continue
+
+        print(f"\n***Updating protein {gene}")
+        # Get list of jaspar matrix_ids
+        jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
+        if jasper_ids:
+            protein_obj = ProteinTF.objects.get(gene=gene)
+            protein_obj.jaspar = jasper_ids
+            print(f"Updating protein: {protein_obj}")
+            protein_obj.save()
+
+
 def delete_all_records():
     # Delete all records in all tables
     ProteinTF.objects.all().delete()
@@ -230,13 +305,25 @@ def delete_all_records():
     Organism.objects.all().delete()
 
 
+
 if __name__ == "__main__":
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 
-    delete_all_records()
+    command = 'unknown'
+    if len(sys.argv) > 1:
+        command = sys.argv[1]
 
-    import_organisms()
-    import_gene_family()
-    import_repeat()
-    import_protein()
+    if command == 'reset': 
+        delete_all_records()
+        import_organisms()
+        import_gene_family()
+        import_repeat()
+        import_protein()
+    elif command == 'update_jaspar':
+        update_jaspar()
+    else:
+        print(f"Usage: python backend/import_data.py <command>")
+        print("Command:")        
+        print("- reset to delete existing records and repopulate tables")        
+        print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")

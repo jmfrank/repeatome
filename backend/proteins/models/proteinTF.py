@@ -152,29 +152,6 @@ class ProteinTF(models.Model):
     
     def get_repeats(self):
         return [p.name for p in self.repeats.all()]
-    
-    def get_jaspar_ids(self, tax_group='vertebrates'):
-        base_url = "https://jaspar.genereg.net/api/v1/matrix/"
-        headers = {"Accept": "application/json"}
-        jaspar_ids = []
-        # print(gene_name)
-        params = {
-            "search": self.gene.strip(' '),
-            "tax_group": tax_group,
-            "format": "json"
-        }
-
-        response = requests.get(base_url, headers=headers, params=params)
-        if response.status_code == 200:
-            data = response.json()
-            # print(data)
-            matrix_ids = [entry['matrix_id'] for entry in data.get('results', [])]
-            jaspar_ids = matrix_ids
-        else:
-            print(f"Failed to get data for {self.gene}: HTTP {response.status_code}")
-            jaspar_ids = []
-
-        return jaspar_ids
 
     def jaspars_length(self):
       if not self.jaspars:

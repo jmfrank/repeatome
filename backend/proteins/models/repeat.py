@@ -61,7 +61,8 @@ class Repeat(models.Model):
             if protein.motif_q_score:
                 datapoints.append({
                     "label": protein.gene,
-                    "y": float(protein.motif_q_score)
+                    "y": float(protein.motif_q_score * -1)
+                    # "y": "-" + str(protein.motif_q_score * -1)
                 })
         # return json.dumps(datapoints)
         return datapoints

@@ -21,6 +21,28 @@
 <script src="{% static 'litemol/LiteMol-plugin-2.js' %}"></script>
 <script type='module' src="{% static 'litemol/litemol_proj.js' %}"></script>
 
+<!-- Motif Sequence Viewer -->
+
+<script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
+<script src="{% static 'motif_viewer/scroller.js' %}"></script>
+<link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+<script>
+
+  // Use jQuery.noConflict() to prevent conflicts
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+    var zoom         = 1;
+    var column_width = 34;
+    // console.log(document.querySelector('div[data-logo]').dataset.logo);
+    // $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+    
+    {% for repeat in protein.repeats.all %}
+        $j("#logo{{forloop.counter}}").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info{{forloop.counter}}'});
+    {% endfor %}
+  });
+</script>
+
+
 <!-- PDB Viewer -->
 <meta
   name="viewport"
@@ -309,6 +331,31 @@ window.onload = function () {
 
     {% if protein.PDB %}
       {% include "proteins/_structure_section.html" with protein=protein %}
+    {% endif %}
+
+    {% if protein.jaspar %}
+      <div class='row' id='struct-micro-names'>
+        <h3>DNA Binding Motif</h3>
+      </div>
+
+      <div class='row' id='struct-micro-names'>
+        {% for jaspar_item in protein.jaspar %}
+          {% if forloop.counter|divisibleby:2 %}
+          <div class="col-12 col-md-6 order-md-2" style="padding:2px">
+          {% else %}
+          <div class="col-12 col-md-6 order-md-1" style="padding:2px">
+          {% endif %}
+            <div id="jaspar-item" style="padding:0px; border: 1px solid #ddd;">
+              <div class="form-group mb-2" style="padding:0px; margin-top:5px;">
+                JASPAR ID: <a href="https://jaspar.elixir.no/matrix/{{jaspar_item}}" target="_blank" rel="noopener">{{jaspar_item}}</a>
+              </div>
+              <div id="jaspar-image-container" style="padding:0px">
+                  <img id="jaspar-img" src="https://jaspar.elixir.no/static/logos/all/svg/{{jaspar_item}}.svg" alt="{{ protein.gene }}"/>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     {% endif %}
 
     {% for repeat in protein.repeats.all %}
