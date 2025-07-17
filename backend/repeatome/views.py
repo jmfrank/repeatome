@@ -7,7 +7,7 @@ from django.views.generic.edit import FormView
 from sentry_sdk import last_event_id
 
 from repeatome.forms import ContactForm
-from proteins.models import Protein, Spectrum, ProteinTF
+from proteins.models import Protein, Repeat, ProteinTF
 
 
 class HomeView(TemplateView):
@@ -16,8 +16,8 @@ class HomeView(TemplateView):
     def get_context_data(self):
         data = super().get_context_data()
         data["stats"] = {
-            "proteins": Protein.objects.count(),
-            "protspectra": Spectrum.objects.exclude(owner_state=None).count(),
+            "proteins": ProteinTF.objects.count(),
+            "repeats": Repeat.objects.count(),
         }
         return data
 

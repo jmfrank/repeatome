@@ -8,6 +8,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+# RUN THIS TO UPDATE FOR CHANGES: $env:DJANGO_SETTINGS_MODULE = 'config.settings.carissa'
+
 import os
 from pathlib import Path
 
@@ -39,6 +41,13 @@ if READ_DOT_ENV_FILE:
         print(f"Could not find {env_file}.")
     if "amazonaws.com" in env("DATABASE_URL", default=""):
         print("\n##################\nWARNING: Using AWS database\n##################\n")
+
+# ALLOWED_HOSTS = env.list(
+#     "DJANGO_ALLOWED_HOSTS",
+#     default=["repeatome.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1"],
+# )
+
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="w)CU)uzJ<JMlkGTrfz?:)W>]EG!PFngIvQZq#9.r=sfHUmCPIe")
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -115,7 +124,8 @@ MIGRATION_MODULES = {"sites": "repeatome.contrib.sites.migrations"}
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+# DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = True
 
 # FIXTURE CONFIGURATION
 # ------------------------------------------------------------------------------

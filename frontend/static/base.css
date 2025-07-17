@@ -11561,6 +11561,284 @@ td a:hover {
   text-align: center;
 }
 
+/* MOTIF HMM LOGO */
+.logo-holder {
+  /* display: flex;
+  flex-direction: row; */
+  width: 100%;
+  margin-bottom: 10px;
+  /* display: inline-block;
+  position: float; */
+  /* height: 100%; */
+  /* width: 100%; */
+  /* justify-content: space-between; */
+}
+
+#logo {
+  padding-right: 15px;
+  /* width: 80%; */
+  width: 100%;
+}
+
+#logo .logo_form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 7px;
+}
+
+#logo .logo_form fieldset {
+  border: 0;
+}
+
+.logo_form fieldset label, .logo_form fieldset input, .logo_form fieldset button {
+  margin-left: 5px;
+  /* padding-right: 5px; */
+}
+
+.logo_form .logo_controls button {
+  margin-right: 5px;
+  padding: 3px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+/* #logo_info {
+    width: 15%;
+} */
+#logo_info {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  margin-top: 10px;
+}
+
+#logo_info .logo_info_data {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 40%;
+  padding-right: 15px;
+}
+
+#logo_info .logo_col_info {
+  flex-direction: row;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  /* width: 60%; */
+}
+
+.logo_col_info tr {
+  display: block;
+  float: left;
+}
+
+.logo_col_info th, .logo_col_info td {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  #logo_info .logo_info_data {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    width: 40%;
+    padding-right: 15px;
+  }
+  #logo_info .logo_col_info {
+    display: flex;
+    flex-direction: column !important;
+    /* width: 60%; */
+  }
+  .logo_col_info tr {
+    display: flex;
+    flex-direction: row;
+  }
+  .logo_col_info th, .logo_col_info td {
+    display: flex;
+    width: 100%;
+  }
+}
+@media (max-width: 992px) {
+  #logo_info .logo_info_data {
+    width: 50%;
+  }
+}
+/* STRUCTURE SECTION (LITEMOL) + MICROSCOPY */
+/* Style the tab */
+.litmol-tab {
+  overflow: hidden;
+  /* border: 1px solid #ccc; */
+  background-color: #f1f1f1;
+  margin-top: 40px;
+  padding: 0px !important;
+  height: 40px;
+}
+
+/* Style the buttons inside the tab */
+.litmol-tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  /* padding: 14px 16px; */
+  padding: 0px 0px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.litmol-tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.litmol-tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.litmol-tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+#struct-micro-names {
+  text-align: center;
+  padding-bottom: 10px;
+  /* justify-content: space-around; */
+  /* padding-left: 5px; */
+}
+
+#pdb-info {
+  /* margin: auto; */
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative !important;
+  height: 100%;
+}
+
+#pdb-info img {
+  width: 100%;
+}
+
+#jaspar-item {
+  border: 1px solid #ddd !important;
+  background-color: white !important;
+  margin: 10px !important;
+}
+
+#jaspar-image-container {
+  justify-content: left !important;
+  align-items: left !important;
+  position: relative !important;
+  object-fit: contain !important;
+}
+
+#jaspar-img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.lm-plugin {
+  z-index: 10;
+  background: white !important;
+}
+.lm-plugin .lm-plugin-content.lm-layout-expanded {
+  z-index: 100000 !important;
+}
+.lm-plugin .lm-highlight-info {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #777 !important;
+  padding: 5px !important;
+}
+.lm-plugin .lm-viewport .lm-btn-link {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+.lm-plugin .lm-viewport-controls {
+  opacity: 0.35;
+  transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s ease-in-out;
+}
+.lm-plugin .lm-viewport-controls:hover {
+  opacity: 0.9;
+}
+.lm-plugin .lm-viewport-controls-buttons .lm-btn-link, .lm-plugin .lm-viewport-controls-buttons .lm-btn-link-toggle-on {
+  color: #637ca0 !important;
+}
+.lm-plugin .lm-viewport-controls-buttons .lm-btn-link:hover, .lm-plugin .lm-viewport-controls-buttons .lm-btn-link-toggle-on:hover {
+  color: #86F !important;
+}
+.lm-plugin .lm-task-state div {
+  background: white !important;
+  color: #555 !important;
+}
+.lm-plugin .lm-task-state button {
+  background: white !important;
+  color: #dc3545;
+}
+.lm-plugin .lm-overlay {
+  display: none;
+}
+.lm-plugin .lm-logo-image {
+  background: #AAA;
+}
+.lm-plugin .lm-layout-standard-outside .lm-layout-left, .lm-plugin .lm-layout-standard-outside .lm-layout-right {
+  bottom: -330px !important;
+  height: 330px !important;
+}
+@media (min-width: 768px) {
+  .lm-plugin .lm-layout-standard-outside .lm-layout-left, .lm-plugin .lm-layout-standard-outside .lm-layout-right {
+    bottom: 0 !important;
+    height: 100% !important;
+  }
+}
+.lm-plugin .lm-layout-standard-outside .lm-layout-left .lm-layout-scrollable, .lm-plugin .lm-layout-standard-outside .lm-layout-right .lm-layout-scrollable {
+  top: 0px !important;
+}
+.lm-plugin .lm-layout-standard-outside .lm-layout-right {
+  right: 0 !important;
+}
+@media (min-width: 768px) {
+  .lm-plugin .lm-layout-standard-outside .lm-layout-right {
+    right: -100% !important;
+  }
+}
+.lm-plugin .lm-layout-standard-outside .lm-layout-left {
+  left: 0 !important;
+}
+@media (min-width: 768px) {
+  .lm-plugin .lm-layout-standard-outside .lm-layout-left {
+    left: 100% !important;
+  }
+}
+.lm-plugin .lm-toast-container .lm-toast-entry {
+  background: rgba(255, 255, 255, 0.5) !important;
+  color: #333 !important;
+  border: none !important;
+  font-size: 0.8rem;
+}
+.lm-plugin .lm-toast-container .lm-toast-entry .lm-toast-title {
+  background: rgba(245, 245, 245, 0.5) !important;
+  font-weight: 700;
+}
+.lm-plugin .lm-toast-container .lm-toast-entry .lm-toast-title::after {
+  content: " loaded: " !important;
+}
+
+#chem-title {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .d3-container {
   max-width: 1200px;
   margin: auto;
@@ -13867,243 +14145,6 @@ a.object-flag:active:focus {
   color: #dc3545;
   margin-left: 10px;
   font-size: 1.1rem;
-}
-
-/* MOTIF HMM LOGO */
-.logo-holder {
-  /* display: flex;
-  flex-direction: row; */
-  width: 100%;
-  margin-bottom: 10px;
-  /* display: inline-block;
-  position: float; */
-  /* height: 100%; */
-  /* width: 100%; */
-  /* justify-content: space-between; */
-}
-
-#logo {
-  padding-right: 15px;
-  /* width: 80%; */
-  width: 100%;
-}
-
-#logo .logo_form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding-top: 7px;
-}
-
-#logo .logo_form fieldset {
-  border: 0;
-}
-
-.logo_form fieldset label, .logo_form fieldset input, .logo_form fieldset button {
-  margin-left: 5px;
-  /* padding-right: 5px; */
-}
-
-.logo_form .logo_controls button {
-  margin-right: 5px;
-  padding: 3px;
-  padding-left: 7px;
-  padding-right: 7px;
-}
-
-/* #logo_info {
-    width: 15%;
-} */
-#logo_info {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-between; */
-  margin-top: 10px;
-}
-
-#logo_info .logo_info_data {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 40%;
-  padding-right: 15px;
-}
-
-#logo_info .logo_col_info {
-  flex-direction: row;
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  /* width: 60%; */
-}
-
-.logo_col_info tr {
-  display: block;
-  float: left;
-}
-
-.logo_col_info th, .logo_col_info td {
-  display: block;
-}
-
-@media (max-width: 768px) {
-  #logo_info .logo_info_data {
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-    width: 40%;
-    padding-right: 15px;
-  }
-  #logo_info .logo_col_info {
-    display: flex;
-    flex-direction: column !important;
-    /* width: 60%; */
-  }
-  .logo_col_info tr {
-    display: flex;
-    flex-direction: row;
-  }
-  .logo_col_info th, .logo_col_info td {
-    display: flex;
-    width: 100%;
-  }
-}
-@media (max-width: 992px) {
-  #logo_info .logo_info_data {
-    width: 50%;
-  }
-}
-/* STRUCTURE SECTION (LITEMOL) + MICROSCOPY */
-#struct-micro-names {
-  text-align: center;
-  padding-bottom: 10px;
-  /* justify-content: space-around; */
-  /* padding-left: 5px; */
-}
-
-#pdb-info {
-  /* margin: auto; */
-  /* text-align: center; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative !important;
-  height: 100%;
-}
-
-#pdb-info img {
-  width: 100%;
-}
-
-#jaspar-item {
-  border: 1px solid #ddd !important;
-  background-color: #ffffff !important;
-  margin: 10px !important;
-}
-
-#jaspar-image-container {
-  justify-content: left !important;
-  align-items: left !important;
-  position: relative !important;
-  object-fit: contain !important;
-}
-
-#jaspar-img {
-  width: 100% !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-.lm-plugin {
-  z-index: 10;
-  background: white !important;
-}
-.lm-plugin .lm-plugin-content.lm-layout-expanded {
-  z-index: 100000 !important;
-}
-.lm-plugin .lm-highlight-info {
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: #777 !important;
-  padding: 5px !important;
-}
-.lm-plugin .lm-viewport .lm-btn-link {
-  background: rgba(255, 255, 255, 0.7) !important;
-}
-.lm-plugin .lm-viewport-controls {
-  opacity: 0.35;
-  transition: opacity 0.3s ease-in-out;
-  -moz-transition: opacity 0.3s ease-in-out;
-  -webkit-transition: opacity 0.3s ease-in-out;
-}
-.lm-plugin .lm-viewport-controls:hover {
-  opacity: 0.9;
-}
-.lm-plugin .lm-viewport-controls-buttons .lm-btn-link, .lm-plugin .lm-viewport-controls-buttons .lm-btn-link-toggle-on {
-  color: #637ca0 !important;
-}
-.lm-plugin .lm-viewport-controls-buttons .lm-btn-link:hover, .lm-plugin .lm-viewport-controls-buttons .lm-btn-link-toggle-on:hover {
-  color: #86F !important;
-}
-.lm-plugin .lm-task-state div {
-  background: white !important;
-  color: #555 !important;
-}
-.lm-plugin .lm-task-state button {
-  background: white !important;
-  color: #dc3545;
-}
-.lm-plugin .lm-overlay {
-  display: none;
-}
-.lm-plugin .lm-logo-image {
-  background: #AAA;
-}
-.lm-plugin .lm-layout-standard-outside .lm-layout-left, .lm-plugin .lm-layout-standard-outside .lm-layout-right {
-  bottom: -330px !important;
-  height: 330px !important;
-}
-@media (min-width: 768px) {
-  .lm-plugin .lm-layout-standard-outside .lm-layout-left, .lm-plugin .lm-layout-standard-outside .lm-layout-right {
-    bottom: 0 !important;
-    height: 100% !important;
-  }
-}
-.lm-plugin .lm-layout-standard-outside .lm-layout-left .lm-layout-scrollable, .lm-plugin .lm-layout-standard-outside .lm-layout-right .lm-layout-scrollable {
-  top: 0px !important;
-}
-.lm-plugin .lm-layout-standard-outside .lm-layout-right {
-  right: 0 !important;
-}
-@media (min-width: 768px) {
-  .lm-plugin .lm-layout-standard-outside .lm-layout-right {
-    right: -100% !important;
-  }
-}
-.lm-plugin .lm-layout-standard-outside .lm-layout-left {
-  left: 0 !important;
-}
-@media (min-width: 768px) {
-  .lm-plugin .lm-layout-standard-outside .lm-layout-left {
-    left: 100% !important;
-  }
-}
-.lm-plugin .lm-toast-container .lm-toast-entry {
-  background: rgba(255, 255, 255, 0.5) !important;
-  color: #333 !important;
-  border: none !important;
-  font-size: 0.8rem;
-}
-.lm-plugin .lm-toast-container .lm-toast-entry .lm-toast-title {
-  background: rgba(245, 245, 245, 0.5) !important;
-  font-weight: 700;
-}
-.lm-plugin .lm-toast-container .lm-toast-entry .lm-toast-title::after {
-  content: " loaded: " !important;
-}
-
-#chem-title {
-  color: #666;
-  font-size: 1rem;
-  font-weight: 400;
 }
 
 .fav-count {

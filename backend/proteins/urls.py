@@ -157,13 +157,13 @@ urlpatterns = [
         name="organismTable-detail",
     ),
     re_path(
-       r"^proteinTable/(?P<gene>[-\w]+)/$", # gene is SlugField with name of gene
+       r"^proteinTable/(?P<slug>[-\w]+)/$", # slug is SlugField with name of gene
        # {'my_id': '?P<my_id>'}
        views.ProteinDetailView2.as_view(),
        name="proteinTable-detail",
     ),
     re_path(
-       r"^repeatTable/(?P<slug>[-\w]+)/$", # gene is SlugField with name of gene
+       r"^repeatTable/(?P<slug>[-\w]+)/$", # slug is SlugField with name of repeat
        # {'my_id': '?P<my_id>'}
        views.RepeatDetailView.as_view(),
        name="repeatTable-detail",

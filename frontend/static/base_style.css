@@ -148,12 +148,12 @@ sup {
 
 a {
     background-color: #0000;
-    color: #36a83b;
+    /* color: #36a83b; */
     text-decoration: none
 }
 
 a:hover {
-    color: #236e27;
+    /* color: #236e27; */
     text-decoration: underline
 }
 
@@ -12181,7 +12181,7 @@ ul li.select2-search,ul li.select2-selection__choice {
 
 .btn-foursquare.disabled,.btn-foursquare:disabled {
     background-color: #f94877;
-    background-image: none;
+    background-image: none; 
     border-color: #f94877;
     color: #fff
 }

@@ -63,7 +63,6 @@ class Repeat(models.Model):
                     "label": protein.gene,
                     "y": float(protein.motif_q_score * -1)
                     # "y": "-" + str(protein.motif_q_score * -1)
-
                 })
         # return json.dumps(datapoints)
         return datapoints
