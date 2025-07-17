@@ -44,12 +44,12 @@ export default async function initAutocomplete() {
                 },
                 item({ item, html }) {
                     var str = item.gene;
-                    return html`<a href='/proteinTable/${item.gene}'><div>${str}</div></a>`;
+                    return html`<a href='/proteinTable/${item.slug}'><div>${str}</div></a>`;
                 }
                 },
                 onSelect({ item }) {
                     // Triggered on selection (click or enter)
-                    window.location.href = '/proteinTable/' + item.gene;
+                    window.location.href = '/proteinTable/' + item.slug;
                 }
             },
             {
@@ -63,11 +63,11 @@ export default async function initAutocomplete() {
                 },
                 item({ item, html }) {
                     var str = item.name;
-                    return html`<a href='/repeatTable/${item.name}'><div>${str}</div></a>`;
+                    return html`<a href='/repeatTable/${item.slug}'><div>${str}</div></a>`;
                 }
                 },
                 onSelect({ item }) {
-                    window.location.href = '/repeatTable/' + item.name;
+                    window.location.href = '/repeatTable/' + item.slug;
                 }
             },
             {

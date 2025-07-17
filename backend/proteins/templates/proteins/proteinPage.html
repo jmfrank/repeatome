@@ -70,8 +70,63 @@ function htmlDecode(input) {
   return doc.documentElement.textContent;
 }
 
+function setColor(chart){
+    var colors = {}
+    for(var i = 0; i < all_organs.length; i++) {
+      const hexColor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+      colors[all_organs[i]] = hexColor;
+    }
+    // console.log(colors)
+
+    for(var i = 0; i < chart.options.data.length; i++) {
+      dataSeries = chart.options.data[i];
+      for(var j = 0; j < dataSeries.dataPoints.length; j++){
+        dataSeries.dataPoints[j].color = colors[organ_tissues[dataSeries.dataPoints[j].label]];
+        // organ_chart_data[dataSeries.dataPoints[j].label]
+      }
+    }
+  }
+
 var chart_raw_data = JSON.parse('{{ chart_data }}'.replaceAll('&#x27;', '"'))
+var organ_chart_data = JSON.parse('{{ organ_data }}'.replaceAll('&#x27;', '"').replaceAll('&amp;', '&'))
 {% comment %} console.log(chart_raw_data) {% endcomment %}
+
+// Connect organs and tissues
+var all_organs = [...new Set(organ_chart_data.map(item => item.organ))];
+var organ_tissues = {}
+for (var i = 0; i < Object.keys(organ_chart_data).length; i++) {
+  organ_tissues[organ_chart_data[i]['tissue']] = organ_chart_data[i]['organ']
+}
+
+// Group tissues by organs
+var organ_groups = {};
+chart_raw_data.forEach(item => {
+  const tissue = item.label;
+  const organ = organ_tissues[tissue] || 'Unknown';
+  if (!organ_groups[organ]) {
+    organ_groups[organ] = [];
+  }
+  item.toolTipContent = `<strong>${tissue}</strong><br>Organ: ${organ}<br>nTPM: {y}`;
+  organ_groups[organ].push(item);
+});
+// console.log(organ_groups)
+
+// Group data points by organs
+var grouped_dataPoints = [];
+Object.keys(organ_groups).sort().forEach((organ, i, arr) => {
+  grouped_dataPoints = grouped_dataPoints.concat(organ_groups[organ]);
+
+  // Insert a spacer between organ groups
+  if (i < arr.length - 1) {
+    grouped_dataPoints.push({ label: "", y: null });
+  }
+});
+
+// console.log(all_organs)
+// console.log(chart_raw_data)
+// console.log(organ_chart_data)
+// console.log(organ_tissues)
+// console.log(grouped_dataPoints)
 
 window.onload = function () {
   var exprChart = new CanvasJS.Chart("expressionChartContainer", {
@@ -103,41 +158,12 @@ window.onload = function () {
       name: "nTPM",
       // legendText: "Tissue",
       // showInLegend: true, 
-      dataPoints: chart_raw_data
+      dataPoints: grouped_dataPoints
     }]
   });
 
   setColor(exprChart);
   exprChart.render();
-
-  function setColor(chart){
-    var organ_chart_data = JSON.parse('{{ organ_data }}'.replaceAll('&#x27;', '"').replaceAll('&amp;', '&'))
-    var all_organs = [...new Set(organ_chart_data.map(item => item.organ))];
-    var organ_tissues = {}
-    for (var i = 0; i < Object.keys(organ_chart_data).length; i++) {
-      organ_tissues[organ_chart_data[i]['tissue']] = organ_chart_data[i]['organ']
-    }
-    
-    var colors = {}
-    for(var i = 0; i < all_organs.length; i++) {
-      const hexColor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
-      colors[all_organs[i]] = hexColor;
-    }
-
-    // console.log(all_organs)
-    // console.log(chart_raw_data)
-    // console.log(organ_chart_data)
-    // console.log(organ_tissues)
-    // console.log(colors)
-
-    for(var i = 0; i < chart.options.data.length; i++) {
-      dataSeries = chart.options.data[i];
-      for(var j = 0; j < dataSeries.dataPoints.length; j++){
-        dataSeries.dataPoints[j].color = colors[organ_tissues[dataSeries.dataPoints[j].label]];
-        // organ_chart_data[dataSeries.dataPoints[j].label]
-      }
-    }
-  }
 
   function toggleDataSeries(e) {
     if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -282,7 +308,7 @@ window.onload = function () {
           <div class='aminosequence container'>{{ protein.protein_sequence }}</div>
         </div>
       {% else %}
-          <p>no sequence available ... <a href="{% url 'proteins:update' slug=protein.gene %}" class='text-secondary'>add one!</a></p>
+          <p>no sequence available ... <a href="{% url 'proteins:update' slug=protein.slug %}" class='text-secondary'>add one!</a></p>
       {% endif %}
 
 			{% if protein.ENSEMBL or protein.UNIPROT or protein.PDB or protein.AF3 or protein.jaspar %}
@@ -375,8 +401,10 @@ window.onload = function () {
     {%endfor%}
 
     <!-- RNA Expression Graph -->
-    <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
-    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    {% if protein.proteinatlas %}
+      <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
+      <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    {% endif %}
 
    {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>
