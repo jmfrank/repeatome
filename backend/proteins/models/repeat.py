@@ -58,20 +58,22 @@ class Repeat(models.Model):
     def get_motif_chart_q_score_data(self):
         datapoints = []
         for protein in self.get_proteins():
-            datapoints.append({
-                "label": protein.gene,
-                "y": float(protein.motif_q_score)
-            })
+            if protein.motif_q_score:
+                datapoints.append({
+                    "label": protein.gene,
+                    "y": float(protein.motif_q_score)
+                })
         # return json.dumps(datapoints)
         return datapoints
 
     def get_motif_chart_enrichment_data(self):
         datapoints = []
         for protein in self.get_proteins():
-            datapoints.append({
-                "label": protein.gene,
-                "y": float(protein.motif_enrichment)
-            })
+            if protein.motif_enrichment:
+                datapoints.append({
+                    "label": protein.gene,
+                    "y": float(protein.motif_enrichment)
+                })
         # return json.dumps(datapoints)
         return datapoints
 

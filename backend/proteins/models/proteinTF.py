@@ -31,7 +31,8 @@ class ProteinReferences(models.Model):
 
 class ProteinTF(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
-    gene = models.SlugField(max_length=200, blank=True, null=True, unique=True)
+    gene = models.CharField(max_length=200, blank=True, null=True, unique=True)
+    # slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
     aliases = ArrayField(
         models.TextField(blank=True, null=True),
         blank=True,
@@ -194,5 +195,4 @@ class ProteinTF(models.Model):
 
     def get_repeats(self):
         return [p.name for p in self.repeats.all()]
-    
     

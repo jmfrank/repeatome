@@ -18,11 +18,15 @@ export default async function initAutocomplete() {
         container: '#algolia-search-input', // still required, but will wrap around input
         detachedMediaQuery: 'none',             // disables fullscreen modal mode
         placeholder: 'Search a protein or repeat',
-        openOnFocus: true,
+        // openOnFocus: true,
+        autoselectOnBlur: window.mobilecheck(),
+        autoSelect: true,
+        minLength: 2,
         inputElement: document.querySelector('#algolia-search-input'),
+        // plugins: [redirectUrlPlugin],
         onSubmit({ state }) {
             console.log("STATE: ", state)
-            window.location.href = '/search/?q=' + state
+            window.location.href = '/search/?q=' + state.query
         },
         getSources({ query }) {
             return [
@@ -42,6 +46,10 @@ export default async function initAutocomplete() {
                     var str = item.gene;
                     return html`<a href='/proteinTable/${item.gene}'><div>${str}</div></a>`;
                 }
+                },
+                onSelect({ item }) {
+                    // Triggered on selection (click or enter)
+                    window.location.href = '/proteinTable/' + item.gene;
                 }
             },
             {
@@ -57,6 +65,9 @@ export default async function initAutocomplete() {
                     var str = item.name;
                     return html`<a href='/repeatTable/${item.name}'><div>${str}</div></a>`;
                 }
+                },
+                onSelect({ item }) {
+                    window.location.href = '/repeatTable/' + item.name;
                 }
             },
             {
@@ -72,6 +83,9 @@ export default async function initAutocomplete() {
                     var str = item.title;
                     return html`<a href='${item.url}'><div>${str}</div></a>`;
                 }
+                },
+                onSelect({ item }) {
+                    window.location.href = item.url;
                 }
             },
             {
@@ -87,6 +101,9 @@ export default async function initAutocomplete() {
                     var str = item.scientific_name;
                     return html `<a href='${item.url}'><div>${str}</div></a>`;
                 }
+                },
+                onSelect({ item }) {
+                    window.location.href = item.url;
                 }
             },
             ];

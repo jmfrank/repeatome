@@ -47,7 +47,7 @@ if env("MAILGUN_API_KEY", default=False) and env("MAILGUN_DOMAIN", default=False
 
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS",
-    default=["fpbase.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1"],
+    default=["repeatome.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1"],
 )
 
 # CACHING

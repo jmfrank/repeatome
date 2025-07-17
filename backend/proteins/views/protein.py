@@ -175,6 +175,39 @@ def get_country_code(request) -> str:
         return response["country"]["iso_code"]  # type: ignore
     return ""
 
+def get_chart_expression_data(protein):
+    datapoints = []
+    # print("GETTING DATA")
+    f = open('./rna_tissue_consensus.tsv')
+    # Gene: 0 (ensembl), Gene name: 1, Tissue: 2, nTPM: 3
+    for line in f.readlines()[1:]:
+        line_split = line.split('\t')
+        # print(line_split[0], self.ENSEMBL)
+        if (line_split[0] == protein.ENSEMBL):  
+            datapoints.append({
+                "label": line_split[2],
+                "y": float(line_split[3])
+            })
+    # return json.dumps(datapoints)
+    # print(datapoints)
+    return datapoints
+
+def get_chart_organ_data():
+    datapoints = []
+    # print("GETTING DATA")
+    f = open('./rna_tissue_consensus_tissues.tsv')
+    # Tissue: 0, Organs: 1
+    for line in f.readlines()[1:]:
+        line_split = line.split('\t')
+        # print(line_split[0], self.ENSEMBL)
+        datapoints.append({
+            "tissue": line_split[0],
+            "organ": line_split[1][:len(line_split[1]) - 1]
+        })
+    # return json.dumps(datapoints)
+    # print(datapoints)
+    return datapoints
+
 class ProteinDetailView2(DetailView):
     """renders html for single protein page"""
     
@@ -200,6 +233,8 @@ class ProteinDetailView2(DetailView):
         self.object = self.get_object()
         #  print(self.object)
         context = self.get_context_data(object=self.object)
+        context['chart_data'] = get_chart_expression_data(self.object)
+        context['organ_data'] = get_chart_organ_data()
         #  print(context['protein'].repeats.all()[0].parental_organism)
         # print(context['protein'].primary_reference)
         return render(request, 'proteins/proteinPage.html', context)

@@ -9,8 +9,8 @@
 
 {% block extrahead %}
 {% load static %}
-<link rel='stylesheet' href="{% static 'base_style.css' %}">
 <link rel='stylesheet' href="{% static 'base.css' %}">
+<link rel='stylesheet' href="{% static 'base_style.css' %}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'base_proj.js' %}"></script>
@@ -37,6 +37,97 @@
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar-plugin.js"
 ></script>
+
+<!-- RNA Expression Graph-->
+{% comment %} {{ protein.get_chart_expression_data|json_script:'chart-data' }} {% endcomment %}
+
+<script>
+function htmlDecode(input) {
+  console.log(input)
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
+var chart_raw_data = JSON.parse('{{ chart_data }}'.replaceAll('&#x27;', '"'))
+{% comment %} console.log(chart_raw_data) {% endcomment %}
+
+window.onload = function () {
+  var exprChart = new CanvasJS.Chart("expressionChartContainer", {
+    animationEnabled: true,
+    title:{
+      text: "RNA Expression Chart"
+    },	
+    axisX: {
+      title: "Tissues",
+      interval: 1,
+      labelAngle: 75,
+    },
+    axisY: {
+      title: "nTPM",
+      titleFontColor: "#4F81BC",
+      lineColor: "#4F81BC",
+      labelFontColor: "#4F81BC",
+      tickColor: "#4F81BC"
+    },
+    toolTip: {
+      shared: true
+    },
+    legend: {
+      cursor:"pointer",
+      itemclick: toggleDataSeries
+    },
+    data: [{
+      type: "column",
+      name: "nTPM",
+      // legendText: "Tissue",
+      // showInLegend: true, 
+      dataPoints: chart_raw_data
+    }]
+  });
+
+  setColor(exprChart);
+  exprChart.render();
+
+  function setColor(chart){
+    var organ_chart_data = JSON.parse('{{ organ_data }}'.replaceAll('&#x27;', '"').replaceAll('&amp;', '&'))
+    var all_organs = [...new Set(organ_chart_data.map(item => item.organ))];
+    var organ_tissues = {}
+    for (var i = 0; i < Object.keys(organ_chart_data).length; i++) {
+      organ_tissues[organ_chart_data[i]['tissue']] = organ_chart_data[i]['organ']
+    }
+    
+    var colors = {}
+    for(var i = 0; i < all_organs.length; i++) {
+      const hexColor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+      colors[all_organs[i]] = hexColor;
+    }
+
+    // console.log(all_organs)
+    // console.log(chart_raw_data)
+    // console.log(organ_chart_data)
+    // console.log(organ_tissues)
+    // console.log(colors)
+
+    for(var i = 0; i < chart.options.data.length; i++) {
+      dataSeries = chart.options.data[i];
+      for(var j = 0; j < dataSeries.dataPoints.length; j++){
+        dataSeries.dataPoints[j].color = colors[organ_tissues[dataSeries.dataPoints[j].label]];
+        // organ_chart_data[dataSeries.dataPoints[j].label]
+      }
+    }
+  }
+
+  function toggleDataSeries(e) {
+    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+      e.dataSeries.visible = false;
+    }
+    else {
+      e.dataSeries.visible = true;
+    }
+    chart.render();
+  }
+}
+</script>
 {% endblock extrahead %}
 
 {% block container-class %}container protein{% endblock %}
@@ -235,6 +326,10 @@
             {% endif %}
       </tr>
     {%endfor%}
+
+    <!-- RNA Expression Graph -->
+    <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
    {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>
