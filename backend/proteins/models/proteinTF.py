@@ -32,7 +32,7 @@ class ProteinReferences(models.Model):
 class ProteinTF(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
     gene = models.CharField(max_length=200, blank=True, null=True, unique=True)
-    # slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
+    slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
     aliases = ArrayField(
         models.TextField(blank=True, null=True),
         blank=True,
@@ -115,7 +115,7 @@ class ProteinTF(models.Model):
     )
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.gene)
+        self.slug = slugify(self.ENSEMBL + '-' + self.gene)
         super().save(*args, **kwargs)
     
     def get_absolute_url(self):

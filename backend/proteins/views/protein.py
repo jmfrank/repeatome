@@ -223,7 +223,7 @@ class ProteinDetailView2(DetailView):
             query_set = self.get_queryset()
         # print(self.kwargs['slug'])
         # print(ProteinTF.objects.get(gene=self.kwargs['slug']))
-        obj = ProteinTF.objects.get(gene=self.kwargs['gene'])
+        obj = ProteinTF.objects.get(slug=self.kwargs['slug'])
         # print(query_set.get(gene=self.kwargs['slug']))
         # obj = query_set.get(gene=self.kwargs['slug'])
         # obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
