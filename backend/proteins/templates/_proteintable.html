@@ -28,7 +28,10 @@
 					<td class="remove-button">{% collection_remove_button protein %}</td>
 				{% endif %}
 				<td class="protein">
-					<a href="{{ protein.get_absolute_url | safe }}">
+					<!-- <a href="{{ protein.get_absolute_url | safe }}">
+						{{ protein.gene | safe }}
+					</a> -->
+					<a href="/proteinTable/{{ protein.slug | safe }}">
 						{{ protein.gene | safe }}
 					</a>
 				</td>

@@ -23,7 +23,7 @@ env = environ.Env()
 
 # Data to import
 # ------------------------------------------------------------------------------
-IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent / 'Scripting/satellite_binders_database.csv'
+IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent.parent / 'Scripting/satellite_binders_database.xlsx'
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)

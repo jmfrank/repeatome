@@ -11,7 +11,22 @@ import requests
 import os
 import pandas as pd
 import sys
+import unicodedata
+import re
 
+def slugify(value, allow_unicode=False):
+    """
+    Convert to ASCII if 'allow_unicode' is False. Convert spaces to hyphens.
+    Remove characters that aren't alphanumerics, underscores, or hyphens.
+    Convert to lowercase. Also strip leading and trailing whitespace.
+    """
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize("NFKC", value)
+    else:
+        value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"[^\w\s-]", "", value).strip().lower()
+    return re.sub(r"[-\s]+", "-", value)
 
 def parse_array(x):
     if x is None:
@@ -67,7 +82,7 @@ def get_gene_family_obj(gene_family: str):
 
 def import_gene_family():
 
-    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, 'master_proteins')
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins')
 
     # Get unique gene families
     gene_family_df = df[df['gene_family'].notnull()].drop_duplicates()
@@ -184,7 +199,7 @@ def get_jaspar_ids(gene, tax_group, use_cache):
         # If use_cache then try to load from cache first
         # If not found in cache then try loading from the url
         if use_cache:
-            cache_file = f"{cache_folder}/{gene}.json"
+            cache_file = f"{cache_folder}/{slugify(gene)}.json"
             if os.path.exists(cache_file):
                 print(f"Loading jaspar data from cache")
                 with open(cache_file, 'r') as stream:
@@ -258,9 +273,14 @@ def import_protein():
             gene_family=gene_family_obj,
             parent_organism=parent_organism_obj
         )
+        print(type(obj))
+        print(f"ENSEMBL: {obj.ENSEMBL}, GENE: {obj.gene}")
         obj.save()
 
         protein_obj = ProteinTF.objects.get(gene=gene)
+        protein_obj.save()
+        print(obj.gene, obj.slug, obj)
+        print(protein_obj.gene, protein_obj.slug, protein_obj)
 
         satellite_str = row['satellite']
         # motif_q_score = row['motif_q_score']

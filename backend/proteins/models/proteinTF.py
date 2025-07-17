@@ -115,11 +115,13 @@ class ProteinTF(models.Model):
     )
     
     def save(self, *args, **kwargs):
+        print(self.ENSEMBL + '-' + self.gene)
         self.slug = slugify(self.ENSEMBL + '-' + self.gene)
+        print(self.gene + ": " + self.slug)
         super().save(*args, **kwargs)
     
     def get_absolute_url(self):
-        return reverse("proteins:proteinTable-detail", args=[self.gene])
+        return reverse("proteins:proteinTable-detail", args=[self.slug])
     
     def gene_type_as_str(self):
         if not self.gene_type:
@@ -162,13 +164,6 @@ class ProteinTF(models.Model):
         if not self.repeats:
             return 0
         return len(self.repeats)
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.gene)
-        super().save(*args, **kwargs)
-    
-    def get_absolute_url(self):
-        return reverse("proteins:proteinTable-detail", args=[self.gene])
 
     def get_repeats(self):
         return [p.name for p in self.repeats.all()]
