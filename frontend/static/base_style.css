@@ -11161,7 +11161,7 @@ h6.dropdown-header:after {
 }
 
 .aminosequence .sequence_count {
-    color: red;
+    /* color: red; */
     float: left;
     margin: 0;
     padding: 0;

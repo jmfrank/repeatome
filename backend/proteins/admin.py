@@ -10,7 +10,7 @@ from reversion_compare.admin import CompareVersionAdmin
 
 from repeatome.util import uncache_protein_page
 from proteins.models import (
-    BleachMeasurement,
+    # BleachMeasurement,
     Camera,
     Dye,
     Excerpt,
@@ -80,10 +80,10 @@ class MultipleSpectraOwner(SpectrumOwner):
         return qs.prefetch_related(Prefetch("spectra", queryset=Spectrum.objects.all_objects()))
 
 
-class BleachInline(admin.TabularInline):
-    model = BleachMeasurement
-    autocomplete_fields = ("reference",)
-    extra = 1
+# class BleachInline(admin.TabularInline):
+#     model = BleachMeasurement
+#     autocomplete_fields = ("reference",)
+#     extra = 1
 
 
 class OSERInline(admin.StackedInline):
@@ -123,7 +123,7 @@ class StateInline(MultipleSpectraOwner, admin.StackedInline):
                     ("twop_ex_max", "twop_peakGM", "twop_qy"),
                     ("pka", "maturation"),
                     "lifetime",
-                    "bleach_links",
+                    # "bleach_links",
                     "spectra",
                 )
             },
@@ -138,21 +138,21 @@ class StateInline(MultipleSpectraOwner, admin.StackedInline):
     ]
     readonly_fields = (
         "slug",
-        "bleach_links",
+        # "bleach_links",
         "created",
         "created_by",
         "modified",
         "updated_by",
     )
 
-    @admin.display(description="BleachMeasurements")
-    def bleach_links(self, obj):
-        links = []
-        for bm in obj.bleach_measurements.all():
-            url = reverse("admin:proteins_bleachmeasurement_change", args=(bm.pk,))
-            link = f'<a href="{url}">{bm}</a>'
-            links.append(link)
-        return mark_safe(", ".join(links))
+    # @admin.display(description="BleachMeasurements")
+    # def bleach_links(self, obj):
+    #     links = []
+    #     for bm in obj.bleach_measurements.all():
+    #         url = reverse("admin:proteins_bleachmeasurement_change", args=(bm.pk,))
+    #         link = f'<a href="{url}">{bm}</a>'
+    #         links.append(link)
+    #     return mark_safe(", ".join(links))
 
 
 class LineageInline(admin.TabularInline):
@@ -319,11 +319,11 @@ class OSERMeasurementAdmin(VersionAdmin):
     ]
 
 
-@admin.register(BleachMeasurement)
-class BleachMeasurementAdmin(VersionAdmin):
-    model = BleachMeasurement
-    autocomplete_fields = ("state", "reference")
-    list_select_related = ("state", "state__protein")
+# @admin.register(BleachMeasurement)
+# class BleachMeasurementAdmin(VersionAdmin):
+#     model = BleachMeasurement
+#     autocomplete_fields = ("state", "reference")
+#     list_select_related = ("state", "state__protein")
 
 
 @admin.register(State)
@@ -342,7 +342,7 @@ class StateAdmin(CompareVersionAdmin):
         "modified",
     )
     list_filter = ("created", "modified")
-    inlines = (BleachInline,)
+    # inlines = (BleachInline,)
     fieldsets = [
         (None, {"fields": (("name", "slug", "is_dark"),)}),
         (

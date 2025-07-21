@@ -1,0 +1,3732 @@
+{
+    "options": {
+        "type": "mixed",
+        "multi": false,
+        "allowSelfLoops": true
+    },
+    "attributes": {},
+    "nodes": [
+        {
+            "key": "HSat3",
+            "attributes": {
+                "label": "HSat3",
+                "x": 0,
+                "y": 0,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat3"
+            }
+        },
+        {
+            "key": "BCLAF1_HSat3",
+            "attributes": {
+                "label": "BCLAF1",
+                "x": 24.748737341529164,
+                "y": 24.748737341529164,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000029363-bclaf1"
+            }
+        },
+        {
+            "key": "CFDP1_HSat3",
+            "attributes": {
+                "label": "CFDP1",
+                "x": 21.58516054199901,
+                "y": 27.551421821316758,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000153774-cfdp1"
+            }
+        },
+        {
+            "key": "ZNF621_HSat3",
+            "attributes": {
+                "label": "ZNF621",
+                "x": 18.106823496217988,
+                "y": 29.95234453055066,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000172888-znf621"
+            }
+        },
+        {
+            "key": "HOXA7_HSat3",
+            "attributes": {
+                "label": "HOXA7",
+                "x": 14.364448190846499,
+                "y": 31.91649460972315,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000122592-hoxa7"
+            }
+        },
+        {
+            "key": "EWS_FLI1_HSat3",
+            "attributes": {
+                "label": "EWS_FLI1",
+                "x": 10.412606884932112,
+                "y": 33.415230327799094,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/none-ews_fli1"
+            }
+        },
+        {
+            "key": "HES1_HSat3",
+            "attributes": {
+                "label": "HES1",
+                "x": 6.3089263234867134,
+                "y": 34.426696743150025,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000114315-hes1"
+            }
+        },
+        {
+            "key": "PIN1_HSat3",
+            "attributes": {
+                "label": "PIN1",
+                "x": 2.1132474097800276,
+                "y": 34.936144397816115,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000127445-pin1"
+            }
+        },
+        {
+            "key": "HOXA9_HSat3",
+            "attributes": {
+                "label": "HOXA9",
+                "x": -2.1132474097799925,
+                "y": 34.936144397816115,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000078399-hoxa9"
+            }
+        },
+        {
+            "key": "HSF4_HSat3",
+            "attributes": {
+                "label": "HSF4",
+                "x": -6.308926323486686,
+                "y": 34.426696743150025,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000102878-hsf4"
+            }
+        },
+        {
+            "key": "PLRG1_HSat3",
+            "attributes": {
+                "label": "PLRG1",
+                "x": -10.41260688493208,
+                "y": 33.4152303277991,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000171566-plrg1"
+            }
+        },
+        {
+            "key": "TEAD2_HSat3",
+            "attributes": {
+                "label": "TEAD2",
+                "x": -14.364448190846467,
+                "y": 31.916494609723163,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000074219-tead2"
+            }
+        },
+        {
+            "key": "IRF3_HSat3",
+            "attributes": {
+                "label": "IRF3",
+                "x": -18.106823496217963,
+                "y": 29.95234453055068,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000126456-irf3"
+            }
+        },
+        {
+            "key": "FAM181B_HSat3",
+            "attributes": {
+                "label": "FAM181B",
+                "x": -21.585160541998995,
+                "y": 27.551421821316765,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000182103-fam181b"
+            }
+        },
+        {
+            "key": "TBX4_HSat3",
+            "attributes": {
+                "label": "TBX4",
+                "x": -24.74873734152915,
+                "y": 24.74873734152918,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000121075-tbx4"
+            }
+        },
+        {
+            "key": "JUNB_HSat3",
+            "attributes": {
+                "label": "JUNB",
+                "x": -27.55142182131675,
+                "y": 21.585160541999013,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000171223-junb"
+            }
+        },
+        {
+            "key": "ZNF8_HSat3",
+            "attributes": {
+                "label": "ZNF8",
+                "x": -29.952344530550658,
+                "y": 18.106823496217995,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000278129-znf8"
+            }
+        },
+        {
+            "key": "TEAD1_HSat3",
+            "attributes": {
+                "label": "TEAD1",
+                "x": -31.916494609723152,
+                "y": 14.364448190846486,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000187079-tead1"
+            }
+        },
+        {
+            "key": "BDP1_HSat3",
+            "attributes": {
+                "label": "BDP1",
+                "x": -33.4152303277991,
+                "y": 10.412606884932092,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000145734-bdp1"
+            }
+        },
+        {
+            "key": "ZBTB17_HSat3",
+            "attributes": {
+                "label": "ZBTB17",
+                "x": -34.426696743150025,
+                "y": 6.308926323486692,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000116809-zbtb17"
+            }
+        },
+        {
+            "key": "TEAD3_HSat3",
+            "attributes": {
+                "label": "TEAD3",
+                "x": -34.936144397816115,
+                "y": 2.1132474097799756,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000007866-tead3"
+            }
+        },
+        {
+            "key": "NFAT5_HSat3",
+            "attributes": {
+                "label": "NFAT5",
+                "x": -34.93614439781611,
+                "y": -2.1132474097800444,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000102908-nfat5"
+            }
+        },
+        {
+            "key": "FLYWCH1_HSat3",
+            "attributes": {
+                "label": "FLYWCH1",
+                "x": -34.42669674315002,
+                "y": -6.308926323486745,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000059122-flywch1"
+            }
+        },
+        {
+            "key": "NKX2-4_HSat3",
+            "attributes": {
+                "label": "NKX2-4",
+                "x": -33.41523032779909,
+                "y": -10.412606884932144,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000125816-nkx2-4"
+            }
+        },
+        {
+            "key": "CREBBP_HSat3",
+            "attributes": {
+                "label": "CREBBP",
+                "x": -31.916494609723134,
+                "y": -14.364448190846536,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000005339-crebbp"
+            }
+        },
+        {
+            "key": "LIN54_HSat3",
+            "attributes": {
+                "label": "LIN54",
+                "x": -29.95234453055064,
+                "y": -18.10682349621803,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000189308-lin54"
+            }
+        },
+        {
+            "key": "NFATc1_HSat3",
+            "attributes": {
+                "label": "NFATc1",
+                "x": -27.55142182131672,
+                "y": -21.585160541999056,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000131196-nfatc1"
+            }
+        },
+        {
+            "key": "PRDM15_HSat3",
+            "attributes": {
+                "label": "PRDM15",
+                "x": -24.74873734152912,
+                "y": -24.748737341529203,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000141956-prdm15"
+            }
+        },
+        {
+            "key": "NFATc4_HSat3",
+            "attributes": {
+                "label": "NFATc4",
+                "x": -21.585160541998953,
+                "y": -27.5514218213168,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000100968-nfatc4"
+            }
+        },
+        {
+            "key": "BHLHE40_HSat3",
+            "attributes": {
+                "label": "BHLHE40",
+                "x": -18.106823496217917,
+                "y": -29.952344530550707,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000134107-bhlhe40"
+            }
+        },
+        {
+            "key": "TBX5_HSat3",
+            "attributes": {
+                "label": "TBX5",
+                "x": -14.364448190846403,
+                "y": -31.91649460972319,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000089225-tbx5"
+            }
+        },
+        {
+            "key": "ONECUT1_HSat3",
+            "attributes": {
+                "label": "ONECUT1",
+                "x": -10.412606884932005,
+                "y": -33.41523032779913,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000169856-onecut1"
+            }
+        },
+        {
+            "key": "NEUROD1_HSat3",
+            "attributes": {
+                "label": "NEUROD1",
+                "x": -6.3089263234866175,
+                "y": -34.426696743150046,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000162992-neurod1"
+            }
+        },
+        {
+            "key": "ZBTB5_HSat3",
+            "attributes": {
+                "label": "ZBTB5",
+                "x": -2.1132474097799467,
+                "y": -34.936144397816115,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000168795-zbtb5"
+            }
+        },
+        {
+            "key": "ZNF394_HSat3",
+            "attributes": {
+                "label": "ZNF394",
+                "x": 2.113247409780089,
+                "y": -34.93614439781611,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000160908-znf394"
+            }
+        },
+        {
+            "key": "HSF5_HSat3",
+            "attributes": {
+                "label": "HSF5",
+                "x": 6.308926323486758,
+                "y": -34.42669674315002,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000176160-hsf5"
+            }
+        },
+        {
+            "key": "SOX1_HSat3",
+            "attributes": {
+                "label": "SOX1",
+                "x": 10.412606884932142,
+                "y": -33.41523032779909,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000182968-sox1"
+            }
+        },
+        {
+            "key": "ZNF502_HSat3",
+            "attributes": {
+                "label": "ZNF502",
+                "x": 14.364448190846506,
+                "y": -31.916494609723145,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000196653-znf502"
+            }
+        },
+        {
+            "key": "CUX1_HSat3",
+            "attributes": {
+                "label": "CUX1",
+                "x": 18.106823496218016,
+                "y": -29.952344530550647,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000257923-cux1"
+            }
+        },
+        {
+            "key": "NFATc2_HSat3",
+            "attributes": {
+                "label": "NFATc2",
+                "x": 21.585160541999016,
+                "y": -27.551421821316747,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101096-nfatc2"
+            }
+        },
+        {
+            "key": "FOXK2_HSat3",
+            "attributes": {
+                "label": "FOXK2",
+                "x": 24.748737341529157,
+                "y": -24.748737341529168,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000141568-foxk2"
+            }
+        },
+        {
+            "key": "HSF1_HSat3",
+            "attributes": {
+                "label": "HSF1",
+                "x": 27.55142182131674,
+                "y": -21.585160541999027,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185122-hsf1"
+            }
+        },
+        {
+            "key": "MLLT1_HSat3",
+            "attributes": {
+                "label": "MLLT1",
+                "x": 29.952344530550654,
+                "y": -18.106823496218,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000130382-mllt1"
+            }
+        },
+        {
+            "key": "ONECUT2_HSat3",
+            "attributes": {
+                "label": "ONECUT2",
+                "x": 31.916494609723138,
+                "y": -14.36444819084652,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000119547-onecut2"
+            }
+        },
+        {
+            "key": "TEAD4_HSat3",
+            "attributes": {
+                "label": "TEAD4",
+                "x": 33.41523032779908,
+                "y": -10.412606884932154,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000197905-tead4"
+            }
+        },
+        {
+            "key": "STAT6_HSat3",
+            "attributes": {
+                "label": "STAT6",
+                "x": 34.42669674315001,
+                "y": -6.308926323486772,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000166888-stat6"
+            }
+        },
+        {
+            "key": "TBX1_HSat3",
+            "attributes": {
+                "label": "TBX1",
+                "x": 34.93614439781611,
+                "y": -2.113247409780104,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000184058-tbx1"
+            }
+        },
+        {
+            "key": "PKNOX1_HSat3",
+            "attributes": {
+                "label": "PKNOX1",
+                "x": 34.93614439781612,
+                "y": 2.1132474097799006,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000160199-pknox1"
+            }
+        },
+        {
+            "key": "NFATc3_HSat3",
+            "attributes": {
+                "label": "NFATc3",
+                "x": 34.42669674315004,
+                "y": 6.3089263234866335,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000072736-nfatc3"
+            }
+        },
+        {
+            "key": "NKX2-2_HSat3",
+            "attributes": {
+                "label": "NKX2-2",
+                "x": 33.41523032779912,
+                "y": 10.412606884932021,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000125820-nkx2-2"
+            }
+        },
+        {
+            "key": "HSF2_HSat3",
+            "attributes": {
+                "label": "HSF2",
+                "x": 31.916494609723195,
+                "y": 14.36444819084639,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000025156-hsf2"
+            }
+        },
+        {
+            "key": "CUX2_HSat3",
+            "attributes": {
+                "label": "CUX2",
+                "x": 29.95234453055073,
+                "y": 18.106823496217878,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000111249-cux2"
+            }
+        },
+        {
+            "key": "IKZF1_HSat3",
+            "attributes": {
+                "label": "IKZF1",
+                "x": 27.551421821316847,
+                "y": 21.585160541998892,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185811-ikzf1"
+            }
+        },
+        {
+            "key": "HSat2",
+            "attributes": {
+                "label": "HSat2",
+                "x": 80,
+                "y": 0,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat2"
+            }
+        },
+        {
+            "key": "HOXA7_HSat2",
+            "attributes": {
+                "label": "HOXA7",
+                "x": 104.74873734152916,
+                "y": 24.748737341529164,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000122592-hoxa7"
+            }
+        },
+        {
+            "key": "HOXA9_HSat2",
+            "attributes": {
+                "label": "HOXA9",
+                "x": 55.251262658470836,
+                "y": 24.748737341529164,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000078399-hoxa9"
+            }
+        },
+        {
+            "key": "DUX4_HSat2",
+            "attributes": {
+                "label": "DUX4",
+                "x": 55.251262658470836,
+                "y": -24.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000260596-dux4"
+            }
+        },
+        {
+            "key": "FLYWCH1_HSat2",
+            "attributes": {
+                "label": "FLYWCH1",
+                "x": 104.74873734152916,
+                "y": -24.748737341529168,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000059122-flywch1"
+            }
+        },
+        {
+            "key": "HSat1A",
+            "attributes": {
+                "label": "HSat1A",
+                "x": 160,
+                "y": 0,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat1a"
+            }
+        },
+        {
+            "key": "LEF1_HSat1A",
+            "attributes": {
+                "label": "LEF1",
+                "x": 184.74873734152916,
+                "y": 24.748737341529164,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000138795-lef1"
+            }
+        },
+        {
+            "key": "HOXA7_HSat1A",
+            "attributes": {
+                "label": "HOXA7",
+                "x": 176.35440198955718,
+                "y": 30.944038772661337,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000122592-hoxa7"
+            }
+        },
+        {
+            "key": "POU5F1_HSat1A",
+            "attributes": {
+                "label": "POU5F1",
+                "x": 166.506906250702,
+                "y": 34.38982656316509,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000204531-pou5f1"
+            }
+        },
+        {
+            "key": "HOXA9_HSat1A",
+            "attributes": {
+                "label": "HOXA9",
+                "x": 156.08124333638423,
+                "y": 34.77992734626349,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000078399-hoxa9"
+            }
+        },
+        {
+            "key": "DLX6_HSat1A",
+            "attributes": {
+                "label": "DLX6",
+                "x": 146.0037791488091,
+                "y": 32.07967895544917,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000006377-dlx6"
+            }
+        },
+        {
+            "key": "TCF7_HSat1A",
+            "attributes": {
+                "label": "TCF7",
+                "x": 137.16994060526577,
+                "y": 26.529010310090865,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000081059-tcf7"
+            }
+        },
+        {
+            "key": "TEF_HSat1A",
+            "attributes": {
+                "label": "TEF",
+                "x": 130.36465302701006,
+                "y": 18.621122678036794,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000167074-tef"
+            }
+        },
+        {
+            "key": "ZNF382_HSat1A",
+            "attributes": {
+                "label": "ZNF382",
+                "x": 126.1925960798826,
+                "y": 9.058666578588236,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000161298-znf382"
+            }
+        },
+        {
+            "key": "TBP_HSat1A",
+            "attributes": {
+                "label": "TBP",
+                "x": 125.02447533240604,
+                "y": -1.3086917996713665,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000112592-tbp"
+            }
+        },
+        {
+            "key": "TCF7L2_HSat1A",
+            "attributes": {
+                "label": "TCF7L2",
+                "x": 126.96408343920713,
+                "y": -11.55976716843083,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000148737-tcf7l2"
+            }
+        },
+        {
+            "key": "PBX3_HSat1A",
+            "attributes": {
+                "label": "PBX3",
+                "x": 131.8390777081666,
+                "y": -20.783706495072536,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000167081-pbx3"
+            }
+        },
+        {
+            "key": "YY1_HSat1A",
+            "attributes": {
+                "label": "YY1",
+                "x": 139.21629350492742,
+                "y": -28.160922291833362,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000100811-yy1"
+            }
+        },
+        {
+            "key": "RXRG_HSat1A",
+            "attributes": {
+                "label": "RXRG",
+                "x": 148.44023283156912,
+                "y": -33.035916560792856,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000143171-rxrg"
+            }
+        },
+        {
+            "key": "BCL11A_HSat1A",
+            "attributes": {
+                "label": "BCL11A",
+                "x": 158.69130820032856,
+                "y": -34.975524667593945,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000119866-bcl11a"
+            }
+        },
+        {
+            "key": "NCOA2_HSat1A",
+            "attributes": {
+                "label": "NCOA2",
+                "x": 169.05866657858823,
+                "y": -33.80740392011739,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000140396-ncoa2"
+            }
+        },
+        {
+            "key": "ZBTB32_HSat1A",
+            "attributes": {
+                "label": "ZBTB32",
+                "x": 178.62112267803678,
+                "y": -29.635346972989947,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000011590-zbtb32"
+            }
+        },
+        {
+            "key": "ZFAT_HSat1A",
+            "attributes": {
+                "label": "ZFAT",
+                "x": 186.52901031009088,
+                "y": -22.830059394734214,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000066827-zfat"
+            }
+        },
+        {
+            "key": "E2F1_HSat1A",
+            "attributes": {
+                "label": "E2F1",
+                "x": 192.0796789554492,
+                "y": -13.996220851190893,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101412-e2f1"
+            }
+        },
+        {
+            "key": "NANOG_HSat1A",
+            "attributes": {
+                "label": "NANOG",
+                "x": 194.7799273462635,
+                "y": -3.9187566636157216,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000111704-nanog"
+            }
+        },
+        {
+            "key": "ZNF239_HSat1A",
+            "attributes": {
+                "label": "ZNF239",
+                "x": 194.3898265631651,
+                "y": 6.506906250702042,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000196793-znf239"
+            }
+        },
+        {
+            "key": "TCF7L1_HSat1A",
+            "attributes": {
+                "label": "TCF7L1",
+                "x": 190.94403877266132,
+                "y": 16.354401989557235,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000152284-tcf7l1"
+            }
+        },
+        {
+            "key": "HSat1B",
+            "attributes": {
+                "label": "HSat1B",
+                "x": 240,
+                "y": 0,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat1b"
+            }
+        },
+        {
+            "key": "IKZF2_HSat1B",
+            "attributes": {
+                "label": "IKZF2",
+                "x": 264.74873734152914,
+                "y": 24.748737341529164,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000030419-ikzf2"
+            }
+        },
+        {
+            "key": "POU4F1_HSat1B",
+            "attributes": {
+                "label": "POU4F1",
+                "x": 243.05045099616802,
+                "y": 34.8668144332111,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000152192-pou4f1"
+            }
+        },
+        {
+            "key": "OTX2_HSat1B",
+            "attributes": {
+                "label": "OTX2",
+                "x": 219.9248247277134,
+                "y": 28.67032155011472,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000165588-otx2"
+            }
+        },
+        {
+            "key": "ZBTB8A_HSat1B",
+            "attributes": {
+                "label": "ZBTB8A",
+                "x": 206.1925960798826,
+                "y": 9.058666578588236,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000160062-zbtb8a"
+            }
+        },
+        {
+            "key": "NCOA2_HSat1B",
+            "attributes": {
+                "label": "NCOA2",
+                "x": 208.27922745371725,
+                "y": -14.791639160924476,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000140396-ncoa2"
+            }
+        },
+        {
+            "key": "ZNF211_HSat1B",
+            "attributes": {
+                "label": "ZNF211",
+                "x": 225.2083608390755,
+                "y": -31.72077254628274,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000121417-znf211"
+            }
+        },
+        {
+            "key": "TCF12_HSat1B",
+            "attributes": {
+                "label": "TCF12",
+                "x": 249.05866657858823,
+                "y": -33.80740392011739,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000140262-tcf12"
+            }
+        },
+        {
+            "key": "DMBX1_HSat1B",
+            "attributes": {
+                "label": "DMBX1",
+                "x": 268.6703215501147,
+                "y": -20.07517527228663,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000197587-dmbx1"
+            }
+        },
+        {
+            "key": "POU4F3_HSat1B",
+            "attributes": {
+                "label": "POU4F3",
+                "x": 274.86681443321106,
+                "y": 3.050450996168055,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000091010-pou4f3"
+            }
+        },
+        {
+            "key": "bsat",
+            "attributes": {
+                "label": "bsat",
+                "x": 0,
+                "y": -80,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/bsat"
+            }
+        },
+        {
+            "key": "DBP_bsat",
+            "attributes": {
+                "label": "DBP",
+                "x": 24.748737341529164,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000105516-dbp"
+            }
+        },
+        {
+            "key": "MEIS1_bsat",
+            "attributes": {
+                "label": "MEIS1",
+                "x": 17.500000000000004,
+                "y": -49.68911086754465,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000143995-meis1"
+            }
+        },
+        {
+            "key": "JUN_bsat",
+            "attributes": {
+                "label": "JUN",
+                "x": 9.058666578588227,
+                "y": -46.19259607988261,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000177606-jun"
+            }
+        },
+        {
+            "key": "SMAD5_bsat",
+            "attributes": {
+                "label": "SMAD5",
+                "x": 2.1431318985078682e-15,
+                "y": -45.0,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000113658-smad5"
+            }
+        },
+        {
+            "key": "HLF_bsat",
+            "attributes": {
+                "label": "HLF",
+                "x": -9.05866657858823,
+                "y": -46.19259607988261,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000108924-hlf"
+            }
+        },
+        {
+            "key": "CEBPD_bsat",
+            "attributes": {
+                "label": "CEBPD",
+                "x": -17.499999999999993,
+                "y": -49.68911086754464,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000221869-cebpd"
+            }
+        },
+        {
+            "key": "ATF4_bsat",
+            "attributes": {
+                "label": "ATF4",
+                "x": -24.74873734152916,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000128272-atf4"
+            }
+        },
+        {
+            "key": "CEBPA_bsat",
+            "attributes": {
+                "label": "CEBPA",
+                "x": -30.310889132455355,
+                "y": -62.5,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000245848-cebpa"
+            }
+        },
+        {
+            "key": "ZEB1_bsat",
+            "attributes": {
+                "label": "ZEB1",
+                "x": -33.80740392011739,
+                "y": -70.94133342141177,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000148516-zeb1"
+            }
+        },
+        {
+            "key": "CEBPB_bsat",
+            "attributes": {
+                "label": "CEBPB",
+                "x": -35.0,
+                "y": -80.0,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000172216-cebpb"
+            }
+        },
+        {
+            "key": "TEF_bsat",
+            "attributes": {
+                "label": "TEF",
+                "x": -33.807403920117395,
+                "y": -89.05866657858822,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000167074-tef"
+            }
+        },
+        {
+            "key": "CEBPE_bsat",
+            "attributes": {
+                "label": "CEBPE",
+                "x": -30.31088913245535,
+                "y": -97.5,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000092067-cebpe"
+            }
+        },
+        {
+            "key": "JDP2_bsat",
+            "attributes": {
+                "label": "JDP2",
+                "x": -24.748737341529168,
+                "y": -104.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000140044-jdp2"
+            }
+        },
+        {
+            "key": "SMAD3_bsat",
+            "attributes": {
+                "label": "SMAD3",
+                "x": -17.500000000000014,
+                "y": -110.31088913245534,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000166949-smad3"
+            }
+        },
+        {
+            "key": "ESR1_bsat",
+            "attributes": {
+                "label": "ESR1",
+                "x": -9.058666578588221,
+                "y": -113.8074039201174,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000091831-esr1"
+            }
+        },
+        {
+            "key": "MEIS3_bsat",
+            "attributes": {
+                "label": "MEIS3",
+                "x": -6.429395695523604e-15,
+                "y": -115.0,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000105419-meis3"
+            }
+        },
+        {
+            "key": "NFIL3_bsat",
+            "attributes": {
+                "label": "NFIL3",
+                "x": 9.05866657858824,
+                "y": -113.8074039201174,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000165030-nfil3"
+            }
+        },
+        {
+            "key": "SMAD4_bsat",
+            "attributes": {
+                "label": "SMAD4",
+                "x": 17.500000000000004,
+                "y": -110.31088913245534,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000141646-smad4"
+            }
+        },
+        {
+            "key": "ATF3_bsat",
+            "attributes": {
+                "label": "ATF3",
+                "x": 24.748737341529157,
+                "y": -104.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000162772-atf3"
+            }
+        },
+        {
+            "key": "CEBPG_bsat",
+            "attributes": {
+                "label": "CEBPG",
+                "x": 30.310889132455344,
+                "y": -97.50000000000001,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000153879-cebpg"
+            }
+        },
+        {
+            "key": "CREB1_bsat",
+            "attributes": {
+                "label": "CREB1",
+                "x": 33.80740392011739,
+                "y": -89.05866657858823,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000118260-creb1"
+            }
+        },
+        {
+            "key": "FOSB::JUN_bsat",
+            "attributes": {
+                "label": "FOSB::JUN",
+                "x": 35.0,
+                "y": -80.00000000000001,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/none-fosbjun"
+            }
+        },
+        {
+            "key": "CREB5_bsat",
+            "attributes": {
+                "label": "CREB5",
+                "x": 33.807403920117395,
+                "y": -70.9413334214118,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000146592-creb5"
+            }
+        },
+        {
+            "key": "ATF7_bsat",
+            "attributes": {
+                "label": "ATF7",
+                "x": 30.310889132455365,
+                "y": -62.50000000000003,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000170653-atf7"
+            }
+        },
+        {
+            "key": "gsat",
+            "attributes": {
+                "label": "gsat",
+                "x": 80,
+                "y": -80,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/gsat"
+            }
+        },
+        {
+            "key": "EBF3_gsat",
+            "attributes": {
+                "label": "EBF3",
+                "x": 104.74873734152916,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000108001-ebf3"
+            }
+        },
+        {
+            "key": "ZNF692_gsat",
+            "attributes": {
+                "label": "ZNF692",
+                "x": 90.4126068849321,
+                "y": -46.584769672200906,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000171163-znf692"
+            }
+        },
+        {
+            "key": "BMI1_gsat",
+            "attributes": {
+                "label": "BMI1",
+                "x": 73.69107367651331,
+                "y": -45.573303256849975,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000168283-bmi1"
+            }
+        },
+        {
+            "key": "SMAD5_gsat",
+            "attributes": {
+                "label": "SMAD5",
+                "x": 58.41483945800098,
+                "y": -52.448578178683256,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000113658-smad5"
+            }
+        },
+        {
+            "key": "ZNF343_gsat",
+            "attributes": {
+                "label": "ZNF343",
+                "x": 48.08350539027685,
+                "y": -65.63555180915351,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000088876-znf343"
+            }
+        },
+        {
+            "key": "RBPJ_gsat",
+            "attributes": {
+                "label": "RBPJ",
+                "x": 45.063855602183885,
+                "y": -82.11324740978,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000168214-rbpj"
+            }
+        },
+        {
+            "key": "TFAP2E_gsat",
+            "attributes": {
+                "label": "TFAP2E",
+                "x": 50.047655469449325,
+                "y": -98.10682349621797,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000116819-tfap2e"
+            }
+        },
+        {
+            "key": "EBF4_gsat",
+            "attributes": {
+                "label": "EBF4",
+                "x": 61.893176503782,
+                "y": -109.95234453055065,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000088881-ebf4"
+            }
+        },
+        {
+            "key": "EBF1_gsat",
+            "attributes": {
+                "label": "EBF1",
+                "x": 77.88675259021996,
+                "y": -114.93614439781611,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000164330-ebf1"
+            }
+        },
+        {
+            "key": "EBF2_gsat",
+            "attributes": {
+                "label": "EBF2",
+                "x": 94.36444819084645,
+                "y": -111.91649460972317,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000221818-ebf2"
+            }
+        },
+        {
+            "key": "TP53_gsat",
+            "attributes": {
+                "label": "TP53",
+                "x": 107.55142182131672,
+                "y": -101.58516054199906,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000141510-tp53"
+            }
+        },
+        {
+            "key": "NR2E3_gsat",
+            "attributes": {
+                "label": "NR2E3",
+                "x": 114.42669674315002,
+                "y": -86.30892632348677,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000278570-nr2e3"
+            }
+        },
+        {
+            "key": "VEZF1_gsat",
+            "attributes": {
+                "label": "VEZF1",
+                "x": 113.41523032779912,
+                "y": -69.58739311506798,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000136451-vezf1"
+            }
+        },
+        {
+            "key": "censat",
+            "attributes": {
+                "label": "censat",
+                "x": 160,
+                "y": -80,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/censat"
+            }
+        },
+        {
+            "key": "PRDM1_censat",
+            "attributes": {
+                "label": "PRDM1",
+                "x": 184.74873734152916,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000057657-prdm1"
+            }
+        },
+        {
+            "key": "MSANTD3_censat",
+            "attributes": {
+                "label": "MSANTD3",
+                "x": 135.25126265847084,
+                "y": -104.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000066697-msantd3"
+            }
+        },
+        {
+            "key": "rDNA",
+            "attributes": {
+                "label": "rDNA",
+                "x": 240,
+                "y": -80,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/rdna"
+            }
+        },
+        {
+            "key": "RUNX2_rDNA",
+            "attributes": {
+                "label": "RUNX2",
+                "x": 264.74873734152914,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000124813-runx2"
+            }
+        },
+        {
+            "key": "ZNF768_rDNA",
+            "attributes": {
+                "label": "ZNF768",
+                "x": 215.25126265847084,
+                "y": -55.251262658470836,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000169957-znf768"
+            }
+        },
+        {
+            "key": "EWSR-FLI1_rDNA",
+            "attributes": {
+                "label": "EWSR-FLI1",
+                "x": 215.25126265847084,
+                "y": -104.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/none-ewsr-fli1"
+            }
+        },
+        {
+            "key": "PRDM1_rDNA",
+            "attributes": {
+                "label": "PRDM1",
+                "x": 264.74873734152914,
+                "y": -104.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000057657-prdm1"
+            }
+        },
+        {
+            "key": "dhor",
+            "attributes": {
+                "label": "dhor",
+                "x": 0,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/dhor"
+            }
+        },
+        {
+            "key": "OSR2_dhor",
+            "attributes": {
+                "label": "OSR2",
+                "x": 24.748737341529164,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000164920-osr2"
+            }
+        },
+        {
+            "key": "hor",
+            "attributes": {
+                "label": "hor",
+                "x": 80,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hor"
+            }
+        },
+        {
+            "key": "SP1_hor",
+            "attributes": {
+                "label": "SP1",
+                "x": 104.74873734152916,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185591-sp1"
+            }
+        },
+        {
+            "key": "PRDM4_hor",
+            "attributes": {
+                "label": "PRDM4",
+                "x": 46.19259607988261,
+                "y": -150.94133342141177,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000110851-prdm4"
+            }
+        },
+        {
+            "key": "ZFAT_hor",
+            "attributes": {
+                "label": "ZFAT",
+                "x": 89.05866657858824,
+                "y": -193.8074039201174,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000066827-zfat"
+            }
+        },
+        {
+            "key": "HSat1B_Y",
+            "attributes": {
+                "label": "HSat1B_Y",
+                "x": 160,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat1b_y"
+            }
+        },
+        {
+            "key": "RFX2_HSat1B_Y",
+            "attributes": {
+                "label": "RFX2",
+                "x": 184.74873734152916,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000087903-rfx2"
+            }
+        },
+        {
+            "key": "RFX3_HSat1B_Y",
+            "attributes": {
+                "label": "RFX3",
+                "x": 163.05045099616802,
+                "y": -125.13318556678891,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000080298-rfx3"
+            }
+        },
+        {
+            "key": "E2F2_HSat1B_Y",
+            "attributes": {
+                "label": "E2F2",
+                "x": 139.9248247277134,
+                "y": -131.32967844988528,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000007968-e2f2"
+            }
+        },
+        {
+            "key": "RFX1_HSat1B_Y",
+            "attributes": {
+                "label": "RFX1",
+                "x": 126.1925960798826,
+                "y": -150.94133342141177,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000132005-rfx1"
+            }
+        },
+        {
+            "key": "NFIL3_HSat1B_Y",
+            "attributes": {
+                "label": "NFIL3",
+                "x": 128.27922745371725,
+                "y": -174.7916391609245,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000165030-nfil3"
+            }
+        },
+        {
+            "key": "TFCP2_HSat1B_Y",
+            "attributes": {
+                "label": "TFCP2",
+                "x": 145.2083608390755,
+                "y": -191.72077254628275,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000135457-tfcp2"
+            }
+        },
+        {
+            "key": "RFX5_HSat1B_Y",
+            "attributes": {
+                "label": "RFX5",
+                "x": 169.05866657858823,
+                "y": -193.8074039201174,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000143390-rfx5"
+            }
+        },
+        {
+            "key": "E2F1_HSat1B_Y",
+            "attributes": {
+                "label": "E2F1",
+                "x": 188.6703215501147,
+                "y": -180.07517527228663,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101412-e2f1"
+            }
+        },
+        {
+            "key": "E2F4_HSat1B_Y",
+            "attributes": {
+                "label": "E2F4",
+                "x": 194.8668144332111,
+                "y": -156.94954900383195,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000205250-e2f4"
+            }
+        },
+        {
+            "key": "alpha",
+            "attributes": {
+                "label": "alpha",
+                "x": 240,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/alpha"
+            }
+        },
+        {
+            "key": "Sp1_copy_alpha",
+            "attributes": {
+                "label": "Sp1_copy",
+                "x": 264.74873734152914,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185591-sp1_copy"
+            }
+        },
+        {
+            "key": "HSat3_Y",
+            "attributes": {
+                "label": "HSat3_Y",
+                "x": 0,
+                "y": -240,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat3_y"
+            }
+        },
+        {
+            "key": "CDX4_HSat3_Y",
+            "attributes": {
+                "label": "CDX4",
+                "x": 24.748737341529164,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000131264-cdx4"
+            }
+        },
+        {
+            "key": "ZNF410_HSat3_Y",
+            "attributes": {
+                "label": "ZNF410",
+                "x": -24.74873734152916,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000119725-znf410"
+            }
+        },
+        {
+            "key": "BCL11b_HSat3_Y",
+            "attributes": {
+                "label": "BCL11b",
+                "x": -24.748737341529168,
+                "y": -264.74873734152914,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000127152-bcl11b"
+            }
+        },
+        {
+            "key": "HOXd9_HSat3_Y",
+            "attributes": {
+                "label": "HOXd9",
+                "x": 24.748737341529157,
+                "y": -264.7487373415292,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000128709-hoxd9"
+            }
+        },
+        {
+            "key": "unknown",
+            "attributes": {
+                "label": "unknown",
+                "x": 80,
+                "y": -240,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/unknown"
+            }
+        },
+        {
+            "key": "ELF1_unknown",
+            "attributes": {
+                "label": "ELF1",
+                "x": 104.74873734152916,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000120690-elf1"
+            }
+        },
+        {
+            "key": "ADNP2_unknown",
+            "attributes": {
+                "label": "ADNP2",
+                "x": 98.84987865463165,
+                "y": -210.50962742341727,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101544-adnp2"
+            }
+        },
+        {
+            "key": "IRF4_unknown",
+            "attributes": {
+                "label": "IRF4",
+                "x": 92.06962059197896,
+                "y": -207.14692923384973,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000137265-irf4"
+            }
+        },
+        {
+            "key": "POU2AF1_unknown",
+            "attributes": {
+                "label": "POU2AF1",
+                "x": 84.72500048486515,
+                "y": -205.32040411974177,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000110777-pou2af1"
+            }
+        },
+        {
+            "key": "IRF2_unknown",
+            "attributes": {
+                "label": "IRF2",
+                "x": 77.1594446065399,
+                "y": -205.11545836539221,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000168310-irf2"
+            }
+        },
+        {
+            "key": "LRWD1_unknown",
+            "attributes": {
+                "label": "LRWD1",
+                "x": 69.72670994136229,
+                "y": -206.5416750064936,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000161036-lrwd1"
+            }
+        },
+        {
+            "key": "ADNP_unknown",
+            "attributes": {
+                "label": "ADNP",
+                "x": 62.774342901384756,
+                "y": -209.53236573803397,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101126-adnp"
+            }
+        },
+        {
+            "key": "RFX8_unknown",
+            "attributes": {
+                "label": "RFX8",
+                "x": 56.62742844239566,
+                "y": -213.94768918532054,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000196460-rfx8"
+            }
+        },
+        {
+            "key": "IRF5_unknown",
+            "attributes": {
+                "label": "IRF5",
+                "x": 51.57338945269261,
+                "y": -219.5811897312377,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000128604-irf5"
+            }
+        },
+        {
+            "key": "RFX7_unknown",
+            "attributes": {
+                "label": "RFX7",
+                "x": 47.848547178273236,
+                "y": -226.16945115144455,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000181827-rfx7"
+            }
+        },
+        {
+            "key": "IRF1_unknown",
+            "attributes": {
+                "label": "IRF1",
+                "x": 45.627071104024544,
+                "y": -233.40441366425887,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000125347-irf1"
+            }
+        },
+        {
+            "key": "IRF7_unknown",
+            "attributes": {
+                "label": "IRF7",
+                "x": 45.01283498218506,
+                "y": -240.94777846366472,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185507-irf7"
+            }
+        },
+        {
+            "key": "BANP_unknown",
+            "attributes": {
+                "label": "BANP",
+                "x": 46.034559811137605,
+                "y": -248.4468261954897,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000172530-banp"
+            }
+        },
+        {
+            "key": "IRF9_unknown",
+            "attributes": {
+                "label": "IRF9",
+                "x": 48.64447087344593,
+                "y": -255.55090972238665,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000213928-irf9"
+            }
+        },
+        {
+            "key": "STAT4_unknown",
+            "attributes": {
+                "label": "STAT4",
+                "x": 52.72053162854431,
+                "y": -261.92784999425953,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000138378-stat4"
+            }
+        },
+        {
+            "key": "IRF8_unknown",
+            "attributes": {
+                "label": "IRF8",
+                "x": 58.072150005740475,
+                "y": -267.2794683714557,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000140968-irf8"
+            }
+        },
+        {
+            "key": "NRF1_unknown",
+            "attributes": {
+                "label": "NRF1",
+                "x": 64.4490902776134,
+                "y": -271.3555291265541,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000106459-nrf1"
+            }
+        },
+        {
+            "key": "SOX2_unknown",
+            "attributes": {
+                "label": "SOX2",
+                "x": 71.55317380451032,
+                "y": -273.96544018886243,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000181449-sox2"
+            }
+        },
+        {
+            "key": "GTF2A1L_unknown",
+            "attributes": {
+                "label": "GTF2A1L",
+                "x": 79.05222153633531,
+                "y": -274.98716501781496,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000242441-gtf2a1l"
+            }
+        },
+        {
+            "key": "LRIF1_unknown",
+            "attributes": {
+                "label": "LRIF1",
+                "x": 86.59558633574116,
+                "y": -274.37292889597546,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000121931-lrif1"
+            }
+        },
+        {
+            "key": "ZNF274_unknown",
+            "attributes": {
+                "label": "ZNF274",
+                "x": 93.83054884855544,
+                "y": -272.15145282172676,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000171606-znf274"
+            }
+        },
+        {
+            "key": "RFX6_unknown",
+            "attributes": {
+                "label": "RFX6",
+                "x": 100.41881026876229,
+                "y": -268.4266105473074,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185002-rfx6"
+            }
+        },
+        {
+            "key": "ZMYM3_unknown",
+            "attributes": {
+                "label": "ZMYM3",
+                "x": 106.05231081467944,
+                "y": -263.3725715576044,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000147130-zmym3"
+            }
+        },
+        {
+            "key": "FUS-CHOP_unknown",
+            "attributes": {
+                "label": "FUS-CHOP",
+                "x": 110.467634261966,
+                "y": -257.22565709861533,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/none-fus-chop"
+            }
+        },
+        {
+            "key": "DDIT3_unknown",
+            "attributes": {
+                "label": "DDIT3",
+                "x": 113.45832499350638,
+                "y": -250.27329005863777,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000175197-ddit3"
+            }
+        },
+        {
+            "key": "RNF2_unknown",
+            "attributes": {
+                "label": "RNF2",
+                "x": 114.88454163460779,
+                "y": -242.84055539346014,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000121481-rnf2"
+            }
+        },
+        {
+            "key": "IRF6_unknown",
+            "attributes": {
+                "label": "IRF6",
+                "x": 114.67959588025825,
+                "y": -235.2749995151349,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000117595-irf6"
+            }
+        },
+        {
+            "key": "ZBED2_unknown",
+            "attributes": {
+                "label": "ZBED2",
+                "x": 112.8530707661503,
+                "y": -227.93037940802114,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000177494-zbed2"
+            }
+        },
+        {
+            "key": "POU6F1_unknown",
+            "attributes": {
+                "label": "POU6F1",
+                "x": 109.49037257658277,
+                "y": -221.15012134536843,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000184271-pou6f1"
+            }
+        },
+        {
+            "key": "mon",
+            "attributes": {
+                "label": "mon",
+                "x": 160,
+                "y": -240,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/mon"
+            }
+        },
+        {
+            "key": "OSR2_mon",
+            "attributes": {
+                "label": "OSR2",
+                "x": 184.74873734152916,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000164920-osr2"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "key": "BCLAF1_HSat3_edge",
+            "source": "HSat3",
+            "target": "BCLAF1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CFDP1_HSat3_edge",
+            "source": "HSat3",
+            "target": "CFDP1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF621_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZNF621_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA7_HSat3_edge",
+            "source": "HSat3",
+            "target": "HOXA7_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EWS_FLI1_HSat3_edge",
+            "source": "HSat3",
+            "target": "EWS_FLI1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HES1_HSat3_edge",
+            "source": "HSat3",
+            "target": "HES1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PIN1_HSat3_edge",
+            "source": "HSat3",
+            "target": "PIN1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA9_HSat3_edge",
+            "source": "HSat3",
+            "target": "HOXA9_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HSF4_HSat3_edge",
+            "source": "HSat3",
+            "target": "HSF4_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PLRG1_HSat3_edge",
+            "source": "HSat3",
+            "target": "PLRG1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEAD2_HSat3_edge",
+            "source": "HSat3",
+            "target": "TEAD2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF3_HSat3_edge",
+            "source": "HSat3",
+            "target": "IRF3_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FAM181B_HSat3_edge",
+            "source": "HSat3",
+            "target": "FAM181B_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TBX4_HSat3_edge",
+            "source": "HSat3",
+            "target": "TBX4_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "JUNB_HSat3_edge",
+            "source": "HSat3",
+            "target": "JUNB_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF8_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZNF8_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEAD1_HSat3_edge",
+            "source": "HSat3",
+            "target": "TEAD1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BDP1_HSat3_edge",
+            "source": "HSat3",
+            "target": "BDP1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZBTB17_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZBTB17_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEAD3_HSat3_edge",
+            "source": "HSat3",
+            "target": "TEAD3_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFAT5_HSat3_edge",
+            "source": "HSat3",
+            "target": "NFAT5_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FLYWCH1_HSat3_edge",
+            "source": "HSat3",
+            "target": "FLYWCH1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NKX2-4_HSat3_edge",
+            "source": "HSat3",
+            "target": "NKX2-4_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CREBBP_HSat3_edge",
+            "source": "HSat3",
+            "target": "CREBBP_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "LIN54_HSat3_edge",
+            "source": "HSat3",
+            "target": "LIN54_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFATc1_HSat3_edge",
+            "source": "HSat3",
+            "target": "NFATc1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PRDM15_HSat3_edge",
+            "source": "HSat3",
+            "target": "PRDM15_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFATc4_HSat3_edge",
+            "source": "HSat3",
+            "target": "NFATc4_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BHLHE40_HSat3_edge",
+            "source": "HSat3",
+            "target": "BHLHE40_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TBX5_HSat3_edge",
+            "source": "HSat3",
+            "target": "TBX5_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ONECUT1_HSat3_edge",
+            "source": "HSat3",
+            "target": "ONECUT1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NEUROD1_HSat3_edge",
+            "source": "HSat3",
+            "target": "NEUROD1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZBTB5_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZBTB5_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF394_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZNF394_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HSF5_HSat3_edge",
+            "source": "HSat3",
+            "target": "HSF5_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SOX1_HSat3_edge",
+            "source": "HSat3",
+            "target": "SOX1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF502_HSat3_edge",
+            "source": "HSat3",
+            "target": "ZNF502_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CUX1_HSat3_edge",
+            "source": "HSat3",
+            "target": "CUX1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFATc2_HSat3_edge",
+            "source": "HSat3",
+            "target": "NFATc2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FOXK2_HSat3_edge",
+            "source": "HSat3",
+            "target": "FOXK2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HSF1_HSat3_edge",
+            "source": "HSat3",
+            "target": "HSF1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "MLLT1_HSat3_edge",
+            "source": "HSat3",
+            "target": "MLLT1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ONECUT2_HSat3_edge",
+            "source": "HSat3",
+            "target": "ONECUT2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEAD4_HSat3_edge",
+            "source": "HSat3",
+            "target": "TEAD4_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "STAT6_HSat3_edge",
+            "source": "HSat3",
+            "target": "STAT6_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TBX1_HSat3_edge",
+            "source": "HSat3",
+            "target": "TBX1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PKNOX1_HSat3_edge",
+            "source": "HSat3",
+            "target": "PKNOX1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFATc3_HSat3_edge",
+            "source": "HSat3",
+            "target": "NFATc3_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NKX2-2_HSat3_edge",
+            "source": "HSat3",
+            "target": "NKX2-2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HSF2_HSat3_edge",
+            "source": "HSat3",
+            "target": "HSF2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CUX2_HSat3_edge",
+            "source": "HSat3",
+            "target": "CUX2_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IKZF1_HSat3_edge",
+            "source": "HSat3",
+            "target": "IKZF1_HSat3",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA7_HSat2_edge",
+            "source": "HSat2",
+            "target": "HOXA7_HSat2",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA9_HSat2_edge",
+            "source": "HSat2",
+            "target": "HOXA9_HSat2",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DUX4_HSat2_edge",
+            "source": "HSat2",
+            "target": "DUX4_HSat2",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FLYWCH1_HSat2_edge",
+            "source": "HSat2",
+            "target": "FLYWCH1_HSat2",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "LEF1_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "LEF1_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA7_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "HOXA7_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "POU5F1_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "POU5F1_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXA9_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "HOXA9_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DLX6_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "DLX6_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TCF7_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "TCF7_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEF_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "TEF_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF382_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "ZNF382_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TBP_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "TBP_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TCF7L2_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "TCF7L2_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PBX3_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "PBX3_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "YY1_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "YY1_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RXRG_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "RXRG_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BCL11A_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "BCL11A_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NCOA2_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "NCOA2_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZBTB32_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "ZBTB32_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZFAT_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "ZFAT_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "E2F1_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "E2F1_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NANOG_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "NANOG_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF239_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "ZNF239_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TCF7L1_HSat1A_edge",
+            "source": "HSat1A",
+            "target": "TCF7L1_HSat1A",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IKZF2_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "IKZF2_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "POU4F1_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "POU4F1_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "OTX2_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "OTX2_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZBTB8A_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "ZBTB8A_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NCOA2_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "NCOA2_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF211_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "ZNF211_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TCF12_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "TCF12_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DMBX1_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "DMBX1_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "POU4F3_HSat1B_edge",
+            "source": "HSat1B",
+            "target": "POU4F3_HSat1B",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DBP_bsat_edge",
+            "source": "bsat",
+            "target": "DBP_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "MEIS1_bsat_edge",
+            "source": "bsat",
+            "target": "MEIS1_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "JUN_bsat_edge",
+            "source": "bsat",
+            "target": "JUN_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SMAD5_bsat_edge",
+            "source": "bsat",
+            "target": "SMAD5_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HLF_bsat_edge",
+            "source": "bsat",
+            "target": "HLF_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CEBPD_bsat_edge",
+            "source": "bsat",
+            "target": "CEBPD_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ATF4_bsat_edge",
+            "source": "bsat",
+            "target": "ATF4_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CEBPA_bsat_edge",
+            "source": "bsat",
+            "target": "CEBPA_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZEB1_bsat_edge",
+            "source": "bsat",
+            "target": "ZEB1_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CEBPB_bsat_edge",
+            "source": "bsat",
+            "target": "CEBPB_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TEF_bsat_edge",
+            "source": "bsat",
+            "target": "TEF_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CEBPE_bsat_edge",
+            "source": "bsat",
+            "target": "CEBPE_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "JDP2_bsat_edge",
+            "source": "bsat",
+            "target": "JDP2_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SMAD3_bsat_edge",
+            "source": "bsat",
+            "target": "SMAD3_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ESR1_bsat_edge",
+            "source": "bsat",
+            "target": "ESR1_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "MEIS3_bsat_edge",
+            "source": "bsat",
+            "target": "MEIS3_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFIL3_bsat_edge",
+            "source": "bsat",
+            "target": "NFIL3_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SMAD4_bsat_edge",
+            "source": "bsat",
+            "target": "SMAD4_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ATF3_bsat_edge",
+            "source": "bsat",
+            "target": "ATF3_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CEBPG_bsat_edge",
+            "source": "bsat",
+            "target": "CEBPG_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CREB1_bsat_edge",
+            "source": "bsat",
+            "target": "CREB1_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FOSB::JUN_bsat_edge",
+            "source": "bsat",
+            "target": "FOSB::JUN_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CREB5_bsat_edge",
+            "source": "bsat",
+            "target": "CREB5_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ATF7_bsat_edge",
+            "source": "bsat",
+            "target": "ATF7_bsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EBF3_gsat_edge",
+            "source": "gsat",
+            "target": "EBF3_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF692_gsat_edge",
+            "source": "gsat",
+            "target": "ZNF692_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BMI1_gsat_edge",
+            "source": "gsat",
+            "target": "BMI1_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SMAD5_gsat_edge",
+            "source": "gsat",
+            "target": "SMAD5_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF343_gsat_edge",
+            "source": "gsat",
+            "target": "ZNF343_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RBPJ_gsat_edge",
+            "source": "gsat",
+            "target": "RBPJ_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TFAP2E_gsat_edge",
+            "source": "gsat",
+            "target": "TFAP2E_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EBF4_gsat_edge",
+            "source": "gsat",
+            "target": "EBF4_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EBF1_gsat_edge",
+            "source": "gsat",
+            "target": "EBF1_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EBF2_gsat_edge",
+            "source": "gsat",
+            "target": "EBF2_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TP53_gsat_edge",
+            "source": "gsat",
+            "target": "TP53_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NR2E3_gsat_edge",
+            "source": "gsat",
+            "target": "NR2E3_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "VEZF1_gsat_edge",
+            "source": "gsat",
+            "target": "VEZF1_gsat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PRDM1_censat_edge",
+            "source": "censat",
+            "target": "PRDM1_censat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "MSANTD3_censat_edge",
+            "source": "censat",
+            "target": "MSANTD3_censat",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RUNX2_rDNA_edge",
+            "source": "rDNA",
+            "target": "RUNX2_rDNA",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF768_rDNA_edge",
+            "source": "rDNA",
+            "target": "ZNF768_rDNA",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EWSR-FLI1_rDNA_edge",
+            "source": "rDNA",
+            "target": "EWSR-FLI1_rDNA",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PRDM1_rDNA_edge",
+            "source": "rDNA",
+            "target": "PRDM1_rDNA",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "OSR2_dhor_edge",
+            "source": "dhor",
+            "target": "OSR2_dhor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SP1_hor_edge",
+            "source": "hor",
+            "target": "SP1_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PRDM4_hor_edge",
+            "source": "hor",
+            "target": "PRDM4_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZFAT_hor_edge",
+            "source": "hor",
+            "target": "ZFAT_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX2_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "RFX2_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX3_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "RFX3_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "E2F2_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "E2F2_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX1_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "RFX1_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NFIL3_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "NFIL3_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TFCP2_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "TFCP2_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX5_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "RFX5_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "E2F1_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "E2F1_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "E2F4_HSat1B_Y_edge",
+            "source": "HSat1B_Y",
+            "target": "E2F4_HSat1B_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Sp1_copy_alpha_edge",
+            "source": "alpha",
+            "target": "Sp1_copy_alpha",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CDX4_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "CDX4_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF410_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "ZNF410_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BCL11b_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "BCL11b_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXd9_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "HOXd9_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ELF1_unknown_edge",
+            "source": "unknown",
+            "target": "ELF1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ADNP2_unknown_edge",
+            "source": "unknown",
+            "target": "ADNP2_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF4_unknown_edge",
+            "source": "unknown",
+            "target": "IRF4_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "POU2AF1_unknown_edge",
+            "source": "unknown",
+            "target": "POU2AF1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF2_unknown_edge",
+            "source": "unknown",
+            "target": "IRF2_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "LRWD1_unknown_edge",
+            "source": "unknown",
+            "target": "LRWD1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ADNP_unknown_edge",
+            "source": "unknown",
+            "target": "ADNP_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX8_unknown_edge",
+            "source": "unknown",
+            "target": "RFX8_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF5_unknown_edge",
+            "source": "unknown",
+            "target": "IRF5_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX7_unknown_edge",
+            "source": "unknown",
+            "target": "RFX7_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF1_unknown_edge",
+            "source": "unknown",
+            "target": "IRF1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF7_unknown_edge",
+            "source": "unknown",
+            "target": "IRF7_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BANP_unknown_edge",
+            "source": "unknown",
+            "target": "BANP_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF9_unknown_edge",
+            "source": "unknown",
+            "target": "IRF9_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "STAT4_unknown_edge",
+            "source": "unknown",
+            "target": "STAT4_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF8_unknown_edge",
+            "source": "unknown",
+            "target": "IRF8_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "NRF1_unknown_edge",
+            "source": "unknown",
+            "target": "NRF1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SOX2_unknown_edge",
+            "source": "unknown",
+            "target": "SOX2_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "GTF2A1L_unknown_edge",
+            "source": "unknown",
+            "target": "GTF2A1L_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "LRIF1_unknown_edge",
+            "source": "unknown",
+            "target": "LRIF1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF274_unknown_edge",
+            "source": "unknown",
+            "target": "ZNF274_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RFX6_unknown_edge",
+            "source": "unknown",
+            "target": "RFX6_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZMYM3_unknown_edge",
+            "source": "unknown",
+            "target": "ZMYM3_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FUS-CHOP_unknown_edge",
+            "source": "unknown",
+            "target": "FUS-CHOP_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DDIT3_unknown_edge",
+            "source": "unknown",
+            "target": "DDIT3_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RNF2_unknown_edge",
+            "source": "unknown",
+            "target": "RNF2_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "IRF6_unknown_edge",
+            "source": "unknown",
+            "target": "IRF6_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZBED2_unknown_edge",
+            "source": "unknown",
+            "target": "ZBED2_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "POU6F1_unknown_edge",
+            "source": "unknown",
+            "target": "POU6F1_unknown",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "OSR2_mon_edge",
+            "source": "mon",
+            "target": "OSR2_mon",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        }
+    ]
+}

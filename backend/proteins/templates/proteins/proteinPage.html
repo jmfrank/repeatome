@@ -117,9 +117,9 @@ Object.keys(organ_groups).sort().forEach((organ, i, arr) => {
   grouped_dataPoints = grouped_dataPoints.concat(organ_groups[organ]);
 
   // Insert a spacer between organ groups
-  if (i < arr.length - 1) {
+  /*if (i < arr.length - 1) {
     grouped_dataPoints.push({ label: "", y: null });
-  }
+  }*/
 });
 
 // console.log(all_organs)
@@ -330,10 +330,12 @@ window.onload = function () {
 					{% endif %}
 
           <!-- {% if protein.jaspar %}
+          {% comment %} {% if protein.jaspar %}
 					<div class="col-md-3 col-sm-6">
 					<small>Jaspar: <a href="https://jaspar.elixir.no/matrix/{{ protein.jaspar }}" target="_blank" rel="noopener">{{ protein.jaspar | default:''}}</a></small>
 					</div>
 					{% endif %} -->
+					{% endif %} {% endcomment %}
 
 			</div>
 			{% endif %}
@@ -387,6 +389,10 @@ window.onload = function () {
     <!-- RNA Expression Graph -->
     <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    {% comment %} {% if protein.proteinatlas %} {% endcomment %}
+      <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
+      <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    {% comment %} {% endif %} {% endcomment %}
 
    {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>

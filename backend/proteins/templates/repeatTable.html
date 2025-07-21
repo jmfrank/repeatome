@@ -15,7 +15,7 @@
 	<h1 class="name text-center mb-4">RepeatOme Repeats</h1>
 
 
-      <table class="table table-striped" id="repeatTable" style="width: 100%;">
+      <table class="table table-striped" id="repeatTable" style="width: 100%; overflow-x: scroll;">
         <thead>
           <tr class="table-header">
             <th class="repeat text-nowrap">Repeat</th>
@@ -51,7 +51,7 @@
 ///////////DATA TABLE
 
 $(function() {
-  $('#org-table').DataTable({
+  $('#repeatTable').DataTable({
     "scrollX": true,
     "pageLength": 50,
     "iDisplayLength": -1,
@@ -62,9 +62,9 @@ $(function() {
 });
 </script>
 
-<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+{% comment %} <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script> {% endcomment %}
 
-<script type="text/javascript">
+{% comment %} <script type="text/javascript">
    $(function(){
 
 
@@ -76,7 +76,7 @@ $(function() {
    });
 
 
-</script>
+</script> {% endcomment %}
 
 
 {% endblock javascript %}

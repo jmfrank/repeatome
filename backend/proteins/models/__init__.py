@@ -1,4 +1,4 @@
-from .bleach import BleachMeasurement
+# from .bleach import BleachMeasurement
 from .collection import ProteinCollection
 from .efficiency import OcFluorEff
 from .excerpt import Excerpt
@@ -15,7 +15,7 @@ from .state import Dye, Fluorophore, State
 from .transition import StateTransition
 
 __all__ = [
-    "BleachMeasurement",
+    # "BleachMeasurement",
     "Camera",
     "Dye",
     "Excerpt",

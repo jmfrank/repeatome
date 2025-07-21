@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% load static i18n favit_tags %}
+{% load static %}
 
 {% block title %}{{ object }} in the repeatOme Database {% endblock %}
 {% block meta-description %}Proteins derived from {{ object.scientific_name }} at FPbase{% endblock %}
+
+{% block extrahead %}
+<script type='module' src="{% static 'repeat_network.js'%}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -23,7 +28,7 @@
 
       <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
 
-      <div class="lineage mb-0" data-slug='{{protein.slug}}'></div>
+      <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px;'></div>
 
       <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
 			{% with proteins=object.proteinTF.all removebutton=False %}
@@ -36,7 +41,7 @@
 
 {% block javascript %}
 
-<script>
+{% comment %} <script>
 
 $('.lineage').each(function(i, el){
   $.getJSON("{% url 'proteins:get-org-lineage' object.pk %}", function(data){
@@ -54,7 +59,7 @@ $('.lineage').each(function(i, el){
 });
 
 
-</script>
+</script> {% endcomment %}
 
 
 {% endblock javascript %}
