@@ -45,6 +45,7 @@ class RepeatIndex(AlgoliaIndex):
     fields = (
         "id",
         "name",
+        "slug",
         "aliases",
         "dfam_id",
         "parental_organism"
