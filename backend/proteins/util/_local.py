@@ -15,7 +15,7 @@ from references.models import Reference
 from .. import forms
 from ..forms import SpectrumForm
 from ..models import (
-    BleachMeasurement,
+    # BleachMeasurement,
     Dye,
     Organism,
     OSERMeasurement,
@@ -102,8 +102,8 @@ def importCSV(file=None):
             p.save()
 
             # add bleach numbers
-            if get_nonan(prot, "bleach"):
-                BleachMeasurement.objects.update_or_create(rate=get_nonan(prot, "bleach"), state=s)
+            # if get_nonan(prot, "bleach"):
+                # BleachMeasurement.objects.update_or_create(rate=get_nonan(prot, "bleach"), state=s)
         else:
             print(f"{prot.Name} already in database...")
             p = Protein.objects.get(slug=slugify(prot.Name))
@@ -205,8 +205,8 @@ def importPSFPs(file=None):
                 p.default_state = state
                 p.save()
 
-            if get_nonan(prot, "bleach"):
-                BleachMeasurement.objects.update_or_create(rate=get_nonan(prot, "bleach"), state=state)
+            # if get_nonan(prot, "bleach"):
+                # BleachMeasurement.objects.update_or_create(rate=get_nonan(prot, "bleach"), state=state)
             if created:
                 print(f"STATE CREATED  : {prot.state}")
                 st += 1
@@ -686,10 +686,10 @@ def import_fpd(file=None, overwrite=True):
                 except Exception:
                     print("failed to link states")
 
-            if row["bleach"]:
-                state = sinstances[-1] if len(sinstances) else None
-                bm = BleachMeasurement(rate=float(row["bleach"]), reference=ref, state=state)
-                bm.save()
+            # if row["bleach"]:
+                # state = sinstances[-1] if len(sinstances) else None
+                # bm = BleachMeasurement(rate=float(row["bleach"]), reference=ref, state=state)
+                # bm.save()
 
             p = pform.save() if overwrite else pform.save_new_only()  # register states
 

@@ -44,15 +44,15 @@ from proteins.util.spectra import spectra2csv
 from references.models import Reference  # breaks application modularity
 
 from ..forms import (
-    BleachComparisonForm,
-    BleachMeasurementForm,
+    # BleachComparisonForm,
+    # BleachMeasurementForm,
     LineageFormSet,
     ProteinForm,
     StateFormSet,
     StateTransitionFormSet,
     bleach_items_formset,
 )
-from ..models import BleachMeasurement, Excerpt, Organism, Protein, Spectrum, State, ProteinTF
+from ..models import Excerpt, Organism, Protein, Spectrum, State, ProteinTF
 
 if TYPE_CHECKING:
     import maxminddb
@@ -870,92 +870,92 @@ def update_transitions(request, slug=None):
         return render(request, template_name, {"transition_form": formset})
 
 
-@login_required
-def protein_bleach_formsets(request, slug):
-    template_name = "proteins/protein_bleach_form.html"
-    BleachMeasurementFormSet = modelformset_factory(BleachMeasurement, BleachMeasurementForm, extra=1, can_delete=True)
-    protein = get_object_or_404(Protein, slug=slug)
-    qs = BleachMeasurement.objects.filter(state__protein=protein)
-    if request.method == "POST":
-        formset = BleachMeasurementFormSet(request.POST, queryset=qs)
-        formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
-        if not formset.is_valid():
-            return render(request, template_name, {"formset": formset, "protein": protein})
+# @login_required
+# def protein_bleach_formsets(request, slug):
+#     template_name = "proteins/protein_bleach_form.html"
+#     BleachMeasurementFormSet = modelformset_factory(BleachMeasurement, BleachMeasurementForm, extra=1, can_delete=True)
+#     protein = get_object_or_404(Protein, slug=slug)
+#     qs = BleachMeasurement.objects.filter(state__protein=protein)
+#     if request.method == "POST":
+#         formset = BleachMeasurementFormSet(request.POST, queryset=qs)
+#         formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
+#         if not formset.is_valid():
+#             return render(request, template_name, {"formset": formset, "protein": protein})
 
-        with transaction.atomic():
-            with reversion.create_revision():
-                saved = formset.save(commit=False)
-                for s in saved:
-                    if not s.created_by:
-                        s.created_by = request.user
-                    s.updated_by = request.user
-                    s.save()
-                for s in formset.deleted_objects:
-                    s.delete()
+#         with transaction.atomic():
+#             with reversion.create_revision():
+#                 saved = formset.save(commit=False)
+#                 for s in saved:
+#                     if not s.created_by:
+#                         s.created_by = request.user
+#                     s.updated_by = request.user
+#                     s.save()
+#                 for s in formset.deleted_objects:
+#                     s.delete()
 
-                chg_string = "\n".join(get_form_changes(formset))
+#                 chg_string = "\n".join(get_form_changes(formset))
 
-                if not request.user.is_staff:
-                    protein.status = "pending"
-                    mail_managers(
-                        "BleachMeasurement Added",
-                        f"User: {request.user.username}\nProtein: {protein}\n{chg_string}\n\n"
-                        f"{request.build_absolute_uri(protein.get_absolute_url())}",
-                        fail_silently=True,
-                    )
-                # else:
-                #     protein.status = 'approved'
+#                 if not request.user.is_staff:
+#                     protein.status = "pending"
+#                     mail_managers(
+#                         "BleachMeasurement Added",
+#                         f"User: {request.user.username}\nProtein: {protein}\n{chg_string}\n\n"
+#                         f"{request.build_absolute_uri(protein.get_absolute_url())}",
+#                         fail_silently=True,
+#                     )
+#                 # else:
+#                 #     protein.status = 'approved'
 
-                protein.save()
-                reversion.set_user(request.user)
-                reversion.set_comment(chg_string)
-                try:
-                    uncache_protein_page(slug, request)
-                except Exception as e:
-                    logger.error(f"failed to uncache protein: {e}")
-        return HttpResponseRedirect(protein.get_absolute_url())
-    else:
-        formset = BleachMeasurementFormSet(queryset=qs)
-        formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
-    return render(request, template_name, {"formset": formset, "protein": protein})
+#                 protein.save()
+#                 reversion.set_user(request.user)
+#                 reversion.set_comment(chg_string)
+#                 try:
+#                     uncache_protein_page(slug, request)
+#                 except Exception as e:
+#                     logger.error(f"failed to uncache protein: {e}")
+#         return HttpResponseRedirect(protein.get_absolute_url())
+#     else:
+#         formset = BleachMeasurementFormSet(queryset=qs)
+#         formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
+#     return render(request, template_name, {"formset": formset, "protein": protein})
 
 
-@login_required
-def bleach_comparison(request, pk=None):
-    template_name = "proteins/bleach_comparison_form.html"
-    if request.method == "POST":
-        formset = bleach_items_formset(request.POST)
-        bcf = BleachComparisonForm(request.POST)
-        if not formset.is_valid() or not bcf.is_valid():
-            return render(request, template_name, {"formset": formset, "mainform": bcf})
-        d = bcf.cleaned_data
-        d["reference"], _ = Reference.objects.get_or_create(doi=d.pop("reference_doi"))
-        for form in formset.forms:
-            if form.has_changed():
-                d["state"] = form.cleaned_data["state"]
-                d["rate"] = form.cleaned_data["rate"]
-                BleachMeasurement.objects.create(**d)
-        return redirect(d["reference"])
-    else:
-        formset = bleach_items_formset()
-        if pk:
-            reference = get_object_or_404(Reference, id=pk)
-            bcf = BleachComparisonForm({"reference_doi": reference.doi})
-            bcf.fields["reference_doi"].widget.attrs["readonly"] = True
-        else:
-            bcf = BleachComparisonForm()
-    return render(request, template_name, {"formset": formset, "mainform": bcf})
+# @login_required
+# def bleach_comparison(request, pk=None):
+#     template_name = "proteins/bleach_comparison_form.html"
+#     if request.method == "POST":
+#         formset = bleach_items_formset(request.POST)
+#         bcf = BleachComparisonForm(request.POST)
+#         if not formset.is_valid() or not bcf.is_valid():
+#             return render(request, template_name, {"formset": formset, "mainform": bcf})
+#         d = bcf.cleaned_data
+#         d["reference"], _ = Reference.objects.get_or_create(doi=d.pop("reference_doi"))
+#         for form in formset.forms:
+#             if form.has_changed():
+#                 d["state"] = form.cleaned_data["state"]
+#                 d["rate"] = form.cleaned_data["rate"]
+#                 BleachMeasurement.objects.create(**d)
+#         return redirect(d["reference"])
+#     else:
+#         formset = bleach_items_formset()
+#         if pk:
+#             reference = get_object_or_404(Reference, id=pk)
+#             bcf = BleachComparisonForm({"reference_doi": reference.doi})
+#             bcf.fields["reference_doi"].widget.attrs["readonly"] = True
+#         else:
+#             bcf = BleachComparisonForm()
+#     return render(request, template_name, {"formset": formset, "mainform": bcf})
 
-def spectra_csv(request):
-    try:
-        idlist = [int(x) for x in request.GET.get("q", "").split(",") if x]
-        spectralist = Spectrum.objects.filter(id__in=idlist)
-        if spectralist:
-            return spectra2csv(spectralist)
-    except Exception:
-        return HttpResponse("malformed spectra csv request")
-    else:
-        return HttpResponse("malformed spectra csv request")
+# def spectra_csv(request):
+#     try:
+#         idlist = [int(x) for x in request.GET.get("q", "").split(",") if x]
+#         spectralist = Spectrum.objects.filter(id__in=idlist)
+#         if spectralist:
+#             return spectra2csv(spectralist)
+#     except Exception:
+#         return HttpResponse("malformed spectra csv request")
+#     else:
+#         return HttpResponse("malformed spectra csv request")
 
 
 @login_required

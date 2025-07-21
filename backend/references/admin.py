@@ -110,7 +110,7 @@ class ReferenceAdmin(CompareVersionAdmin):
                 )
             },
         ),
-        ("Bleach Measurements", {"fields": ("bleach_links",)}),
+        # ("Bleach Measurements", {"fields": ("bleach_links",)}),
         (
             "Change History",
             {
@@ -123,7 +123,7 @@ class ReferenceAdmin(CompareVersionAdmin):
         "author_links",
         "protein_links",
         "secondary_proteins",
-        "bleach_links",
+        # "bleach_links",
         "created",
         "created_by",
         "modified",
@@ -161,14 +161,14 @@ class ReferenceAdmin(CompareVersionAdmin):
             links.append(link)
         return mark_safe(", ".join(links))
 
-    @admin.display(description="BleachMeasurements")
-    def bleach_links(self, obj):
-        links = []
-        for bm in obj.bleach_measurements.all():
-            url = reverse("admin:proteins_bleachmeasurement_change", args=(bm.pk,))
-            link = f'<a href="{url}">{bm}</a>'
-            links.append(link)
-        return mark_safe(", ".join(links))
+    # @admin.display(description="BleachMeasurements")
+    # def bleach_links(self, obj):
+    #     links = []
+    #     for bm in obj.bleach_measurements.all():
+    #         url = reverse("admin:proteins_bleachmeasurement_change", args=(bm.pk,))
+    #         link = f'<a href="{url}">{bm}</a>'
+    #         links.append(link)
+    #     return mark_safe(", ".join(links))
 
     def save_model(self, request, obj, form, change):
         if not obj.created_by:

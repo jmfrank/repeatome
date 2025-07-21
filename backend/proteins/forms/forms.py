@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from proteins.models import (
-    BleachMeasurement,
+    # BleachMeasurement,
     Lineage,
     Protein,
     ProteinCollection,
@@ -487,65 +487,65 @@ class CollectionForm(forms.ModelForm):
         )
 
 
-class BleachMeasurementForm(forms.ModelForm):
-    reference_doi = DOIField(required=False, help_text="e.g. 10.1038/nmeth.2413", label="Reference DOI")
+# class BleachMeasurementForm(forms.ModelForm):
+#     reference_doi = DOIField(required=False, help_text="e.g. 10.1038/nmeth.2413", label="Reference DOI")
 
-    class Meta:
-        model = BleachMeasurement
-        fields = (
-            "rate",
-            "power",
-            "units",
-            "modality",
-            "reference_doi",
-            "bandcenter",
-            "bandwidth",
-            "state",
-            "light",
-            "temp",
-            "fusion",
-            "in_cell",
-            "cell_type",
-        )
+#     class Meta:
+#         model = BleachMeasurement
+#         fields = (
+#             "rate",
+#             "power",
+#             "units",
+#             "modality",
+#             "reference_doi",
+#             "bandcenter",
+#             "bandwidth",
+#             "state",
+#             "light",
+#             "temp",
+#             "fusion",
+#             "in_cell",
+#             "cell_type",
+#         )
 
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get("instance", None)
-        if instance:
-            kwargs.update(initial={"reference_doi": instance.reference.doi})
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.disable_csrf = True
-        self.helper.layout = Layout(
-            Div(
-                Div(
-                    Div("state", css_class="col-md-4 col-xs-12"),
-                    Div("rate", css_class="col-md-4 col-xs-12"),
-                    Div("reference_doi", css_class="col-md-4 col-xs-12"),
-                    Div("modality", css_class="col-md-4 col-xs-12"),
-                    Div("power", css_class="col-md-4 col-xs-12"),
-                    Div("units", css_class="col-md-4 col-xs-12"),
-                    Div("light", css_class="col-md-4 col-xs-12"),
-                    Div("bandcenter", css_class="col-md-4 col-xs-12"),
-                    Div("bandwidth", css_class="col-md-4 col-xs-12"),
-                    Div("fusion", css_class="col-md-3 col-xs-12"),
-                    Div("in_cell", css_class="col-md-3 col-xs-12"),
-                    Div("cell_type", css_class="col-md-3 col-xs-12"),
-                    Div("temp", css_class="col-md-3 col-xs-12"),
-                    css_class="row",
-                )
-            )
-        )
+#     def __init__(self, *args, **kwargs):
+#         instance = kwargs.get("instance", None)
+#         if instance:
+#             kwargs.update(initial={"reference_doi": instance.reference.doi})
+#         super().__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.form_tag = False
+#         self.helper.disable_csrf = True
+#         self.helper.layout = Layout(
+#             Div(
+#                 Div(
+#                     Div("state", css_class="col-md-4 col-xs-12"),
+#                     Div("rate", css_class="col-md-4 col-xs-12"),
+#                     Div("reference_doi", css_class="col-md-4 col-xs-12"),
+#                     Div("modality", css_class="col-md-4 col-xs-12"),
+#                     Div("power", css_class="col-md-4 col-xs-12"),
+#                     Div("units", css_class="col-md-4 col-xs-12"),
+#                     Div("light", css_class="col-md-4 col-xs-12"),
+#                     Div("bandcenter", css_class="col-md-4 col-xs-12"),
+#                     Div("bandwidth", css_class="col-md-4 col-xs-12"),
+#                     Div("fusion", css_class="col-md-3 col-xs-12"),
+#                     Div("in_cell", css_class="col-md-3 col-xs-12"),
+#                     Div("cell_type", css_class="col-md-3 col-xs-12"),
+#                     Div("temp", css_class="col-md-3 col-xs-12"),
+#                     css_class="row",
+#                 )
+#             )
+#         )
 
-    def save(self, commit=True):
-        obj = super().save(commit=False)
-        doi = self.cleaned_data.get("reference_doi")
-        if doi:
-            ref, created = Reference.objects.get_or_create(doi=doi)
-            obj.reference = ref
-        if commit:
-            obj.save()
-        return obj
+#     def save(self, commit=True):
+#         obj = super().save(commit=False)
+#         doi = self.cleaned_data.get("reference_doi")
+#         if doi:
+#             ref, created = Reference.objects.get_or_create(doi=doi)
+#             obj.reference = ref
+#         if commit:
+#             obj.save()
+#         return obj
 
 
 class protBleachItem(forms.ModelForm):
@@ -565,7 +565,7 @@ class protBleachItem(forms.ModelForm):
     )
 
     class Meta:
-        model = BleachMeasurement
+        # model = BleachMeasurement
         fields = ("rate", "state")
 
     def __init__(self, *args, **kwargs):
@@ -588,7 +588,7 @@ class BleachComparisonForm(forms.ModelForm):
     reference_doi = DOIField(required=True, help_text="e.g. 10.1038/nmeth.2413", label="Reference DOI")
 
     class Meta:
-        model = BleachMeasurement
+        # model = BleachMeasurement
         fields = (
             "power",
             "units",

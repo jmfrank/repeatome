@@ -168,22 +168,22 @@ urlpatterns = [
        views.RepeatDetailView.as_view(),
        name="repeatTable-detail",
     ),
-    re_path(
-        r"^protein/(?P<slug>[-\w]+)/bleach/$",
-        views.protein_bleach_formsets,
-        name="protein-bleach-form",
-    ),
+    # re_path(
+    #     r"^protein/(?P<slug>[-\w]+)/bleach/$",
+    #     views.protein_bleach_formsets,
+    #     name="protein-bleach-form",
+    # ),
     re_path(
         r"^protein/(?P<slug>[-\w]+)/history/$",
         views.protein_history,
         name="protein-history",
     ),
-    re_path(
-        r"^bleach_comparison/(?P<pk>[-\w]+)/$",
-        views.bleach_comparison,
-        name="bleach-comparison",
-    ),
-    path("bleach_comparison/", views.bleach_comparison, name="bleach-comparison"),
+    # re_path(
+    #     r"^bleach_comparison/(?P<pk>[-\w]+)/$",
+    #     views.bleach_comparison,
+    #     name="bleach-comparison",
+    # ),
+    # path("bleach_comparison/", views.bleach_comparison, name="bleach-comparison"),
     re_path(
         r"^protein/(?P<slug>[-\w]+)/rev/(?P<rev>\d+)$",
         views.ProteinDetailView.as_view(),

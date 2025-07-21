@@ -59,7 +59,7 @@ class StateFilter(filters.FilterSet):
             "qy": ["gte", "lte", "range", "exact"],
             "brightness": ["gte", "lte", "range", "exact"],
             "pka": ["gte", "lte", "range", "exact"],
-            "bleach_measurements__rate": ["gte", "lte", "range", "exact"],
+            # "bleach_measurements__rate": ["gte", "lte", "range", "exact"],
         }
 
 
