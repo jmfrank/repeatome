@@ -10,6 +10,7 @@ from .models import Organism, ProteinTF, Repeat
 class ProteinIndex(AlgoliaIndex):
     fields = (
         "gene",
+        "slug",
         "id",
         "aliases",
         "PDB",

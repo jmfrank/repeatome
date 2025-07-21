@@ -26,7 +26,7 @@
 <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
 <script src="{% static 'motif_viewer/scroller.js' %}"></script>
 <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
-<script>
+<!-- <script>
 
   // Use jQuery.noConflict() to prevent conflicts
   var $j = jQuery.noConflict();
@@ -40,7 +40,7 @@
         $j("#logo{{forloop.counter}}").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info{{forloop.counter}}'});
     {% endfor %}
   });
-</script>
+</script> -->
 
 
 <!-- PDB Viewer -->
@@ -184,7 +184,10 @@ window.onload = function () {
   <h1 class="text-center name display-4">{{ protein.gene | safe }}</h1>
   <div class="text-center aliases" style="font-size: 20px;">a.k.a {{ protein.aliases_as_str | safe }}</div>
   <div class="text-center gene_family" style="font-size: 24px;">{{protein.gene_family.gene_family | safe}}</div>
-   <div class="table mt-3">
+  <div class="attributes">
+     <h3>Attributes</h3>
+  </div>
+  <div class="table mt-3">
      <table class="table mobile flip-scroll">
        <thead>
          <tr class="table-header ">
@@ -195,16 +198,22 @@ window.onload = function () {
          </tr>
        </thead>
        <tbody>
-
-
          <tr >
            <td>{{protein.gene_family.parent_organism.scientific_name | safe}}</td>
            <td>{{protein.molecular_weight_str | safe}}</td>
            <td>{{protein.cofactor_as_str | safe}}</td>
            <td>{{protein.oligomerization | safe}}</td>
          </tr>
-
-
+         <tr class="table-header ">
+           <th>Gene type</th>
+           <th>DNA binding domain</th>
+           <th>Signaling pathway</th>
+         </tr>
+         <tr class="table-header ">
+           <td>{{ protein.gene_type_as_str | safe}}</td>
+           <td>{{ protein.dna_binding_domain | safe }}</td>
+           <td>{{ protein.signaling_pathway | safe }}</td>
+         </tr>
        </tbody>
      </table>
    </div>
@@ -238,31 +247,7 @@ window.onload = function () {
      </table>
    </div>
 
-   <div class="attributes">
-     <h3>Attributes</h3>
-   </div>
-
-
-   <div class="table mt-3">
-     <table class="table flip-scroll">
-       <thead>
-         <tr class="table-header">
-           <th>Gene type</th>
-           <th>DNA binding domain</th>
-           <th>Signaling pathway</th>
-         </tr>
-       </thead>
-       <tbody>
-         <tr >
-           <td>{{ protein.gene_type_as_str | safe}}</td>
-           <td>{{ protein.dna_binding_domain | safe }}</td>
-           <td>{{ protein.signaling_pathway | safe }}</td>
-         </tr>
-       </tbody>
-     </table>
-   </div>
-
-
+   
      {% comment %} {% if protein.protein_sequence %} {% endcomment %}
      {% comment %} <div class="float-sm-right text-info"><a href="{% url 'proteins:blast' %}?query={{protein.seq}}">BLAST</a></div>
      {% endif %}
@@ -344,18 +329,18 @@ window.onload = function () {
 					</div>
 					{% endif %}
 
-          {% if protein.jaspar %}
+          <!-- {% if protein.jaspar %}
 					<div class="col-md-3 col-sm-6">
 					<small>Jaspar: <a href="https://jaspar.elixir.no/matrix/{{ protein.jaspar }}" target="_blank" rel="noopener">{{ protein.jaspar | default:''}}</a></small>
 					</div>
-					{% endif %}
+					{% endif %} -->
 
 			</div>
 			{% endif %}
 		</div>
 
 
-    {% if protein.PDB %}
+    {% if protein.UNIPROT %}
       {% include "proteins/_structure_section.html" with protein=protein %}
     {% endif %}
 
@@ -384,7 +369,7 @@ window.onload = function () {
       </div>
     {% endif %}
 
-    {% for repeat in protein.repeats.all %}
+    <!-- {% for repeat in protein.repeats.all %}
       <tr>
             {% if repeat.dfam_id %}
               <div class='row' id='struct-micro-names' style="padding:15px">
@@ -394,17 +379,14 @@ window.onload = function () {
 
               <div class='logo-holder'>
                 <div class="logo-col" id="logo{{forloop.counter}}" data-logo="{{repeat.get_hmm}}"></div>
-                <!-- <div class="logo-col" id="logo_info{{forloop.counter}}"></div> -->
               </div>
             {% endif %}
       </tr>
-    {%endfor%}
+    {%endfor%} -->
 
     <!-- RNA Expression Graph -->
-    {% if protein.proteinatlas %}
-      <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
-      <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-    {% endif %}
+    <div id="expressionChartContainer" style="height: 450px; width: 100%;"></div>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
    {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>

@@ -545,6 +545,18 @@ pre code {
     margin-right: -15px
 }
 
+/* Karyoplot LOGO*/
+
+#karyoplot-info {
+    /* margin: auto; */
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative !important;
+    height: 100px !important;
+}
+
 /* MOTIF HMM LOGO */
 .logo-holder {
     /* display: flex;

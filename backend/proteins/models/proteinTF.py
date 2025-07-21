@@ -15,6 +15,8 @@ from references.models import Reference
 class ProteinRepeats(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
     repeat = models.ForeignKey(Repeat, on_delete=models.CASCADE, to_field='name', db_column='name')
+    motif_enrichment = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
+    motif_q_score = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
     # date_published = models.DateField() # Example of an extra field
 
     class Meta:
