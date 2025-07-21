@@ -155,11 +155,15 @@
 	.sequence_count {
 		float: left;
 		text-align: right;
-		color: rgb(191, 133, 210);
+		color: rgb(103, 149, 213) !important;
 		position: absolute;
 		margin: 0;
 		padding: 0;
 	}
+}
+
+.MuiTooltip-tooltip {
+  // background-color: black !important;
 }
 
 .flip-scroll {

@@ -9857,6 +9857,12 @@ a {
   position: absolute;
   z-index: 1001;
 }
+.dropdown-menu a:hover {
+  background-color: rgb(148, 124, 169) !important;
+}
+.dropdown-menu a:active {
+  background-color: rgb(148, 124, 169) !important;
+}
 
 .navbar {
   height: auto !important;
@@ -10281,7 +10287,7 @@ h6.dropdown-header:after {
 .aminosequence .sequence_count {
   float: left;
   text-align: right;
-  color: rgb(191, 133, 210);
+  color: rgb(103, 149, 213) !important;
   position: absolute;
   margin: 0;
   padding: 0;

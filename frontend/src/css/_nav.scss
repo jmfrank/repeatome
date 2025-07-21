@@ -3,6 +3,13 @@ $logo-color: #efe;
 .dropdown-menu {
   position: absolute;
   z-index: 1001;
+  a:hover  {
+    background-color: rgb(148, 124, 169) !important;
+  }
+
+  a:active {
+    background-color: rgb(148, 124, 169) !important;
+  }
 }
 
 .navbar {
