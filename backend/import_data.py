@@ -299,6 +299,51 @@ def import_protein():
                 protein_repeat_obj.save()
                 # index += 1
 
+def update_proteinrepeats():
+    en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE)
+    en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+    en_df = en_df.where(pd.notnull(en_df), None)
+
+    enrich_lookup = dict()
+    for row in en_df.to_dict(orient="records"):
+        gene = row["Gene"]
+        
+        for key, value in row.items():
+            if key != 'Gene':
+                lookup_key = gene,key.lower()
+                enrich_lookup[lookup_key] = value
+                
+
+    qs_df = pd.read_csv(settings.IMPORT_QSCORE_FILE)
+    qs_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+    qs_df = qs_df.where(pd.notnull(qs_df), None)
+
+    qscore_lookup = dict()
+    for row in qs_df.to_dict(orient="records"):
+        gene = row["Gene"]
+       
+
+        for key, value in row.items():
+            if key != 'Gene':
+                lookup_key = gene,key.lower()
+                qscore_lookup[lookup_key] = value
+               
+
+
+    objs = ProteinRepeats.objects.all()
+    for obj in objs:
+        
+        lookup_key = obj.protein.gene, obj.repeat.name.lower()
+        enrichment = enrich_lookup.get(lookup_key)
+        # print(f"enrichment:{enrichment}, lookup_key:{lookup_key},  enrichment:{len(enrich_lookup)}")
+        q_score = qscore_lookup.get(lookup_key)
+        # print(f"qscore:{q_score}, lookup_key:{lookup_key}, q_score:{len(qscore_lookup)}")
+        obj.motif_enrichment = enrichment if enrichment else None
+        obj.motif_q_score = q_score if q_score else None
+        print(f"saving protein:{obj.protein.gene}, repeat:{obj.repeat.name}, motif_enrichment:{obj.motif_enrichment}, motif_q_score:{obj.motif_q_score}")
+        obj.save()
+
+
 
 def update_jaspar():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
@@ -340,10 +385,17 @@ if __name__ == "__main__":
         import_gene_family()
         import_repeat()
         import_protein()
+        update_proteinrepeats()
+
     elif command == 'update_jaspar':
         update_jaspar()
+
+    elif command == 'update_proteinrepeats':
+        update_proteinrepeats()
+        
     else:
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        
         print("- reset to delete existing records and repopulate tables")        
         print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")
+        print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")

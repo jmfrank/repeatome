@@ -1,6 +1,6 @@
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Repeat, ProteinTF
+from ..models import Repeat, ProteinTF, ProteinRepeats
 import requests
 
 def RepeatTable(request):
@@ -34,15 +34,48 @@ class RepeatDetailView(DetailView):
         self.object = self.get_object()
         # print(self.object)
         context = self.get_context_data(object=self.object)
+        enrichment_datapoints = self.get_motif_chart_enrichment_data(self.object)
+        qscore_datapoints = self.get_motif_chart_qscore_data(self.object)
+
+        context["enrichment_datapoints"] = enrichment_datapoints
+        context["qscore_datapoints"] = qscore_datapoints
+
         # protein_names = ProteinTF.objects.filter(repeats__id == context['repeat'].name)
         # print(context['protein'].satellite)
         # print(self.object.get_proteins())
-        
+        print(f"enrichment_datapoints = {enrichment_datapoints}")
+        print(f"qscore_datapoints = {qscore_datapoints}")
+
         return render(request, 'repeats/repeatPage.html', context)
     
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         return data
+    
+    def get_motif_chart_qscore_data(self, repeat):
+        datapoints = []
+        for obj in ProteinRepeats.objects.filter(repeat=repeat):
+            if obj.motif_q_score:
+                datapoints.append({
+                    "label": obj.protein.gene,
+                    "y": float(obj.motif_q_score * -1)
+                    # "y": "-" + str(protein.motif_q_score * -1)
+                })
+        # return json.dumps(datapoints)
+        return datapoints
+
+    def get_motif_chart_enrichment_data(self, repeat):
+        datapoints = []
+        for obj in ProteinRepeats.objects.filter(repeat=repeat):
+            if obj.motif_enrichment:
+                datapoints.append({
+                    "label": obj.protein.gene,
+                    "y": float(obj.motif_enrichment)
+                })
+        # return json.dumps(datapoints)
+        return datapoints
+
+
     
 
     
