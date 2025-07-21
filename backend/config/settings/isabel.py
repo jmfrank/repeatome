@@ -15,6 +15,9 @@ import os
 # Data to import
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FILE = "/Users/isabel/repeatome_data/satellite_binders_database_master.xlsx"
+IMPORT_ENRICHMENT_FILE = "/Users/isabel/repeatome_data/TFs_summary_ENR.csv"
+IMPORT_QSCORE_FILE = "/Users/isabel/repeatome_data/TFs_summary_Qscore.csv"
+
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -25,7 +28,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase16',  # Replace with your database name
+        'NAME': 'fpbase21',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development

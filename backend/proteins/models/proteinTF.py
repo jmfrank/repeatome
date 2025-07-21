@@ -15,7 +15,32 @@ from references.models import Reference
 class ProteinRepeats(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
     repeat = models.ForeignKey(Repeat, on_delete=models.CASCADE, to_field='name', db_column='name')
+    motif_enrichment = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
+    motif_q_score = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
     # date_published = models.DateField() # Example of an extra field
+
+    def get_motif_chart_q_score_data(self):
+        datapoints = []
+        for protein in self.get_proteins():
+            if protein.motif_q_score:
+                datapoints.append({
+                    "label": protein.gene,
+                    "y": float(protein.motif_q_score * -1)
+                    # "y": "-" + str(protein.motif_q_score * -1)
+                })
+        # return json.dumps(datapoints)
+        return datapoints
+
+    def get_motif_chart_enrichment_data(self):
+        datapoints = []
+        for protein in self.get_proteins():
+            if protein.motif_enrichment:
+                datapoints.append({
+                    "label": protein.gene,
+                    "y": float(protein.motif_enrichment)
+                })
+        # return json.dumps(datapoints)
+        return datapoints
 
     class Meta:
         unique_together = ('protein', 'repeat')

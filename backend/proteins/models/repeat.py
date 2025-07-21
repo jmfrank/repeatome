@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
@@ -55,28 +58,6 @@ class Repeat(models.Model):
     def get_proteins(self):
         return self.proteintf_set.all()
 
-    def get_motif_chart_q_score_data(self):
-        datapoints = []
-        for protein in self.get_proteins():
-            if protein.motif_q_score:
-                datapoints.append({
-                    "label": protein.gene,
-                    "y": float(protein.motif_q_score * -1)
-                    # "y": "-" + str(protein.motif_q_score * -1)
-                })
-        # return json.dumps(datapoints)
-        return datapoints
-
-    def get_motif_chart_enrichment_data(self):
-        datapoints = []
-        for protein in self.get_proteins():
-            if protein.motif_enrichment:
-                datapoints.append({
-                    "label": protein.gene,
-                    "y": float(protein.motif_enrichment)
-                })
-        # return json.dumps(datapoints)
-        return datapoints
 
     # def get_HMM(self):
     #     with pyhmmer.plan7.HMMFile("data/hmms/txt/PKSI-AT.hmm") as hmm_file:
@@ -91,3 +72,18 @@ class Repeat(models.Model):
 
             return r.text
         return None
+    
+    def karyoplot_exists(self):
+        name_lower = self.repeat_lower()
+        file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyoplot/human_{name_lower}_blocks.svg"  # Replace with your actual path
+        if os.path.exists(file_path):
+            # File or directory exists
+            return True
+        else:
+            return False
+        
+    def repeat_lower(self):
+        return self.name.lower()
+
+        
+        

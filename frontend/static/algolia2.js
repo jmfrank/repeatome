@@ -4,10 +4,10 @@
 export default async function initAutocomplete() {
     const searchClient = algoliasearch('I8J408MSCM', '7a38c6848180ee8d3723175b5ec3cc4e');
 
-    const proteinIndex = searchClient.initIndex('ProteinTF_prod');
-    const repeatIndex = searchClient.initIndex('Repeat_prod');
-    const referenceIndex = searchClient.initIndex('Reference_prod');
-    const organismIndex = searchClient.initIndex('Organism_prod');
+    const proteinIndex = searchClient.initIndex('ProteinTF_dev');
+    const repeatIndex = searchClient.initIndex('Repeat_dev');
+    const referenceIndex = searchClient.initIndex('Reference_dev');
+    const organismIndex = searchClient.initIndex('Organism_dev');
 
     console.log('algoliasearch:', typeof algoliasearch);
     console.log('searchClient:', searchClient);

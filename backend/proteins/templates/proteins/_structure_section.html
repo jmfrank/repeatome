@@ -3,8 +3,14 @@
   <div class='col-12 col-md-6 order-md-1'>
     <h3>Structure</h3>
     <div class="litmol-tab">
-        <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" id="defaultOpen">PDB</button>
-        <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')">AF3</button>
+        {% if protein.PDB %}
+          <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" id="defaultOpen">PDB</button>
+          <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')">AF3</button>
+        {% else %}
+          <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" >PDB</button>
+          <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')" id="defaultOpen" >AF3</button>
+        {% endif %}
+
       </div>
   </div>
   <div class='col-12 col-md-6 order-md-2'><h3>Microscopy Result</h3></div>
@@ -199,27 +205,3 @@ const viewerContainer = document.getElementById('litemol-viewer');
 viewerInstance.render(viewerContainer, options);
 
 </script>
- 
-<!-- <div class='text-center col-12 col-md-6 order-md-1'><h3>JASPAR Motif</h3></div> -->
-<!-- <div class='row' id='struct-micro-names'>
-  <h3>DNA Binding Motif</h3>
-</div>
-
-<div class='row' id='struct-micro-names'>
-  {% for jaspar_item in protein.jaspar %}
-    {% if forloop.counter|divisibleby:2 %}
-    <div class="col-12 col-md-6 order-md-2" style="padding:2px">
-    {% else %}
-    <div class="col-12 col-md-6 order-md-1" style="padding:2px">
-    {% endif %}
-      <div id="jaspar-item" style="padding:0px; border: 1px solid #ddd;">
-        <div class="form-group mb-2" style="padding:0px; margin-top:5px;">
-          JASPAR ID: <a href="https://jaspar.elixir.no/matrix/{{jaspar_item}}" target="_blank" rel="noopener">{{jaspar_item}}</a>
-        </div>
-        <div id="jaspar-image-container" style="padding:0px">
-            <img id="jaspar-img" src="https://jaspar.elixir.no/static/logos/all/svg/{{jaspar_item}}.svg" alt="{{ protein.gene }}"/>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-</div> -->
