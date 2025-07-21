@@ -1,8 +1,10 @@
+import math
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Organism
+from ..models import Organism, Repeat
 from django.db.models import Count
 import requests
+from proteins.util.repeat_network_data import GetNetworkData
 
 def OrganismTable(request):
     items = Organism.objects.all()
@@ -18,6 +20,7 @@ class OrganismListView(ListView):
 class OrganismDetailView(DetailView):
     """renders html for single reference page"""
 
+    GetNetworkData()
     queryset = Organism.objects.all().prefetch_related("proteins__repeats")
     template_name = "organisms/organismPage.html"
 
