@@ -17,9 +17,14 @@ a {
   display: table-cell;
   vertical-align: middle;
   // @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
-  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
+  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(54, 26, 76));
+  // background-image: linear-gradient(160deg, rgb(131, 78, 152), rgb(60, 30, 78));
+  // background-image: linear-gradient(160deg, rgb(154, 13, 27), rgb(57, 30, 78));
+
   @include media-breakpoint-down(sm) {
-    background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
+    // background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
+  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(54, 26, 76));
+  // background-image: linear-gradient(160deg, rgb(154, 13, 27), rgb(57, 30, 78));
     // @include gradient-directional(rgba(darken($primary,5%), 0.6), rgba(lighten($primary, 15%),0.6), 160deg);
   }
 }
@@ -131,7 +136,10 @@ $search-colors: rgba($white,0.4);
   padding-top: 0;
   height: 100vh;
   // @include gradient-directional(rgba(darken($primary,5%), 1), rgba(lighten($primary, 15%),1), 160deg);
-  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
+  background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(54, 26, 76));
+  // background-image: linear-gradient(160deg, rgb(131, 78, 152), rgb(60, 30, 78));
+  // background-image: linear-gradient(160deg, rgb(154, 13, 27), rgb(57, 30, 78));
+
 }
 
 .home-stats{

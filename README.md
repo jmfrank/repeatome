@@ -1,13 +1,13 @@
 [![Logo](_resources/logo_green_wide@1x.gif)](https://www.fpbase.org)
 
-# FPbase: The Fluorescent Protein Database
+# Repeatome: The Repeat and Protein Database
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![CI](https://github.com/tlambert03/FPbase/actions/workflows/ci.yml/badge.svg)](https://github.com/tlambert03/FPbase/actions/workflows/ci.yml)
 [![Cov](https://codecov.io/gh/tlambert03/FPbase/branch/main/graph/badge.svg)](https://codecov.io/gh/tlambert03/FPbase)
 [![DOI](https://zenodo.org/badge/DOI/10.1038/s41592-019-0352-8.svg)](https://doi.org/10.1038/s41592-019-0352-8)
 
-Source code for <https://www.fpbase.org>
+Source code for <https://www.repeatome.org>
 
 Documentation and info on using the site: <https://help.fpbase.org>.
 
@@ -20,20 +20,25 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
 1. Clone repo and cd into directory
 
     ```bash
-    git clone https://github.com/tlambert03/FPbase.git
+    git clone https://github.com/jmfrank/repeatome.git
     cd FPbase
     ```
 
-1. Create/activate environment **using python 3.11** with pipenv/virtualenv/conda
+1. Create/activate environment **using python 3.13** with pipenv/virtualenv/conda
 1. Install python requirements for local development
 
     ```bash
-    pip install -r backend/requirements/local.txt
+    # for windows 
+    pip install -r requirements.txt
+
+    # for mac apple silicon 
+    pip install -r requirements_p13_mc4.txt
     # note: on mac silicon, you might have difficulty compiling psycopg2
     # in which case you should pip install psycopg2-binary instead
+
     ```
 
-1. Make sure that you have `postgres` installed.
+1. Make sure that you have `postgres` and `pgAdmin 4` installed.
 
    On macOS, with homebrew:
 
@@ -41,6 +46,8 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
    brew install postgresql@15
    brew services start postgresql@15
    ```
+
+   (https://www.pgadmin.org/download/)
 
 1. Install [Node.js](https://nodejs.org/en/) & [pnpm](https://pnpm.js.org/en/) (homebrew: `brew install node`)
 
@@ -66,7 +73,16 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
 
     ```bash
     createdb fpbase
+    python backend/manage.py makemigrations
     python backend/manage.py migrate
+    ```
+1. Import data
+
+    Cache the JASPAR ids and update the database
+
+    ```bash
+    python backend/import_data.py update_jaspar
+    python backend/import_data.py reset
     ```
 
 1. start dev servers:
