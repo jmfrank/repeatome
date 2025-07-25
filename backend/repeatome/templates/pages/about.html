@@ -2,60 +2,66 @@
 {% load webp_picture from protein_tags %}
 {% load static %}
 
-{% block title %}About RepeatOme: The Repeat and Protein Database {% endblock %}
-{% block meta-description %}RepeatOme is a free and open-source, web-based, community-editable database for repeats and proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
+{% block title %}About Repeatome: The Repeat and Protein Database {% endblock %}
+{% block meta-description %}Repeatome is a free and open-source, web-based, community-editable database for repeats and proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
 
 {% block content %}
-<h1 class='mb-4'><strong>Repeat</strong>Ome <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
+<h1 class='mb-4'><strong>Repeat</strong>ome <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
 
 <h3><strong>A repeat and protein database</strong></h3>
 
   <p>
-    RepeatOme is a free and open-source, community-editable database for repeats and proteins and their properties. The primary objective is to aggregate structured and searchable repeat data that is of interest to the repeat developers. Each protein in the database has a dedicated page showing amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt), repeats, experimental data, structural data, references that introduced or characterized the protein, and more. Excerpts from primary literature can be entered to store key information about a protein that is otherwise difficult to capture within the current database schema. (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.)
+    Repeatome is a free and open-source, community-editable database for repeats and proteins and their properties. 
+    The primary objective is to aggregate expiremental and catalogued repeat data in a structured and searchable format. 
+    Each protein in the database has a dedicated page showing repeats, amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt, PDB, jaspar, DFam), structural data, microscopy results and experimental data, RNA expression, references that introduced or characterized the protein, and more. 
+    Each repeat in the database has a dedicated page showing karyoplot data, motif data, proteomics, proteins, and references
+    {% comment %} (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.) {% endcomment %}
   </p>
   <p>RepeatOme additionally includes a variety of tools to:
     <ul>
+      <li>explore the <a href="{% url 'proteins:proteinTable' %}">table of all proteins in the database</a></li>
+      <li>explore the <a href="{% url 'proteins:repeatTable' %}">table of all repeats in the database</a></li>
       {% comment %} <li>explore the <a href="{% url 'proteins:lineage-list' %}">lineage and directed evolution of FPs</a></li> {% endcomment %}
-      <li>view <a href="{% url 'proteins:ichart' %}">relationships between protein properties</a></li>
+      {% comment %} <li>view <a href="{% url 'proteins:ichart' %}">relationships between protein properties</a></li> {% endcomment %}
       {% comment %} <li><a href="{% url 'proteins:spectra' %}">compare spectra</a> with common filters and light sources</li> {% endcomment %}
-      <li>calculate <a href="{% url 'proteins:fret' %}">FRET relationships</a></li>
+      {% comment %} <li>calculate <a href="{% url 'proteins:fret' %}">FRET relationships</a></li> {% endcomment %}
       <li>create and share curated <a href="{% url 'proteins:collections' %}">protein collections</a></li>
       {% comment %} <li>build a spectra viewer customized for the specifications on your <a href="{% url 'proteins:microscopes' %}">microscope</a></li> {% endcomment %}
     </ul>
   </p>
   <p>
-    RepeatOme was designed and created in 2025 by Matt Franklin at Altemose.
+    Repeatome was designed and created in 2025 by Carissa Penn, Isabel Moorhead, and Matt Franklin at the Altemose lab, Genetics Department, School of Medicine, Stanford University.
   </p>
 
 <h4><strong>A Caution About Overinterpretation and Comparison</strong></h4>
 
 <p>
-  Fluorescent proteins are tremendously complex!  Even "basic" fluorescent proteins demonstrate complex environmentally-dependent variations.  As such, any attempt to classify and categorize something as multifacted as fluorescent proteins will innevitably miss important details.  Please use the data on this website as the starting point (and not the ending point) in your search for the right protein for your experiments.  If there is an aspect of fluorescent proteins that you think should be represented here, <a href="{% url 'contact' %}">let us know</a>!</p>
+  Proteins and repeats are tremendously complex!  Even "basic" proteins demonstrate complex environmentally-dependent variations.  As such, any attempt to classify and categorize something as multifacted as proteins will innevitably miss important details.  Please use the data on this website as the starting point (and not the ending point) in your search for the right protein for your experiments.  If there is an aspect of proteins that you think should be represented here, <a href="{% url 'contact' %}">let us know</a>!</p>
   <p>
 
-  When comparing protein attributes on this site, remember that <em>all measurements reflect the conditions under which they were performed</em>.  Conditions such as temperature, pH, fusion protein, expression level, etc... can all dramatically affect the performance and characteristics of a fluorescent protein and a protein that looks inferior to another based on attributes catalogued in FPbase may actually be superior when used in a particular biological environment.  When searching for a fluorescent protein to be used in a biological experiment, it is always advisable to narrow your choices based on a few critical parameters (e.g. spectra), and then test <strong>multiple</strong> candidate proteins in your biological system.</p>
+  When comparing proteomics data on this site, remember that all measurements reflect the conditions under which they were performed</em>.  Conditions such as temperature, pH, fusion protein, expression level, etc... can all dramatically affect the performance and characteristics of a protein and a protein that looks inferior to another based on attributes catalogued in Repeatome may actually be superior when used in a particular biological environment.  When searching for a fluorescent protein to be used in a biological experiment, it is always advisable to narrow your choices based on a few critical parameters (e.g. spectra), and then test <strong>multiple</strong> candidate proteins in your biological system.</p>
 
 <h3><strong>How to use this site</strong></h3>
 
 <h5><strong>Search</strong></h5>
-<p>There are many ways to find and compare proteins and repeats on this site.  Of course, you can always just type the name of the protein you're looking for into the search box on the home page or the top right corner of this page.  To perform more complicated searches, use the <a href="{% url 'proteins:search' %}">advanced query builder</a>, where you can search using a number of fields (<em>e.g. Name, Sequence, Repeats, Year Published, etc...</em>) and a variety of operators (<em>e.g. contains, greater than, etc...</em>):</p>
+<p>There are many ways to find and compare proteins and repeats on this site.  Of course, you can always just type the name of the protein you're looking for into the search box on the home page or the top right corner of this page.  To perform more complicated searches, use the <a href="{% url 'proteins:search' %}">advanced query builder</a>, where you can search using a number of fields (<em>e.g. Name, Sequence, Repeats, ENSEMBL, UNIPROT, Parent Organism, etc...</em>) and a variety of operators (<em>e.g. contains, greater than, etc...</em>):</p>
 
 <div class="card">
   <div class="card-body">
    <h5 class="card-title"> <a href='{% url 'proteins:search' %}'><strong>Advanced Query Builder</strong></a></h5>
-    <p class="card-text"> {% webp_picture 'images/query.png' 'img-fluid' 'advanced FPbase query example'%}</p>
+    <p class="card-text"> {% webp_picture 'images/query_builder.png' 'img-fluid' 'advanced Repeatome query example'%}</p>
   </div>
 </div>
 
 <h5 class='mt-4'><strong>Browse</strong></h5>
-<p>If you just want to browse the database without searching something specific, you may find the <a href="{% url 'proteins:table' %}">Table</a> and <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> views usful.</p>
+<p>If you just want to browse the database without searching something specific, you may find the <a href="{% url 'proteins:proteinTable' %}">Protein Table</a> and <a href="{% url 'proteins:repeatTable' %}">Repeat Table</a> useful.</p>
 
 <p><strong>Table</strong></p>
 
-<p>The <a href="{% url 'proteins:proteinTable' %}">table</a> page shows all proteins in the databse, with each row representing a single protein.  You can sort this table by any of the paremeters or enter text in the search field to limit the proteins displayed.</p>
-<p>The <a href="{% url 'proteins:repeatTable' %}">table</a> page shows all repeats in the databse, with each row representing a single repeat.  You can sort this table by any of the paremeters or enter text in the search field to limit the repeats displayed.</p>
+<p>The <a href="{% url 'proteins:proteinTable' %}">Protein Table</a> page shows all proteins in the databse, with each row representing a single protein.  You can sort this table by any of the paremeters or enter text in the search field to limit the proteins displayed.</p>
+<p>The <a href="{% url 'proteins:repeatTable' %}">Repeat Table</a> page shows all repeats in the databse, with each row representing a single repeat.  You can sort this table by any of the paremeters or enter text in the search field to limit the repeats displayed.</p>
 
-<p><strong>Interactive Chart</strong></p>
+<p><strong>Proteomics</strong></p>
 <p>The <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> allows visualization of the many parameters of proteins, along with the ability to filter down to a subset of proteins based on certain attributes.  Change the axes to explore the relationship between protein properties.  Hover over the circles to identify each protein on the scatter plot, and click on the circles to go to the repeatOme page for that protein.</p>
 
 <div class="card">
@@ -70,14 +76,18 @@
 <p>Click the heart (<a class="btn example-like-button"><i class="fas fa-heart"></i></a>) icon at the top right of any protein page to quickly add it to your favorites, which can be seen on your profile page.  You may also <a href="{% url 'proteins:newcollection' %}">create collections of proteins</a> for private use or for sharing publicly.  You may view your own collections in your profile, or <a href='{% url 'proteins:collections' %}'>view all public collections</a> created on repeatOme.  On each protein page, you can click the book icon (<a class="btn example-like-button"><i class="fas fa-book"></i></a>) to add the current protein to one of your collections.</p>
 
 <h5 class='mt-4'><strong>Contribute</strong></h5>
-<p>If you would like to help expand the repeatOme database, please consider contributing information to the database.  This can be as small as adding an additional reference to a protein, or creating new protein records altogether.  Please read the <a href="{% url "contributing" %}">guide to contributing</a> for more information.</p>
+<p>If you would like to help expand the Repeatome database, please consider contributing information to the database.  This can be as small as adding an additional reference to a protein, or creating new protein records altogether.  Please read the <a href="{% url "contributing" %}">guide to contributing</a> for more information.</p>
 
 <h3 class='mt-4'><strong>REST API</strong></h3>
-<p>RepeatOme includes a <a href="{%url 'api:api' %}">REST API</a> that allows programmatic retrieval of data in JSON, or CSV format.</p>
+<p>Repeatome includes a <a href="{%url 'api:api' %}">REST API</a> that allows programmatic retrieval of data in JSON, or CSV format.</p>
 
 
 <h3 class='mt-4'><strong>Moderation</strong></h3>
 {% include 'pages/_moderation.html' %}
 
+<h3 class='mt-4'><strong>Acknowledgements</strong></h3>
+<p>Thank you to these providers for supporting open source projects:
+  
+</p>
 
 {% endblock content %}

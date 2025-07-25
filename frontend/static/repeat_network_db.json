@@ -23,7 +23,7 @@
             "attributes": {
                 "label": "BCLAF1",
                 "x": 24.748737341529164,
-                "y": 24.748737341529164,
+                "y": 24.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000029363-bclaf1"
@@ -484,7 +484,7 @@
             "key": "ONECUT2_HSat3",
             "attributes": {
                 "label": "ONECUT2",
-                "x": 31.916494609723138,
+                "x": 31.91649460972314,
                 "y": -14.36444819084652,
                 "size": 7,
                 "color": "red",
@@ -607,7 +607,7 @@
             "attributes": {
                 "label": "HOXA7",
                 "x": 104.74873734152916,
-                "y": 24.748737341529164,
+                "y": 24.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000122592-hoxa7"
@@ -663,7 +663,7 @@
             "attributes": {
                 "label": "LEF1",
                 "x": 184.74873734152916,
-                "y": 24.748737341529164,
+                "y": 24.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000138795-lef1"
@@ -784,7 +784,7 @@
             "attributes": {
                 "label": "YY1",
                 "x": 139.21629350492742,
-                "y": -28.160922291833362,
+                "y": -28.160922291833366,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000100811-yy1"
@@ -906,7 +906,7 @@
             "attributes": {
                 "label": "IKZF2",
                 "x": 264.74873734152914,
-                "y": 24.748737341529164,
+                "y": 24.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000030419-ikzf2"
@@ -1013,25 +1013,25 @@
             }
         },
         {
-            "key": "DBP_bsat",
+            "key": "MEIS1_bsat",
             "attributes": {
-                "label": "DBP",
+                "label": "MEIS1",
                 "x": 24.748737341529164,
                 "y": -55.251262658470836,
                 "size": 7,
                 "color": "red",
-                "url": "/proteinTable/ensg00000105516-dbp"
+                "url": "/proteinTable/ensg00000143995-meis1"
             }
         },
         {
-            "key": "MEIS1_bsat",
+            "key": "DBP_bsat",
             "attributes": {
-                "label": "MEIS1",
+                "label": "DBP",
                 "x": 17.500000000000004,
                 "y": -49.68911086754465,
                 "size": 7,
                 "color": "red",
-                "url": "/proteinTable/ensg00000143995-meis1"
+                "url": "/proteinTable/ensg00000105516-dbp"
             }
         },
         {
@@ -1466,90 +1466,11 @@
             }
         },
         {
-            "key": "rDNA",
-            "attributes": {
-                "label": "rDNA",
-                "x": 240,
-                "y": -80,
-                "size": 25,
-                "color": "blue",
-                "zIndex": 100,
-                "url": "/repeatTable/rdna"
-            }
-        },
-        {
-            "key": "RUNX2_rDNA",
-            "attributes": {
-                "label": "RUNX2",
-                "x": 264.74873734152914,
-                "y": -55.251262658470836,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000124813-runx2"
-            }
-        },
-        {
-            "key": "ZNF768_rDNA",
-            "attributes": {
-                "label": "ZNF768",
-                "x": 215.25126265847084,
-                "y": -55.251262658470836,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000169957-znf768"
-            }
-        },
-        {
-            "key": "EWSR-FLI1_rDNA",
-            "attributes": {
-                "label": "EWSR-FLI1",
-                "x": 215.25126265847084,
-                "y": -104.74873734152916,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/none-ewsr-fli1"
-            }
-        },
-        {
-            "key": "PRDM1_rDNA",
-            "attributes": {
-                "label": "PRDM1",
-                "x": 264.74873734152914,
-                "y": -104.74873734152916,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000057657-prdm1"
-            }
-        },
-        {
-            "key": "dhor",
-            "attributes": {
-                "label": "dhor",
-                "x": 0,
-                "y": -160,
-                "size": 25,
-                "color": "blue",
-                "zIndex": 100,
-                "url": "/repeatTable/dhor"
-            }
-        },
-        {
-            "key": "OSR2_dhor",
-            "attributes": {
-                "label": "OSR2",
-                "x": 24.748737341529164,
-                "y": -135.25126265847084,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000164920-osr2"
-            }
-        },
-        {
             "key": "hor",
             "attributes": {
                 "label": "hor",
-                "x": 80,
-                "y": -160,
+                "x": 240,
+                "y": -80,
                 "size": 25,
                 "color": "blue",
                 "zIndex": 100,
@@ -1560,8 +1481,8 @@
             "key": "SP1_hor",
             "attributes": {
                 "label": "SP1",
-                "x": 104.74873734152916,
-                "y": -135.25126265847084,
+                "x": 264.74873734152914,
+                "y": -55.251262658470836,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000185591-sp1"
@@ -1571,8 +1492,8 @@
             "key": "PRDM4_hor",
             "attributes": {
                 "label": "PRDM4",
-                "x": 46.19259607988261,
-                "y": -150.94133342141177,
+                "x": 206.1925960798826,
+                "y": -70.94133342141177,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000110851-prdm4"
@@ -1582,145 +1503,11 @@
             "key": "ZFAT_hor",
             "attributes": {
                 "label": "ZFAT",
-                "x": 89.05866657858824,
-                "y": -193.8074039201174,
+                "x": 249.05866657858823,
+                "y": -113.8074039201174,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000066827-zfat"
-            }
-        },
-        {
-            "key": "HSat1B_Y",
-            "attributes": {
-                "label": "HSat1B_Y",
-                "x": 160,
-                "y": -160,
-                "size": 25,
-                "color": "blue",
-                "zIndex": 100,
-                "url": "/repeatTable/hsat1b_y"
-            }
-        },
-        {
-            "key": "RFX2_HSat1B_Y",
-            "attributes": {
-                "label": "RFX2",
-                "x": 184.74873734152916,
-                "y": -135.25126265847084,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000087903-rfx2"
-            }
-        },
-        {
-            "key": "RFX3_HSat1B_Y",
-            "attributes": {
-                "label": "RFX3",
-                "x": 163.05045099616802,
-                "y": -125.13318556678891,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000080298-rfx3"
-            }
-        },
-        {
-            "key": "E2F2_HSat1B_Y",
-            "attributes": {
-                "label": "E2F2",
-                "x": 139.9248247277134,
-                "y": -131.32967844988528,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000007968-e2f2"
-            }
-        },
-        {
-            "key": "RFX1_HSat1B_Y",
-            "attributes": {
-                "label": "RFX1",
-                "x": 126.1925960798826,
-                "y": -150.94133342141177,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000132005-rfx1"
-            }
-        },
-        {
-            "key": "NFIL3_HSat1B_Y",
-            "attributes": {
-                "label": "NFIL3",
-                "x": 128.27922745371725,
-                "y": -174.7916391609245,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000165030-nfil3"
-            }
-        },
-        {
-            "key": "TFCP2_HSat1B_Y",
-            "attributes": {
-                "label": "TFCP2",
-                "x": 145.2083608390755,
-                "y": -191.72077254628275,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000135457-tfcp2"
-            }
-        },
-        {
-            "key": "RFX5_HSat1B_Y",
-            "attributes": {
-                "label": "RFX5",
-                "x": 169.05866657858823,
-                "y": -193.8074039201174,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000143390-rfx5"
-            }
-        },
-        {
-            "key": "E2F1_HSat1B_Y",
-            "attributes": {
-                "label": "E2F1",
-                "x": 188.6703215501147,
-                "y": -180.07517527228663,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000101412-e2f1"
-            }
-        },
-        {
-            "key": "E2F4_HSat1B_Y",
-            "attributes": {
-                "label": "E2F4",
-                "x": 194.8668144332111,
-                "y": -156.94954900383195,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000205250-e2f4"
-            }
-        },
-        {
-            "key": "alpha",
-            "attributes": {
-                "label": "alpha",
-                "x": 240,
-                "y": -160,
-                "size": 25,
-                "color": "blue",
-                "zIndex": 100,
-                "url": "/repeatTable/alpha"
-            }
-        },
-        {
-            "key": "Sp1_copy_alpha",
-            "attributes": {
-                "label": "Sp1_copy",
-                "x": 264.74873734152914,
-                "y": -135.25126265847084,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000185591-sp1_copy"
             }
         },
         {
@@ -1728,7 +1515,7 @@
             "attributes": {
                 "label": "HSat3_Y",
                 "x": 0,
-                "y": -240,
+                "y": -160,
                 "size": 25,
                 "color": "blue",
                 "zIndex": 100,
@@ -1740,7 +1527,7 @@
             "attributes": {
                 "label": "CDX4",
                 "x": 24.748737341529164,
-                "y": -215.25126265847084,
+                "y": -135.25126265847084,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000131264-cdx4"
@@ -1751,7 +1538,7 @@
             "attributes": {
                 "label": "ZNF410",
                 "x": -24.74873734152916,
-                "y": -215.25126265847084,
+                "y": -135.25126265847084,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000119725-znf410"
@@ -1762,7 +1549,7 @@
             "attributes": {
                 "label": "BCL11b",
                 "x": -24.748737341529168,
-                "y": -264.74873734152914,
+                "y": -184.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000127152-bcl11b"
@@ -1773,17 +1560,253 @@
             "attributes": {
                 "label": "HOXd9",
                 "x": 24.748737341529157,
-                "y": -264.7487373415292,
+                "y": -184.74873734152916,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000128709-hoxd9"
             }
         },
         {
+            "key": "mon",
+            "attributes": {
+                "label": "mon",
+                "x": 80,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/mon"
+            }
+        },
+        {
+            "key": "OSR2_mon",
+            "attributes": {
+                "label": "OSR2",
+                "x": 104.74873734152916,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000164920-osr2"
+            }
+        },
+        {
+            "key": "rDNA",
+            "attributes": {
+                "label": "rDNA",
+                "x": 160,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/rdna"
+            }
+        },
+        {
+            "key": "RUNX2_rDNA",
+            "attributes": {
+                "label": "RUNX2",
+                "x": 184.74873734152916,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000124813-runx2"
+            }
+        },
+        {
+            "key": "ZNF768_rDNA",
+            "attributes": {
+                "label": "ZNF768",
+                "x": 135.25126265847084,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000169957-znf768"
+            }
+        },
+        {
+            "key": "EWSR-FLI1_rDNA",
+            "attributes": {
+                "label": "EWSR-FLI1",
+                "x": 135.25126265847084,
+                "y": -184.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/none-ewsr-fli1"
+            }
+        },
+        {
+            "key": "PRDM1_rDNA",
+            "attributes": {
+                "label": "PRDM1",
+                "x": 184.74873734152916,
+                "y": -184.74873734152916,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000057657-prdm1"
+            }
+        },
+        {
+            "key": "dhor",
+            "attributes": {
+                "label": "dhor",
+                "x": 240,
+                "y": -160,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/dhor"
+            }
+        },
+        {
+            "key": "OSR2_dhor",
+            "attributes": {
+                "label": "OSR2",
+                "x": 264.74873734152914,
+                "y": -135.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000164920-osr2"
+            }
+        },
+        {
+            "key": "HSat1B_Y",
+            "attributes": {
+                "label": "HSat1B_Y",
+                "x": 0,
+                "y": -240,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/hsat1b_y"
+            }
+        },
+        {
+            "key": "RFX2_HSat1B_Y",
+            "attributes": {
+                "label": "RFX2",
+                "x": 24.748737341529164,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000087903-rfx2"
+            }
+        },
+        {
+            "key": "RFX3_HSat1B_Y",
+            "attributes": {
+                "label": "RFX3",
+                "x": 3.050450996168035,
+                "y": -205.1331855667889,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000080298-rfx3"
+            }
+        },
+        {
+            "key": "E2F2_HSat1B_Y",
+            "attributes": {
+                "label": "E2F2",
+                "x": -20.075175272286604,
+                "y": -211.32967844988528,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000007968-e2f2"
+            }
+        },
+        {
+            "key": "RFX1_HSat1B_Y",
+            "attributes": {
+                "label": "RFX1",
+                "x": -33.80740392011739,
+                "y": -230.94133342141177,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000132005-rfx1"
+            }
+        },
+        {
+            "key": "NFIL3_HSat1B_Y",
+            "attributes": {
+                "label": "NFIL3",
+                "x": -31.720772546282753,
+                "y": -254.7916391609245,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000165030-nfil3"
+            }
+        },
+        {
+            "key": "TFCP2_HSat1B_Y",
+            "attributes": {
+                "label": "TFCP2",
+                "x": -14.791639160924499,
+                "y": -271.7207725462827,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000135457-tfcp2"
+            }
+        },
+        {
+            "key": "RFX5_HSat1B_Y",
+            "attributes": {
+                "label": "RFX5",
+                "x": 9.05866657858824,
+                "y": -273.8074039201174,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000143390-rfx5"
+            }
+        },
+        {
+            "key": "E2F1_HSat1B_Y",
+            "attributes": {
+                "label": "E2F1",
+                "x": 28.670321550114704,
+                "y": -260.07517527228663,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000101412-e2f1"
+            }
+        },
+        {
+            "key": "E2F4_HSat1B_Y",
+            "attributes": {
+                "label": "E2F4",
+                "x": 34.86681443321109,
+                "y": -236.94954900383195,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000205250-e2f4"
+            }
+        },
+        {
+            "key": "alpha",
+            "attributes": {
+                "label": "alpha",
+                "x": 80,
+                "y": -240,
+                "size": 25,
+                "color": "blue",
+                "zIndex": 100,
+                "url": "/repeatTable/alpha"
+            }
+        },
+        {
+            "key": "Sp1_copy_alpha",
+            "attributes": {
+                "label": "Sp1_copy",
+                "x": 104.74873734152916,
+                "y": -215.25126265847084,
+                "size": 7,
+                "color": "red",
+                "url": "/proteinTable/ensg00000185591-sp1_copy"
+            }
+        },
+        {
             "key": "unknown",
             "attributes": {
                 "label": "unknown",
-                "x": 80,
+                "x": 160,
                 "y": -240,
                 "size": 25,
                 "color": "blue",
@@ -1795,7 +1818,7 @@
             "key": "ELF1_unknown",
             "attributes": {
                 "label": "ELF1",
-                "x": 104.74873734152916,
+                "x": 184.74873734152916,
                 "y": -215.25126265847084,
                 "size": 7,
                 "color": "red",
@@ -1806,7 +1829,7 @@
             "key": "ADNP2_unknown",
             "attributes": {
                 "label": "ADNP2",
-                "x": 98.84987865463165,
+                "x": 178.84987865463165,
                 "y": -210.50962742341727,
                 "size": 7,
                 "color": "red",
@@ -1817,7 +1840,7 @@
             "key": "IRF4_unknown",
             "attributes": {
                 "label": "IRF4",
-                "x": 92.06962059197896,
+                "x": 172.06962059197895,
                 "y": -207.14692923384973,
                 "size": 7,
                 "color": "red",
@@ -1828,7 +1851,7 @@
             "key": "POU2AF1_unknown",
             "attributes": {
                 "label": "POU2AF1",
-                "x": 84.72500048486515,
+                "x": 164.72500048486515,
                 "y": -205.32040411974177,
                 "size": 7,
                 "color": "red",
@@ -1839,7 +1862,7 @@
             "key": "IRF2_unknown",
             "attributes": {
                 "label": "IRF2",
-                "x": 77.1594446065399,
+                "x": 157.15944460653992,
                 "y": -205.11545836539221,
                 "size": 7,
                 "color": "red",
@@ -1850,7 +1873,7 @@
             "key": "LRWD1_unknown",
             "attributes": {
                 "label": "LRWD1",
-                "x": 69.72670994136229,
+                "x": 149.7267099413623,
                 "y": -206.5416750064936,
                 "size": 7,
                 "color": "red",
@@ -1861,7 +1884,7 @@
             "key": "ADNP_unknown",
             "attributes": {
                 "label": "ADNP",
-                "x": 62.774342901384756,
+                "x": 142.77434290138476,
                 "y": -209.53236573803397,
                 "size": 7,
                 "color": "red",
@@ -1872,7 +1895,7 @@
             "key": "RFX8_unknown",
             "attributes": {
                 "label": "RFX8",
-                "x": 56.62742844239566,
+                "x": 136.62742844239565,
                 "y": -213.94768918532054,
                 "size": 7,
                 "color": "red",
@@ -1883,7 +1906,7 @@
             "key": "IRF5_unknown",
             "attributes": {
                 "label": "IRF5",
-                "x": 51.57338945269261,
+                "x": 131.57338945269262,
                 "y": -219.5811897312377,
                 "size": 7,
                 "color": "red",
@@ -1894,7 +1917,7 @@
             "key": "RFX7_unknown",
             "attributes": {
                 "label": "RFX7",
-                "x": 47.848547178273236,
+                "x": 127.84854717827324,
                 "y": -226.16945115144455,
                 "size": 7,
                 "color": "red",
@@ -1905,7 +1928,7 @@
             "key": "IRF1_unknown",
             "attributes": {
                 "label": "IRF1",
-                "x": 45.627071104024544,
+                "x": 125.62707110402454,
                 "y": -233.40441366425887,
                 "size": 7,
                 "color": "red",
@@ -1916,7 +1939,7 @@
             "key": "IRF7_unknown",
             "attributes": {
                 "label": "IRF7",
-                "x": 45.01283498218506,
+                "x": 125.01283498218507,
                 "y": -240.94777846366472,
                 "size": 7,
                 "color": "red",
@@ -1927,7 +1950,7 @@
             "key": "BANP_unknown",
             "attributes": {
                 "label": "BANP",
-                "x": 46.034559811137605,
+                "x": 126.0345598111376,
                 "y": -248.4468261954897,
                 "size": 7,
                 "color": "red",
@@ -1938,7 +1961,7 @@
             "key": "IRF9_unknown",
             "attributes": {
                 "label": "IRF9",
-                "x": 48.64447087344593,
+                "x": 128.64447087344593,
                 "y": -255.55090972238665,
                 "size": 7,
                 "color": "red",
@@ -1949,7 +1972,7 @@
             "key": "STAT4_unknown",
             "attributes": {
                 "label": "STAT4",
-                "x": 52.72053162854431,
+                "x": 132.7205316285443,
                 "y": -261.92784999425953,
                 "size": 7,
                 "color": "red",
@@ -1960,7 +1983,7 @@
             "key": "IRF8_unknown",
             "attributes": {
                 "label": "IRF8",
-                "x": 58.072150005740475,
+                "x": 138.07215000574047,
                 "y": -267.2794683714557,
                 "size": 7,
                 "color": "red",
@@ -1971,7 +1994,7 @@
             "key": "NRF1_unknown",
             "attributes": {
                 "label": "NRF1",
-                "x": 64.4490902776134,
+                "x": 144.44909027761338,
                 "y": -271.3555291265541,
                 "size": 7,
                 "color": "red",
@@ -1982,7 +2005,7 @@
             "key": "SOX2_unknown",
             "attributes": {
                 "label": "SOX2",
-                "x": 71.55317380451032,
+                "x": 151.55317380451032,
                 "y": -273.96544018886243,
                 "size": 7,
                 "color": "red",
@@ -1993,7 +2016,7 @@
             "key": "GTF2A1L_unknown",
             "attributes": {
                 "label": "GTF2A1L",
-                "x": 79.05222153633531,
+                "x": 159.0522215363353,
                 "y": -274.98716501781496,
                 "size": 7,
                 "color": "red",
@@ -2004,7 +2027,7 @@
             "key": "LRIF1_unknown",
             "attributes": {
                 "label": "LRIF1",
-                "x": 86.59558633574116,
+                "x": 166.59558633574116,
                 "y": -274.37292889597546,
                 "size": 7,
                 "color": "red",
@@ -2015,7 +2038,7 @@
             "key": "ZNF274_unknown",
             "attributes": {
                 "label": "ZNF274",
-                "x": 93.83054884855544,
+                "x": 173.83054884855542,
                 "y": -272.15145282172676,
                 "size": 7,
                 "color": "red",
@@ -2026,7 +2049,7 @@
             "key": "RFX6_unknown",
             "attributes": {
                 "label": "RFX6",
-                "x": 100.41881026876229,
+                "x": 180.4188102687623,
                 "y": -268.4266105473074,
                 "size": 7,
                 "color": "red",
@@ -2037,7 +2060,7 @@
             "key": "ZMYM3_unknown",
             "attributes": {
                 "label": "ZMYM3",
-                "x": 106.05231081467944,
+                "x": 186.05231081467943,
                 "y": -263.3725715576044,
                 "size": 7,
                 "color": "red",
@@ -2048,7 +2071,7 @@
             "key": "FUS-CHOP_unknown",
             "attributes": {
                 "label": "FUS-CHOP",
-                "x": 110.467634261966,
+                "x": 190.467634261966,
                 "y": -257.22565709861533,
                 "size": 7,
                 "color": "red",
@@ -2059,7 +2082,7 @@
             "key": "DDIT3_unknown",
             "attributes": {
                 "label": "DDIT3",
-                "x": 113.45832499350638,
+                "x": 193.45832499350638,
                 "y": -250.27329005863777,
                 "size": 7,
                 "color": "red",
@@ -2070,7 +2093,7 @@
             "key": "RNF2_unknown",
             "attributes": {
                 "label": "RNF2",
-                "x": 114.88454163460779,
+                "x": 194.88454163460779,
                 "y": -242.84055539346014,
                 "size": 7,
                 "color": "red",
@@ -2081,7 +2104,7 @@
             "key": "IRF6_unknown",
             "attributes": {
                 "label": "IRF6",
-                "x": 114.67959588025825,
+                "x": 194.67959588025826,
                 "y": -235.2749995151349,
                 "size": 7,
                 "color": "red",
@@ -2092,7 +2115,7 @@
             "key": "ZBED2_unknown",
             "attributes": {
                 "label": "ZBED2",
-                "x": 112.8530707661503,
+                "x": 192.8530707661503,
                 "y": -227.93037940802114,
                 "size": 7,
                 "color": "red",
@@ -2103,34 +2126,11 @@
             "key": "POU6F1_unknown",
             "attributes": {
                 "label": "POU6F1",
-                "x": 109.49037257658277,
+                "x": 189.49037257658279,
                 "y": -221.15012134536843,
                 "size": 7,
                 "color": "red",
                 "url": "/proteinTable/ensg00000184271-pou6f1"
-            }
-        },
-        {
-            "key": "mon",
-            "attributes": {
-                "label": "mon",
-                "x": 160,
-                "y": -240,
-                "size": 25,
-                "color": "blue",
-                "zIndex": 100,
-                "url": "/repeatTable/mon"
-            }
-        },
-        {
-            "key": "OSR2_mon",
-            "attributes": {
-                "label": "OSR2",
-                "x": 184.74873734152916,
-                "y": -215.25126265847084,
-                "size": 7,
-                "color": "red",
-                "url": "/proteinTable/ensg00000164920-osr2"
             }
         }
     ],
@@ -2910,18 +2910,18 @@
             }
         },
         {
-            "key": "DBP_bsat_edge",
+            "key": "MEIS1_bsat_edge",
             "source": "bsat",
-            "target": "DBP_bsat",
+            "target": "MEIS1_bsat",
             "attributes": {
                 "size": 3,
                 "color": "black"
             }
         },
         {
-            "key": "MEIS1_bsat_edge",
+            "key": "DBP_bsat_edge",
             "source": "bsat",
-            "target": "MEIS1_bsat",
+            "target": "DBP_bsat",
             "attributes": {
                 "size": 3,
                 "color": "black"
@@ -3261,6 +3261,78 @@
             }
         },
         {
+            "key": "SP1_hor_edge",
+            "source": "hor",
+            "target": "SP1_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PRDM4_hor_edge",
+            "source": "hor",
+            "target": "PRDM4_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZFAT_hor_edge",
+            "source": "hor",
+            "target": "ZFAT_hor",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "CDX4_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "CDX4_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ZNF410_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "ZNF410_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "BCL11b_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "BCL11b_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "HOXd9_HSat3_Y_edge",
+            "source": "HSat3_Y",
+            "target": "HOXd9_HSat3_Y",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "OSR2_mon_edge",
+            "source": "mon",
+            "target": "OSR2_mon",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
             "key": "RUNX2_rDNA_edge",
             "source": "rDNA",
             "target": "RUNX2_rDNA",
@@ -3300,33 +3372,6 @@
             "key": "OSR2_dhor_edge",
             "source": "dhor",
             "target": "OSR2_dhor",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "SP1_hor_edge",
-            "source": "hor",
-            "target": "SP1_hor",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "PRDM4_hor_edge",
-            "source": "hor",
-            "target": "PRDM4_hor",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "ZFAT_hor_edge",
-            "source": "hor",
-            "target": "ZFAT_hor",
             "attributes": {
                 "size": 3,
                 "color": "black"
@@ -3417,42 +3462,6 @@
             "key": "Sp1_copy_alpha_edge",
             "source": "alpha",
             "target": "Sp1_copy_alpha",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "CDX4_HSat3_Y_edge",
-            "source": "HSat3_Y",
-            "target": "CDX4_HSat3_Y",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "ZNF410_HSat3_Y_edge",
-            "source": "HSat3_Y",
-            "target": "ZNF410_HSat3_Y",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "BCL11b_HSat3_Y_edge",
-            "source": "HSat3_Y",
-            "target": "BCL11b_HSat3_Y",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "HOXd9_HSat3_Y_edge",
-            "source": "HSat3_Y",
-            "target": "HOXd9_HSat3_Y",
             "attributes": {
                 "size": 3,
                 "color": "black"
@@ -3714,15 +3723,6 @@
             "key": "POU6F1_unknown_edge",
             "source": "unknown",
             "target": "POU6F1_unknown",
-            "attributes": {
-                "size": 3,
-                "color": "black"
-            }
-        },
-        {
-            "key": "OSR2_mon_edge",
-            "source": "mon",
-            "target": "OSR2_mon",
             "attributes": {
                 "size": 3,
                 "color": "black"

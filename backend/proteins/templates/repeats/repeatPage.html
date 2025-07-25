@@ -167,39 +167,17 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 {% block content %}
     <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
     <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
-    <div class="text-center organism">Organism: {{repeat.parental_organism.scientific_name}}</div>  
-    <!-- <div class="table mt-3">
-        {% comment %} 
-        <table class="table mobile flip-scroll">
-        <thead>
-            <tr class="table-header ">
-            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#organism">Organism</a></th>
-            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#molecular-weight">Molecular Weight</a></th>
-            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#cofactor">Motif</a></th>
-            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#oligomerization">Proteomics</a></th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="text-center organism " style="padding-bottom: 30px">Organism: {{repeat.parental_organism.scientific_name}}</div>  
+    
+    <div id="karyoplot-info" >
+      {% if repeat.karyoplot_exists %}
+        <svg width=auto height=auto style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
+          <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
+        </svg>
+      {% endif %}
+    </div>
 
-            <tr >
-            <td>{{repeat.parental_organism.scientific_name | safe}}</td>
-            <td>{{repeat.molecular_weight_str | safe}}</td>
-            <td>{{repeat.motif | safe}}</td>
-            <td>{{repeat.proteomics | safe}}</td>
-            </tr>
-        </tbody>
-        </table> {% endcomment %}
-   </div> -->
-
-  <div id="karyoplot-info" style="padding-top: 300px" >
-    {% if repeat.karyoplot_exists %}
-      <svg height="650" width="900" xmlns="http://www.w3.org/2000/svg" >
-        <image height="650" width="900" href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
-      </svg>
-    {% endif %}
-  </div>
-
-   <div class="attributes" style="padding-top: 50px" >
+   <div class="attributes" >
      <h3>Attributes</h3>
    </div>
 

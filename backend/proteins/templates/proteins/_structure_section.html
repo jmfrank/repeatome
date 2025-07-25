@@ -26,7 +26,7 @@
     {% comment %} <div class='row' id='microscopy'> {% endcomment %}
     {% comment %} <div class='col-12'> {% endcomment %}
       <div class="text-muted" id="pdb-info">
-        {% comment %} <img src="{% static 'microscopy_' ~ {{ protein.gene }} ~ '.png' %}" alt="{{ protein.gene }}"> {% endcomment %}
+        <!-- {% include "proteins/test2.html" with protein=protein %} -->
         <img src="{% static 'microscopy_'|add:protein.gene|add:'.png' %}" alt="{{ protein.gene }}">
       </div>
           {% comment %} <div id="smilesDrawing" class="mt-4">

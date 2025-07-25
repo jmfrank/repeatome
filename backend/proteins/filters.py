@@ -160,7 +160,7 @@ class ProteinFilter(filters.FilterSet):
             # "slug": ["exact"],
             # "id": ["exact"],
         }
-        form_fields = dict(**fields, spectral_brightness=["gt", "lt"])
+        form_fields = dict(**fields)
         operators = {
             "lt": "is less than",
             "gt": "is greater than",
@@ -187,9 +187,9 @@ class ProteinFilter(filters.FilterSet):
             # "default_state__brightness": "Brightness",
             # "default_state__pka": "pKa",
             "UNIPROT": "UniProtKB ID",
-            "ENSEMBL": "GenBank ID",
+            "ENSEMBL": "ENSEMBL ID",
             "PDB": "PDB ID",
-            "id": "RepeatOme ID",
+            "id": "Repeatome ID",
             "protein_sequence": "Sequence",
             "gene": "Name or Alias",
             # "agg": "Oligomerization",
