@@ -378,3 +378,26 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    </div>
 
 {% endblock content %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
+
+<script type="text/javascript">
+
+
+///////////DATA TABLE
+
+$(function() {
+  $('#repeatProteins').DataTable({
+    "scrollX": true,
+    "pageLength": 10,
+    "iDisplayLength": -1,
+    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
+    "order": [[ 3, 'desc' ]],
+  });
+
+});
+</script>
+
+{% endblock javascript %}
