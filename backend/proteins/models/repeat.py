@@ -47,9 +47,10 @@ class Repeat(models.Model):
     
     def aliases_as_str(self):
         # print(self.aliases)
-        if not self.aliases or not self.aliases == "''":
+        if self.aliases:
+            return ", ".join(self.aliases)
+        else:
             return "None"
-        return ", ".join(self.aliases)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

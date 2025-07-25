@@ -23,7 +23,7 @@
 <h2>Advanced Protein Search</h2>
 
 <p class="text-muted">Add additional rows to refine your search.  Each row is considered as an 'AND' clause in the search.  If a given search parameter is unknown for a protein in the database, that protein will be excluded from the results. If you find that you are not getting results, relax your query.</p>
-<p class='text-muted'>Note: organic dyes are not yet searchable in the database, but spectra for a selection of organic dyes are available on the <a href="{% url 'proteins:spectra' %}">spectra page</a>.</p>
+<!-- <p class='text-muted'>Note: organic dyes are not yet searchable in the database, but spectra for a selection of organic dyes are available on the <a href="{% url 'proteins:spectra' %}">spectra page</a>.</p> -->
 
 <div class='hidden' id="crispy-form">
  {{ filter.form |crispy }}

@@ -22,7 +22,11 @@
     </div>
   </div>
   <div class='col-12 col-md-6 order-1 order-md-2'>
-      {% comment %} <div class="text-muted" id="pdb-info">
+    {% comment %} <h5 class='mb-0' id="chem-title"></h5> {% endcomment %}
+    {% comment %} <div class='row' id='microscopy'> {% endcomment %}
+    {% comment %} <div class='col-12'> {% endcomment %}
+      <div class="text-muted" id="pdb-info">
+        <!-- {% include "proteins/test2.html" with protein=protein %} -->
         <img src="{% static 'microscopy_'|add:protein.gene|add:'.png' %}" alt="{{ protein.gene }}">
       </div> {% endcomment %}
       <div

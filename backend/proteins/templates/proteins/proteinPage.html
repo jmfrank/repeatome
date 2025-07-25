@@ -323,9 +323,9 @@ window.onload = function () {
 					</div>
 					{% endif %}
 
-          {% if protein.AF3 %}
+          {% if protein.UNIPROT %}
 					<div class="col-md-3 col-sm-6">
-					<small>AF3: <a href="https://alphafold.ebi.ac.uk/entry/{{ protein.AF3 }}" target="_blank" rel="noopener">{{ protein.AF3 | default:''}}</a></small>
+					<small>AF3: <a href="https://alphafold.ebi.ac.uk/entry/{{ protein.UNIPROT }}" target="_blank" rel="noopener">{{ protein.UNIPROT | default:''}}</a></small>
 					</div>
 					{% endif %}
 
