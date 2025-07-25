@@ -8,13 +8,13 @@
 {% endcomment %}
 
 
-<table class="table table-sm table-striped {{classes}}" id="{{ id|default:'proteinTable' }}" style="width:100%">
+<table class="table table-striped {{classes}}" id="{{ id|default:'proteinTable' }}" style="width:100%">
 	<thead>
 		<tr class="table-header">
 			{% if removebutton %}<th class='remove-button'>Remove</th>{% endif %}
-			<th class="protein">Name</th>
+			<th>Name</th>
 			
-			<td>Aliases</td>
+			<th>Aliases</th>
 			{% if comparison %}
 			<th><span class="d-none d-lg-inline">Compare</span><span class="d-block d-lg-none"><i class="fas fa-plus ml-1"></i></span></th>
 			{% endif %}
@@ -46,3 +46,5 @@
 		{% endfor %}
 	</tbody>
 </table>
+
+

@@ -132,7 +132,7 @@ class ProteinTF(models.Model):
 
     def aliases_as_str(self):
         if not self.aliases:
-            return ''
+            return 'None'
         return ", ".join(self.aliases)
 
     def cofactor_as_str(self):
@@ -170,3 +170,8 @@ class ProteinTF(models.Model):
     def get_repeats(self):
         return [p.name for p in self.repeats.all()]
     
+    def get_jaspar_base(self):
+        if not len(self.jaspar) == 0:
+            indx = self.jaspar[0].find('.')
+            return self.jaspar[0][:indx]
+        return None

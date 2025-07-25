@@ -18,43 +18,31 @@
       <table class="table table-striped" id="proteinTable" style="width: 100%;">
         <thead>
             <tr class="table-header">
-                <th class="protein">gene</th>
-                <th>satellite</th>
-                <th>validation_grade</th>
-                <th>prediction_method</th>
-                <th>microscopy_result</th>
-                <th>motif_enrichment</th>
-                <th>motif_q_score</th>
-                <th>existing_images</th>
-                <th>existing_images_link</th>
-                <th>imaging_results</th>
-                <th>notes</th>
-                <th>PDB</th>
-                <th>AF3</th>
+                <th class="protein">Gene</th>
+                <th>Aliases</th>
+                <th>Repeats</th>
+                <th>Parent Organism</th>
+                <th>Gene Family</th>
                 <th>UNIPROT</th>
                 <th>ENSEMBL</th>
-                <th>proteinatlas</th>
+                <th>Jaspar</th>
             </tr>
         </thead>
         <tbody>
             {% for protein in proteins %}
             <tr class="data">
                 <td class="protein"><a href="/proteinTable/{{protein.slug}}">{{protein.gene}}</a></td>
-                <td class="text-center">{{protein.satellite}}</td>
-                <td class="text-center">{{protein.validation_grade}}</td>
-                <td class="text-center">{{protein.prediction_method}}</td>
-                <td class="text-center">{{protein.microscopy_result}}</td>
-                <td class="text-center">{{protein.motif_enrichment}}</td>
-                <td class="text-center">{{protein.motif_q_score}}</td>
-                <td class="text-center">{{protein.existing_images}}</td>
-                <td class="text-center">{{protein.existing_images_link}}</td>
-                <td class="text-center">{{protein.imaging_results}}</td>
-                <td class="text-center">{{protein.notes}}</td>
-                <td class="text-center">{{protein.PDB}}</td>
-                <td class="text-center">{{protein.AF3}}</td>
-                <td class="text-center">{{protein.UNIPROT}}</td>
-                <td class="text-center">{{protein.ENSEMBL}}</td>
-                <td class="text-center">{{protein.proteinatlas}}</td>
+                <td class="text-center">{{protein.aliases_as_str}}</td>
+                <td class="text-center">
+                  {% for repeat in protein.repeats.all %}
+                    <a href="/repeatTable/{{repeat.slug}}">{{repeat.name}}</a>
+                  {% endfor %}
+                </td>
+                <td class="text-center">{{protein.parent_organism.scientific_name}}</td>
+                <td class="text-center">{{protein.gene_family.gene_family}}</td>
+                <td class="text-center"> <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank">{{protein.UNIPROT}}</a></td>
+                <td class="text-center"> <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank">{{protein.ENSEMBL}}</a></td>
+                <td class="text-center"><a href=''>{{protein.get_jaspar_base}}</a></td>
             </tr>
             {% endfor %}
         </tbody>

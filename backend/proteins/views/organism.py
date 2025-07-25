@@ -20,9 +20,15 @@ class OrganismListView(ListView):
 class OrganismDetailView(DetailView):
     """renders html for single reference page"""
 
-    GetNetworkData()
+    model = Organism
     queryset = Organism.objects.all().prefetch_related("proteins__repeats")
     template_name = "organisms/organismPage.html"
+    
+    def get(self, request, *args, **kwargs):
+        slug = kwargs.get("pk")
+        if slug:
+            GetNetworkData(slug)  # just write to file, ignore return
+        return super().get(request, *args, **kwargs)
 
 # class RepeatDetailView(DetailView):
 #     """renders html for single protein page"""

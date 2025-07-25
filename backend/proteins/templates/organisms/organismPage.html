@@ -28,12 +28,15 @@
 
       <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
 
-      <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px;'></div>
+      <div id="network-container" style="position: relative;">
+        <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px; position: relative;'>
+        </div>
+      </div>
 
       <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
 			{% with proteins=object.proteinTF.all removebutton=False %}
         <div class="table-responsive mt-2">
-			    {% include '_proteintable.html' %}
+			    {% include '_proteintable.html' with id='organismProteins' %}
         </div>
 			{% endwith %}
 
@@ -41,25 +44,23 @@
 
 {% block javascript %}
 
-{% comment %} <script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
 
-$('.lineage').each(function(i, el){
-  $.getJSON("{% url 'proteins:get-org-lineage' object.pk %}", function(data){
-    if(!$.isEmptyObject(data)){
-      $('<h5>', {class: 'pt-3'}).html('<strong>Lineages derived from {{ object }}</strong>').insertBefore(el)
-      var chart = window.FPBASE.LineageChart({
-        withToolbar: true,
-        withSearch: true,
-        withTopScroll: true,
-      }).data(data);
-      d3.select(el).call(chart);
-      chart.duration(100);
-    }
-  })
+<script type="text/javascript">
+
+
+///////////DATA TABLE
+
+$(function() {
+  $('#organismProteins').DataTable({
+    "scrollX": true,
+    "pageLength": 50,
+    "iDisplayLength": -1,
+    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
+    "order": [[ 0, 'desc' ]],
+  });
+
 });
-
-
-</script> {% endcomment %}
-
+</script>
 
 {% endblock javascript %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+
+    <div id='view_text'></div>
+
+    <script>
+      const imageArray = ... // itk-wasm Image or imjoy-rpc encoded ndarray
+      const viewer = await api.createWindow({
+        src: "https://kitware.github.io/itk-vtk-viewer/app/",
+        data: { image: imageArray },
+        config: config,
+        })
+    </script>
+
+    <!--<div
+      style="float: right; display: inline-block; border: 2px solid gray; margin: 20px; margin-right: 50px;"
+      class="itk-vtk-viewer"
+      data-url="https://data.kitware.com/api/v1/file/5b8446868d777f43cc8d5ec1/download/data.nrrd"
+      data-viewport="450x300"
+    ></div>
+
+    <script type="text/javascript" src="https://kitware.github.io/itk-vtk-viewer/app/itkVtkViewerCDN.js">
+    </script>-->
+  </body>
+</html>

@@ -22,144 +22,15 @@
  <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
  <script src="{% static 'motif_viewer/scroller.js' %}"></script>
  <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
-<script>
-  // Use jQuery.noConflict() to prevent conflicts
-  var $j = jQuery.noConflict();
-  $j(document).ready(function() {
+<script type="application/javascript">
+  $(document).ready(function() {
     var zoom         = 1;
     var column_width = 34;
-    // console.log(document.querySelector('div[data-logo]').dataset.logo);
-    $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+    console.log(document.querySelector('div[data-logo]').dataset.logo)
+    $('#logo').hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+    //$('#logo2').hmm_logo({zoom: 1, height_toggle: 'enabled', help: 1, column_info: '#logo_info'});
   });
 </script>
-
-  {{ enrichment_datapoints|json_script:'chart1-data' }}
-  {{ qscore_datapoints|json_script:'chart2-data' }}
-
-
-<!--Motif Q-Score and Enrichment Graph-->
-<script>
-
-var chart1_raw_data = JSON.parse(document.getElementById('chart1-data').textContent)
-var chart2_raw_data = JSON.parse(document.getElementById('chart2-data').textContent)
-
-window.onload = function () {
-
-  // var chart1_datapoints = [];
-  // for (var i = 0; i < chart1_raw_data.length; i++) {
-  //     chart1_datapoints.push({
-  //         label: chart1_raw_data[i].label,
-  //         y: chart1_raw_data[i].y
-  //     });
-  // }
-
-  // var chart2_datapoints = [];
-  // for (var i = 0; i < chart2_raw_data.length; i++) {
-  //     chart2_datapoints.push({
-  //         label: chart2_raw_data[i].label,
-  //         y: chart2_raw_data[i].y
-  //     });
-  // }
-
-  var qScoreChart = new CanvasJS.Chart("qScoreChartContainer", {
-    animationEnabled: true,
-    title:{
-      text: "Motif Q-Score vs Gene"
-    },	
-    axisX: {
-      interval: 1
-    },
-    axisY: {
-      title: "Motif Q-Score",
-      titleFontColor: "#4F81BC",
-      lineColor: "#4F81BC",
-      labelFontColor: "#4F81BC",
-      tickColor: "#4F81BC",
-      minimum: 0,
-      labelFormatter: function (e) {
-        // Display the absolute value as the index label
-        return e.value * -1; 
-      },
-    },
-    toolTip: {
-      shared: true,
-      contentFormatter: function(e) {
-        var yValue = (e.entries[0].dataPoint.y) * -1; // Get the absolute value
-        return e.entries[0].dataPoint.label + "<br/>Motif Q-Score: " + yValue;
-      }
-    },
-    legend: {
-      cursor:"pointer",
-      itemclick: toggleDataSeries
-    },
-    data: [{
-      type: "column",
-      name: "Motif Q-Score",
-      legendText: "Gene",
-      showInLegend: true,
-      dataPoints: chart1_raw_data
-    }]
-  });
-  qScoreChart.render();
-
-
-  
-function toggleDataSeries(e) {
-	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-		e.dataSeries.visible = false;
-	}
-	else {
-		e.dataSeries.visible = true;
-	}
-	chart.render();
-}
-
-var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
-    animationEnabled: true,
-    title:{
-      text: "Motif Enrichment vs Gene"
-    },	
-    axisX: {
-      interval: 1
-    },
-    axisY: {
-      title: "Motif Enrichment",
-      titleFontColor: "#4F81BC",
-      lineColor: "#4F81BC",
-      labelFontColor: "#4F81BC",
-      tickColor: "#4F81BC"
-    },
-    toolTip: {
-      shared: true,
-      contentFormatter: function(e) {
-        var yValue = (e.entries[0].dataPoint.y); // Get the absolute value
-        return e.entries[0].dataPoint.label + "<br/>Motif Enrichment: " + yValue;
-      }
-    },
-    legend: {
-      cursor:"pointer",
-      itemclick: toggleDataSeries
-    },
-    data: [{
-      type: "column",
-      name: "Motif Enrichment",
-      legendText: "Gene",
-      showInLegend: true, 
-      dataPoints: chart2_raw_data
-    }]
-  });
-  enrichmentScoreChart.render();
-
-
-}
-
-
-
-</script>
-
-
-
-
 {% endblock extrahead %}
 
 {% block container-class %}container repeat{% endblock %}
@@ -168,7 +39,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
     <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
     <div class="text-center organism">Organism: {{repeat.parental_organism.scientific_name}}</div>  
-    <!-- <div class="table mt-3">
+    <div class="table mt-3">
         {% comment %} 
         <table class="table mobile flip-scroll">
         <thead>
@@ -189,17 +60,9 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
             </tr>
         </tbody>
         </table> {% endcomment %}
-   </div> -->
+   </div>
 
-  <div id="karyoplot-info" style="padding-top: 300px" >
-    {% if repeat.karyoplot_exists %}
-      <svg height="650" width="900" xmlns="http://www.w3.org/2000/svg" >
-        <image height="650" width="900" href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
-      </svg>
-    {% endif %}
-  </div>
-
-   <div class="attributes" style="padding-top: 50px" >
+   <div class="attributes">
      <h3>Attributes</h3>
    </div>
 
@@ -238,7 +101,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    </div>
 
    <div class="table mt-3">
-     <table class="table flip-scroll">
+     <table class="table" id='repeatProteins' style="width: 100%; overflow-x: scroll;">
        <thead>
          <tr class="table-header">
            <th>Protein</th>
@@ -252,7 +115,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
        <tbody>
         {% for protein in repeat.get_proteins %}
          <tr>
-           <td><a href="/proteinTable/{{protein.slug}}">{{ protein.gene | safe}}</a></td>
+           <td><a href="/proteinTable/{{protein.gene}}">{{ protein.gene | safe}}</a></td>
            <td>{{ protein.gene_family.gene_family | safe }}</td>
            <td>{{ protein.gene_type_as_str | safe }}</td>
            <td>{{ protein.parent_organism.scientific_name | safe }}</td>
@@ -263,15 +126,6 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
        </tbody>
      </table>
    </div>
-
-  <!--Motif Q-Score & Enrichment Graph-->
-
-  <div id="qScoreChartContainer" style="height: 370px; width: 100%;"></div>
-  <div id="enrichmentChartContainer" style="height: 370px; width: 100%;"></div>
-
-  <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-
-
 
      {% comment %} <div class="sequence mt-3">
 			<div class="row">
@@ -400,3 +254,26 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    </div>
 
 {% endblock content %}
+
+{% block javascript %}
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
+
+<script type="text/javascript">
+
+
+///////////DATA TABLE
+
+$(function() {
+  $('#repeatProteins').DataTable({
+    "scrollX": true,
+    "pageLength": 10,
+    "iDisplayLength": -1,
+    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
+    "order": [[ 3, 'desc' ]],
+  });
+
+});
+</script>
+
+{% endblock javascript %}

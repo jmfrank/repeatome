@@ -2,29 +2,36 @@
 {% load webp_picture from protein_tags %}
 {% load static %}
 
-{% block title %}About RepeatOme: The Repeat and Protein Database {% endblock %}
-{% block meta-description %}RepeatOme is a free and open-source, web-based, community-editable database for repeats and proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
+{% block title %}About Repeatome: The Repeat and Protein Database {% endblock %}
+{% block meta-description %}Repeatome is a free and open-source, web-based, community-editable database for repeats and proteins and their properties.  It accepts user contributions but is also moderated.{% endblock %}
 
 {% block content %}
-<h1 class='mb-4'><strong>Repeat</strong>Ome <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
+<h1 class='mb-4'><strong>Repeat</strong>ome <img class='float-right' style="opacity: 0.9;" src="{% static 'images/GFP_spinner.gif' %}" class="pt-4 mb-4"></h1>
 
 <h3><strong>A repeat and protein database</strong></h3>
 
   <p>
-    RepeatOme is a free and open-source, community-editable database for repeats and proteins and their properties. The primary objective is to aggregate structured and searchable repeat data that is of interest to the repeat developers. Each protein in the database has a dedicated page showing amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt), repeats, experimental data, structural data, references that introduced or characterized the protein, and more. Excerpts from primary literature can be entered to store key information about a protein that is otherwise difficult to capture within the current database schema. (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.)
+    RepeatOme is a free and open-source, community-editable database for repeats and proteins and their properties. 
+    The primary objective is to aggregate expiremental and catalogued repeat data in a structured and searchable format. 
+    Each protein in the database has a dedicated page showing repeats, amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt, PDB, jaspar, DFam), structural data, microscopy results and experimental data, RNA expression, references that introduced or characterized the protein, and more. 
+    Each repeat in the database has a dedicated page showing karyoplot data, motif data, proteomics, proteins, and references
+    {% comment %} (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.) {% endcomment %}
   </p>
   <p>RepeatOme additionally includes a variety of tools to:
     <ul>
+      <li>explore the <a href="{% url 'proteins:proteinTable' %}">table of all proteins in the database</a></li>
+      <li>explore the <a href="{% url 'proteins:repeatTable' %}">table of all repeats in the database</a></li>
       {% comment %} <li>explore the <a href="{% url 'proteins:lineage-list' %}">lineage and directed evolution of FPs</a></li> {% endcomment %}
-      <li>view <a href="{% url 'proteins:ichart' %}">relationships between protein properties</a></li>
+      {% comment %} <li>view <a href="{% url 'proteins:ichart' %}">relationships between protein properties</a></li> {% endcomment %}
       {% comment %} <li><a href="{% url 'proteins:spectra' %}">compare spectra</a> with common filters and light sources</li> {% endcomment %}
-      <li>calculate <a href="{% url 'proteins:fret' %}">FRET relationships</a></li>
+      {% comment %} <li>calculate <a href="{% url 'proteins:fret' %}">FRET relationships</a></li> {% endcomment %}
       <li>create and share curated <a href="{% url 'proteins:collections' %}">protein collections</a></li>
       {% comment %} <li>build a spectra viewer customized for the specifications on your <a href="{% url 'proteins:microscopes' %}">microscope</a></li> {% endcomment %}
     </ul>
   </p>
   <p>
-    RepeatOme was designed and created in 2025 by Matt Franklin at Altemose.
+    RepeatOme was designed and created in 2025 by Carissa Penn and Isabel Moorhead
+    Matt Franklin at Altemose.
   </p>
 
 <h4><strong>A Caution About Overinterpretation and Comparison</strong></h4>
