@@ -22,6 +22,7 @@
  <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
  <script src="{% static 'motif_viewer/scroller.js' %}"></script>
  <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+
 <script>
   // Use jQuery.noConflict() to prevent conflicts
   var $j = jQuery.noConflict();
@@ -31,6 +32,7 @@
     // console.log(document.querySelector('div[data-logo]').dataset.logo);
     $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
   });
+
 </script>
 
   {{ enrichment_datapoints|json_script:'chart1-data' }}
@@ -206,17 +208,20 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
                 <div class="logo-col" id="logo_info"></div>
               </div>
             {% endif %}
-            <p class="attr-name">Proteomics</p>
-            <p>{{repeat.proteomics}}</p>
         </div>
     </div>
 
-   <div class="Proteins">
+  <h3>Proteomics</h3>  
+  <div class="proteomics mt-3">
+      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat %}
+  </div>
+
+   <div class="Proteins" style="margin-top: 0px;">
      <h3>Proteins</h3>
    </div>
 
-   <div class="table mt-3">
-     <table class="table flip-scroll">
+   <div class="table mt-3" id="repeatProteinsContainer">
+     <table class="table flip-scroll" id="repeatProteins" style="width:100%">
        <thead>
          <tr class="table-header">
            <th>Protein</th>
