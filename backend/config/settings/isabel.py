@@ -14,9 +14,10 @@ import os
 
 # Data to import
 # ------------------------------------------------------------------------------
-IMPORT_DATA_FILE = "/Users/isabel/repeatome_data/satellite_binders_database_master.xlsx"
-IMPORT_ENRICHMENT_FILE = "/Users/isabel/repeatome_data/TFs_summary_ENR.csv"
-IMPORT_QSCORE_FILE = "/Users/isabel/repeatome_data/TFs_summary_Qscore.csv"
+IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
+IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
+IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
+IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
 
 
 # DATABASE CONFIGURATION

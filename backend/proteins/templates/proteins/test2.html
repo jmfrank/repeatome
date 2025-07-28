@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script>
+      // Example using XMLHttpRequest for a remote image
+      let xhr = new XMLHttpRequest();
+      xhr.responseType = 'arraybuffer';
+      xhr.open('GET', '/static/microscopy/microscopy_TEAD1.tif');
+      xhr.onload = function(e) {
+          let arrayBuffer = xhr.response;
+          // Proceed to decode and display
+          // Assuming 'arrayBuffer' contains the TIFF data
+          let tiff = new Tiff({buffer: arrayBuffer});
+          let canvas = tiff.toCanvas(); // This generates an HTML canvas element with the image
+          // Append the canvas to your desired HTML element
+          document.getElementById('tiff-viewer').appendChild(canvas); // Or append to a specific div
+      };
+      xhr.send();
+    </script>
+  </head>
+  <body>
+    <div id="tiff-viewer">
+    </div>
+    {% load static %}
+    <script src="{% static 'microscopy/tiff.min.js' %}"></script>
+  </body>
+</html>
