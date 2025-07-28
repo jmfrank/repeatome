@@ -89,6 +89,9 @@ if (!devMode) {
   )
 }
 
+//       "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Origin": "https://kitware.github.io"
+
 module.exports = {
   context: __dirname,
   entry: {
@@ -127,11 +130,12 @@ module.exports = {
   devServer: {
     port: 8080,
     headers: {
-      "Access-Control-Allow-Origin": "*",
+       "Access-Control-Allow-Origin": "*",
     },
     client: {
       overlay: false, // Disable the overlay
     },
+    
   },
   module: {
     rules: [

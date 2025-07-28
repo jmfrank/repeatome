@@ -25,6 +25,16 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
     ```
 
 1. Create/activate environment **using python 3.13** with pipenv/virtualenv/conda
+
+1. For microscopy data
+
+    For mac: using homebrew
+    ```bash
+    brew install
+    ```
+    For windows: 
+    Download the pre-compiled binary on [libvips.org](https://www.libvips.org/)
+
 1. Install python requirements for local development
 
     ```bash
@@ -76,6 +86,7 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
     python backend/manage.py makemigrations
     python backend/manage.py migrate
     ```
+
 1. Import data
 
     Cache the JASPAR ids and update the database

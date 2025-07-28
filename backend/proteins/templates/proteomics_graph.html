@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+
+<style>
+
+    .xlabel, .ylabel {
+        font-weight: bold;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text {
+        font-family: sans-serif;
+        font-size: 12px;
+    }
+</style>
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css" rel="stylesheet" type="text/css" />
+
+<body>
+
+{% load static %}
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
+<script type="text/javascript" src="{% static 'colorbrewer.js' %}"></script>
+
+
+
+<div class='fig'>
+    <div class="chart"></div>
+    <table id="info">
+	    <tr>
+		    <td><b>Name:</b></td><td><div id="gene_name"></div></td>
+	    </tr>
+	    <tr>
+		    <td><b>x-value:</b></td> <td><div id="xval"></div></td>
+	    </tr>
+	    <tr>
+		    <td><b>y-value:</b></td> <td><div id="yval"></div></td>
+	    </tr>
+	</table>
+</div>
+
+{{ datapoints|json_script:'chart3-data' }}
+
+<script type="text/javascript">
+        
+    //Width and height
+    var w = 800;
+    var h = 500;
+    var padding = 100;
+
+    var svg = d3.select(".chart")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", h);
+
+    var highlightElement = null;
+    var info = function(d) {
+        $("#gene_name").html(d.name);
+        $("#xval").html(parseFloat(d.x).toPrecision(5));
+        $("#yval").html(parseFloat(d.y).toPrecision(5));
+
+        var element = d3.select(this);
+        element.transition().duration(100)
+            .attr("stroke", element.attr("fill"))
+            .attr("stroke-width", 5);
+
+        if (highlightElement) {
+            highlightElement.transition().duration(100)
+                .attr("stroke","none");
+        }
+
+        highlightElement = element;		
+    };
+
+    var data = JSON.parse(document.getElementById('chart3-data').textContent)
+
+    console.log("Loading datapoints 2")
+    console.log(data)
+    
+    var len = d3.max(data, function(d) { return d.f; } );
+
+    var xmin = d3.min(data, function(d) { return parseFloat(d.x); });
+    var xmax = d3.max(data, function(d) { return parseFloat(d.x); });
+
+    var ymin = d3.min(data, function(d) { return parseFloat(d.y); });
+    var ymax = d3.max(data, function(d) { return parseFloat(d.y); });
+
+
+    var xScale = d3.scale.linear()
+        .domain([xmin,xmax])
+        .range([padding, w - padding]);
+
+    var yScale = d3.scale.linear()
+        .domain([ymin, ymax])
+        .range([h - padding, 10]);
+                            
+
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("svg:circle")
+        .attr("cx", function(d) {
+            return xScale(parseFloat(d.x));
+        })
+        .attr("cy", function(d) {
+            return yScale(parseFloat(d.y));
+        })
+        .attr("r", 3)
+        .attr("fill", function(d) { return colorbrewer["Set2"][len][d.f-1]; })
+        .on("mouseover", function() {
+            d3.select(this)
+                .transition().duration(100)
+                .attr("r", 7);
+        })
+        .on("mouseout", function() {
+            d3.select(this)
+                .transition().duration(100)
+                .attr("r", 3);
+        })
+        .on("click", info)
+        .attr("id", function(d) { return d.f; });
+
+    $('svg circle').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+        return this.__data__.name;
+        }
+    });		
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+        .ticks(10);  //Set rough # of ticks
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .ticks(10);
+
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + (h - padding + 20) + ")")
+        .call(xAxis);           
+
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (padding-10) + ",0)")
+        .call(yAxis);
+
+    svg.append("text")
+        .attr("class", "xlabel")
+        .attr("text-anchor", "end")
+        .attr("x", w/2)
+        .attr("y", h-40)
+        .text("Effect Size");
+        
+    svg.append("text")
+        .attr("class", "ylabel")
+        .attr("text-anchor", "end")
+        .attr("y", 40)
+        .attr("x", -h/2+50)		 
+        .attr("transform", "rotate(-90)")
+        .text("-log10(p-value)");
+
+</script>
+
+</body>
+</html>

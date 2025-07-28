@@ -93,6 +93,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "repeatome.middleware.BlackListMiddleware",
@@ -405,14 +406,34 @@ GRAPHENE = {"SCHEMA": "repeatome.schema.schema"}
 # CORS
 # -------
 
-MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
+# MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
 INSTALLED_APPS += ["corsheaders"]
+
+# MIDDLEWARE_CLASSES = [
+#     "corsheaders.middleware.CorsMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+# ] + MIDDLEWARE
+
+
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "http://localhost:8080",
     "http://localhost:3000",
+    "https://kitware.github.io"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "https://kitware.github.io"
 ]
 
 BLOCKED_IPS = env.list("IP_BLACKLIST", default=[])
 
 # INSTALLED_APPS += ["app.apps.AppConfig"]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_HEADERS = list(default_headers) + [

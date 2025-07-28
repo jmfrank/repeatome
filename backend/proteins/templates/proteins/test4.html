@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="openseadragon1" style="width: 800px; height: 600px;"></div>
+    <script src="/static/openseadragon/openseadragon.min.js"></script>
+    <script type="text/javascript">
+        var viewer = OpenSeadragon({
+            id: "openseadragon1",
+            tileSources: "/static/microscopy/microscopy_TEAD1.dzi",
+            prefixUrl: "/static/openseadragon/images/"
+        });
+    </script>
+  </body>
+</html>
