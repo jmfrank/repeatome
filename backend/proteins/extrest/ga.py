@@ -13,7 +13,7 @@ from google.analytics.data_v1beta.types import (
 )
 from google.oauth2.service_account import Credentials
 
-from proteins.models import Protein
+from proteins.models import ProteinTF
 
 PROPERTY_ID = "255212585"
 
@@ -63,7 +63,7 @@ def ga_popular_proteins(client: BetaAnalyticsDataClient, days: int = 30) -> list
     """
     slug2name: dict[str, str] = {}
     uuid2slug: dict[str, str] = {}
-    for item in Protein.objects.all().values("slug", "name", "uuid"):
+    for item in ProteinTF.objects.all().values("slug", "name", "uuid"):
         uuid2slug[item["uuid"]] = item["slug"]
         slug2name[item["slug"]] = item["name"]
     request = RunReportRequest(

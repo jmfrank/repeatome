@@ -37,22 +37,16 @@ from reversion.models import Revision, Version
 from repeatome.util import is_ajax, uncache_protein_page
 from proteins.extrest.entrez import get_cached_gbseqs
 from proteins.extrest.ga import cached_ga_popular
-from proteins.forms.forms import BaseStateFormSet
+# from proteins.forms.forms import BaseStateFormSet
 from proteins.util.helpers import link_excerpts, most_favorited
 from proteins.util.maintain import check_lineages, suggested_switch_type
-from proteins.util.spectra import spectra2csv
+# from proteins.util.spectra import spectra2csv
 from references.models import Reference  # breaks application modularity
 
 from ..forms import (
-    # BleachComparisonForm,
-    # BleachMeasurementForm,
-    LineageFormSet,
     ProteinForm,
-    StateFormSet,
-    StateTransitionFormSet,
-    bleach_items_formset,
 )
-from ..models import Excerpt, Organism, Protein, Spectrum, State, ProteinTF
+from ..models import Excerpt, Organism, ProteinTF
 
 if TYPE_CHECKING:
     import maxminddb
@@ -246,117 +240,117 @@ class ProteinDetailView2(DetailView):
         data = super().get_context_data(**kwargs)
         return data
 
-class ProteinDetailView(DetailView):
-    """renders html for single protein page"""
+# class ProteinDetailView(DetailView):
+#     """renders html for single protein page"""
 
-    queryset = (
-        Protein.objects.annotate(has_spectra=Count("states__spectra"))
-        .prefetch_related("states", "excerpts__reference", "oser_measurements__reference")
-        .select_related("primary_reference")
-    )
+#     queryset = (
+#         Protein.objects.annotate(has_spectra=Count("states__spectra"))
+#         .prefetch_related("states", "excerpts__reference", "oser_measurements__reference")
+#         .select_related("primary_reference")
+#     )
 
-    @method_decorator(cache_page(60 * 30))
-    @method_decorator(vary_on_cookie)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+#     @method_decorator(cache_page(60 * 30))
+#     @method_decorator(vary_on_cookie)
+#     def dispatch(self, *args, **kwargs):
+#         return super().dispatch(*args, **kwargs)
 
-    def version_view(self, request, version, *args, **kwargs):
-        try:
-            with transaction.atomic(using=version.db):
-                # Revert the revision.
-                version.revision.revert(delete=True)
-                # Run the normal changeform view.
-                self.object = self.get_object()
-                context = self.get_context_data(object=self.object)
-                context["version"] = version
-                response = self.render_to_response(context)
-                response.render()  # eager rendering of response is necessary before db rollback
-                raise _RollBackRevisionView(response)
-        except _RollBackRevisionView as ex:
-            return ex.response
+#     def version_view(self, request, version, *args, **kwargs):
+#         try:
+#             with transaction.atomic(using=version.db):
+#                 # Revert the revision.
+#                 version.revision.revert(delete=True)
+#                 # Run the normal changeform view.
+#                 self.object = self.get_object()
+#                 context = self.get_context_data(object=self.object)
+#                 context["version"] = version
+#                 response = self.render_to_response(context)
+#                 response.render()  # eager rendering of response is necessary before db rollback
+#                 raise _RollBackRevisionView(response)
+#         except _RollBackRevisionView as ex:
+#             return ex.response
 
-    def get_object(self, queryset=None):
-        if queryset is None:
-            queryset = self.get_queryset()
-        try:
-            obj = queryset.get(slug=self.kwargs.get("slug"))
-        except Protein.DoesNotExist:
-            try:
-                obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
-            except Protein.DoesNotExist as e:
-                raise Http404("No protein found matching this query") from e
-        if obj.status == "hidden" and obj.created_by != self.request.user and not self.request.user.is_staff:
-            raise Http404("No protein found matching this query")
-        return obj
+#     def get_object(self, queryset=None):
+#         if queryset is None:
+#             queryset = self.get_queryset()
+#         try:
+#             obj = queryset.get(slug=self.kwargs.get("slug"))
+#         except Protein.DoesNotExist:
+#             try:
+#                 obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
+#             except Protein.DoesNotExist as e:
+#                 raise Http404("No protein found matching this query") from e
+#         if obj.status == "hidden" and obj.created_by != self.request.user and not self.request.user.is_staff:
+#             raise Http404("No protein found matching this query")
+#         return obj
 
-    def get(self, request, *args, **kwargs):
-        if "rev" in kwargs:
-            try:
-                rev = int(kwargs["rev"])  # has to be int or indexing will fail
-            except Exception:
-                rev = 0
-            if rev > 0:
-                versions = Version.objects.get_for_object(self.get_object())
-                version = versions[min(versions.count() - 1, rev)]
-                return self.version_view(request, version, *args, **kwargs)
-        elif "ver" in kwargs:
-            version = get_object_or_404(Version, id=kwargs["ver"])
-            if int(version.object_id) == self.get_object().id:
-                return self.version_view(request, version, *args, **kwargs)
-            # TODO:  ELSE WHAT??
-        try:
-            return super().get(request, *args, **kwargs)
-        except Http404:
-            from django.contrib.postgres.fields import ArrayField
-            from django.db import models
+#     def get(self, request, *args, **kwargs):
+#         if "rev" in kwargs:
+#             try:
+#                 rev = int(kwargs["rev"])  # has to be int or indexing will fail
+#             except Exception:
+#                 rev = 0
+#             if rev > 0:
+#                 versions = Version.objects.get_for_object(self.get_object())
+#                 version = versions[min(versions.count() - 1, rev)]
+#                 return self.version_view(request, version, *args, **kwargs)
+#         elif "ver" in kwargs:
+#             version = get_object_or_404(Version, id=kwargs["ver"])
+#             if int(version.object_id) == self.get_object().id:
+#                 return self.version_view(request, version, *args, **kwargs)
+#             # TODO:  ELSE WHAT??
+#         try:
+#             return super().get(request, *args, **kwargs)
+#         except Http404:
+#             from django.contrib.postgres.fields import ArrayField
+#             from django.db import models
 
-            name = slugify(self.kwargs.get(self.slug_url_kwarg))
-            aliases_lower = Func(Func(F("aliases"), function="unnest"), function="LOWER")
-            remove_space = Func(aliases_lower, Value(" "), Value("-"), function="replace")
-            final = Func(
-                remove_space,
-                Value("."),
-                Value(""),
-                function="replace",
-                output_field=ArrayField(models.CharField(max_length=200)),
-            )
-            d = dict(Protein.objects.annotate(aka=final).values_list("aka", "id"))
-            if name in d:
-                obj = Protein.objects.get(id=d[name])
-                messages.add_message(
-                    self.request,
-                    messages.INFO,
-                    f"The URL {self.request.get_full_path()} was not found.  You have been forwarded here",
-                )
-                return HttpResponseRedirect(obj.get_absolute_url())
-            raise
+#             name = slugify(self.kwargs.get(self.slug_url_kwarg))
+#             aliases_lower = Func(Func(F("aliases"), function="unnest"), function="LOWER")
+#             remove_space = Func(aliases_lower, Value(" "), Value("-"), function="replace")
+#             final = Func(
+#                 remove_space,
+#                 Value("."),
+#                 Value(""),
+#                 function="replace",
+#                 output_field=ArrayField(models.CharField(max_length=200)),
+#             )
+#             d = dict(Protein.objects.annotate(aka=final).values_list("aka", "id"))
+#             if name in d:
+#                 obj = Protein.objects.get(id=d[name])
+#                 messages.add_message(
+#                     self.request,
+#                     messages.INFO,
+#                     f"The URL {self.request.get_full_path()} was not found.  You have been forwarded here",
+#                 )
+#                 return HttpResponseRedirect(obj.get_absolute_url())
+#             raise
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        if self.object.status != "approved":
-            data["last_approved"] = self.object.last_approved_version()
+#     def get_context_data(self, **kwargs):
+#         data = super().get_context_data(**kwargs)
+#         if self.object.status != "approved":
+#             data["last_approved"] = self.object.last_approved_version()
 
-        similar = Protein.visible.filter(name__iexact=f"m{self.object.name}")
-        similar = similar | Protein.visible.filter(name__iexact=f"monomeric{self.object.name}")
-        similar = similar | Protein.visible.filter(name__iexact=self.object.name.lstrip("m"))
-        similar = similar | Protein.visible.filter(name__iexact=self.object.name.lower().lstrip("td"))
-        similar = similar | Protein.visible.filter(name__iexact=f"td{self.object.name}")
-        data["similar"] = similar.exclude(id=self.object.id)
-        spectra = [sp for state in self.object.states.all() for sp in state.spectra.all()]
+#         similar = Protein.visible.filter(name__iexact=f"m{self.object.name}")
+#         similar = similar | Protein.visible.filter(name__iexact=f"monomeric{self.object.name}")
+#         similar = similar | Protein.visible.filter(name__iexact=self.object.name.lstrip("m"))
+#         similar = similar | Protein.visible.filter(name__iexact=self.object.name.lower().lstrip("td"))
+#         similar = similar | Protein.visible.filter(name__iexact=f"td{self.object.name}")
+#         data["similar"] = similar.exclude(id=self.object.id)
+#         spectra = [sp for state in self.object.states.all() for sp in state.spectra.all()]
 
-        data["spectra_ids"] = ",".join([str(sp.id) for sp in spectra])
-        data["hidden_spectra"] = ",".join([str(sp.id) for sp in spectra if sp.subtype in ("2p")])
+#         data["spectra_ids"] = ",".join([str(sp.id) for sp in spectra])
+#         data["hidden_spectra"] = ",".join([str(sp.id) for sp in spectra if sp.subtype in ("2p")])
 
-        # put links in excerpts
-        data["excerpts"] = link_excerpts(self.object.excerpts.all(), self.object.name, self.object.aliases)
+#         # put links in excerpts
+#         data["excerpts"] = link_excerpts(self.object.excerpts.all(), self.object.name, self.object.aliases)
 
-        # Add country code to context
-        try:
-            data["country_code"] = get_country_code(self.request)
-        except Exception:
-            data["country_code"] = ""
+#         # Add country code to context
+#         try:
+#             data["country_code"] = get_country_code(self.request)
+#         except Exception:
+#             data["country_code"] = ""
 
-        return data
+#         return data
 
 class ProteinCreateUpdateMixin:
     def get_form_type(self):
@@ -365,30 +359,30 @@ class ProteinCreateUpdateMixin:
     def form_valid(self: CreateView, form: ProteinForm):
         # This method is called when valid form data has been POSTed.
         context: dict = self.get_context_data()
-        states = cast("BaseStateFormSet", context["states"])
-        lineage = cast("BaseInlineFormSet", context["lineage"])
+        # states = cast("BaseStateFormSet", context["states"])
+        # lineage = cast("BaseInlineFormSet", context["lineage"])
 
-        if not (states.is_valid() and lineage.is_valid()):
-            context |= {"states": states, "lineage": lineage}
-            return self.render_to_response(context)
+        # if not (states.is_valid() and lineage.is_valid()):
+            # context |= {"states": states, "lineage": lineage}
+            # return self.render_to_response(context)
 
         # check if another protein already has the sequence that would be
-        if not form.cleaned_data.get("seq"):
-            for lform in lineage.forms:
-                mut = lform.cleaned_data.get("mutation")
-                par = lform.cleaned_data.get("parent")
-                if par and mut:
-                    seq = par.protein.seq.mutate(mut)
-                    with contextlib.suppress(Protein.DoesNotExist):
-                        prot = Protein.objects.get(seq__iexact=str(seq))
-                        msg = mark_safe(
-                            f'<a href="{prot.get_absolute_url()}" style="text-decoration: '
-                            + f'underline;">{prot.name}</a> already has the sequence that'
-                            + " would be generated by this parent & mutation"
-                        )
-                        lform.add_error(None, msg)
-                        context |= {"states": states, "lineage": lineage}
-                        return self.render_to_response(context)
+        # if not form.cleaned_data.get("seq"):
+        #     for lform in lineage.forms:
+        #         mut = lform.cleaned_data.get("mutation")
+        #         par = lform.cleaned_data.get("parent")
+        #         if par and mut:
+        #             seq = par.protein.seq.mutate(mut)
+        #             with contextlib.suppress(Protein.DoesNotExist):
+        #                 prot = Protein.objects.get(seq__iexact=str(seq))
+        #                 msg = mark_safe(
+        #                     f'<a href="{prot.get_absolute_url()}" style="text-decoration: '
+        #                     + f'underline;">{prot.name}</a> already has the sequence that'
+        #                     + " would be generated by this parent & mutation"
+        #                 )
+        #                 lform.add_error(None, msg)
+        #                 context |= {"states": states, "lineage": lineage}
+                        # return self.render_to_response(context)
 
         with transaction.atomic():
             with reversion.create_revision():
@@ -399,32 +393,32 @@ class ProteinCreateUpdateMixin:
                     else None
                 )
 
-                states.instance = self.object
-                saved_states = states.save(commit=False)
-                for s in saved_states:
-                    if not s.created_by:
-                        s.created_by = self.request.user
-                    s.updated_by = self.request.user
-                    s.save()
-                for s in states.deleted_objects:
-                    if self.object.default_state == s:
-                        self.object.default_state = None
-                    s.delete()
+                # states.instance = self.object
+                # saved_states = states.save(commit=False)
+                # for s in saved_states:
+                #     if not s.created_by:
+                #         s.created_by = self.request.user
+                #     s.updated_by = self.request.user
+                #     s.save()
+                # for s in states.deleted_objects:
+                #     if self.object.default_state == s:
+                #         self.object.default_state = None
+                #     s.delete()
 
-                lineage.instance = self.object
-                for lin in lineage.save(commit=False):
-                    # if the form has been cleared and there are no children,
-                    # let's clean up a little
-                    if not (lin.mutation and lin.parent) and not lin.children.exists():
-                        lin.delete()
-                    else:
-                        if not lin.created_by:
-                            lin.created_by = self.request.user
-                        lin.updated_by = self.request.user
-                        lin.reference = self.object.primary_reference
-                        lin.save()
-                for lin in lineage.deleted_objects:
-                    lin.delete()
+                # lineage.instance = self.object
+                # for lin in lineage.save(commit=False):
+                #     # if the form has been cleared and there are no children,
+                #     # let's clean up a little
+                #     if not (lin.mutation and lin.parent) and not lin.children.exists():
+                #         lin.delete()
+                #     else:
+                #         if not lin.created_by:
+                #             lin.created_by = self.request.user
+                #         lin.updated_by = self.request.user
+                #         lin.reference = self.object.primary_reference
+                #         lin.save()
+                # for lin in lineage.deleted_objects:
+                #     lin.delete()
 
                 if hasattr(self.object, "lineage"):
                     if not self.object.seq:
@@ -462,7 +456,7 @@ class ProteinCreateUpdateMixin:
 class ProteinCreateView(ProteinCreateUpdateMixin, CreateView):
     """renders html for protein submission page"""
 
-    model = Protein
+    model = ProteinTF
     form_class = ProteinForm
 
     def get_form(self, *args, **kwargs):
@@ -473,12 +467,12 @@ class ProteinCreateView(ProteinCreateUpdateMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data["states"] = StateFormSet(self.request.POST)
-            data["lineage"] = LineageFormSet(self.request.POST)
-        else:
-            data["states"] = StateFormSet()
-            data["lineage"] = LineageFormSet()
+        # if self.request.POST:
+        #     data["states"] = StateFormSet(self.request.POST)
+        #     data["lineage"] = LineageFormSet(self.request.POST)
+        # else:
+        #     data["states"] = StateFormSet()
+        #     data["lineage"] = LineageFormSet()
         return data
 
     def form_valid(self, form):
@@ -489,7 +483,7 @@ class ProteinCreateView(ProteinCreateUpdateMixin, CreateView):
 class ProteinUpdateView(ProteinCreateUpdateMixin, UpdateView):
     """renders html for protein submission page"""
 
-    model = Protein
+    model = ProteinTF
     form_class = ProteinForm
 
     def get_form(self, form_class=None):
@@ -508,10 +502,10 @@ class ProteinUpdateView(ProteinCreateUpdateMixin, UpdateView):
             queryset = self.get_queryset()
         try:
             obj = queryset.get(slug=self.kwargs.get("slug"))
-        except Protein.DoesNotExist:
+        except ProteinTF.DoesNotExist:
             try:
                 obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
-            except Protein.DoesNotExist as e:
+            except ProteinTF.DoesNotExist as e:
                 raise Http404("No protein found matching this query") from e
         if obj.status == "hidden" and obj.created_by != self.request.user and not self.request.user.is_staff:
             raise Http404("No protein found matching this query")
@@ -519,14 +513,14 @@ class ProteinUpdateView(ProteinCreateUpdateMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        if self.request.POST:
-            data["states"] = StateFormSet(self.request.POST, instance=self.object)
-            data["states"].full_clean()  # why is this here?
+        # if self.request.POST:
+        #     data["states"] = StateFormSet(self.request.POST, instance=self.object)
+        #     data["states"].full_clean()  # why is this here?
 
-            data["lineage"] = LineageFormSet(self.request.POST, instance=self.object)
-        else:
-            data["states"] = StateFormSet(instance=self.object)
-            data["lineage"] = LineageFormSet(instance=self.object)
+        #     data["lineage"] = LineageFormSet(self.request.POST, instance=self.object)
+        # else:
+        #     data["states"] = StateFormSet(instance=self.object)
+        #     data["lineage"] = LineageFormSet(instance=self.object)
         return data
 
     def form_valid(self, form):
@@ -534,64 +528,31 @@ class ProteinUpdateView(ProteinCreateUpdateMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ActivityView(ListView):
-    template_name = "proteins/activity.html"
-    stateprefetch = Prefetch(
-        "states",
-        queryset=State.objects.prefetch_related("spectra").order_by("-is_dark", "em_max"),
-    )
-    queryset = Protein.visible.prefetch_related(stateprefetch, "primary_reference").order_by("-created")[:18]
+# class ActivityView(ListView):
+#     template_name = "proteins/activity.html"
+#     stateprefetch = Prefetch(
+#         "states",
+#         queryset=State.objects.prefetch_related("spectra").order_by("-is_dark", "em_max"),
+#     )
+#     queryset = Protein.visible.prefetch_related(stateprefetch, "primary_reference").order_by("-created")[:18]
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        stateprefetch = Prefetch(
-            "states",
-            queryset=State.objects.prefetch_related("spectra").order_by("-is_dark", "em_max"),
-        )
-        data["proteins_by_date"] = (
-            Protein.visible.annotate(nstates=Count("states"))
-            .prefetch_related(stateprefetch, "primary_reference")
-            .order_by(F("primary_reference__date").desc(nulls_last=True))[:15]
-        )
-        try:
-            data["most_viewed"] = {k: v[:12] for k, v in cached_ga_popular().items()}
-        except Exception as e:
-            logger.error(e)
-        data["most_favorited"] = most_favorited(max_results=18)
-        return data
-
-
-@cache_page(60 * 120)
-def spectra_image(request, slug, **kwargs):
-    protein = get_object_or_404(Protein.objects.select_related("default_state"), slug=slug)
-    try:
-        d = {}
-        for k, v in request.GET.dict().items():
-            if k == "xlim":
-                tmp = [int(x) for x in v.split(",")][:2]
-                if len(tmp) == 1:
-                    tmp.append(750)
-                d[k] = tmp
-            elif v.lower() in ("false", "no"):
-                d[k] = False
-            elif v.lower() in ("true", "yes"):
-                d[k] = True
-            else:
-                d[k] = int(v) if v.isdigit() else v
-    except Exception:
-        return HttpResponseBadRequest("failed to parse url parameters as JSON")
-    try:
-        fmt = kwargs.get("extension", "png")
-        byt = protein.spectra_img(fmt, output=io.BytesIO(), **d)
-    except Exception as e:
-        logger.error(e)
-        return HttpResponseBadRequest(f"failed to parse url parameters as JSON: {e}")
-    if byt:
-        byt.seek(0)
-        if fmt == "svg":
-            fmt += "+xml"
-        return HttpResponse(byt, content_type=f"image/{fmt}")
-    raise Http404()
+#     def get_context_data(self, **kwargs):
+#         data = super().get_context_data(**kwargs)
+#         stateprefetch = Prefetch(
+#             "states",
+#             queryset=State.objects.prefetch_related("spectra").order_by("-is_dark", "em_max"),
+#         )
+#         data["proteins_by_date"] = (
+#             Protein.visible.annotate(nstates=Count("states"))
+#             .prefetch_related(stateprefetch, "primary_reference")
+#             .order_by(F("primary_reference__date").desc(nulls_last=True))[:15]
+#         )
+#         try:
+#             data["most_viewed"] = {k: v[:12] for k, v in cached_ga_popular().items()}
+#         except Exception as e:
+#             logger.error(e)
+#         data["most_favorited"] = most_favorited(max_results=18)
+#         return data
 
 
 @cache_page(60 * 10)
@@ -831,131 +792,6 @@ def revert_revision(request, rev=None):
                     uncache_protein_page(p.slug, request)
 
     return JsonResponse({"status": 200})
-
-
-@login_required
-def update_transitions(request, slug=None):
-    template_name = "proteins/forms/_transition_form.html"
-    obj = Protein.objects.get(slug=slug)
-    if request.method == "POST":
-        formset = StateTransitionFormSet(request.POST, instance=obj)
-        if not formset.is_valid():
-            return render(request, template_name, {"transition_form": formset}, status=422)
-
-        with transaction.atomic():
-            with reversion.create_revision():
-                formset.save()
-                chg_string = "\n".join(get_form_changes(formset))
-
-                if not request.user.is_staff:
-                    obj.status = "pending"
-                    mail_managers(
-                        "Transition updated",
-                        f"User: {request.user.username}\nProtein: {obj}\n\n{chg_string}",
-                        fail_silently=True,
-                    )
-                obj.save()
-                reversion.set_user(request.user)
-                reversion.set_comment(chg_string)
-                try:
-                    uncache_protein_page(slug, request)
-                except Exception as e:
-                    logger.error(f"failed to uncache protein: {e}")
-                check_switch_type(obj, request)
-        return HttpResponse(status=200)
-    else:
-        formset = StateTransitionFormSet(instance=obj)
-        formset.form.base_fields["from_state"].queryset = State.objects.filter(protein=obj)
-        formset.form.base_fields["to_state"].queryset = State.objects.filter(protein=obj)
-        return render(request, template_name, {"transition_form": formset})
-
-
-# @login_required
-# def protein_bleach_formsets(request, slug):
-#     template_name = "proteins/protein_bleach_form.html"
-#     BleachMeasurementFormSet = modelformset_factory(BleachMeasurement, BleachMeasurementForm, extra=1, can_delete=True)
-#     protein = get_object_or_404(Protein, slug=slug)
-#     qs = BleachMeasurement.objects.filter(state__protein=protein)
-#     if request.method == "POST":
-#         formset = BleachMeasurementFormSet(request.POST, queryset=qs)
-#         formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
-#         if not formset.is_valid():
-#             return render(request, template_name, {"formset": formset, "protein": protein})
-
-#         with transaction.atomic():
-#             with reversion.create_revision():
-#                 saved = formset.save(commit=False)
-#                 for s in saved:
-#                     if not s.created_by:
-#                         s.created_by = request.user
-#                     s.updated_by = request.user
-#                     s.save()
-#                 for s in formset.deleted_objects:
-#                     s.delete()
-
-#                 chg_string = "\n".join(get_form_changes(formset))
-
-#                 if not request.user.is_staff:
-#                     protein.status = "pending"
-#                     mail_managers(
-#                         "BleachMeasurement Added",
-#                         f"User: {request.user.username}\nProtein: {protein}\n{chg_string}\n\n"
-#                         f"{request.build_absolute_uri(protein.get_absolute_url())}",
-#                         fail_silently=True,
-#                     )
-#                 # else:
-#                 #     protein.status = 'approved'
-
-#                 protein.save()
-#                 reversion.set_user(request.user)
-#                 reversion.set_comment(chg_string)
-#                 try:
-#                     uncache_protein_page(slug, request)
-#                 except Exception as e:
-#                     logger.error(f"failed to uncache protein: {e}")
-#         return HttpResponseRedirect(protein.get_absolute_url())
-#     else:
-#         formset = BleachMeasurementFormSet(queryset=qs)
-#         formset.form.base_fields["state"].queryset = State.objects.filter(protein__slug=slug)
-#     return render(request, template_name, {"formset": formset, "protein": protein})
-
-
-# @login_required
-# def bleach_comparison(request, pk=None):
-#     template_name = "proteins/bleach_comparison_form.html"
-#     if request.method == "POST":
-#         formset = bleach_items_formset(request.POST)
-#         bcf = BleachComparisonForm(request.POST)
-#         if not formset.is_valid() or not bcf.is_valid():
-#             return render(request, template_name, {"formset": formset, "mainform": bcf})
-#         d = bcf.cleaned_data
-#         d["reference"], _ = Reference.objects.get_or_create(doi=d.pop("reference_doi"))
-#         for form in formset.forms:
-#             if form.has_changed():
-#                 d["state"] = form.cleaned_data["state"]
-#                 d["rate"] = form.cleaned_data["rate"]
-#                 BleachMeasurement.objects.create(**d)
-#         return redirect(d["reference"])
-#     else:
-#         formset = bleach_items_formset()
-#         if pk:
-#             reference = get_object_or_404(Reference, id=pk)
-#             bcf = BleachComparisonForm({"reference_doi": reference.doi})
-#             bcf.fields["reference_doi"].widget.attrs["readonly"] = True
-#         else:
-#             bcf = BleachComparisonForm()
-#     return render(request, template_name, {"formset": formset, "mainform": bcf})
-
-# def spectra_csv(request):
-#     try:
-#         idlist = [int(x) for x in request.GET.get("q", "").split(",") if x]
-#         spectralist = Spectrum.objects.filter(id__in=idlist)
-#         if spectralist:
-#             return spectra2csv(spectralist)
-#     except Exception:
-#         return HttpResponse("malformed spectra csv request")
-#     else:
-#         return HttpResponse("malformed spectra csv request")
 
 
 @login_required

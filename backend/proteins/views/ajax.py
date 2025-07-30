@@ -16,25 +16,24 @@ from django.views.generic import DetailView
 from repeatome.util import is_ajax, uncache_protein_page
 from proteins.util.maintain import validate_node
 
-from ..models import Fluorophore, Lineage, Organism, Protein, Spectrum, State
+from ..models import Organism, ProteinTF
 
 
 def serialize_comparison(request):
     info = []
     slugs = request.session.get("comparison", [])
-    for prot in Protein.objects.filter(slug__in=slugs).prefetch_related("default_state"):
-        d = {"name": prot.name, "slug": prot.slug}
-        if prot.default_state:
-            d.update(
-                {
-                    "color": prot.default_state.emhex or "#FFFFFF",
-                    "emMax": prot.default_state.em_max or "",
-                    "exMax": prot.default_state.ex_max or "",
-                    "ec": prot.default_state.ext_coeff or "",
-                    "qy": prot.default_state.qy or "",
-                    "spectra": prot.d3_spectra(),
-                }
-            )
+    for prot in ProteinTF.objects.filter(slug__in=slugs):
+        d = {"gene": prot.gene, "slug": prot.slug}
+        # d.update(
+        #     {
+        #         "color": prot.default_state.emhex or "#FFFFFF",
+        #         "emMax": prot.default_state.em_max or "",
+        #         "exMax": prot.default_state.ex_max or "",
+        #         "ec": prot.default_state.ext_coeff or "",
+        #         "qy": prot.default_state.qy or "",
+        #         "spectra": prot.d3_spectra(),
+        #     }
+        # )
         info.append(d)
     return info
 
@@ -94,7 +93,7 @@ def approve_protein(request, slug=None):
         return HttpResponseNotAllowed([])
 
     try:
-        p = Protein.objects.get(slug=slug)
+        p = ProteinTF.objects.get(slug=slug)
         if p.status != "pending":
             return JsonResponse({})
 
@@ -114,31 +113,6 @@ def approve_protein(request, slug=None):
         logging.error(e)
 
 
-def similar_spectrum_owners(request):
-    if not is_ajax(request):
-        return HttpResponseNotAllowed([])
-
-    name = request.POST.get("owner", None)
-    similars = Spectrum.objects.find_similar_owners(name, 0.3)
-    data = {
-        "similars": [
-            {
-                "slug": s.slug,
-                "name": s.protein.name if hasattr(s, "protein") else s.name,
-                "url": s.get_absolute_url(),
-                "spectra": (
-                    [sp.get_subtype_display() for sp in s.spectra.all()]
-                    if isinstance(s, Fluorophore)
-                    else [s.spectrum.get_subtype_display()]
-                ),
-            }
-            for s in similars[:4]
-        ]
-    }
-
-    return JsonResponse(data)
-
-
 def validate_proteinname(request):
     if not is_ajax(request):
         return HttpResponseNotAllowed([])
@@ -146,7 +120,7 @@ def validate_proteinname(request):
     name = request.POST.get("name", None)
     slug = request.POST.get("slug", None)
     try:
-        prot = Protein.objects.get(slug=slugify(name.replace(" ", "").replace("monomeric", "m")))
+        prot = ProteinTF.objects.get(slug=slugify(name.replace(" ", "").replace("monomeric", "m")))
         if slug and prot.slug == slug:
             data = {"is_taken": False}
         else:
@@ -156,7 +130,7 @@ def validate_proteinname(request):
                 "url": prot.get_absolute_url(),
                 "name": prot.name,
             }
-    except Protein.DoesNotExist:
+    except ProteinTF.DoesNotExist:
         data = {"is_taken": False}
     return JsonResponse(data)
 
@@ -192,56 +166,11 @@ def recursive_node_to_dict(node, widths=None, rootseq=None, validate=False):
         result["children"] = children
     return result, widths
 
+# class Widget(DetailView):
+#     template_name = "widget.js"
+#     queryset = Protein.visible.prefetch_related("states")
 
-@cache_page(60 * 5)
-def get_lineage(request, slug=None, org=None):
-    # if not is_ajax(request):
-    #     return HttpResponseNotAllowed([])
-    if org:
-        _ids = list(Lineage.objects.filter(protein__parent_organism=org, parent=None))
-        ids = []
-        for item in _ids:
-            ids.extend([i.pk for i in item.get_family()])
-        if not ids:
-            return JsonResponse({})
-    elif slug:
-        item = Lineage.objects.get(protein__slug=slug)
-        ids = item.get_family()
-    else:
-        ids = Lineage.objects.all().values_list("id", flat=True)
-    # cache upfront everything we're going to need
-    stateprefetch = Prefetch("protein__states", queryset=State.objects.order_by("-is_dark", "em_max"))
-    root_nodes = (
-        Lineage.objects.filter(id__in=ids)
-        .select_related("protein", "reference", "protein__default_state")
-        .prefetch_related(stateprefetch)
-        .get_cached_trees()
-    )
-
-    d = {"name": "fakeroot", "children": [], "widths": defaultdict(int)}
-    for n in sorted(root_nodes, key=lambda x: x.protein.name.lower()):
-        result, d["widths"] = recursive_node_to_dict(
-            n,
-            d["widths"],
-            n.protein,
-            request.GET.get("validate", "").lower() in ("1", "true"),
-        )
-        if "children" in result:
-            d["children"].append(result)
-    d["max_width"] = max(d["widths"].values())
-    d["max_depth"] = max(d["widths"])
-    d["tot_nodes"] = sum(d["widths"].values())
-
-    # data['tree'] = json.dumps(D)
-
-    return JsonResponse(d)
-
-
-class Widget(DetailView):
-    template_name = "widget.js"
-    queryset = Protein.visible.prefetch_related("states")
-
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        print(self.request.build_absolute_uri())
-        return data
+#     def get_context_data(self, **kwargs):
+#         data = super().get_context_data(**kwargs)
+#         print(self.request.build_absolute_uri())
+#         return data

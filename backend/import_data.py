@@ -1,10 +1,12 @@
+from datetime import datetime
+import math
 import django
 
 # Must call setup before improrting any Django models
 django.setup()
 
 from django.conf import settings
-from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats
+from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, Proteomics
 from proteins.util.helpers import shortuuid
 import json
 import requests
@@ -13,6 +15,7 @@ import pandas as pd
 import sys
 import unicodedata
 import re
+from UniProtMapper import ProtMapper
 
 def slugify(value, allow_unicode=False):
     """
@@ -343,7 +346,85 @@ def update_proteinrepeats():
         print(f"saving protein:{obj.protein.gene}, repeat:{obj.repeat.name}, motif_enrichment:{obj.motif_enrichment}, motif_q_score:{obj.motif_q_score}")
         obj.save()
 
+def update_proteomics():
+    # file = input("Enter file: ")
+    file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/proteomics_database.csv"
+    df = pd.read_csv(file, dtype=str)
+    
+    repeat_name = 'HSat3'
+    
+    parent_organism_obj = None
+    parent_organism = '9606'
+    if parent_organism:
+        parent_organism = int(parent_organism)
+        parent_organism_obj = get_organism_obj(parent_organism)
 
+    repeat_obj = get_obj_if_exists(Repeat, name=repeat_name)
+    log2C_vals = {}
+    significance = {}
+
+    for row in df.to_dict(orient='records'):
+        print(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]]))
+        if (len(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])) == 0):
+            mapper = ProtMapper()
+            result, failed = mapper.get(ids=[row[df.keys()[0]]], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+            print(result)
+            if len(result) != 0:
+                alias_lst = str(result['Gene Names'].values[0].split(' '))
+                alias_lst = '{' + alias_lst[1:len(alias_lst) - 1] + '}'
+                if len(result['Gene Names'].values[0].split(' ')) == 1:
+                    alias_lst = ['null']
+                print(alias_lst)
+                if result['Ensembl'].values[0] == '':
+                    ensembl_str = 'none'
+                else:
+                    ensembl_str = result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
+                print(ensembl_str)
+                protein_obj = ProteinTF(gene=result['Gene Names (primary)'].values[0], aliases = alias_lst, UNIPROT = row[df.keys()[0]], ENSEMBL = ensembl_str, parent_organism = parent_organism_obj)
+                protein_obj.save()
+                protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                protein_repeat_obj.save()
+            # print(obj.gene)
+            # print(obj.aliases)
+            # print(obj.ENSEMBL.values[0].split(' ')[0])
+        # else:
+        #     obj = ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])[0]
+        #     mapper = ProtMapper()
+        #     result, failed = mapper.get(ids=[row[df.keys()[0]]], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+        #     ens_result = result['Ensembl'].values[0].strip(';')
+        #     obj.ENSEMBL = ens_result.split('ENST')[0]
+        #     print(obj.gene, obj.ENSEMBL)
+        #     obj.save()
+        wildtype = row['WT ZF Area']
+        if row['WT ZF Area'] == '-':
+            wildtype = 0
+        control = row['WT CT Area']
+        if row['WT CT Area'] == '-':
+            control = 0
+        # print(row['WT ZF Area'], row['WT CT Area'])
+        log2C_vals[row[df.keys()[0]]] = math.log2((int(wildtype) + 1) / (int(control) + 1))
+        significance[row[df.keys()[0]]] = row[df.keys()[1]]
+
+    if len(Proteomics.objects.filter(target=repeat_obj.name)) == 0:
+        date_string = 'Aug 30th, 2021'
+        cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_string)
+        date_obj = datetime.strptime(cleaned_date, "%b %d, %Y")
+        obj = Proteomics(
+            id = shortuuid(),
+            cell_type = 'breast epithelial',
+            cell_line_name = 'MCF10A',
+            target = repeat_obj,
+            method = 'turboID targeting HSat3 using ZF-hsat3-3xHA-turboID.',
+            description = 'XXXXX Description of how samples were generated, controls, mass spec machine details. XXXXX',
+            date_generated = date_obj.date(),
+            parent_organism = parent_organism_obj,
+            significance = significance,
+            log2vals = log2C_vals,
+            # UNIPROT = df.keys()[0],
+            x_label = df.keys()[1],
+            y_label = df.keys()[2],
+        )
+        obj.save()
 
 def update_jaspar():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
@@ -361,11 +442,15 @@ def update_jaspar():
             print(f"Updating protein: {protein_obj}")
             protein_obj.save()
 
+def save_proteins():
+    for protein in ProteinTF.objects.all():
+        protein.save()
 
 def delete_all_records():
     # Delete all records in all tables
     ProteinTF.objects.all().delete()
     Repeat.objects.all().delete()
+    Proteomics.objects.all().delete()
     GeneFamily.objects.all().delete()
     Organism.objects.all().delete()
 
@@ -386,13 +471,20 @@ if __name__ == "__main__":
         import_repeat()
         import_protein()
         update_proteinrepeats()
+        update_proteomics()
 
     elif command == 'update_jaspar':
         update_jaspar()
 
     elif command == 'update_proteinrepeats':
         update_proteinrepeats()
+     
+    elif command == 'update_proteomics':
+        update_proteomics()
         
+    elif command == 'save_proteins':
+        save_proteins()
+           
     else:
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        

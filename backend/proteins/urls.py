@@ -57,57 +57,57 @@ urlpatterns = [
         views.problems_inconsistencies,
         name="problems-inconsistencies",
     ),
-    path(
-        "spectra/submit/",
-        (
-            login_required(
-                views.SpectrumCreateView.as_view(),
-                message="You must be logged in to submit a new spectrum",
-            )
-            if CONTRIBS_OPEN
-            else disabled
-        ),
-        name="submit-spectra",
-    ),
-    path("spectra/submitted/", views.spectrum_submitted, name="spectrum_submitted"),
-    re_path(
-        r"^spectra/submit/(?P<slug>[-\w]+)/$",
-        (
-            login_required(
-                views.SpectrumCreateView.as_view(),
-                message="You must be logged in to submit a new spectrum",
-            )
-            if CONTRIBS_OPEN
-            else disabled
-        ),
-        name="submit-spectra",
-    ),
-    re_path(r"^spectra/(?P<slug>[-\w]+)", views.protein_spectra, name="spectra"),
-    path("spectra/", views.protein_spectra, name="spectra"),
-    path("spectra-graph/", views.protein_spectra_graph, name="spectra_graph"),
-    re_path(r"^spectra_csv/", views.spectra_csv, name="spectra_csv"),
-    re_path(
-        r"^spectra_img/(?P<slug>[-\w]+)(\.(?P<extension>(png)|(svg)|(tif?f)|(pdf)|(jpe?g))?)?$",
-        views.spectra_image,
-        name="spectra-img",
-    ),
-    path(
-        "spectra_url_builder/",
-        TemplateView.as_view(template_name="spectrum_url_form.html"),
-        name="spectra-url-builder",
-    ),
-    re_path(r"^fret/", views.fret_chart, name="fret"),
-    path("compare/", views.ComparisonView.as_view(), name="compare"),
-    re_path(
-        r"^compare/(?P<proteins>[\w,\-]+)/$",
-        views.ComparisonView.as_view(),
-        name="compare",
-    ),
-    re_path(
-        r"^lineage/",
-        TemplateView.as_view(template_name="lineage.html"),
-        name="lineage-list",
-    ),
+    # path(
+    #     "spectra/submit/",
+    #     (
+    #         login_required(
+    #             views.SpectrumCreateView.as_view(),
+    #             message="You must be logged in to submit a new spectrum",
+    #         )
+    #         if CONTRIBS_OPEN
+    #         else disabled
+    #     ),
+    #     name="submit-spectra",
+    # ),
+    # path("spectra/submitted/", views.spectrum_submitted, name="spectrum_submitted"),
+    # re_path(
+    #     r"^spectra/submit/(?P<slug>[-\w]+)/$",
+    #     (
+    #         login_required(
+    #             views.SpectrumCreateView.as_view(),
+    #             message="You must be logged in to submit a new spectrum",
+    #         )
+    #         if CONTRIBS_OPEN
+    #         else disabled
+    #     ),
+    #     name="submit-spectra",
+    # ),
+    # re_path(r"^spectra/(?P<slug>[-\w]+)", views.protein_spectra, name="spectra"),
+    # path("spectra/", views.protein_spectra, name="spectra"),
+    # path("spectra-graph/", views.protein_spectra_graph, name="spectra_graph"),
+    # re_path(r"^spectra_csv/", views.spectra_csv, name="spectra_csv"),
+    # re_path(
+    #     r"^spectra_img/(?P<slug>[-\w]+)(\.(?P<extension>(png)|(svg)|(tif?f)|(pdf)|(jpe?g))?)?$",
+    #     views.spectra_image,
+    #     name="spectra-img",
+    # ),
+    # path(
+    #     "spectra_url_builder/",
+    #     TemplateView.as_view(template_name="spectrum_url_form.html"),
+    #     name="spectra-url-builder",
+    # ),
+    # re_path(r"^fret/", views.fret_chart, name="fret"),
+    # path("compare/", views.ComparisonView.as_view(), name="compare"),
+    # re_path(
+    #     r"^compare/(?P<proteins>[\w,\-]+)/$",
+    #     views.ComparisonView.as_view(),
+    #     name="compare",
+    # ),
+    # re_path(
+    #     r"^lineage/",
+    #     TemplateView.as_view(template_name="lineage.html"),
+    #     name="lineage-list",
+    # ),
     re_path(r"^chart/", TemplateView.as_view(template_name="ichart.html"), name="ichart"),
     re_path(
         r"^collections/(?P<owner>[\w.@+-]+)/?$",
@@ -144,7 +144,7 @@ urlpatterns = [
         ),
         name="newcollection",
     ),
-    path("activity", views.ActivityView.as_view(), name="activity"),
+    # path("activity", views.ActivityView.as_view(), name="activity"),
     # re_path(
     #     r"^protein/(?P<slug>[-\w]+)/$",
     #     views.ProteinDetailView.as_view(),
@@ -184,16 +184,16 @@ urlpatterns = [
     #     name="bleach-comparison",
     # ),
     # path("bleach_comparison/", views.bleach_comparison, name="bleach-comparison"),
-    re_path(
-        r"^protein/(?P<slug>[-\w]+)/rev/(?P<rev>\d+)$",
-        views.ProteinDetailView.as_view(),
-        name="protein-detail",
-    ),
-    re_path(
-        r"^protein/(?P<slug>[-\w]+)/ver/(?P<ver>\d+)$",
-        views.ProteinDetailView.as_view(),
-        name="protein-detail",
-    ),
+    # re_path(
+    #     r"^protein/(?P<slug>[-\w]+)/rev/(?P<rev>\d+)$",
+    #     views.ProteinDetailView.as_view(),
+    #     name="protein-detail",
+    # ),
+    # re_path(
+    #     r"^protein/(?P<slug>[-\w]+)/ver/(?P<ver>\d+)$",
+    #     views.ProteinDetailView.as_view(),
+    #     name="protein-detail",
+    # ),
     path(
         "autocomplete-protein/",
         views.ProteinAutocomplete.as_view(),
@@ -204,73 +204,28 @@ urlpatterns = [
         views.RepeatAutocomplete.as_view(),
         name="repeat-autocomplete",
     ),
-    path(
-        "autocomplete-lineage/",
-        views.LineageAutocomplete.as_view(),
-        name="lineage-autocomplete",
-    ),
-    path(
-        "autocomplete-state/",
-        views.StateAutocomplete.as_view(),
-        name="state-autocomplete",
-    ),
-    path(
-        "autocomplete-filter/",
-        views.FilterAutocomplete.as_view(),
-        name="filter-autocomplete",
-    ),
-    re_path(
-        r"^microscope/create/",
-        login_required(
-            views.MicroscopeCreateView.as_view(),
-            message="You must be logged in to create a microscope configuration",
-        ),
-        name="newmicroscope",
-    ),
-    re_path(
-        r"^microscope/(?P<pk>[-\w]+)/delete/",
-        login_required(
-            views.MicroscopeDeleteView.as_view(),
-            message="You must be logged in to delete microscopes",
-        ),
-        name="deletemicroscope",
-    ),
-    re_path(
-        r"^embedscope/(?P<pk>[-\w]+)/$",
-        views.MicroscopeEmbedView.as_view(),
-        name="microscope-embed",
-    ),
-    re_path(
-        r"^microscope/(?P<pk>[-\w]+)/report/$",
-        views.ScopeReportView.as_view(),
-        name="microscope-report",
-    ),
-    re_path(
-        r"^microscope/(?P<pk>[-\w]+)/$",
-        views.MicroscopeDetailView.as_view(),
-        name="microscope-detail",
-    ),
-    re_path(
-        r"^microscope/(?P<pk>[-\w]+)/update/",
-        login_required(
-            views.MicroscopeUpdateView.as_view(),
-            message="You must be logged in to update microscopes",
-        ),
-        name="updatemicroscope",
-    ),
-    re_path(
-        r"^microscopes/(?P<owner>[\w.@+-]+)/?$",
-        views.MicroscopeList.as_view(),
-        name="microscopes",
-    ),
-    re_path(r"^microscopes/", views.MicroscopeList.as_view(), name="microscopes"),
+    # path(
+    #     "autocomplete-lineage/",
+    #     views.LineageAutocomplete.as_view(),
+    #     name="lineage-autocomplete",
+    # ),
+    # path(
+    #     "autocomplete-state/",
+    #     views.StateAutocomplete.as_view(),
+    #     name="state-autocomplete",
+    # ),
+    # path(
+    #     "autocomplete-filter/",
+    #     views.FilterAutocomplete.as_view(),
+    #     name="filter-autocomplete",
+    # ),
     # AJAX
     path("ajax/add_taxonomy/", views.add_organism, name="add_taxonomy"),
-    re_path(
-        r"^ajax/filter_import/(?P<brand>[-\w]+)$",
-        views.filter_import,
-        name="filter_import",
-    ),
+    # re_path(
+    #     r"^ajax/filter_import/(?P<brand>[-\w]+)$",
+    #     views.filter_import,
+    #     name="filter_import",
+    # ),
     re_path(
         r"^ajax/add_protein_reference/(?P<slug>[-\w]+)/$",
         views.add_reference,
@@ -296,21 +251,21 @@ urlpatterns = [
         views.revert_revision,
         name="admin_revert_revision",
     ),
-    re_path(
-        r"^ajax/update_transitions/(?P<slug>[-\w]+)/$",
-        views.update_transitions,
-        name="update_transitions",
-    ),
+    # re_path(
+    #     r"^ajax/update_transitions/(?P<slug>[-\w]+)/$",
+    #     views.update_transitions,
+    #     name="update_transitions",
+    # ),
     path(
         "ajax/validate_proteinname/",
         views.validate_proteinname,
         name="validate_proteinname",
     ),
-    path(
-        "ajax/validate_spectrumownername/",
-        views.similar_spectrum_owners,
-        name="validate_spectrumownername",
-    ),
+    # path(
+    #     "ajax/validate_spectrumownername/",
+    #     views.similar_spectrum_owners,
+    #     name="validate_spectrumownername",
+    # ),
     path(
         "ajax/remove_from_collection/",
         views.collection_remove,
@@ -319,17 +274,17 @@ urlpatterns = [
     path("ajax/flag_object/", views.flag_object, name="flag_object"),
     path("ajax/add_to_collection/", views.add_to_collection, name="add_to_collection"),
     path("ajax/comparison/", views.update_comparison, name="update-comparison"),
-    re_path(r"^ajax/lineage/(?P<slug>[-\w]+)/$", views.get_lineage, name="get-lineage"),
-    path("ajax/lineage/", views.get_lineage, name="get-lineage"),
-    re_path(
-        r"^ajax/org_lineage/(?P<org>[-\w]+)/$",
-        views.get_lineage,
-        name="get-org-lineage",
-    ),
-    re_path(
-        r"^microscope/(?P<pk>[-\w]+)/report/json/$",
-        views.scope_report_json,
-        name="scope_report_json",
-    ),
-    re_path(r"^widget/(?P<slug>[-\w]+)/$", views.Widget.as_view(), name="widget-detail"),
+    # re_path(r"^ajax/lineage/(?P<slug>[-\w]+)/$", views.get_lineage, name="get-lineage"),
+    # path("ajax/lineage/", views.get_lineage, name="get-lineage"),
+    # re_path(
+    #     r"^ajax/org_lineage/(?P<org>[-\w]+)/$",
+    #     views.get_lineage,
+    #     name="get-org-lineage",
+    # ),
+    # re_path(
+    #     r"^microscope/(?P<pk>[-\w]+)/report/json/$",
+    #     views.scope_report_json,
+    #     name="scope_report_json",
+    # ),
+    # re_path(r"^widget/(?P<slug>[-\w]+)/$", views.Widget.as_view(), name="widget-detail"),
 ]

@@ -42,11 +42,12 @@ def GetNetworkData(organism=9606):
     
     repeats = {}
     for protrep in ProteinRepeats.objects.all():
-        if not protrep.repeat.name in repeats.keys():
-            repeats[protrep.repeat.name] = {'repeat_data': protrep.repeat, 'proteins': [protrep.protein], 'enrichment': [enrichment_normalized[protrep.protein.gene + '_' + protrep.repeat.name]]}
-        else:
-            repeats[protrep.repeat.name]['proteins'].append(protrep.protein)
-            repeats[protrep.repeat.name]['enrichment'].append(enrichment_normalized[protrep.protein.gene + '_' + protrep.repeat.name])
+        if protrep.protein.gene + '_' + protrep.repeat.name in enrichment_normalized.keys():
+            if not protrep.repeat.name in repeats.keys():
+                repeats[protrep.repeat.name] = {'repeat_data': protrep.repeat, 'proteins': [protrep.protein], 'enrichment': [enrichment_normalized[protrep.protein.gene + '_' + protrep.repeat.name]]}
+            else:
+                repeats[protrep.repeat.name]['proteins'].append(protrep.protein)
+                repeats[protrep.repeat.name]['enrichment'].append(enrichment_normalized[protrep.protein.gene + '_' + protrep.repeat.name])
     # print(repeats)
     
     # Loop through repeats
@@ -60,14 +61,21 @@ def GetNetworkData(organism=9606):
                 # print(repeat)
                 # Getting protein data for one repeat
                 REP_SIZE = 40
-                repeat_data = { 'key': repeat.name, 'attributes': { 'node_type': 'repeat', 'label': repeat.name, 'aliases': repeat.aliases_as_str(), 'dfam_id': repeat.dfam_id, 'x': spacing_x, 'y': spacing_y, 'size': REP_SIZE, 'color': 'blue', 'zIndex': 100, 'url': '/repeatTable/' + repeat.slug} }
+                repeat_data = { 'key': repeat.name, 'attributes': { 'node_type': 'repeat', 'label': repeat.name, 'aliases': repeat.aliases_as_str(), 'dfam_id': repeat.dfam_id, 'x': spacing_x, 'y': spacing_y, 'size': REP_SIZE, 'color': 'rgb(140, 90, 230)', 'zIndex': 100, 'url': '/repeatTable/' + repeat.slug} }
 
                 # Figure out x and y spacing to make them show up in a circle
-                each_angle = 360 / len(repeats[repeat_name]['proteins'])
+                protein_lst = []
+                enrichments = []
+                for i in range(len(repeats[repeat_name]['proteins'])):
+                    p = repeats[repeat_name]['proteins'][i]
+                    if not p.gene_type == None and 'TF' in p.gene_type:
+                        protein_lst.append(p)
+                        enrichments.append(repeats[repeat_name]['enrichment'][i])
+                each_angle = 360 / len(protein_lst)
                 START_ANGLE = 45
                 EDGE_LENGTH = 70
-                total_size = sum(repeats[repeat_name]['enrichment'])
-                enrichments = repeats[repeat_name]['enrichment']
+                total_size = sum(enrichments)
+                # enrichments = repeats[repeat_name]['enrichment']
                 angles = []
                 for i in range(len(enrichments)):
                     prev = enrichments[i]
@@ -98,14 +106,15 @@ def GetNetworkData(organism=9606):
                 # Add proteins to data
                 PROT_SIZE = 7
                 EDGE_SIZE = 3
-                proteins = repeats[repeat_name]['proteins']
-                for i in range(len(proteins)) :
-                    if proteins[i].gene_family:
-                        gene_fam = proteins[i].gene_family.gene_family
-                    else:
-                        gene_fam = 'None'
-                    data["nodes"].append({ 'key': proteins[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': proteins[i].gene, 'aliases': proteins[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[proteins[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[proteins[i].gene + '_' + repeat.name], 'color': 'red', 'url': '/proteinTable/' + proteins[i].slug}})
-                    data["edges"].append({ 'key': proteins[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': proteins[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
+                # proteins = repeats[repeat_name]['proteins']
+                for i in range(len(protein_lst)) :
+                    if not protein_lst[i].gene_type == None and 'TF' in protein_lst[i].gene_type:
+                        if protein_lst[i].gene_family:
+                            gene_fam = protein_lst[i].gene_family.gene_family
+                        else:
+                            gene_fam = 'None'
+                        data["nodes"].append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#D44657", 'url': '/proteinTable/' + protein_lst[i].slug}})
+                        data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
 
                 spacing_x += 210
                 spacing_x = spacing_x % 840

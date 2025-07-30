@@ -9,7 +9,7 @@ from pathlib import Path
 from shutil import copyfileobj
 from subprocess import run
 
-from ..models import Protein
+from ..models import ProteinTF
 
 ROOT = Path(__file__).parent.parent.parent
 BIN_DIR = ROOT / "bin"
@@ -55,7 +55,7 @@ def write_fasta(fpath):
         with contextlib.suppress(Exception):
             # for some reason, first write usually throws an exception
             fd.write("")
-        fasta = Protein.objects.all().fasta()
+        fasta = ProteinTF.objects.all().fasta()
         fasta.seek(0)
         copyfileobj(fasta, fd)
         return fd.name

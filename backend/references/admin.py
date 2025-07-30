@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from reversion_compare.admin import CompareVersionAdmin
 
-from proteins.models import Excerpt, Protein
+from proteins.models import Excerpt, ProteinTF
 from references.forms import ReferenceForm
 from references.models import Author, Reference
 
@@ -54,7 +54,7 @@ class ReferenceInline(admin.StackedInline):
 
 
 class PrimaryProteinInline(admin.TabularInline):
-    model = Protein.references.through
+    model = ProteinTF.references.through
     extra = 0
     can_delete = True
     show_change_link = True

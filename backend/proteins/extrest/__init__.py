@@ -1,4 +1,4 @@
-from ..models import Organism, Protein
+from ..models import Organism, ProteinTF
 from .entrez import get_gb_info
 from .uniprot import get_uniprot_info
 
@@ -47,7 +47,7 @@ class ChangeSet:
     def execute(self):
         if not self.changes:
             return
-        p = Protein.objects.get(id=self.id)  # in case it's changed
+        p = ProteinTF.objects.get(id=self.id)  # in case it's changed
         for attr, newval in self.changes.items():
             if attr == "parent_organism" and isinstance(newval, int):
                 org, created = Organism.objects.get_or_create(id=newval)

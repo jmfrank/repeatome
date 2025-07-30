@@ -25,7 +25,7 @@ from django.views.generic import (
 from repeatome.util import is_ajax
 
 from ..forms import CollectionForm
-from ..models import ProteinCollection
+from proteins.models import ProteinCollection
 from .mixins import OwnableObject
 
 

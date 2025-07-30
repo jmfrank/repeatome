@@ -37,7 +37,7 @@ class OwnedCollection(TimeStampedModel):
 
 
 class ProteinCollection(OwnedCollection):
-    proteins = models.ManyToManyField("Protein", related_name="collection_memberships")
+    proteins = models.ManyToManyField("ProteinTF", related_name="collection_memberships")
     private = models.BooleanField(
         default=False,
         verbose_name="Private Collection",
@@ -48,11 +48,12 @@ class ProteinCollection(OwnedCollection):
         return reverse("proteins:collection-detail", args=[self.id])
 
     class Meta:
-        unique_together = (("owner", "name"),)
+        unique_together = ("owner", "name"),
+        app_label = 'proteins'
 
 
-class FluorophoreCollection(ProteinCollection):
-    dyes = models.ManyToManyField("Dye", blank=True, related_name="collection_memberships")
+# class FluorophoreCollection(ProteinCollection):
+#     dyes = models.ManyToManyField("Dye", blank=True, related_name="collection_memberships")
 
-    def get_absolute_url(self):
-        return reverse("proteins:fluor-collection-detail", args=[self.id])
+#     def get_absolute_url(self):
+#         return reverse("proteins:fluor-collection-detail", args=[self.id])
