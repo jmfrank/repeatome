@@ -337,6 +337,7 @@ window.onload = function () {
     {% if protein.UNIPROT %}
       {% include "proteins/_structure_section.html" with protein=protein %}
     {% endif %}
+    
 
     {% if protein.jaspar %}
       <div class='row' id='struct-micro-names'>
