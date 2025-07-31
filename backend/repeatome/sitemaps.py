@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from proteins.models import Microscope, Organism, Protein, ProteinCollection
+from proteins.models import Organism, ProteinTF, ProteinCollection
 from references.models import Author, Reference
 
 
@@ -21,7 +21,7 @@ class ProteinSitemap(Sitemap):
     priority = 0.7
 
     def items(self):
-        return Protein.visible.all()
+        return ProteinTF.visible.all()
 
     def lastmod(self, item):
         return item.modified

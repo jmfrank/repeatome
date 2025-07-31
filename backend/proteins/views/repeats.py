@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Repeat, ProteinTF, ProteinRepeats
+from ..models import Repeat, ProteinTF, ProteinRepeats, Proteomics
+from proteins.models.proteomics import get_proteomics
 import os
 import pandas as pd
 from math import log2
@@ -48,29 +49,48 @@ class RepeatDetailView(DetailView):
     def get_proteomics_data(self, repeat):
         taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
-        file = f"{settings.IMPORT_DATA_FOLDER}/proteomics_{taxonomy}_{repeat_name}.csv"
-        if not os.path.exists(file):
-            print(f"No proteomics data found for taxonomy={taxonomy} repeat={repeat_name}: {file}")
-            return []
+        # file = f"{settings.IMPORT_DATA_FOLDER}/proteomics_{taxonomy}_{repeat_name}.csv"
+        # if not os.path.exists(file):
+        #     print(f"No proteomics data found for taxonomy={taxonomy} repeat={repeat_name}: {file}")
+        #     return []
+        prot_obj = get_proteomics(repeat.name)
         
-        df = pd.read_csv(file, dtype=str)
+        SIG_THRESHOLD = 20
+        
+        # df = pd.read_csv(file, dtype=str)
         datapoints = []
         data_format = 1
-        for row in df.to_dict(orient='records'):
-            col1 = self.get_float(row["WT ZF Area"], 0.0) + 1
-            col2 = self.get_float(row["WT CT Area"], 0.0) + 1
-            val = log2(col1/col2)
-            significance = self.get_float(row["Significance"], 0.0)
-            # data_format = 1 if significance > 20 else 2
-            datapoints.append({
-                "name": row["Accession"],
-                "x": val,
-                "y": significance,
-                "f": data_format
-            })
-            data_format += 1
-            if data_format > 5:
-                data_format = 1
+        # for row in df.to_dict(orient='records'):
+        if not prot_obj == None:
+            for key in prot_obj.significance.keys():
+                # col1 = self.get_float(row["WT ZF Area"], 0.0) + 1
+                # col2 = self.get_float(row["WT CT Area"], 0.0) + 1
+                # val = log2(col1/col2)
+                # significance = self.get_float(row["Significance"], 0.0)
+                # data_format = 1 if significance > 20 else 2
+                # datapoints.append({
+                #     "name": row["Accession"],
+                #     "x": val,
+                #     "y": significance,
+                #     "f": data_format
+                # })
+                protein_objs = ProteinTF.objects.filter(UNIPROT=key)
+                if len(protein_objs) > 0:
+                    if float(prot_obj.significance[key]) < SIG_THRESHOLD:
+                        data_format = 0
+                    else:
+                        data_format = 1
+
+                    datapoints.append({
+                        "name": protein_objs[0].gene,
+                        "x": prot_obj.log2vals[key],
+                        "y": prot_obj.significance[key],
+                        "slug": protein_objs[0].slug,
+                        "f": data_format
+                    })
+                    # data_format += 1
+                    # if data_format > 5:
+                    #     data_format = 1
         
         return datapoints
 

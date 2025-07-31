@@ -24,7 +24,10 @@ env = environ.Env()
 # Data to import
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent.parent / 'repeatome_data/satellite_binders_database.xlsx'
-IMPORT_PROTEOMICS_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent.parent / 'repeatome_data/proteomics_database.xlsx'
+IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
+IMPORT_QSCORE_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"
+
+
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -265,14 +268,6 @@ WEBPACK_LOADER = {
         "IGNORE": [r".*\.hot-update.js", r".+\.map"],
     }
 }
-
-# Data to import
-# ------------------------------------------------------------------------------
-IMPORT_DATA_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/satellite_binders_database_master.xlsx"
-IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
-IMPORT_QSCORE_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"
-
-
 
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------

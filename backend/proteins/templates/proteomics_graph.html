@@ -18,6 +18,13 @@
         font-family: sans-serif;
         font-size: 12px;
     }
+
+    .threshold {
+        stroke: #333;
+        stroke-dasharray: 5px 10px;
+        stroke-opacity: 0.25;
+        border-width: 5px;
+    }
 </style>
 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css" rel="stylesheet" type="text/css" />
@@ -34,7 +41,7 @@
 
 <div class='fig'>
     <div class="chart"></div>
-    <table id="info">
+    <!--<table id="info">
 	    <tr>
 		    <td><b>Name:</b></td><td><div id="gene_name"></div></td>
 	    </tr>
@@ -44,12 +51,55 @@
 	    <tr>
 		    <td><b>y-value:</b></td> <td><div id="yval"></div></td>
 	    </tr>
-	</table>
+	</table>-->
 </div>
 
 {{ datapoints|json_script:'chart3-data' }}
 
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/d3@7/+esm"></script> {% endcomment %}
+{% comment %} <script src="{% static 'volcano_plot.js'%}"></script> {% endcomment %}
+
+<!--<script>
+    var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',
+        xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change',
+        file = "data.diff";
+
+    var volcanoPlot = volcanoPlot()
+        .xAxisLabel(xLabel)
+        .yAxisLabel(yLabel)
+        .foldChangeThreshold(2.0)
+        .sampleID("Uniprot")
+        .xColumn("log2(fold_change)")
+        .yColumn("q_value");
+
+    //d3.tsv(file, parser, function(error, data){
+    //    if (error) console.log(error);
+
+    d3.select('.chart')
+        .data({{datapoints|safe}})
+        .call(volcanoPlot);
+    //});
+
+    // row parser to convert key values into numbers if possible
+    function parser(d) {
+        for (var key in d) {
+            if (d.hasOwnProperty(key)) {
+                d[key] = numberParser(d[key]);
+            }
+        }
+        return d;
+    }
+
+    // function to turn string into number if possible
+    function numberParser(value){
+        return (+value) ? +value : value;
+    }
+
+</script>-->
+
 <script type="text/javascript">
+    var COLORS = ["rgb(51, 51, 51)", "rgb(176, 35, 35)"];
+    var OPACITY = [0.8, 1];
         
     //Width and height
     var w = 800;
@@ -82,10 +132,11 @@
 
     var data = JSON.parse(document.getElementById('chart3-data').textContent)
 
-    console.log("Loading datapoints 2")
+    console.log("Loading datapoints")
     console.log(data)
     
-    var len = d3.max(data, function(d) { return d.f; } );
+    var len = d3.max(data, function(d) { return d.f; } ); 
+    if (len < 3) { len = 3; }
 
     var xmin = d3.min(data, function(d) { return parseFloat(d.x); });
     var xmax = d3.max(data, function(d) { return parseFloat(d.x); });
@@ -113,8 +164,10 @@
         .attr("cy", function(d) {
             return yScale(parseFloat(d.y));
         })
-        .attr("r", 3)
-        .attr("fill", function(d) { return colorbrewer["Set2"][len][d.f-1]; })
+        .attr("r", 2.5)
+        // .attr("fill", function(d) { return colorbrewer["Set1"][len][d.f - 1]; })
+        .attr("fill", function(d) { return COLORS[d.f]; })
+        .attr("opacity", function(d) { return OPACITY[d.f]; })
         .on("mouseover", function() {
             d3.select(this)
                 .transition().duration(100)
@@ -123,9 +176,12 @@
         .on("mouseout", function() {
             d3.select(this)
                 .transition().duration(100)
-                .attr("r", 3);
+                .attr("r", 2.5);
         })
-        .on("click", info)
+        // .on("click", info)
+        .on("click", function(d) {
+            window.location.href = "/proteinTable/" + d.slug; // Change the URL
+        })
         .attr("id", function(d) { return d.f; });
 
     $('svg circle').tipsy({ 
@@ -135,6 +191,16 @@
         return this.__data__.name;
         }
     });		
+
+    var thresholdLines = svg.append('g').attr('class', 'thresholdLines');
+    var significanceThreshold = 20;
+    // add horizontal line at significance threshold
+    thresholdLines.append("svg:line")
+        .attr('class', 'threshold')
+        .attr("x1", padding - 10)
+        .attr("x2", w - padding)
+        .attr("y1", yScale(significanceThreshold))
+        .attr("y2", yScale(significanceThreshold));
 
     var xAxis = d3.svg.axis()
         .scale(xScale)
@@ -170,6 +236,7 @@
         .attr("x", -h/2+50)		 
         .attr("transform", "rotate(-90)")
         .text("-log10(p-value)");
+    
 
 </script>
 

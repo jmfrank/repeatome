@@ -18,6 +18,11 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.7",
-    "psql": "^0.0.1"
+    "d3": "^7.9.0",
+    "graphology": "^0.26.0",
+    "itk-vtk-viewer": "^14.51.0",
+    "psql": "^0.0.1",
+    "sigma": "^3.0.2",
+    "webpack-dev-server": "^5.2.2"
   }
 }

@@ -3,65 +3,8 @@ from Bio import Seq
 from django import forms
 from django_filters import rest_framework as filters
 
-from .models import Organism, ProteinTF, Spectrum, State
+from .models import Organism, ProteinTF
 from .validators import cdna_sequence_validator
-
-
-class SpectrumFilter(filters.FilterSet):
-    class Meta:
-        model = Spectrum
-        fields = ("category", "subtype", "id", "owner_state")
-
-
-class StateFilter(filters.FilterSet):
-    ex_spectra = django_filters.BooleanFilter(field_name="ex_spectra", lookup_expr="isnull")
-    em_spectra = django_filters.BooleanFilter(field_name="em_spectra", lookup_expr="isnull")
-    spectral_brightness = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright",
-        help_text="fold brightness relative to spectral neighbors",
-    )
-    spectral_brightness__gt = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright_gt",
-        lookup_expr="gt",
-        help_text="fold brightness relative to spectral neighbors",
-    )
-    spectral_brightness__lt = django_filters.NumberFilter(
-        field_name="spectral_brightness",
-        method="get_specbright_lt",
-        lookup_expr="lt",
-        help_text="fold brightness relative to spectral neighbors",
-    )
-
-    def get_specbright(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        return [P for P in qsALL if P.local_brightness == value]
-
-    def get_specbright_lt(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        return [P for P in qsALL if P.local_brightness < value]
-
-    def get_specbright_gt(self, queryset, name, value):
-        qsALL = list(queryset.all())
-        return [P for P in qsALL if P.local_brightness > value]
-
-    class Meta:
-        model = State
-        order_by = "em_max"
-        fields = {
-            "name": ["icontains", "iendswith", "istartswith", "iexact"],
-            "ex_max": ["around", "range", "lte", "gte", "exact"],
-            "em_max": ["around", "range", "lte", "gte", "exact"],
-            "lifetime": ["gte", "lte", "range", "exact"],
-            "maturation": ["gte", "lte", "range", "exact"],
-            "ext_coeff": ["gte", "lte", "range", "exact"],
-            "qy": ["gte", "lte", "range", "exact"],
-            "brightness": ["gte", "lte", "range", "exact"],
-            "pka": ["gte", "lte", "range", "exact"],
-            # "bleach_measurements__rate": ["gte", "lte", "range", "exact"],
-        }
-
 
 class ProteinFilterForm(forms.Form):
     def clean_seq__cdna_contains(self):

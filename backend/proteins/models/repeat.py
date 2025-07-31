@@ -20,7 +20,6 @@ class Repeat(models.Model):
         null = True
     )
     motif = models.TextField(blank=True, null=True)
-    proteomics = models.TextField(blank=True, null=True)
     dfam_id = models.CharField(max_length=100, blank=True, null=True)
     parental_organism = models.ForeignKey(
         "Organism",

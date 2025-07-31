@@ -21,7 +21,7 @@ class OrganismDetailView(DetailView):
     """renders html for single reference page"""
 
     model = Organism
-    queryset = Organism.objects.all().prefetch_related("proteins__repeats")
+    queryset = Organism.objects.all().prefetch_related("proteinTF__repeats")
     template_name = "organisms/organismPage.html"
     
     def get(self, request, *args, **kwargs):

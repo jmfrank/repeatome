@@ -7,7 +7,7 @@ from django.views.generic.edit import FormView
 from sentry_sdk import last_event_id
 
 from repeatome.forms import ContactForm
-from proteins.models import Protein, Repeat, ProteinTF
+from proteins.models import Repeat, ProteinTF
 
 
 class HomeView(TemplateView):
@@ -56,6 +56,6 @@ def testview(request):
     import logging
 
     logger = logging.getLogger(__name__)
-    p = Protein.objects.get(name="mNeonGreen")
+    p = ProteinTF.objects.get(gene="mNeonGreen")
     logger.info(p)
     return render(request, "pages/test.html", {"protein": p})

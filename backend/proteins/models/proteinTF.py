@@ -4,6 +4,9 @@ from django.urls import reverse
 import requests
 
 from backend.fpseq.util import slugify
+from proteins.models.mixins import Authorable
+from model_utils import Choices
+from model_utils.models import StatusModel, TimeStampedModel
 
 from ..util.helpers import shortuuid
 from references.models import Reference
@@ -31,7 +34,9 @@ class ProteinReferences(models.Model):
     class Meta:
         unique_together = ('protein', 'reference')
 
-class ProteinTF(models.Model):
+class ProteinTF(Authorable, StatusModel, TimeStampedModel):
+    STATUS = Choices("pending", "approved", "hidden")
+    
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
     gene = models.CharField(max_length=200, blank=True, null=True, unique=True)
     slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
@@ -116,10 +121,14 @@ class ProteinTF(models.Model):
         through=ProteinRepeats
     )
     
+    # Meta
+    class Meta:
+        ordering = ["gene"]
+    
     def save(self, *args, **kwargs):
-        print(self.ENSEMBL + '-' + self.gene)
+        # print(self.ENSEMBL + '-' + self.gene)
         self.slug = slugify(self.ENSEMBL + '-' + self.gene)
-        print(self.gene + ": " + self.slug)
+        # print(self.gene + ": " + self.slug)
         super().save(*args, **kwargs)
     
     def get_absolute_url(self):
@@ -134,6 +143,11 @@ class ProteinTF(models.Model):
         if not self.aliases:
             return 'None'
         return ", ".join(self.aliases)
+    
+    def gene_type_as_str(self):
+        if not self.gene_type:
+            return 'None'
+        return ", ".join(self.gene_type)
 
     def cofactor_as_str(self):
         if not self.cofactor:
@@ -153,9 +167,6 @@ class ProteinTF(models.Model):
 
     def get_references(self):
         return self.reference_set.all()
-    
-    def get_repeats(self):
-        return [p.name for p in self.repeats.all()]
 
     def jaspars_length(self):
       if not self.jaspars:
@@ -171,7 +182,7 @@ class ProteinTF(models.Model):
         return [p.name for p in self.repeats.all()]
     
     def get_jaspar_base(self):
-        if not len(self.jaspar) == 0:
+        if not self.jaspar == None and not len(self.jaspar) == 0:
             indx = self.jaspar[0].find('.')
             return self.jaspar[0][:indx]
         return None
