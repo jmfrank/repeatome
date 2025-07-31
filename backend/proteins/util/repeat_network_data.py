@@ -10,7 +10,7 @@ def GetNetworkData(organism=9606):
         'attributes': {}, # optional graph-level attributes
         "nodes": [],
         "edges": []
-        }
+    }
     
     # Get enrichment data
     enrichment_data = {}
