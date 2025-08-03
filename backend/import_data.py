@@ -348,13 +348,17 @@ def update_proteinrepeats():
 
 
 def get_proteomic_data(mapper, uniprot_id):
-    cache_file = f".cache/proteomics/{uniprot_id}.csv"
+    proteomics_cache_folder = '.cache/proteomics'
+    cache_file = f"{proteomics_cache_folder}/{uniprot_id}.csv"
     if os.path.exists(cache_file):
         print(f"Loading proteomic data from cache: {cache_file}")
         result_df = pd.read_csv(cache_file)
         return result_df, []
     
     print(f"Loading proteomic data using ProtMapper for {uniprot_id}")
+    if not os.path.exists(proteomics_cache_folder):
+        os.makedirs(proteomics_cache_folder)
+    # Use ProtMapper to get the data
     result_df, failed = mapper.get(ids=[uniprot_id], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
     print(f"***type failed = {type(failed)}, failed = {failed}")
     print(result_df)
