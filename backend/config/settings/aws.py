@@ -42,7 +42,7 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 STATICFILES_DIRS = [
     str(ROOT_DIR.parent / "frontend" / "dist"),
     str(ROOT_DIR.parent / "frontend" / "static"),
-    str(os.environ['VIRTUAL_ENV'] / "lib" / "python3.12" / "site-packages" / "django" / "contrib" / "admin" / "static")
+    os.path.join(os.environ['VIRTUAL_ENV'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static')
 ]
 
 # DEBUG
