@@ -18,6 +18,7 @@ IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
 IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
 IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
+IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
 
 
 # DATABASE CONFIGURATION
@@ -29,7 +30,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase21',  # Replace with your database name
+        'NAME': 'fpbase22',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
