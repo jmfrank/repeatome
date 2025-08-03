@@ -74,8 +74,7 @@ THIRD_PARTY_APPS = [
     "reversion",
     "reversion_compare",
     "avatar",
-    "mptt",
-    'csp',
+    "mptt"
 ]
 
 # Apps specific for this project go here.
