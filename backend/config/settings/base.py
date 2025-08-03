@@ -108,21 +108,6 @@ MIDDLEWARE = [
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
-X_FRAME_OPTIONS = "ALLOW-FROM http://127.0.0.1:8000"
-
-# CSP_DEFAULT_SRC = ("'self'",)  # Allows resources from your Django domain by default
-# CSP_FRAME_SRC = ("'self'", "http://127.0.0.1:8000",) # Allow iframes from your Django domain and the viewer's origin
-# CSP_SCRIPT_SRC = ("'self'", "http://127.0.0.1:8000",) # Allow scripts from your Django domain and the viewer's origin
-# CSP_IMG_SRC = ("'self'", "http://127.0.0.1:8000", "data:",) # Allows images from Django, the viewer's origin, and data URIs (if the viewer uses them)
-# CSP_STYLE_SRC = ("'self'", "http://127.0.0.1:8000", "'unsafe-inline'",) # Allows styles from Django, the viewer's origin, and inline styles (if any)
-
-CONTENT_SECURITY_POLICY = {'DIRECTIVES': {'default-src': ("'self'",),
-                'frame-src': ("'self'", 'http://127.0.0.1:8000'),
-                'img-src': ("'self'", 'http://127.0.0.1:8000', 'data:'),
-                'script-src': ("'self'", 'http://127.0.0.1:8000'),
-                'style-src': ("'self'",
-                              'http://127.0.0.1:8000',
-                              "'unsafe-inline'")}}
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
