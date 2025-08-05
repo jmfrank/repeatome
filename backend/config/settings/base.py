@@ -106,6 +106,10 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+X_FRAME_OPTIONS = "ALLOW-FROM https://ij.imjoy.io"
+
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {"sites": "repeatome.contrib.sites.migrations"}
@@ -419,14 +423,16 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:8000",
     "http://localhost:8080",
     "http://localhost:3000",
-    "https://kitware.github.io"
+    "https://kitware.github.io",
+    "http://localhoost:8082",
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:8080",
     "http://localhost:3000",
-    "https://kitware.github.io"
+    "https://kitware.github.io",
+    "http://localhoost:8082",
 ]
 
 BLOCKED_IPS = env.list("IP_BLACKLIST", default=[])
