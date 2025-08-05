@@ -176,3 +176,5 @@ if os.getenv("DESKTOP_LOG"):
         }
     )
     LOGGING["loggers"]["django"]["handlers"].append("file")
+
+X_FRAME_OPTIONS = "ALLOW-FROM http://127.0.0.1:8000"
