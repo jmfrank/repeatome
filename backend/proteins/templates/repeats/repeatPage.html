@@ -214,7 +214,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% if proteomics_datapoints %}
   <h3>Proteomics</h3>  
   <div class="proteomics mt-3">
-      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat %}
+      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat threshold=threshold %}
   </div>
   {% endif %}
 

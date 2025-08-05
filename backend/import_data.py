@@ -426,6 +426,8 @@ def update_proteomics():
 
     for row in df.to_dict(orient='records'):
         print(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]]))
+        if len(log2C_vals.keys()) == 150:
+            break
         if (len(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])) == 0):
             uniprot_arr = row[df.keys()[0]].split('|')
             uniprot = uniprot_arr[0]
@@ -494,6 +496,72 @@ def update_proteomics():
         print("Proteomics Object Found")
         # TODO: change it so the id isn't satellite name? that way can have multiple expirements
 
+def get_proteomics_without_proteins():
+    file = input("Enter file: ")
+    # file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/HSat3_epithelial_2.csv"
+    df = pd.read_csv(file, dtype=str)
+    
+    # Get other data
+    repeat_name = input("Enter repeat: ") # HSat3
+    parent_organism = input("Enter parent organism taxonomy id: ") # 9606
+    date_string = input("Enter date data was generated (Month Day, Year): ") # Aug 30th, 2021
+    cell_type_str = input("Enter cell type: ") # breast epithelial
+    cell_line_name_str = input("Enter cell line name: ") # MCF10A
+    method_str = input("Enter method: ") # turboID targeting HSat3 using ZF-hsat3-3xHA-turboID
+    description_str = input("Enter description of how samples were generated, controls, mass spec machine details, etc: ")
+    thresholds = input("Enter thresholds comma separated: ")
+    
+    parent_organism_obj = None
+    if parent_organism:
+        parent_organism = int(parent_organism)
+        parent_organism_obj = get_organism_obj(parent_organism)
+        if parent_organism_obj == None:
+            print("Adding Organism")
+            org_obj = Organism(id=int(parent_organism))
+            org_obj.save()
+        else:
+            print(str(parent_organism) + " Object Found")
+
+    repeat_obj = get_obj_if_exists(Repeat, name=repeat_name)
+    if repeat_obj == None:
+        print("Adding Repeat")
+        repeat_obj = Repeat(name=repeat_name, parental_organism = parent_organism_obj)
+        repeat_obj.save()
+    else:
+        print(repeat_obj.name + " Object Found")
+
+    log2C_vals = {}
+    significance = {}
+
+    for row in df.to_dict(orient='records'):
+        log2C_vals[row[df.keys()[0]]] = row[df.keys()[2]]
+        significance[row[df.keys()[0]]] = row[df.keys()[1]]
+
+    if len(Proteomics.objects.filter(target=repeat_obj)) == 0:
+        print("Adding Proteomics")
+        if date_string == "None" or date_string == "NA":
+            date_obj = datetime.now()
+        else:
+            cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_string)
+            date_obj = datetime.strptime(cleaned_date, "%b %d, %Y")
+        obj = Proteomics(
+            id = shortuuid(),
+            cell_type = cell_type_str,
+            cell_line_name = cell_line_name_str,
+            target = repeat_obj,
+            method = method_str,
+            description = description_str,
+            date_generated = date_obj.date(),
+            parent_organism = parent_organism_obj,
+            significance = significance,
+            log2vals = log2C_vals,
+            # UNIPROT = df.keys()[0],
+            x_label = df.keys()[1],
+            y_label = df.keys()[2],
+            thresholds = '{' + thresholds + '}'
+        )
+        obj.save()
+
 def update_jaspar():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
 
@@ -541,6 +609,8 @@ if __name__ == "__main__":
         import_protein()
         update_proteinrepeats()
         update_proteomics()
+        for org in Organism.objects.all():
+            GetNetworkData(org.id)
 
     elif command == 'import_repeat':
         import_repeat()
@@ -557,11 +627,15 @@ if __name__ == "__main__":
     elif command == 'update_proteomics':
         update_proteomics()
         
+    elif command == 'get_proteomics_without_proteins':
+        get_proteomics_without_proteins()
+        
     elif command == 'save_proteins':
         save_proteins()
         
     elif command == 'network_data':
-        GetNetworkData()
+        for org in Organism.objects.all():
+            GetNetworkData(org.id)
            
     else:
         print(f"Usage: python backend/import_data.py <command>")

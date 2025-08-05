@@ -5,6 +5,7 @@ from ..models import Organism, Repeat
 from django.db.models import Count
 import requests
 from proteins.util.repeat_network_data import GetNetworkData
+import shutil
 
 def OrganismTable(request):
     items = Organism.objects.all()
@@ -23,7 +24,13 @@ class OrganismDetailView(DetailView):
     model = Organism
     queryset = Organism.objects.all().prefetch_related("proteinTF__repeats")
     template_name = "organisms/organismPage.html"
-
+    
+    def get(self, request, *args, **kwargs):
+        slug = kwargs.get("pk")
+        print(slug)
+        if slug:
+            shutil.copyfile('frontend/static/repeat_network_db_' + str(slug) + '.json', 'frontend/static/repeat_network_db.json')  # just write to file, ignore return
+        return super().get(request, *args, **kwargs)
 
 # class RepeatDetailView(DetailView):
 #     """renders html for single protein page"""

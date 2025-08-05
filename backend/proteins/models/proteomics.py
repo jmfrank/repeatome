@@ -28,6 +28,10 @@ class Proteomics(TimeStampedModel):
     y_label = models.TextField(blank=True, null=True)
     significance = models.JSONField(default=dict, blank=True, null=True)
     log2vals = models.JSONField(default=dict, blank=True, null=True)
+    thresholds = ArrayField(
+        models.DecimalField(decimal_places=2, max_digits=5, blank=True, null=True),
+        blank=True, null = True
+    )
     target = models.ForeignKey(
         Repeat,
         blank=True, null=True,

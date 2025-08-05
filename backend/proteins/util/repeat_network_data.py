@@ -3,7 +3,7 @@ import sys
 from proteins.models import Repeat, ProteinRepeats
 import math
 
-def GetNetworkData(organism=9606):
+def GetNetworkData(organism):
     # Define data
     data = {
         'options': { 'type': "mixed", 'multi': False, 'allowSelfLoops': True }, # optional
@@ -13,6 +13,7 @@ def GetNetworkData(organism=9606):
     }
     
     # Get enrichment data
+    print(organism)
     enrichment_data = {}
     for protrep in ProteinRepeats.objects.all():
         if not protrep.motif_enrichment == None:
@@ -68,7 +69,7 @@ def GetNetworkData(organism=9606):
                 enrichments = []
                 for i in range(len(repeats[repeat_name]['proteins'])):
                     p = repeats[repeat_name]['proteins'][i]
-                    if not p.gene_type == None and 'TF' in p.gene_type:
+                    if (not p.gene_type == None and 'TF' in p.gene_type) or p.parent_organism.id == 7227:
                         protein_lst.append(p)
                         enrichments.append(repeats[repeat_name]['enrichment'][i])
                 if len(protein_lst) == 0:
@@ -110,13 +111,12 @@ def GetNetworkData(organism=9606):
                 EDGE_SIZE = 3
                 # proteins = repeats[repeat_name]['proteins']
                 for i in range(len(protein_lst)) :
-                    if not protein_lst[i].gene_type == None and 'TF' in protein_lst[i].gene_type:
-                        if protein_lst[i].gene_family:
-                            gene_fam = protein_lst[i].gene_family.gene_family
-                        else:
-                            gene_fam = 'None'
-                        data["nodes"].append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#D44657", 'url': '/proteinTable/' + protein_lst[i].slug}})
-                        data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
+                    if protein_lst[i].gene_family:
+                        gene_fam = protein_lst[i].gene_family.gene_family
+                    else:
+                        gene_fam = 'None'
+                    data["nodes"].append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#D44657", 'url': '/proteinTable/' + protein_lst[i].slug}})
+                    data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
 
                 spacing_x += 210
                 spacing_x = spacing_x % 840
@@ -126,6 +126,7 @@ def GetNetworkData(organism=9606):
     # print(data)
 
     # Write data to json file
-    with open('frontend/static/repeat_network_db.json', 'w', encoding='utf-8') as json_file:
+    file_str = 'frontend/static/repeat_network_db_' + str(organism) + '.json'
+    with open(file_str, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, indent=4, ensure_ascii=False)
 
