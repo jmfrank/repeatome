@@ -15,7 +15,7 @@
     The primary objective is to aggregate expiremental and catalogued repeat data in a structured and searchable format. 
     Each protein in the database has a dedicated page showing repeats, amino acid sequence, accession IDs (e.g. ENSEMBL, UniProt, PDB, jaspar, DFam), structural data, microscopy results and experimental data, RNA expression, references that introduced or characterized the protein, and more. 
     Each repeat in the database has a dedicated page showing karyoplot data, motif data, proteomics, proteins, and references
-    {% comment %} (For more technical information about the structure of the repeatOme database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.) {% endcomment %}
+    {% comment %} (For more technical information about the structure of the Repeatome database, please refer to the <a href="{% url 'schema' %}">database schema</a> page.) {% endcomment %}
   </p>
   <p>RepeatOme additionally includes a variety of tools to:
     <ul>
@@ -63,18 +63,7 @@
 <p>The <a href="{% url 'proteins:repeatTable' %}">Repeat Table</a> page shows all repeats in the databse, with each row representing a single repeat.  You can sort this table by any of the paremeters or enter text in the search field to limit the repeats displayed.</p>
 
 <p><strong>Proteomics</strong></p>
-<p>The <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> allows visualization of the many parameters of proteins, along with the ability to filter down to a subset of proteins based on certain attributes.  Change the axes to explore the relationship between protein properties.  Hover over the circles to identify each protein on the scatter plot, and click on the circles to go to the repeatOme page for that protein.</p>
-
-<div class="card">
-  <div class="card-body">
-   <h5 class="card-title"> <a href='{% url 'proteins:ichart' %}'><strong>Interactive Viewer</strong></a></h5>
-    <p class="card-text text-center">{% webp_picture 'images/ichart.png' 'img-fluid' 'interactive chart of fluorescent protein properties'%}
-      <br><br>This page is based on the original <a href="https://github.com/FPvisualization/fpvisualization.github.io">GitHub project</a> by Talley Lambert and Kurt Thorn</p>
-  </div>
-</div>
-
-<h5 class='mt-4'><strong>Collect</strong></h5>
-<p>Click the heart (<a class="btn example-like-button"><i class="fas fa-heart"></i></a>) icon at the top right of any protein page to quickly add it to your favorites, which can be seen on your profile page.  You may also <a href="{% url 'proteins:newcollection' %}">create collections of proteins</a> for private use or for sharing publicly.  You may view your own collections in your profile, or <a href='{% url 'proteins:collections' %}'>view all public collections</a> created on repeatOme.  On each protein page, you can click the book icon (<a class="btn example-like-button"><i class="fas fa-book"></i></a>) to add the current protein to one of your collections.</p>
+<p>The <a href="{% url 'proteins:ichart' %}">Interactive Chart</a> allows visualization of the many parameters of proteins, along with the ability to filter down to a subset of proteins based on certain attributes.  Change the axes to explore the relationship between protein properties.  Hover over the circles to identify each protein on the scatter plot, and click on the circles to go to the Repeatome page for that protein.</p>
 
 <h5 class='mt-4'><strong>Contribute</strong></h5>
 <p>If you would like to help expand the Repeatome database, please consider contributing information to the database.  This can be as small as adding an additional reference to a protein, or creating new protein records altogether.  Please read the <a href="{% url "contributing" %}">guide to contributing</a> for more information.</p>

@@ -339,6 +339,9 @@ window.onload = function () {
     {% endif %}
     
 
+    {% include "proteins/test8.html" with protein=protein %}
+
+
     {% if protein.jaspar %}
       <div class='row' id='struct-micro-names'>
         <h3>DNA Binding Motif</h3>

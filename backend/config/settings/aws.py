@@ -1,5 +1,5 @@
 """
-Isabel settings for Repeatome project.
+AWS settings for Repeatome project.
 
 - Run in Debug mode
 
@@ -14,7 +14,7 @@ import os
 
 # Data to import
 # ------------------------------------------------------------------------------
-IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
+IMPORT_DATA_FOLDER = "/home/ubuntu/repeatome_data"
 IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
 IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
@@ -28,11 +28,10 @@ IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase22',  # Replace with your database name
-        'USER': 'postgres',      # Replace with your database username
-        # 'PASSWORD': 'mypassword', # Replace with your database password
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'repeatome',  # Replace with your database name
+        'USER': 'admin',      # Replace with your database username
+        'PASSWORD': 'repeatome', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
         'PORT': '5432',        # Default PostgreSQL port
     }
@@ -43,7 +42,7 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True
 STATICFILES_DIRS = [
     str(ROOT_DIR.parent / "frontend" / "dist"),
     str(ROOT_DIR.parent / "frontend" / "static"),
-    os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+    os.path.join(os.environ['VIRTUAL_ENV'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static')
 ]
 
 # DEBUG
@@ -79,10 +78,12 @@ if env("MAILGUN_API_KEY", default=False) and env("MAILGUN_DOMAIN", default=False
     }
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-ALLOWED_HOSTS = env.list(
-    "DJANGO_ALLOWED_HOSTS",
-    default=["fpbase.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1"],
-)
+# ALLOWED_HOSTS = env.list(
+#     "DJANGO_ALLOWED_HOSTS",
+#     default=["fpbase.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1", ".elasticbeanstalk.com", "*"],
+# )
+
+ALLOWED_HOSTS = ["98.86.143.107", "localhost"]
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -176,5 +177,3 @@ if os.getenv("DESKTOP_LOG"):
         }
     )
     LOGGING["loggers"]["django"]["handlers"].append("file")
-
-X_FRAME_OPTIONS = "ALLOW-FROM http://127.0.0.1:8000"
