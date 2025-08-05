@@ -106,7 +106,10 @@ def approve_protein(modeladmin, request, queryset):
 
 @admin.register(ProteinTF)
 class ProteinAdmin(CompareVersionAdmin):
-    autocomplete_fields = ("parent_organism", "references", "primary_reference")
+    autocomplete_fields = ("parent_organism", 
+                           "references", 
+                           "primary_reference"
+                           )
     list_display = (
         "__str__",
         "created",
@@ -143,9 +146,7 @@ class ProteinAdmin(CompareVersionAdmin):
                 )
             },
         ),
-        (None, {"fields": (("primary_reference", 
-                            # "references",
-                           ))}),
+        (None, {"fields": (("primary_reference",),)}),
         (
             "Change History",
             {

@@ -49,13 +49,11 @@ class RepeatDetailView(DetailView):
     def get_proteomics_data(self, repeat):
         taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
-        # file = f"{settings.IMPORT_DATA_FOLDER}/proteomics_{taxonomy}_{repeat_name}.csv"
-        # if not os.path.exists(file):
-        #     print(f"No proteomics data found for taxonomy={taxonomy} repeat={repeat_name}: {file}")
-        #     return []
         prot_obj = get_proteomics(repeat.name)
         
-        SIG_THRESHOLD = 20
+        SIG_THRESHOLD = prot_obj.thresholds[0]
+        if len(prot_obj.thresholds) > 1:
+            LOG_THRESHOLD = prot_obj.thresholds[1]
         
         # df = pd.read_csv(file, dtype=str)
         datapoints = []
@@ -63,17 +61,6 @@ class RepeatDetailView(DetailView):
         # for row in df.to_dict(orient='records'):
         if not prot_obj == None:
             for key in prot_obj.significance.keys():
-                # col1 = self.get_float(row["WT ZF Area"], 0.0) + 1
-                # col2 = self.get_float(row["WT CT Area"], 0.0) + 1
-                # val = log2(col1/col2)
-                # significance = self.get_float(row["Significance"], 0.0)
-                # data_format = 1 if significance > 20 else 2
-                # datapoints.append({
-                #     "name": row["Accession"],
-                #     "x": val,
-                #     "y": significance,
-                #     "f": data_format
-                # })
                 protein_objs = ProteinTF.objects.filter(UNIPROT=key)
                 if len(protein_objs) > 0:
                     if float(prot_obj.significance[key]) < SIG_THRESHOLD:
@@ -91,6 +78,19 @@ class RepeatDetailView(DetailView):
                     # data_format += 1
                     # if data_format > 5:
                     #     data_format = 1
+                else:
+                    if float(prot_obj.significance[key]) < SIG_THRESHOLD:
+                        data_format = 0
+                    else:
+                        data_format = 1
+
+                    datapoints.append({
+                        "name": key.split('|')[0],
+                        "x": prot_obj.log2vals[key],
+                        "y": prot_obj.significance[key],
+                        "slug": 'none',
+                        "f": data_format
+                    })
         
         return datapoints
 
@@ -104,6 +104,12 @@ class RepeatDetailView(DetailView):
         context["enrichment_datapoints"] = enrichment_datapoints
         context["qscore_datapoints"] = qscore_datapoints
         context["proteomics_datapoints"] = self.get_proteomics_data(self.object)
+        threshold_lst = list(get_proteomics(self.object.name).thresholds)
+        for i in range(len(threshold_lst)):
+            threshold_lst[i] = float(threshold_lst[i])
+        context["threshold"] = threshold_lst
+        # print(context['proteomics_datapoints'])
+        # print(context['threshold'])
         # proteomics_datapoints = [
         #     {"name": "aa", "x": 1, "y": 10, "f": 1},
         #     {"name": "bb", "x": 2, "y": 20, "f": 2},

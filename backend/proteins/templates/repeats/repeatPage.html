@@ -11,12 +11,12 @@
 {% load static %}
 <link rel='stylesheet' href="{% static 'base_style.css' %}">
 <link rel='stylesheet' href="{% static 'base.css' %}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'base_proj.js' %}"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script type='module' src="{% static 'react_seq.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.css"/>
 
 <!-- Motif Sequence Viewer -->
  <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
@@ -194,7 +194,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% if proteomics_datapoints %}
   <h3>Proteomics</h3>  
   <div class="proteomics mt-3">
-      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat %}
+      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat threshold=threshold %}
   </div>
   {% endif %}
 
@@ -203,7 +203,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    </div>
 
    <div class="table mt-3" id="repeatProteinsContainer">
-     <table class="table flip-scroll" id="repeatProteins" style="width:100%">
+     <table class="table" id="repeatProteins" style="width:100%">
        <thead>
          <tr class="table-header">
            <th>Protein</th>
@@ -368,22 +368,24 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 
 {% block javascript %}
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
 
 
 ///////////DATA TABLE
+$(document).ready(function() {
+  $(function() {
+    $('#repeatProteins').DataTable({
+      "scrollX": true,
+      "pageLength": 10,
+      "iDisplayLength": -1,
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
+      "order": [[ 3, 'desc' ]],
+    });
 
-$(function() {
-  $('#repeatProteins').DataTable({
-    "scrollX": true,
-    "pageLength": 10,
-    "iDisplayLength": -1,
-    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
-    "order": [[ 3, 'desc' ]],
   });
-
 });
 </script>
 

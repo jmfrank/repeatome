@@ -105,6 +105,7 @@
 <script type="text/javascript">
     var COLORS = ["rgb(51, 51, 51)", "rgb(176, 35, 35)"];
     var OPACITY = [0.8, 1];
+    // const threshold = {{threshold|safe}}
         
     //Width and height
     var w = 800;
@@ -198,7 +199,8 @@
     });		
 
     var thresholdLines = svg.append('g').attr('class', 'thresholdLines');
-    var significanceThreshold = 20;
+    console.log("threshold", {{threshold}}[0])
+    var significanceThreshold = {{threshold}}[0];
     // add horizontal line at significance threshold
     thresholdLines.append("svg:line")
         .attr('class', 'threshold')
@@ -206,6 +208,17 @@
         .attr("x2", w - padding)
         .attr("y1", yScale(significanceThreshold))
         .attr("y2", yScale(significanceThreshold));
+    /*if (threshold.length > 0) {
+        // for (var i = 1; i < threshold.length; i++) {
+        thresholdLines.append("svg:line")
+        .attr('class', 'threshold')
+        .attr("x1", xScale(threshold[1]))
+        .attr("x2", xScale(threshold[1]));
+        .attr("y1", padding - 10)
+        .attr("y2", w - padding);
+        // }
+    }*/
+
 
     var xAxis = d3.svg.axis()
         .scale(xScale)
@@ -232,7 +245,7 @@
         .attr("text-anchor", "end")
         .attr("x", w/2)
         .attr("y", h-40)
-        .text("Effect Size");
+        .text("Log2(enrichment)");
         
     svg.append("text")
         .attr("class", "ylabel")
@@ -240,7 +253,7 @@
         .attr("y", 40)
         .attr("x", -h/2+50)		 
         .attr("transform", "rotate(-90)")
-        .text("-log10(p-value)");
+        .text("Significance");
     
 
 </script>

@@ -5,6 +5,7 @@ from ..models import Organism, Repeat
 from django.db.models import Count
 import requests
 from proteins.util.repeat_network_data import GetNetworkData
+import shutil
 
 def OrganismTable(request):
     items = Organism.objects.all()
@@ -26,8 +27,9 @@ class OrganismDetailView(DetailView):
     
     def get(self, request, *args, **kwargs):
         slug = kwargs.get("pk")
+        print(slug)
         if slug:
-            GetNetworkData(slug)  # just write to file, ignore return
+            shutil.copyfile('frontend/static/repeat_network_db_' + str(slug) + '.json', 'frontend/static/repeat_network_db.json')  # just write to file, ignore return
         return super().get(request, *args, **kwargs)
 
 # class RepeatDetailView(DetailView):

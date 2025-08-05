@@ -126,7 +126,8 @@ class Reference(TimeStampedModel):
 
     @property
     def protein_secondary_reference(self):
-        return self.proteins.exclude(id__in=self.primary_proteins.all())
+        from proteins.models import ProteinTF
+        return ProteinTF.objects.exclude(id__in=self.primary_proteins.values_list("id", flat=True))
 
     def get_citation(self, authorlist):
         try:
@@ -188,10 +189,10 @@ class Reference(TimeStampedModel):
                 authmemb.save()
 
     def prot_secondary(self):
-        return [p.name for p in self.protein_secondary_reference]
+        return [p.gene for p in self.protein_secondary_reference]
 
     def prot_primary(self):
-        return [p.name for p in self.primary_proteins.all()]
+        return [p.gene for p in self.primary_proteins.all()]
 
     def _excerpts(self):
         return [exc.content for exc in self.excerpts.all()]
