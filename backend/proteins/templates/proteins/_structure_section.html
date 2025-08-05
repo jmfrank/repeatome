@@ -26,7 +26,7 @@
     {% comment %} <div class='row' id='microscopy'> {% endcomment %}
     {% comment %} <div class='col-12'> {% endcomment %}
       <div class="text-muted" id="pdb-info">
-        {% include "proteins/test4.html" with protein=protein %}
+        {% comment %} {% include "proteins/test4.html" with protein=protein %} {% endcomment %}
         <!-- <img src="{% static 'microscopy_'|add:protein.gene|add:'.png' %}" alt="{{ protein.gene }}"> -->
       </div> 
   </div>
@@ -46,7 +46,7 @@
 </div>
 
 <!-- MICROSCOPY SCRIPTS -->
-<script type="text/javascript" src="https://unpkg.io/itk-vtk-viewer/dist/itkVtkViewerCDN.js"></script>
+{% comment %} <script type="text/javascript" src="https://unpkg.io/itk-vtk-viewer/dist/itkVtkViewerCDN.js"></script> {% endcomment %}
 
 <!-- LITEMOL SCRIPTS -->
 

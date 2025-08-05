@@ -1,13 +1,19 @@
 from datetime import datetime
 import math
 import django
+import uuid
+from Bio import Entrez
+
+Entrez.email = 'carissapenn123@gmail.com'
 
 # Must call setup before improrting any Django models
 django.setup()
 
 from django.conf import settings
-from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, Proteomics
+from references.models import Reference
+from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics
 from proteins.util.helpers import shortuuid
+from proteins.util.repeat_network_data import GetNetworkData
 import json
 import requests
 import os
@@ -225,82 +231,118 @@ def import_protein():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
 
     for row in df.to_dict(orient='records'):
-        gene = row['gene']
-        if not gene:
-            continue
-        gene_family_obj = None
-        if row['gene_family']:
-            gene_family_obj = get_obj_if_exists(GeneFamily, gene_family=row['gene_family'])
+        if len(ProteinTF.objects.filter(gene = row['gene'])) == 0:
+            gene = row['gene']
+            if not gene:
+                continue
+            gene_family_obj = None
+            if row['gene_family']:
+                gene_family_obj = get_obj_if_exists(GeneFamily, gene_family=row['gene_family'])
 
-        parent_organism_obj = None
-        parent_organism = row['parent_organism']
-        if parent_organism:
-            parent_organism = int(parent_organism)
-            parent_organism_obj = get_organism_obj(parent_organism)
+            parent_organism_obj = None
+            parent_organism = row['parent_organism']
+            if parent_organism:
+                parent_organism = int(parent_organism)
+                parent_organism_obj = get_organism_obj(parent_organism)
 
-        # Get list of jaspar matrix_ids either from local .cache folder or from url
-        jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
+            # Get list of jaspar matrix_ids either from local .cache folder or from url
+            jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
 
-        obj = ProteinTF(
-            gene=gene,
-            aliases=parse_array(row['aliases']),
-            gene_type=parse_array(row['gene_type']),
-            dna_binding_domain=row['dna_binding_domain'], 
-            signaling_pathway=row['signaling_pathway'],
-            validation_grade=row['validation_grade'],
-            prediction_method=row['prediction_method'],
-            microscopy_result=parse_microscopy_result(row['microscopy_result']),
-            # TODO: Remove these 2 fields
-            motif_enrichment=row['motif_enrichment'],
-            motif_q_score=row['motif_q_score'],
-            existing_images=row['existing_images'],
-            existing_images_link=row['existing_images_link'],
-            existing_fusion=row['existing_fusion'],
-            cloned_fusion=row['cloned_fusion'],
-            imaging_results=row['imaging_results'],
-            notes=row['notes'],
-            articles=row['articles'],
-            ENSEMBL=row['ensembl'],
-            UNIPROT=row['uniprot'],
-            PDB=row['PDB'],
-            micro_url=row['micro_url'],
-            AF3=row['AF3'],
-            proteomics_url=row['proteomics_url'],
-            rna_url=row['rna_url'],
-            # jaspar=parse_array(row['jaspar']),
-            jaspar=jasper_ids,
-            protein_sequence=row['protein_sequence'],
-            molecular_weight=row['molecular_weight'],
-            cofactor=parse_array(row['cofactor']),
-            oligomerization=row['oligomerization'] if row['oligomerization'] else None,
-            gene_family=gene_family_obj,
-            parent_organism=parent_organism_obj
-        )
-        print(type(obj))
-        print(f"ENSEMBL: {obj.ENSEMBL}, GENE: {obj.gene}")
-        obj.save()
+            # Get References
+            prim_ref = row['primary_reference']
+            if not (prim_ref == '') and not prim_ref == None:
+                pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=prim_ref))
+                if len(Reference.objects.filter(doi=prim_ref)) == 0:
+                    prim_ref_obj = Reference(
+                        # id = shortuuid(),
+                        id = uuid.uuid4().int % 100000,
+                        created = datetime.now(),
+                        modified = datetime.now(),
+                        doi = prim_ref,
+                        pmid = pubmed_record['IdList'][0])
+                    prim_ref_obj.save()
+                else:
+                    prim_ref_obj = Reference.objects.filter(doi=prim_ref)[0]
+            else: prim_ref_obj = None
 
-        protein_obj = ProteinTF.objects.get(gene=gene)
-        protein_obj.save()
-        print(obj.gene, obj.slug, obj)
-        print(protein_obj.gene, protein_obj.slug, protein_obj)
+            obj = ProteinTF(
+                gene=gene,
+                aliases=parse_array(row['aliases']),
+                gene_type=parse_array(row['gene_type']),
+                dna_binding_domain=row['dna_binding_domain'], 
+                signaling_pathway=row['signaling_pathway'],
+                validation_grade=row['validation_grade'],
+                prediction_method=row['prediction_method'],
+                microscopy_result=parse_microscopy_result(row['microscopy_result']),
+                # TODO: Remove these 2 fields
+                motif_enrichment=row['motif_enrichment'],
+                motif_q_score=row['motif_q_score'],
+                existing_images=row['existing_images'],
+                existing_images_link=row['existing_images_link'],
+                existing_fusion=row['existing_fusion'],
+                cloned_fusion=row['cloned_fusion'],
+                imaging_results=row['imaging_results'],
+                notes=row['notes'],
+                articles=row['articles'],
+                ENSEMBL=row['ensembl'],
+                UNIPROT=row['uniprot'],
+                PDB=row['PDB'],
+                micro_url=row['micro_url'],
+                AF3=row['AF3'],
+                proteomics_url=row['proteomics_url'],
+                rna_url=row['rna_url'],
+                # jaspar=parse_array(row['jaspar']),
+                jaspar=jasper_ids,
+                protein_sequence=row['protein_sequence'],
+                molecular_weight=row['molecular_weight'],
+                cofactor=parse_array(row['cofactor']),
+                oligomerization=row['oligomerization'] if row['oligomerization'] else None,
+                gene_family=gene_family_obj,
+                parent_organism=parent_organism_obj,
+                primary_reference = prim_ref_obj
+            )
+            print(type(obj))
+            print(f"ENSEMBL: {obj.ENSEMBL}, GENE: {obj.gene}")
+            obj.save()
 
-        satellite_str = row['satellite']
-        # motif_q_score = row['motif_q_score']
-        # motif_enrichment = row['motif_enrichment']
-        if satellite_str:
-            satellites = [x.strip() for x in satellite_str.split(',')]
-            # motif_q_scores = [x.strip() for x in motif_q_score.split(',')]
-            # motif_enrichments = [x.strip() for x in motif_enrichment.split(',')]
-            # if len(motif_q_scores) != len(motif_enrichments):
-            #     raise Exception(f"Length of motif_q_score is not the same as motif_enrichment")
-            index = 0
-            for satellite in satellites:
-                repeat_obj = Repeat.objects.get(name=satellite)
-                protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
-                protein_repeat_obj.save()
-                # index += 1
+            protein_obj = ProteinTF.objects.get(gene=gene)
+            protein_obj.save()
+            print(obj.gene, obj.slug, obj)
+            print(protein_obj.gene, protein_obj.slug, protein_obj)
+            
+            refs = row['references']
+            if not refs == None:
+                for ref in refs.split(','):
+                    pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref))
+                    if len(Reference.objects.filter(doi=ref)) == 0:
+                        ref_obj = Reference(id = uuid.uuid4().int % 100000,
+                            created = datetime.now(),
+                            modified = datetime.now(),
+                            doi = ref,
+                            pmid = pubmed_record['IdList'][0])
+                        ref_obj.save()
+                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = ref_obj)
+                        protein_ref_obj.save()
+                    else:
+                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = Reference.objects.filter(doi=ref)[0])
+                        protein_ref_obj.save()
+
+            satellite_str = row['satellite']
+            # motif_q_score = row['motif_q_score']
+            # motif_enrichment = row['motif_enrichment']
+            if satellite_str:
+                satellites = [x.strip() for x in satellite_str.split(',')]
+                # motif_q_scores = [x.strip() for x in motif_q_score.split(',')]
+                # motif_enrichments = [x.strip() for x in motif_enrichment.split(',')]
+                # if len(motif_q_scores) != len(motif_enrichments):
+                #     raise Exception(f"Length of motif_q_score is not the same as motif_enrichment")
+                index = 0
+                for satellite in satellites:
+                    repeat_obj = Repeat.objects.get(name=satellite)
+                    protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                    # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
+                    protein_repeat_obj.save()
+                    # index += 1
 
 def update_proteinrepeats():
     en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE)
@@ -347,75 +389,98 @@ def update_proteinrepeats():
         obj.save()
 
 def update_proteomics():
-    # file = input("Enter file: ")
-    file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/proteomics_database.csv"
+    file = input("Enter file: ")
+    # file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/HSat3_epithelial_2.csv"
     df = pd.read_csv(file, dtype=str)
     
-    repeat_name = 'HSat3'
+    # Get other data
+    repeat_name = input("Enter repeat: ") # HSat3
+    parent_organism = input("Enter parent organism taxonomy id: ") # 9606
+    date_string = input("Enter date data was generated (Month Day, Year): ") # Aug 30th, 2021
+    cell_type_str = input("Enter cell type: ") # breast epithelial
+    cell_line_name_str = input("Enter cell line name: ") # MCF10A
+    method_str = input("Enter method: ") # turboID targeting HSat3 using ZF-hsat3-3xHA-turboID
+    description_str = input("Enter description of how samples were generated, controls, mass spec machine details, etc: ")
     
     parent_organism_obj = None
-    parent_organism = '9606'
     if parent_organism:
         parent_organism = int(parent_organism)
         parent_organism_obj = get_organism_obj(parent_organism)
+        if parent_organism_obj == None:
+            print("Adding Organism")
+            org_obj = Organism(id=int(parent_organism))
+            org_obj.save()
+        else:
+            print(str(parent_organism) + " Object Found")
 
     repeat_obj = get_obj_if_exists(Repeat, name=repeat_name)
+    if repeat_obj == None:
+        print("Adding Repeat")
+        repeat_obj = Repeat(name=repeat_name, parental_organism = parent_organism_obj)
+        repeat_obj.save()
+    else:
+        print(repeat_obj.name + " Object Found")
+
     log2C_vals = {}
     significance = {}
 
     for row in df.to_dict(orient='records'):
         print(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]]))
         if (len(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])) == 0):
+            uniprot_arr = row[df.keys()[0]].split('|')
+            uniprot = uniprot_arr[0]
+            # TODO: Add aliases for uniprots
+            print(uniprot_arr, uniprot)
             mapper = ProtMapper()
-            result, failed = mapper.get(ids=[row[df.keys()[0]]], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+            result, failed = mapper.get(ids=[uniprot], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
             print(result)
             if len(result) != 0:
-                alias_lst = str(result['Gene Names'].values[0].split(' '))
+                alias_lst = result['Gene Names'].values[0].split(' ')
+                alias_lst = str(alias_lst[1:])
+                alias_lst = alias_lst.strip("'")
                 alias_lst = '{' + alias_lst[1:len(alias_lst) - 1] + '}'
-                if len(result['Gene Names'].values[0].split(' ')) == 1:
+                if len(result['Gene Names'].values[0].split(' ')) <= 1:
                     alias_lst = ['null']
                 print(alias_lst)
+                print(result['Ensembl'], result['Ensembl'].values)
                 if result['Ensembl'].values[0] == '':
                     ensembl_str = 'none'
                 else:
-                    ensembl_str = result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
+                    ensembl_str = 'E' + result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
                 print(ensembl_str)
-                protein_obj = ProteinTF(gene=result['Gene Names (primary)'].values[0], aliases = alias_lst, UNIPROT = row[df.keys()[0]], ENSEMBL = ensembl_str, parent_organism = parent_organism_obj)
-                protein_obj.save()
-                protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                protein_repeat_obj.save()
+                
+                if result['Gene Names (primary)'].values[0] != '' and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
+                    protein_obj = ProteinTF(
+                        gene=result['Gene Names (primary)'].values[0], 
+                        aliases = alias_lst, 
+                        UNIPROT = row[df.keys()[0]], 
+                        ENSEMBL = ensembl_str, 
+                        parent_organism = parent_organism_obj,
+                        # gene_type = '{"TF"}' # for testing
+                    )
+                    protein_obj.save()
+                    protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                    protein_repeat_obj.save()
             # print(obj.gene)
             # print(obj.aliases)
             # print(obj.ENSEMBL.values[0].split(' ')[0])
-        # else:
-        #     obj = ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])[0]
-        #     mapper = ProtMapper()
-        #     result, failed = mapper.get(ids=[row[df.keys()[0]]], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
-        #     ens_result = result['Ensembl'].values[0].strip(';')
-        #     obj.ENSEMBL = ens_result.split('ENST')[0]
-        #     print(obj.gene, obj.ENSEMBL)
-        #     obj.save()
-        wildtype = row['WT ZF Area']
-        if row['WT ZF Area'] == '-':
-            wildtype = 0
-        control = row['WT CT Area']
-        if row['WT CT Area'] == '-':
-            control = 0
-        # print(row['WT ZF Area'], row['WT CT Area'])
-        log2C_vals[row[df.keys()[0]]] = math.log2((int(wildtype) + 1) / (int(control) + 1))
+        log2C_vals[row[df.keys()[0]]] = row[df.keys()[2]]
         significance[row[df.keys()[0]]] = row[df.keys()[1]]
 
-    if len(Proteomics.objects.filter(target=repeat_obj.name)) == 0:
-        date_string = 'Aug 30th, 2021'
-        cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_string)
-        date_obj = datetime.strptime(cleaned_date, "%b %d, %Y")
+    if len(Proteomics.objects.filter(target=repeat_obj)) == 0:
+        print("Adding Proteomics")
+        if date_string == "None" or date_string == "NA":
+            date_obj = datetime.now()
+        else:
+            cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', date_string)
+            date_obj = datetime.strptime(cleaned_date, "%b %d, %Y")
         obj = Proteomics(
             id = shortuuid(),
-            cell_type = 'breast epithelial',
-            cell_line_name = 'MCF10A',
+            cell_type = cell_type_str,
+            cell_line_name = cell_line_name_str,
             target = repeat_obj,
-            method = 'turboID targeting HSat3 using ZF-hsat3-3xHA-turboID.',
-            description = 'XXXXX Description of how samples were generated, controls, mass spec machine details. XXXXX',
+            method = method_str,
+            description = description_str,
             date_generated = date_obj.date(),
             parent_organism = parent_organism_obj,
             significance = significance,
@@ -425,6 +490,9 @@ def update_proteomics():
             y_label = df.keys()[2],
         )
         obj.save()
+    else:
+        print("Proteomics Object Found")
+        # TODO: change it so the id isn't satellite name? that way can have multiple expirements
 
 def update_jaspar():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
@@ -448,12 +516,13 @@ def save_proteins():
 
 def delete_all_records():
     # Delete all records in all tables
+    print("DELETING ALL OBJECTS")
     ProteinTF.objects.all().delete()
     Repeat.objects.all().delete()
     Proteomics.objects.all().delete()
     GeneFamily.objects.all().delete()
     Organism.objects.all().delete()
-
+    print("FINISHED DELETING")
 
 
 if __name__ == "__main__":
@@ -473,6 +542,12 @@ if __name__ == "__main__":
         update_proteinrepeats()
         update_proteomics()
 
+    elif command == 'import_repeat':
+        import_repeat()
+    
+    elif command == 'import_protein':
+        import_protein()
+    
     elif command == 'update_jaspar':
         update_jaspar()
 
@@ -484,6 +559,9 @@ if __name__ == "__main__":
         
     elif command == 'save_proteins':
         save_proteins()
+        
+    elif command == 'network_data':
+        GetNetworkData()
            
     else:
         print(f"Usage: python backend/import_data.py <command>")

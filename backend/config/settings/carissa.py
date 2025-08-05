@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 # RUN THIS TO UPDATE FOR CHANGES: $env:DJANGO_SETTINGS_MODULE = 'config.settings.carissa'
 
 import os
+from .base import *
 from pathlib import Path
 
 import environ
@@ -425,11 +426,10 @@ GRAPHENE = {"SCHEMA": "repeatome.schema.schema"}
 
 MIDDLEWARE = ["corsheaders.middleware.CorsMiddleware", *MIDDLEWARE]
 INSTALLED_APPS += ["corsheaders"]
-# CORS_ORIGIN_WHITELIST = [
-#     "http://localhost:8000",
-#     "http://localhost:8080",
-#     "http://localhost:3000",
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
 
 BLOCKED_IPS = env.list("IP_BLACKLIST", default=[])

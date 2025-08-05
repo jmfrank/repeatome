@@ -71,9 +71,11 @@ def GetNetworkData(organism=9606):
                     if not p.gene_type == None and 'TF' in p.gene_type:
                         protein_lst.append(p)
                         enrichments.append(repeats[repeat_name]['enrichment'][i])
-                each_angle = 360 / len(protein_lst)
+                if len(protein_lst) == 0:
+                    continue
+                # each_angle = 360 / len(protein_lst)
                 START_ANGLE = 45
-                EDGE_LENGTH = 70
+                EDGE_LENGTH = 90
                 total_size = sum(enrichments)
                 # enrichments = repeats[repeat_name]['enrichment']
                 angles = []
@@ -89,12 +91,12 @@ def GetNetworkData(organism=9606):
                 indx = 0
                 for angle in angles:
                     minSeparationRadians = 2 * math.asin(enrichments[indx] / EDGE_LENGTH)
-                    if angle*math.pi/180 < minSeparationRadians:
-                        # print('override', repeat.name, angle*math.pi/180, minSeparationRadians)
-                        requiredRadius = 0.95 * enrichments[indx] / (math.sin(angle*math.pi / 360))
-                        # print('  ', requiredRadius)
-                    else:
-                        requiredRadius = EDGE_LENGTH
+                    # if angle*math.pi/180 < minSeparationRadians:
+                    #     # print('override', repeat.name, angle*math.pi/180, minSeparationRadians)
+                    #     requiredRadius = 0.95 * enrichments[indx] / (math.sin(angle*math.pi / 360))
+                    #     # print('  ', requiredRadius)
+                    # else:
+                    requiredRadius = EDGE_LENGTH
                     x_data.append(requiredRadius * math.cos(i*math.pi/180) + spacing_x)
                     y_data.append(requiredRadius * math.sin(i*math.pi/180) + spacing_y)
                     i += angle

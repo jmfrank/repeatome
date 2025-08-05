@@ -66,6 +66,7 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     articles = models.TextField(blank=True, null=True)
     ENSEMBL = models.TextField(blank=True, null=True)
     UNIPROT = models.TextField(blank=True, null=True)
+    UNIPROT_aliases = ArrayField(models.TextField(blank=True, null=True), blank=True, null=True)
     PDB = models.TextField(blank=True, null=True)
     micro_url = models.TextField(blank=True, null=True)
     AF3 = models.TextField(blank=True, null=True)
@@ -78,7 +79,7 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     cofactor = ArrayField(
         models.TextField(),
         blank=True, null=True
-    )  
+    )
     oligomerization = models.TextField(blank=True, null=True)
     gene_family = models.ForeignKey(
         GeneFamily,
@@ -100,13 +101,13 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     )
     primary_reference = models.ForeignKey(
         Reference,
-        related_name="primary_reference",
-        verbose_name="reference",
-        on_delete=models.SET_NULL,
+        help_text='Preferably the publication that introduced the protein',
+        related_name="primary_proteins",
+        verbose_name="Primary Reference",
+        on_delete=models.deletion.CASCADE,
         blank=True,
         null=True,
-        help_text="Primary reference for protein",
-        to_field='doi'
+        # to_field='doi',
     )
     references = models.ManyToManyField(
         Reference,
