@@ -14,7 +14,7 @@
   </div>
   <div class='col-12 col-md-6 order-md-2' style="padding-bottom: -100px;"><h3>Microscopy Result</h3>
     <div class="litmol-tab">
-      <small>ITK-VTK-VIEWER: <a href="http://localhost:8082/?fileToLoad=http://localhost:8082/test-data/microscopy_TEAD1_sitkb.nrrd" target="_blank" rel="noopener">{{ protein.gene | default:''}}</a></small>
+      <small>ITK-VTK-VIEWER: <a href="http://127.0.0.1:8000/static/itk-vtk-viewer/dist/index.html?fileToLoad=http://127.0.0.1:8000/static/microscopy/microscopy_tead1.tif" target="_blank" rel="noopener">{{ protein.gene | default:''}}</a></small>
     </div>
   </div>
 </div>
@@ -46,9 +46,6 @@
     </div>
   </div>
 </div>
-
-<!-- MICROSCOPY SCRIPTS -->
-{% comment %} <script type="text/javascript" src="https://unpkg.io/itk-vtk-viewer/dist/itkVtkViewerCDN.js"></script> {% endcomment %}
 
 <!-- LITEMOL SCRIPTS -->
 

@@ -91,9 +91,13 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
 
     Cache the JASPAR ids and update the database
 
+
+
     ```bash
-    python backend/import_data.py update_jaspar
+    python -m pip install uniprot-id-mapper
     python backend/import_data.py reset
+    python backend/import_data.py update_jaspar
+    
     ```
 
 1. start dev servers:

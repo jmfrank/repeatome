@@ -178,37 +178,17 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
         </svg>
       {% endif %}
     </div>
-
-   <div class="attributes" >
-     <h3>Attributes</h3>
-   </div>
-
-    <div class="table mt-3">
-        {% comment %} <table class="table table-striped flip-scroll states-table">
-        <thead>
-            <tr class="table-header">
-            <th>Gene type</th>
-            <th>DNA binding domain</th>
-            <th>Signaling pathway</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr >
-            <td>{{protein.gene_type_as_str | safe}}</td>
-            <td>{{ protein.dna_binding_domain | safe }}</td>
-            <td>{{ protein.signaling_pathway | safe }}</td>
-            </tr>
-        </tbody>
-        </table> {% endcomment %}
-        <div class="attribute-data">
-            {% if repeat.dfam_id %}
-              <p class="attr-name">Motif</p>
-              <div class='logo-holder'>
-                <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
-                <div class="logo-col" id="logo_info"></div>
-              </div>
-            {% endif %}
-        </div>
+    
+    <div class="attribute-data">
+        {% if repeat.dfam_id %}
+          <div class="attributes" >
+            <h3>Motif </h3>
+          </div>
+          <div class='logo-holder'>
+            <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
+            <div class="logo-col" id="logo_info"></div>
+          </div>
+        {% endif %}
     </div>
 
   {% if proteomics_datapoints %}

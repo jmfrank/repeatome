@@ -74,7 +74,7 @@ THIRD_PARTY_APPS = [
     "reversion",
     "reversion_compare",
     "avatar",
-    "mptt",
+    "mptt"
 ]
 
 # Apps specific for this project go here.
@@ -108,7 +108,6 @@ MIDDLEWARE = [
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 
-X_FRAME_OPTIONS = "ALLOW-FROM https://ij.imjoy.io"
 
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -427,19 +426,19 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhoost:8082",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "https://kitware.github.io",
-    "http://localhoost:8082",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "https://kitware.github.io",
+#     "http://localhost:8082",
+# ]
 
 BLOCKED_IPS = env.list("IP_BLACKLIST", default=[])
 
 # INSTALLED_APPS += ["app.apps.AppConfig"]
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True
 # CORS_ALLOW_HEADERS = list(default_headers) + [

@@ -388,9 +388,30 @@ def update_proteinrepeats():
         print(f"saving protein:{obj.protein.gene}, repeat:{obj.repeat.name}, motif_enrichment:{obj.motif_enrichment}, motif_q_score:{obj.motif_q_score}")
         obj.save()
 
+
+def get_proteomic_data(mapper, uniprot_id):
+    proteomics_cache_folder = '.cache/proteomics'
+    cache_file = f"{proteomics_cache_folder}/{uniprot_id}.csv"
+    if os.path.exists(cache_file):
+        print(f"Loading proteomic data from cache: {cache_file}")
+        result_df = pd.read_csv(cache_file)
+        return result_df, []
+    
+    print(f"Loading proteomic data using ProtMapper for {uniprot_id}")
+    if not os.path.exists(proteomics_cache_folder):
+        os.makedirs(proteomics_cache_folder)
+    # Use ProtMapper to get the data
+    result_df, failed = mapper.get(ids=[uniprot_id], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+    print(f"***type failed = {type(failed)}, failed = {failed}")
+    print(result_df)
+    result_df.to_csv(cache_file, index=False)
+    return result_df, failed
+
+
 def update_proteomics():
     file = input("Enter file: ")
     # file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/HSat3_epithelial_2.csv"
+    # file = settings.IMPORT_PROTEOMICS
     df = pd.read_csv(file, dtype=str)
     
     # Get other data
@@ -424,6 +445,10 @@ def update_proteomics():
     log2C_vals = {}
     significance = {}
 
+    mapper = ProtMapper()
+
+    count = 0
+    print(f"Processing {len(df)} rows from {file} for repeat {repeat_name}")
     for row in df.to_dict(orient='records'):
         print(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]]))
         if len(log2C_vals.keys()) == 150:
@@ -434,7 +459,7 @@ def update_proteomics():
             # TODO: Add aliases for uniprots
             print(uniprot_arr, uniprot)
             mapper = ProtMapper()
-            result, failed = mapper.get(ids=[uniprot], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+            result, failed = get_proteomics(mapper, uniprot)
             print(result)
             if len(result) != 0:
                 alias_lst = result['Gene Names'].values[0].split(' ')
@@ -450,7 +475,6 @@ def update_proteomics():
                 else:
                     ensembl_str = 'E' + result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
                 print(ensembl_str)
-                
                 if result['Gene Names (primary)'].values[0] != '' and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
                     protein_obj = ProteinTF(
                         gene=result['Gene Names (primary)'].values[0], 
@@ -643,3 +667,4 @@ if __name__ == "__main__":
         print("- reset to delete existing records and repopulate tables")        
         print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")
         print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")
+        print("- update_proteomics to update proteomics data in Proteomics table")
