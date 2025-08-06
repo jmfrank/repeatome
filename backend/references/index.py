@@ -15,8 +15,8 @@ class ReferenceIndex(AlgoliaIndex):
         "title",
         "citation",
         "get_date",
-        "prot_primary",
-        "prot_secondary",
-        "_excerpts",
+        # "prot_primary",
+        # "prot_secondary",
+        # "_excerpts",
         "url",
     )

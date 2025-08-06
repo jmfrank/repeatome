@@ -422,6 +422,7 @@ def update_proteomics():
     cell_line_name_str = input("Enter cell line name: ") # MCF10A
     method_str = input("Enter method: ") # turboID targeting HSat3 using ZF-hsat3-3xHA-turboID
     description_str = input("Enter description of how samples were generated, controls, mass spec machine details, etc: ")
+    thresholds = input("Enter thresholds comma separated: ")
     
     parent_organism_obj = None
     if parent_organism:
@@ -459,7 +460,7 @@ def update_proteomics():
             # TODO: Add aliases for uniprots
             print(uniprot_arr, uniprot)
             mapper = ProtMapper()
-            result, failed = get_proteomics(mapper, uniprot)
+            result, failed = get_proteomic_data(mapper, uniprot)
             print(result)
             if len(result) != 0:
                 alias_lst = result['Gene Names'].values[0].split(' ')

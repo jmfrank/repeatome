@@ -129,7 +129,7 @@ renderer.getMouseCaptor().on("mousemove", (event) => {
   // console.log(event)
   // Offset tooltip to not overlap cursor
   tooltip.style.left = `${event.x - 60}px`;
-  tooltip.style.top = `${event.y - 100}px`;
+  tooltip.style.top = `${event.y - 80}px`;
 });
 
 // renderer.on("afterRender", () => {

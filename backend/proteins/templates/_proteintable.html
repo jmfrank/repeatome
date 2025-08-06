@@ -12,9 +12,13 @@
 	<thead>
 		<tr class="table-header">
 			{% if removebutton %}<th class='remove-button'>Remove</th>{% endif %}
-			<th>Name</th>
-			
-			<th>Aliases</th>
+			<th>Protein</th>
+			{% comment %} <th>Aliases</th> {% endcomment %}
+           	<th>Gene Family</th>
+           	<th>Gene Type</th>
+           	<th>Organism</th>
+           	<th>DNA Binding Domain</th>
+           	<th>Signaling Pathway</th>
 			{% if comparison %}
 			<th><span class="d-none d-lg-inline">Compare</span><span class="d-block d-lg-none"><i class="fas fa-plus ml-1"></i></span></th>
 			{% endif %}
@@ -35,8 +39,13 @@
 						{{ protein.gene | safe }}
 					</a>
 				</td>
+				{% comment %} <td>{{ protein.aliases_as_str }}</td> {% endcomment %}
+				<td>{{ protein.gene_family.gene_family | safe }}</td>
+				<td>{{ protein.gene_type_as_str | safe }}</td>
+				<td>{{ protein.parent_organism.scientific_name | safe }}</td>
+				<td>{{ protein.dna_binding_domain | safe }}</td>
+				<td>{{ protein.signaling_pathway | safe }}</td>
 
-				<td>{{ protein.aliases_as_str }}</td>
 				{% if comparison %}
             	<td class="text-center">
               		<button class="btn btn-sm btn-outline-info btn-circle comparison-btn" data-flash='1' data-action-url="{% url 'proteins:update-comparison' %}" data-object='{{protein.slug}}' data-op='add'><i class="fas fa-plus"></i></button>

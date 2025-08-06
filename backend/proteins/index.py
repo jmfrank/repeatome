@@ -10,7 +10,7 @@ from .models import Organism, ProteinTF, Repeat
 class ProteinIndex(AlgoliaIndex):
     fields = (
         "gene",
-        "slug",
+        # "slug",
         "id",
         "aliases",
         "PDB",
@@ -28,13 +28,13 @@ class ProteinIndex(AlgoliaIndex):
         # "n_faves",
         # "n_cols",
         # "get_repeats",
-        "protein_sequence",
+        # "protein_sequence",
         'parent_organism',
-        'primary_reference',
+        # 'primary_reference',
         # "parent_organism__scientific_name",
         # "primary_reference__year",
         # "primary_reference__author__family",
-        "cofactor",
+        # "cofactor",
         # "color",
     )
     # should_index = "is_visible"
@@ -48,7 +48,8 @@ class RepeatIndex(AlgoliaIndex):
         "slug",
         "aliases",
         "dfam_id",
-        "parental_organism"
+        "parental_organism",
+        # "get_protein_lst"
     )
     # should_index = "is_visible"
     # tags = "tags"
