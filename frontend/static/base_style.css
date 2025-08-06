@@ -10865,7 +10865,7 @@ h6.dropdown-header {
 
 h6.dropdown-header:after {
     background-color: #ddd;
-    content: " ";
+    content: " ";
     flex-grow: 1;
     height: 1px;
     margin-left: 10px;

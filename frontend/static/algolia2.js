@@ -2,7 +2,7 @@
 // import { autocomplete } from '@algolia/autocomplete-js';
 
 export default async function initAutocomplete() {
-    const searchClient = algoliasearch('I8J408MSCM', '7a38c6848180ee8d3723175b5ec3cc4e');
+    const searchClient = algoliasearch('XSSHY1QSOB', 'ec5b5984639b89c7c5fd3cfe1bb4ebdd');
 
     const proteinIndex = searchClient.initIndex('ProteinTF_dev');
     const repeatIndex = searchClient.initIndex('Repeat_dev');

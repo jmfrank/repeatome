@@ -228,8 +228,8 @@ window.onload = function () {
          <tr class="table-header">
            <th>Satellite</th>
            <th>Aliases</th>
-           <th>Motif</th>
-           <th>Proteomics</th>
+           {% comment %} <th>Motif</th> {% endcomment %}
+           {% comment %} <th>Proteomics</th> {% endcomment %}
            <th>Parent Organism</th>
          </tr>
        </thead>
@@ -238,8 +238,8 @@ window.onload = function () {
          <tr>
            <td><a href="/repeatTable/{{repeat.name}}">{{repeat.name | safe}}</td>
            <td>{{ repeat.aliases_as_str | safe }}</td>
-           <td>{{ repeat.motif | safe }}</td>
-           <td>{{ repeat.proteomics | safe }}</td>
+           {% comment %} <td>{{ repeat.motif | safe }}</td> {% endcomment %}
+           {% comment %} <td>{{ repeat.proteomics | safe }}</td> {% endcomment %}
            <td>{{ repeat.parental_organism.scientific_name | safe }}</td>
          </tr>
          {%endfor%}
@@ -339,7 +339,7 @@ window.onload = function () {
     {% endif %}
     
 
-    {% include "proteins/test8.html" with protein=protein %}
+    {% comment %} {% include "proteins/test8.html" with protein=protein %} {% endcomment %}
 
 
     {% if protein.jaspar %}

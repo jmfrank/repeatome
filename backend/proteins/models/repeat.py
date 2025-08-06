@@ -57,6 +57,9 @@ class Repeat(models.Model):
         
     def get_proteins(self):
         return self.proteintf_set.all()
+    
+    def get_protein_lst(self):
+        return list(self.proteintf_set.all())
 
 
     # def get_HMM(self):

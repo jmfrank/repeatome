@@ -50,16 +50,15 @@ class RepeatDetailView(DetailView):
         taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
         prot_obj = get_proteomics(repeat.name)
-        
-        SIG_THRESHOLD = prot_obj.thresholds[0]
-        if len(prot_obj.thresholds) > 1:
-            LOG_THRESHOLD = prot_obj.thresholds[1]
-        
+    
         # df = pd.read_csv(file, dtype=str)
         datapoints = []
         data_format = 1
         # for row in df.to_dict(orient='records'):
         if not prot_obj == None:
+            SIG_THRESHOLD = prot_obj.thresholds[0]
+            if len(prot_obj.thresholds) > 1:
+                LOG_THRESHOLD = prot_obj.thresholds[1]
             for key in prot_obj.significance.keys():
                 protein_objs = ProteinTF.objects.filter(UNIPROT=key)
                 if len(protein_objs) > 0:
@@ -104,10 +103,11 @@ class RepeatDetailView(DetailView):
         context["enrichment_datapoints"] = enrichment_datapoints
         context["qscore_datapoints"] = qscore_datapoints
         context["proteomics_datapoints"] = self.get_proteomics_data(self.object)
-        threshold_lst = list(get_proteomics(self.object.name).thresholds)
-        for i in range(len(threshold_lst)):
-            threshold_lst[i] = float(threshold_lst[i])
-        context["threshold"] = threshold_lst
+        if get_proteomics(self.object.name) != None:
+            threshold_lst = list(get_proteomics(self.object.name).thresholds)
+            for i in range(len(threshold_lst)):
+                threshold_lst[i] = float(threshold_lst[i])
+            context["threshold"] = threshold_lst
         # print(context['proteomics_datapoints'])
         # print(context['threshold'])
         # proteomics_datapoints = [
