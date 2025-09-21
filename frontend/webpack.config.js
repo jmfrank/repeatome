@@ -80,7 +80,7 @@ if (!devMode) {
   plugins.push(
     sentryWebpackPlugin({
       org: "talley-lambert",
-      project: "fpbase",
+      project: "repeatome",
       authToken: process.env.SENTRY_AUTH_TOKEN,
       include: "./dist",
       ignore: ["node_modules", "webpack.config.js"],
@@ -98,10 +98,11 @@ module.exports = {
     main: "./src/index.js",
     embedscope: "./src/embedscope.js",
     litemol: "./src/my-litemol.js",
-    spectraViewer: "./src/spectra-viewer.js",
-    simpleSpectraViewer: "./src/simple-spectra-viewer.js",
+    // spectraViewer: "./src/spectra-viewer.js",
+    // simpleSpectraViewer: "./src/simple-spectra-viewer.js",
     microscopeForm: "./src/microscope-form.js",
-    blast: "./src/blast-app.js",
+    // blast: "./src/blast-app.js",
+    karyotypeViewer: './src/karyotype.js'
   },
   output: {
     path: path.resolve("./dist/"),
@@ -113,14 +114,18 @@ module.exports = {
     extensions: [".webpack.js", ".web.js", ".mjs", ".js", ".jsx", ".json"],
     alias: {
       jquery: "jquery/src/jquery",
-      "@fpbase/spectra": path.resolve(
+      "@repeatome/karyotype": path.resolve(
         __dirname,
-        "../packages/spectra/src/index.jsx"
-      ),
-      "@fpbase/blast": path.resolve(
-        __dirname,
-        "../packages/blast/src/index.js"
-      ),
+        '../packages/karyotype/src/index.jsx'
+      )
+    //   "@fpbase/spectra": path.resolve(
+    //     __dirname,
+    //     "../packages/spectra/src/index.jsx"
+    //   ),
+    //   "@fpbase/blast": path.resolve(
+    //     __dirname,
+    //     "../packages/blast/src/index.js"
+    //   ),
     },
     fallback: {
       url: require.resolve("url/"),
@@ -140,7 +145,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.(js|jsx)$/,
         resolve: { fullySpecified: false },
         include: /node_modules/,
       },

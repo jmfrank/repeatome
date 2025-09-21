@@ -25,6 +25,11 @@ import LineageChart from "./js/lineage.js"
 import initFRET from "./js/fret.js"
 import * as Sentry from "@sentry/browser";
 
+// import KaryotypeViewer from "./MyApp";  // <- your existing app
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(<MyApp />);
+
 window.repeatome = window.repeatome || {}
 
 

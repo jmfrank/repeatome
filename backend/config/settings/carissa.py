@@ -24,9 +24,9 @@ env = environ.Env()
 
 # Data to import
 # ------------------------------------------------------------------------------
-IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent.parent / 'repeatome_data/satellite_binders_database.xlsx'
-IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
-IMPORT_QSCORE_FILE = "/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"
+IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent / 'repeatome_data/satellite_binders_database.xlsx'
+IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
+IMPORT_QSCORE_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"
 
 
 
@@ -65,6 +65,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django_vite",
     # Useful template tags:
     "django.contrib.humanize",
     "dal",
@@ -106,6 +107,8 @@ LOCAL_APPS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+DJANGO_VITE_MANIFEST_PATH = ROOT_DIR / "frontend" / "static" / "karyotype" / "manifest.json"
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -262,7 +265,7 @@ INSTALLED_APPS.append("webpack_loader")
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "/",
+        "BUNDLE_DIR_NAME": "dist/",
         "STATS_FILE": str(ROOT_DIR.parent / "frontend" / "dist" / "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,

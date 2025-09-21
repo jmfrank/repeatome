@@ -6,3 +6,4 @@ from .search import *  # noqa
 from .blast import *  # noqa
 from .repeats import *  # ADDED
 from .organism import *  # ADDED
+from .karyotype import * # ADDED

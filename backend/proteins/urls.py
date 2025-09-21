@@ -15,11 +15,13 @@ CONTRIBS_OPEN = not getenv("BLOCK_CONTRIBUTIONS")
 
 urlpatterns = [
     # detail view: /:slug
+    path("viewer/", views.microscopy_viewer, name='karyotype_viewer'),
     path("proteinTable/", views.ProteinTable, name="proteinTable"),
     path("repeatTable/", views.RepeatTable, name="repeatTable"),
     path("organismTable/", views.OrganismListView.as_view(), name="organismTable"),
     re_path(r"^search/", views.protein_search, name="search"),
     re_path(r"^blast/", views.blast_view, name="blast"),
+    re_path(r"^karyotype_viewer", views.karyotype_view, name="karyotype_viewer"),
     re_path(
         r"^submit/",
         (
