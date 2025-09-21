@@ -12,6 +12,9 @@ def OrganismTable(request):
     # print(items)
     return render(request, "organismTable.html", {"organisms": items})
 
+def microscopy_viewer(request):
+    return render(request, "organisms/karyotype_viewer.html")
+
 class OrganismListView(ListView):
     """renders html for single reference page"""
 

@@ -7,7 +7,11 @@
     "clean": "rm -rf node_modules && pnpm -r exec -- rm -rf node_modules && pnpm -r run clean"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "@vitejs/plugin-react": "^5.0.2",
+    "concurrently": "^8.2.0",
+    "vite": "^7.1.4",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^5.1.4"
   },
   "workspaces": [
     "packages/*",
@@ -17,11 +21,14 @@
     "node": "23.x"
   },
   "dependencies": {
+    "@hms-dbmi/viv": "^0.18.0",
     "bootstrap": "^5.3.7",
     "d3": "^7.9.0",
     "graphology": "^0.26.0",
     "itk-vtk-viewer": "^14.51.0",
     "psql": "^0.0.1",
+    "react": "16.14",
+    "react-dom": "16.14",
     "sigma": "^3.0.2",
     "webpack-dev-server": "^5.2.2"
   }

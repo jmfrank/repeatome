@@ -3,6 +3,7 @@ import math
 import django
 import uuid
 from Bio import Entrez
+import numpy as np
 
 Entrez.email = 'carissapenn123@gmail.com'
 
@@ -22,6 +23,7 @@ import sys
 import unicodedata
 import re
 from UniProtMapper import ProtMapper
+from pyjaspar import jaspardb
 
 def slugify(value, allow_unicode=False):
     """
@@ -175,7 +177,7 @@ def import_repeat():
             obj.save()
         
 
-def load_jaspar_from_url(gene, tax_group):
+def load_jaspar_from_url(gene, tax_group, tax_id=9606):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
         headers = {"Accept": "application/json"}
         jaspar_ids = []
@@ -186,8 +188,31 @@ def load_jaspar_from_url(gene, tax_group):
             "format": "json"
         }
         response = requests.get(base_url, headers=headers, params=params)
+        # print(response.json())
+        # result_lst = response.json()['results']
+        # fixed_results = []
+        # for result in result_lst:
+        #     if result['name'] == gene.strip():
+        #         fixed_results.append(result)
+        # fixed_response = response.json()
+        # fixed_response['results'] = fixed_results
+
+        fixed_response = response.json()
+        fixed_results = []
+        for result in response.json()['results']:
+            jdb_obj = jaspardb()
+            motif_data = jdb_obj.fetch_motif_by_id(result['base_id'] + '.' + result['version'])
+            # print(gene.strip(), tax_id)
+            print(motif_data.name, motif_data.species)
+            if len(motif_data.species) > 0 and motif_data.species[0] != '':
+                if motif_data.name == gene.strip() and int(motif_data.species[0]) == tax_id:
+                    fixed_results.append(result)
+        fixed_response['results'] = fixed_results
+
+        # print(response.json())
+        # print(fixed_response)
         if response.status_code == 200:
-            return response.json()
+            return fixed_response
         else:
             print(f"Failed to get data for {gene}: HTTP {response.status_code}")
             return {
@@ -208,7 +233,7 @@ def get_jaspar_ids(gene, tax_group, use_cache):
         # If use_cache then try to load from cache first
         # If not found in cache then try loading from the url
         if use_cache:
-            cache_file = f"{cache_folder}/{slugify(gene)}.json"
+            cache_file = f"{cache_folder}/jaspar/{slugify(gene)}.json"
             if os.path.exists(cache_file):
                 print(f"Loading jaspar data from cache")
                 with open(cache_file, 'r') as stream:
@@ -452,8 +477,6 @@ def update_proteomics():
     print(f"Processing {len(df)} rows from {file} for repeat {repeat_name}")
     for row in df.to_dict(orient='records'):
         print(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]]))
-        if len(log2C_vals.keys()) == 150:
-            break
         if (len(ProteinTF.objects.filter(UNIPROT = row[df.keys()[0]])) == 0):
             uniprot_arr = row[df.keys()[0]].split('|')
             uniprot = uniprot_arr[0]
@@ -471,14 +494,15 @@ def update_proteomics():
                     alias_lst = ['null']
                 print(alias_lst)
                 print(result['Ensembl'], result['Ensembl'].values)
-                if result['Ensembl'].values[0] == '':
+                if result['Ensembl'].values[0] == '' or str(result['Ensembl'].values[0]) == 'nan':
                     ensembl_str = 'none'
                 else:
-                    ensembl_str = 'E' + result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
+                    ensembl_str = str(result['Ensembl'].values[0])
+                    ensembl_str = 'E' + ensembl_str.split('E')[1].split(' ')[0].strip(';')
                 print(ensembl_str)
-                if result['Gene Names (primary)'].values[0] != '' and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
+                if result['Gene Names (primary)'].values[0] != '' and type(result['Gene Names (primary)'].values[0]) != np.float64 and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
                     protein_obj = ProteinTF(
-                        gene=result['Gene Names (primary)'].values[0], 
+                        gene=str(result['Gene Names (primary)'].values[0]), 
                         aliases = alias_lst, 
                         UNIPROT = row[df.keys()[0]], 
                         ENSEMBL = ensembl_str, 
@@ -515,6 +539,7 @@ def update_proteomics():
             # UNIPROT = df.keys()[0],
             x_label = df.keys()[1],
             y_label = df.keys()[2],
+            thresholds = '{' + thresholds + '}',
         )
         obj.save()
     else:
@@ -661,6 +686,9 @@ if __name__ == "__main__":
     elif command == 'network_data':
         for org in Organism.objects.all():
             GetNetworkData(org.id)
+
+    elif command == 'test_jaspar':
+        load_jaspar_from_url('TCF7', 'vertebrates')
            
     else:
         print(f"Usage: python backend/import_data.py <command>")
