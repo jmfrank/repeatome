@@ -3623,12 +3623,14 @@ input[type=button].btn-block {
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-webkit-slider-thumb {
     transition: none;
   }
+}
+.custom-range::-webkit-slider-thumb {
+  appearance: none;
 }
 .custom-range::-webkit-slider-thumb:active {
   background: rgb(163, 117, 197.5) linear-gradient(180deg, rgb(176.8, 137.7, 206.125), rgb(163, 117, 197.5)) repeat-x;
@@ -3651,12 +3653,14 @@ input[type=button].btn-block {
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-moz-range-thumb {
     transition: none;
   }
+}
+.custom-range::-moz-range-thumb {
+  appearance: none;
 }
 .custom-range::-moz-range-thumb:active {
   background: rgb(163, 117, 197.5) linear-gradient(180deg, rgb(176.8, 137.7, 206.125), rgb(163, 117, 197.5)) repeat-x;
@@ -3682,12 +3686,14 @@ input[type=button].btn-block {
   border-radius: 1rem;
   box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.1);
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-ms-thumb {
     transition: none;
   }
+}
+.custom-range::-ms-thumb {
+  appearance: none;
 }
 .custom-range::-ms-thumb:active {
   background: rgb(163, 117, 197.5) linear-gradient(180deg, rgb(176.8, 137.7, 206.125), rgb(163, 117, 197.5)) repeat-x;
@@ -4089,10 +4095,6 @@ input[type=button].btn-block {
     display: none;
   }
 }
-.navbar-expand {
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-}
 .navbar-expand > .container,
 .navbar-expand > .container-fluid,
 .navbar-expand > .container-sm,
@@ -4101,6 +4103,10 @@ input[type=button].btn-block {
 .navbar-expand > .container-xl {
   padding-right: 0;
   padding-left: 0;
+}
+.navbar-expand {
+  flex-flow: row nowrap;
+  justify-content: flex-start;
 }
 .navbar-expand .navbar-nav {
   flex-direction: row;
@@ -5269,12 +5275,14 @@ a.close.disabled {
 }
 .modal.fade .modal-dialog {
   transition: transform 0.3s ease-out;
-  transform: translate(0, -50px);
 }
 @media (prefers-reduced-motion: reduce) {
   .modal.fade .modal-dialog {
     transition: none;
   }
+}
+.modal.fade .modal-dialog {
+  transform: translate(0, -50px);
 }
 .modal.show .modal-dialog {
   transform: none;
@@ -9639,11 +9647,11 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
   }
 }
 
-a.help-link {
-  color: inherit;
-}
 a.help-link abbr {
   text-decoration: none;
+}
+a.help-link {
+  color: inherit;
 }
 a.help-link:hover {
   text-decoration: none;
@@ -9995,19 +10003,21 @@ a {
   opacity: 1;
 }
 
+.navbar .dropdown-menu {
+  z-index: 1001;
+}
 .navbar {
   transition-duration: 0.3s;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
-}
-.navbar .dropdown-menu {
-  z-index: 1001;
 }
 @media (min-width: 768px) {
   .navbar {
     padding: 0;
   }
+}
+.navbar {
+  box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
 }
 .navbar .navbar-brand {
   padding: 0;
@@ -10071,13 +10081,15 @@ a {
 }
 .navbar .nav-search .input-group {
   width: 170px;
-  transition: width 0.2s;
 }
 @media (max-width: 767.98px) {
   .navbar .nav-search .input-group {
     width: 100%;
     margin-top: 8px;
   }
+}
+.navbar .nav-search .input-group {
+  transition: width 0.2s;
 }
 @media (min-width: 768px) {
   .navbar .nav-search .input-group:focus-within {
@@ -10169,8 +10181,6 @@ h6.dropdown-header:after {
   padding-top: 1.5rem;
   text-align: center;
   word-wrap: break-word;
-  color: rgb(95, 64, 126);
-  font-weight: 500;
 }
 @media (max-width: 991.98px) {
   .protein .name {
@@ -10181,6 +10191,10 @@ h6.dropdown-header:after {
   .protein .name {
     font-size: 2.4rem;
   }
+}
+.protein .name {
+  color: rgb(95, 64, 126);
+  font-weight: 500;
 }
 .protein h3 {
   color: rgb(95, 64, 126);
@@ -10247,6 +10261,10 @@ h6.dropdown-header:after {
 .protein_result_item:hover {
   text-decoration: none;
 }
+.protein_result_item div:hover {
+  opacity: 1;
+  box-shadow: inset 0rem 0rem 3rem rgba(0, 0, 0, 0.1);
+}
 .protein_result_item div {
   opacity: 0.75;
   text-align: center;
@@ -10255,10 +10273,6 @@ h6.dropdown-header:after {
   margin: 0.2rem 0;
   padding: 0.6rem 0.6rem;
   height: 90%;
-}
-.protein_result_item div:hover {
-  opacity: 1;
-  box-shadow: inset 0rem 0rem 3rem rgba(0, 0, 0, 0.1);
 }
 .protein_result_item div h4 {
   font-weight: 500;
@@ -10330,11 +10344,13 @@ h6.dropdown-header:after {
     text-align: right !important;
     background-color: white !important;
     color: black !important;
-    border-bottom: 0 !important;
-    border-left: 0 !important;
   }
   .flip-scroll th:after {
     content: ":";
+  }
+  .flip-scroll th {
+    border-bottom: 0 !important;
+    border-left: 0 !important;
   }
   .flip-scroll th, .flip-scroll td {
     margin: 0;
@@ -10453,8 +10469,6 @@ h6.dropdown-header:after {
   padding-top: 1.5rem;
   text-align: center;
   word-wrap: break-word;
-  color: rgb(95, 64, 126);
-  font-weight: 500;
 }
 @media (max-width: 991.98px) {
   .repeat .name {
@@ -10465,6 +10479,10 @@ h6.dropdown-header:after {
   .repeat .name {
     font-size: 2.4rem;
   }
+}
+.repeat .name {
+  color: rgb(95, 64, 126);
+  font-weight: 500;
 }
 .repeat h3 {
   color: rgb(95, 64, 126);
@@ -10489,6 +10507,14 @@ h6.dropdown-header:after {
   color: rgb(148, 123, 148);
   /* color: rgb(157, 141, 171); */
   /* color: rgb(47, 18, 69); */
+  font-family: Raleway, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 5px;
+  padding-top: 0;
+}
+.repeat .subfamilies {
+  color: rgb(154, 169, 218);
   font-family: Raleway, sans-serif;
   font-size: 1.4rem;
   font-weight: 600;
@@ -10523,6 +10549,10 @@ h6.dropdown-header:after {
 .repeat_result_item:hover {
   text-decoration: none;
 }
+.repeat_result_item div:hover {
+  opacity: 1;
+  box-shadow: inset 0rem 0rem 3rem rgba(0, 0, 0, 0.1);
+}
 .repeat_result_item div {
   opacity: 0.75;
   text-align: center;
@@ -10531,10 +10561,6 @@ h6.dropdown-header:after {
   margin: 0.2rem 0;
   padding: 0.6rem 0.6rem;
   height: 90%;
-}
-.repeat_result_item div:hover {
-  opacity: 1;
-  box-shadow: inset 0rem 0rem 3rem rgba(0, 0, 0, 0.1);
 }
 .repeat_result_item div h4 {
   font-weight: 500;
@@ -10605,11 +10631,13 @@ h6.dropdown-header:after {
     text-align: right !important;
     background-color: white !important;
     color: black !important;
-    border-bottom: 0 !important;
-    border-left: 0 !important;
   }
   .flip-scroll th:after {
     content: ":";
+  }
+  .flip-scroll th {
+    border-bottom: 0 !important;
+    border-left: 0 !important;
   }
   .flip-scroll th, .flip-scroll td {
     margin: 0;
@@ -10699,11 +10727,13 @@ h6 {
   display: inline-block;
   color: rgb(81, 113, 255);
   opacity: 1;
-  z-index: 1000;
 }
 #scope-settings-buttons span.pin-wrapper.rotate-90 {
   transform: rotate(-90deg);
   opacity: 0.4;
+}
+#scope-settings-buttons span.pin-wrapper {
+  z-index: 1000;
 }
 
 .nvd3 .nv-brushBackground rect {
@@ -10795,12 +10825,12 @@ h6 {
   padding-top: 2px;
 }
 @media (max-width: 767.98px) {
+  .spectrumpage .spectra-tabs label.custom-control-label {
+    padding-top: 4px;
+  }
   .spectrumpage .spectra-tabs {
     font-size: 0.7rem;
     bottom: 15px;
-  }
-  .spectrumpage .spectra-tabs label.custom-control-label {
-    padding-top: 4px;
   }
 }
 @media (max-width: 575.98px) {
@@ -10816,7 +10846,6 @@ h6 {
 #spectra,
 #spectrasvg {
   position: relative;
-  /* change opacity of spectrum paths */
 }
 #spectra .faded-fret .nv-area,
 #spectrasvg .faded-fret .nv-area {
@@ -10890,6 +10919,10 @@ h6 {
 #spectrasvg #spectrasvg .tick line {
   opacity: 0;
 }
+#spectra,
+#spectrasvg {
+  /* change opacity of spectrum paths */
+}
 #spectra .nv-group,
 #spectrasvg .nv-group {
   fill-opacity: 0.6 !important;
@@ -10898,15 +10931,15 @@ h6 {
 #spectrasvg .nv-axisMaxMin text {
   font-weight: normal;
 }
-#spectra .nv-axis text,
-#spectrasvg .nv-axis text {
-  font-size: 0.8rem;
-  font-weight: 100;
-}
 #spectra .nv-axis text line,
 #spectrasvg .nv-axis text line {
   stroke: none;
   fill: none;
+}
+#spectra .nv-axis text,
+#spectrasvg .nv-axis text {
+  font-size: 0.8rem;
+  font-weight: 100;
 }
 #spectra .nv-line,
 #spectra .nv-axis path,
@@ -10920,13 +10953,16 @@ h6 {
 #spectrasvg .scale-btns {
   float: right;
   margin-right: 1.2rem;
-  padding-top: 1px;
 }
 @media (max-width: 767.98px) {
   #spectra .scale-btns,
   #spectrasvg .scale-btns {
     margin-right: 0rem;
   }
+}
+#spectra .scale-btns,
+#spectrasvg .scale-btns {
+  padding-top: 1px;
 }
 
 .spectra-overlay-div {
@@ -10976,7 +11012,6 @@ h6 {
   width: 100%;
   height: 500px;
   height: 240px;
-  margin-bottom: -30px;
 }
 @media (min-width: 576px) {
   .spectrumpage svg.nvd3-svg {
@@ -10997,6 +11032,9 @@ h6 {
   .spectrumpage svg.nvd3-svg {
     height: 400px;
   }
+}
+.spectrumpage svg.nvd3-svg {
+  margin-bottom: -30px;
 }
 
 .fretpage svg.nvd3-svg {
@@ -11548,23 +11586,23 @@ td a:hover {
   white-space: nowrap !important;
 }
 
-#fret_report {
-  width: 100% !important;
-}
 #fret_report .load-button {
   opacity: 0.7;
 }
 #fret_report .load-button:hover {
   opacity: 1;
 }
-#fret_report tbody {
-  font-size: 0.8rem;
+#fret_report {
+  width: 100% !important;
 }
-#fret_report thead, #fret_report tfoot {
+#fret_report tbody {
   font-size: 0.8rem;
 }
 #fret_report thead th, #fret_report tfoot th {
   text-align: center;
+}
+#fret_report thead, #fret_report tfoot {
+  font-size: 0.8rem;
 }
 
 /* MOTIF HMM LOGO */
@@ -11847,7 +11885,6 @@ td a:hover {
 
 .d3-container {
   max-width: 1200px;
-  margin: auto;
 }
 @media (min-width: 768px) {
   .d3-container {
@@ -11855,15 +11892,20 @@ td a:hover {
     padding-right: 4rem;
   }
 }
+.d3-container {
+  margin: auto;
+}
 
 #graph {
   height: 400px;
-  width: 100%;
 }
 @media (min-width: 768px) {
   #graph {
     height: 700px;
   }
+}
+#graph {
+  width: 100%;
 }
 
 /* Graph Styles */
@@ -11893,13 +11935,12 @@ line.PSFP {
   stroke-dasharray: 3, 2; /*make photoswitchable proteins dashed */
 }
 
+.label.y {
+  transform: rotate(-90deg) translate(0 -0.9rem);
+}
 .label {
   stroke-width: 0.2;
   font-size: 1rem;
-  text-rendering: optimizeLegibility;
-}
-.label.y {
-  transform: rotate(-90deg) translate(0 -0.9rem);
 }
 @media (max-width: 575.98px) {
   .label {
@@ -11913,6 +11954,9 @@ line.PSFP {
   .label {
     font-size: 1.8rem;
   }
+}
+.label {
+  text-rendering: optimizeLegibility;
 }
 
 .axis text {
@@ -12049,10 +12093,6 @@ circle {
   margin: 0;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #fff;
-  background: rgb(56.8362903226, 119.729848426, 179.6637096774) linear-gradient(180deg, rgb(86.5608467742, 140.0203711621, 190.9641532258), rgb(56.8362903226, 119.729848426, 179.6637096774)) repeat-x;
-  border-color: rgb(56.8362903226, 119.729848426, 179.6637096774);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 @media (max-width: 1199.98px) {
   .chartaxis-options .btn {
@@ -12068,6 +12108,12 @@ circle {
   .chartaxis-options .btn {
     font-size: 0.8rem;
   }
+}
+.chartaxis-options .btn {
+  color: #fff;
+  background: rgb(56.8362903226, 119.729848426, 179.6637096774) linear-gradient(180deg, rgb(86.5608467742, 140.0203711621, 190.9641532258), rgb(56.8362903226, 119.729848426, 179.6637096774)) repeat-x;
+  border-color: rgb(56.8362903226, 119.729848426, 179.6637096774);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .chartaxis-options .btn:hover {
   color: #fff;
@@ -12242,11 +12288,6 @@ ul li.select2-search {
   display: none;
 }
 
-.microscope-form {
-  /*  .dynamic-oc-forms .dynamic-form:last-of-type .oc-delete-button{
-      display:none;
-    }*/
-}
 .microscope-form .oc-delete-button {
   font-size: 2rem;
   color: #999;
@@ -12257,6 +12298,11 @@ ul li.select2-search {
 }
 .microscope-form .oc-delete-button:hover {
   text-decoration: none;
+}
+.microscope-form {
+  /*  .dynamic-oc-forms .dynamic-form:last-of-type .oc-delete-button{
+      display:none;
+    }*/
 }
 .microscope-form .dynamic-oc-forms .oc-filter-group span.select2-container:nth-of-type(2) {
   display: none;
@@ -13289,11 +13335,13 @@ h6 {
   display: inline-block;
   color: rgb(81, 113, 255);
   opacity: 1;
-  z-index: 1000;
 }
 #scope-settings-buttons span.pin-wrapper.rotate-90 {
   transform: rotate(-90deg);
   opacity: 0.4;
+}
+#scope-settings-buttons span.pin-wrapper {
+  z-index: 1000;
 }
 
 .nvd3 .nv-brushBackground rect {
@@ -13385,12 +13433,12 @@ h6 {
   padding-top: 2px;
 }
 @media (max-width: 767.98px) {
+  .spectrumpage .spectra-tabs label.custom-control-label {
+    padding-top: 4px;
+  }
   .spectrumpage .spectra-tabs {
     font-size: 0.7rem;
     bottom: 15px;
-  }
-  .spectrumpage .spectra-tabs label.custom-control-label {
-    padding-top: 4px;
   }
 }
 @media (max-width: 575.98px) {
@@ -13406,7 +13454,6 @@ h6 {
 #spectra,
 #spectrasvg {
   position: relative;
-  /* change opacity of spectrum paths */
 }
 #spectra .faded-fret .nv-area,
 #spectrasvg .faded-fret .nv-area {
@@ -13480,6 +13527,10 @@ h6 {
 #spectrasvg #spectrasvg .tick line {
   opacity: 0;
 }
+#spectra,
+#spectrasvg {
+  /* change opacity of spectrum paths */
+}
 #spectra .nv-group,
 #spectrasvg .nv-group {
   fill-opacity: 0.6 !important;
@@ -13488,15 +13539,15 @@ h6 {
 #spectrasvg .nv-axisMaxMin text {
   font-weight: normal;
 }
-#spectra .nv-axis text,
-#spectrasvg .nv-axis text {
-  font-size: 0.8rem;
-  font-weight: 100;
-}
 #spectra .nv-axis text line,
 #spectrasvg .nv-axis text line {
   stroke: none;
   fill: none;
+}
+#spectra .nv-axis text,
+#spectrasvg .nv-axis text {
+  font-size: 0.8rem;
+  font-weight: 100;
 }
 #spectra .nv-line,
 #spectra .nv-axis path,
@@ -13510,13 +13561,16 @@ h6 {
 #spectrasvg .scale-btns {
   float: right;
   margin-right: 1.2rem;
-  padding-top: 1px;
 }
 @media (max-width: 767.98px) {
   #spectra .scale-btns,
   #spectrasvg .scale-btns {
     margin-right: 0rem;
   }
+}
+#spectra .scale-btns,
+#spectrasvg .scale-btns {
+  padding-top: 1px;
 }
 
 .spectra-overlay-div {
@@ -13566,7 +13620,6 @@ h6 {
   width: 100%;
   height: 500px;
   height: 240px;
-  margin-bottom: -30px;
 }
 @media (min-width: 576px) {
   .spectrumpage svg.nvd3-svg {
@@ -13587,6 +13640,9 @@ h6 {
   .spectrumpage svg.nvd3-svg {
     height: 400px;
   }
+}
+.spectrumpage svg.nvd3-svg {
+  margin-bottom: -30px;
 }
 
 .fretpage svg.nvd3-svg {

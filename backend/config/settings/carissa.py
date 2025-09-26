@@ -24,6 +24,7 @@ env = environ.Env()
 
 # Data to import
 # ------------------------------------------------------------------------------
+IMPORT_FAMILY_DATA = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent / 'repeatome_data/satellite_families.csv'
 IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent / 'repeatome_data/satellite_binders_database.xlsx'
 IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"

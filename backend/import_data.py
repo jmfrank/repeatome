@@ -129,17 +129,36 @@ def parse_microscopy_result(x):
         obj[key] = val
     return obj
 
+def import_repeat_families():
+    df =  pd.read_csv(settings.IMPORT_FAMILY_DATA)
+
+    parent_repeats_dict = {}
+    for row in df.to_dict(orient="records"):
+        parent = row['parent']
+        child_arr = row['children']
+        if pd.notna(child_arr):
+            # print(child_arr)
+            child_arr = child_arr.strip(' ').split(',')
+            for child in child_arr:
+                parent_repeats_dict[child] = parent
+
+    return parent_repeats_dict
 
 def import_repeat():
-
     # (1) From repeats sheet we have name, dfam_id and parent organism id
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
+
+    parent_repeats_dict = import_repeat_families()
 
     for row in df.to_dict(orient="records"):
         name = row['parent_name']
         aliases = parse_array(row['aliases'])
         parent_organism_id = row['taxonomy_id']
         parent_organism_obj = get_organism_obj(parent_organism_id)
+
+        parent_repeat_obj = None
+        if name in parent_repeats_dict.keys():
+            parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
 
         existing_obj = get_obj_if_exists(Repeat, name=name)
         if not existing_obj:
@@ -149,6 +168,7 @@ def import_repeat():
                 dfam_id=row["dfam_id"],
                 motif=row["dfam_id"],
                 proteomics="more info",
+                parent_repeat=parent_repeat_obj,
                 parental_organism=parent_organism_obj
             )
             obj.save()
@@ -170,12 +190,15 @@ def import_repeat():
     for name in unique_satellites:
         existing_obj = get_obj_if_exists(Repeat, name=name)
         if not existing_obj:
+            parent_repeat_obj = None
+            if name in parent_repeats_dict.keys():
+                parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
             obj = Repeat(
                 name=name, 
-                proteomics="more info"
+                proteomics="more info",
+                parent_repeat=parent_repeat_obj
             )
             obj.save()
-        
 
 def load_jaspar_from_url(gene, tax_group, tax_id=9606):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
@@ -694,6 +717,10 @@ if __name__ == "__main__":
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        
         print("- reset to delete existing records and repopulate tables")        
+        print("- import_repeat to import repeat data")
+        print("- import_protein to import protein data from table")
+        print("- update_proteomics to update proteomics data in Proteomics table")
         print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")
         print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")
-        print("- update_proteomics to update proteomics data in Proteomics table")
+        print("- get_proteomics_without_proteins to import proteomics data without creating new ProteinTF objects")
+        print("- network_data to update network data")

@@ -21,6 +21,14 @@ class Repeat(models.Model):
     )
     motif = models.TextField(blank=True, null=True)
     dfam_id = models.CharField(max_length=100, blank=True, null=True)
+    parent_repeat = models.ForeignKey(
+        "self", 
+        related_name='children',
+        verbose_name='parental repeat',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
     parental_organism = models.ForeignKey(
         "Organism",
         # related_name="organism",

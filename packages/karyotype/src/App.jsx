@@ -156,15 +156,15 @@ function ViewerPage(){
   useEffect(() => {
     async function loadStaticFiles() {
       try {
-        const karyoResp = await fetch("/static/karyotype_viewer/human_karyotype.txt");
+        const karyoResp = await fetch(`/static/karyotype_viewer/human_karyotype.txt?ts=${Date.now()}`);
         const karyo = await karyoResp.text();
         setKaryoText(karyo);
-        setSourceKaryo("human_karyotype.txt");
+        setSourceKaryo("/static/karyotype_viewer/human_karyotype.txt");
 
-        const bedResp = await fetch("/static/karyotype_viewer/compiled.bed");
+        const bedResp = await fetch(`/static/karyotype_viewer/compiled.bed?ts=${Date.now()}`);
         const bed = await bedResp.text();
         setBedText(bed);
-        setSourceBed("elements.bed");
+        setSourceBed("/static/karyotype_viewer/compiled.bed");
       } catch (err) {
         console.error("Error loading static files", err);
       }
@@ -493,17 +493,18 @@ function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
         });
         r.addEventListener("pointerleave", ()=>{ hovRect.setAttribute("visibility", "hidden"); });
         r.addEventListener("click", ()=>{
-          sessionStorage.setItem("selected_element", id);
-          setSelectedId(id);
-          const kk = byKey.get(b.key);
-          sessionStorage.setItem(`element:${id}`, JSON.stringify({
-            chr: kk ? kk.label : b.key,
-            start: b.start,
-            end: b.end,
-            name: b.name,
-            family: b.family
-          }));
-          window.location.hash = `#/element/${encodeURIComponent(id)}`;
+          // sessionStorage.setItem("selected_element", id);
+          // setSelectedId(id);
+          // const kk = byKey.get(b.key);
+          // sessionStorage.setItem(`element:${id}`, JSON.stringify({
+          //   chr: kk ? kk.label : b.key,
+          //   start: b.start,
+          //   end: b.end,
+          //   name: b.name,
+          //   family: b.family
+          // }));
+          // window.location.hash = `#/element/${encodeURIComponent(id)}`;
+          window.open('/repeatTable/' + b.family, '_blank');
         });
         const t = document.createElementNS(NS, "title");
         const kk = byKey.get(b.key);
