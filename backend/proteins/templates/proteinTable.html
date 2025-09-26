@@ -25,6 +25,7 @@
                 <th>Gene Family</th>
                 <th>Gene Type</th>
                 <th>UNIPROT</th>
+                <th>PDB</th>
                 <th>ENSEMBL</th>
                 <th>Jaspar</th>
             </tr>
@@ -43,6 +44,7 @@
                 <td class="text-center">{{protein.gene_family.gene_family}}</td>
                 <td class="text-center">{{protein.gene_type_as_str}}</td>
                 <td class="text-center"> <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank">{{protein.UNIPROT}}</a></td>
+                <td class="text-center"> <a href="https://www.ebi.ac.uk/pdbe/entry/pdb/{{ protein.PDB_lower }}" target="_blank">{{protein.PDB_as_string}}</a></td>
                 <td class="text-center"> <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank">{{protein.ENSEMBL}}</a></td>
                 <td class="text-center"><a href=''>{{protein.get_jaspar_base}}</a></td>
             </tr>

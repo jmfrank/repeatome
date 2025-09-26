@@ -99,11 +99,11 @@ export default async function initAutocomplete() {
                 },
                 item({ item, html }) {
                     var str = item.scientific_name;
-                    return html `<a href='${item.url}'><div>${str}</div></a>`;
+                    return html `<a href='/organismTable/${item.objectID}'><div>${str}</div></a>`;
                 }
                 },
                 onSelect({ item }) {
-                    window.location.href = item.url;
+                    window.location.href = '/organismTable/' + item.objectID;
                 }
             },
             ];
