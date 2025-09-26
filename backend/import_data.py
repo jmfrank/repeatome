@@ -1,8 +1,10 @@
 from datetime import datetime
 import math
 import django
+import time
 import uuid
 from Bio import Entrez
+
 
 Entrez.email = 'carissapenn123@gmail.com'
 
@@ -474,7 +476,10 @@ def update_proteomics():
                 if result['Ensembl'].values[0] == '':
                     ensembl_str = 'none'
                 else:
-                    ensembl_str = 'E' + result['Ensembl'].values[0].split('E')[1].split(' ')[0].strip(';')
+                    ensembl_str = str(result['Ensembl'].values[0])
+                    print(ensembl_str)
+                    if ensembl_str != 'nan':
+                        ensembl_str = 'E' + ensembl_str.split('E')[1].split(' ')[0].strip(';')
                 print(ensembl_str)
                 if result['Gene Names (primary)'].values[0] != '' and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
                     protein_obj = ProteinTF(
@@ -607,6 +612,115 @@ def save_proteins():
     for protein in ProteinTF.objects.all():
         protein.save()
 
+
+def submit_uniprot_to_pdb_mapping(uniprot_ids):
+    # The data you want to send as a Python dictionary
+    uniprot_ids_str = ','.join(uniprot_ids)
+    payload = {
+        "from": "UniProtKB_AC-ID",
+        "to": "PDB",
+        "ids": uniprot_ids_str
+    }
+    print(f"Payload: {json.dumps(payload, indent=2)}")
+    url = 'https://rest.uniprot.org/idmapping/run'
+    # Send the POST request with the 'json' parameter
+    #response = requests.post(url, json=payload, headers={"accept": "application/json", "Content-Type": "application/json"})
+    response = requests.post(url, data=payload, headers={"accept": "application/json"})
+    print(f"\n{url} returned: {response.status_code}: {response.text}")
+
+    # Raise an HTTPError for bad responses (4xx or 5xx)
+    response.raise_for_status()
+
+    # Get the JSON response from the server
+    response_data = response.json()
+    print(json.dumps(response_data, indent=2))
+
+    job_id = response_data.get("jobId")
+    print("Job id: {job_id}")
+    return job_id
+
+
+def get_uniprot_to_pdb_mapping_results(job_id):
+    url = f"https://rest.uniprot.org/idmapping/status/{job_id}"
+
+    all_results = []
+    while url:
+        print(f"\nCalling URL {url}")
+        response = requests.get(url)
+        print(f"Returned: {response.status_code}")
+
+        # Raise an HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()
+
+        # Get the JSON response from the server
+        response_data = response.json()
+        results = response_data.get('results', [])
+        if results:
+            all_results.extend(results)
+
+        print(f'Got {len(results)} results')
+
+        link = response.headers.get('link')
+        if not link:
+            break
+
+        parts = link.split(';')
+        if len(parts) == 2:
+            next_url = parts[0].split('<')[1].strip().strip('>')
+            rel = parts[1].strip()
+            if rel == 'rel="next"':
+                url = next_url
+
+    print(f"Got total {len(all_results)} results")
+    return all_results
+
+
+def update_PDB_from_uniprot(results):
+
+    protein_objs = ProteinTF.objects.all()
+    uniprot_ids = [obj.UNIPROT for obj in protein_objs if obj.UNIPROT]
+
+    # Submit the job
+    job_id = submit_uniprot_to_pdb_mapping(uniprot_ids)
+
+    # Get results for the given job id
+    results = get_uniprot_to_pdb_mapping_results(job_id)
+
+    test = set()
+    for result in results:
+        test.add(result['from'])
+    
+    print(f"Got {len(test)} unique uniprot ids with PDB mappings")
+
+    num = ProteinTF.objects.filter(PDB__isnull=False).count()
+    print(f"Before updating, there are {num} proteins with PDB ids. We will skip these.")    
+
+    saved = dict()
+    for item in results:
+        print(f"UniProt: {item['from']}, PDB: {item['to']}")
+        uniprot_id = item['from']
+        pdb_id = item['to']
+        if uniprot_id in saved:
+            # Done it already
+            continue
+        # Get protein object for the given uniprot id
+        protein_objs = ProteinTF.objects.filter(UNIPROT=uniprot_id)
+        if len(protein_objs) == 0:
+            continue
+
+        if len(protein_objs) > 1:
+            print(f"WARNING: Found multiple protein objects for uniprot id {uniprot_id}. Using the first one.")
+
+        protein_obj = protein_objs[0]
+        if not protein_obj.PDB:
+            protein_obj.PDB = pdb_id
+            protein_obj.save()
+            # Also track in saved dict
+            saved[uniprot_id] = pdb_id
+
+    print(f"Updated {len(saved)} proteins with PDB ids")
+
+
 def delete_all_records():
     # Delete all records in all tables
     print("DELETING ALL OBJECTS")
@@ -636,7 +750,7 @@ if __name__ == "__main__":
         update_proteomics()
         for org in Organism.objects.all():
             GetNetworkData(org.id)
-
+        update_PDB_from_uniprot()
     elif command == 'import_repeat':
         import_repeat()
     
@@ -661,7 +775,8 @@ if __name__ == "__main__":
     elif command == 'network_data':
         for org in Organism.objects.all():
             GetNetworkData(org.id)
-           
+    elif command == 'update_PDB_from_uniprot':
+        update_PDB_from_uniprot()
     else:
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        

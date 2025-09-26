@@ -30,7 +30,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase22',  # Replace with your database name
+        'NAME': 'fpbase26',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development

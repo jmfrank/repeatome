@@ -142,12 +142,12 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
 
     def aliases_as_str(self):
         if not self.aliases:
-            return 'None'
+            return ""
         return ", ".join(self.aliases)
     
     def gene_type_as_str(self):
         if not self.gene_type:
-            return 'None'
+            return ""
         return ", ".join(self.gene_type)
 
     def cofactor_as_str(self):
@@ -165,6 +165,11 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
             return ""
         pdb = self.PDB.strip(' ')
         return pdb.lower()
+    
+    def PDB_as_string(self):
+        if not self.PDB:
+            return ""
+        return self.PDB
 
     def get_references(self):
         return self.reference_set.all()
@@ -186,4 +191,4 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
         if not self.jaspar == None and not len(self.jaspar) == 0:
             indx = self.jaspar[0].find('.')
             return self.jaspar[0][:indx]
-        return None
+        return ""

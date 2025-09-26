@@ -1,8 +1,8 @@
 {% load static %}
 <div class='row' id='struct-micro-names'>
   <div class='col-12 col-md-6 order-md-1 style="padding-bottom: -100px;"'>
-    <h3>Structure</h3>
-    <div class="litmol-tab">
+    <h3>PDB</h3>
+    <!-- <div class="litmol-tab">
         {% if protein.PDB %}
           <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" id="defaultOpen">PDB</button>
           <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')">AF3</button>
@@ -10,27 +10,22 @@
           <button class="litmol-tablinks" onclick="openLitmol(event, 'PDB')" >PDB</button>
           <button class="litmol-tablinks" onclick="openLitmol(event, 'AF3')" id="defaultOpen" >AF3</button>
         {% endif %}
-      </div>
+      </div> -->
   </div>
-  <div class='col-12 col-md-6 order-md-2' style="padding-bottom: -100px;"><h3>Microscopy Result</h3>
-    <div class="litmol-tab">
-      <small>ITK-VTK-VIEWER: <a href="http://127.0.0.1:8000/static/itk-vtk-viewer/dist/index.html?fileToLoad=http://127.0.0.1:8000/static/microscopy/microscopy_tead1.tif" target="_blank" rel="noopener">{{ protein.gene | default:''}}</a></small>
-    </div>
+  <div class='col-12 col-md-6 order-md-2' style="padding-bottom: -100px;"><h3>AF3</h3>
   </div>
 </div>
 <div class='row' id="protein-structure">
-  <div class="col-12 col-md-6 order-2 order-md-1">
-    <div  style="height: 400px; background: white;">
+  <div class="col-12 col-md-6 order-2 order-md-1" style="border: 5px solid white;">
+    <div  style="height: 400px; background: white; border: 50px solid white;">
       <div id="litemol-viewer"></div>
     </div>
   </div>
-  <div class='col-12 col-md-6 order-1 order-md-2'>
-
-      <div class="text-muted" id="pdb-info">
-        <img src="{% static 'microscopy_'|add:protein.gene|add:'.png' %}" alt="{{ protein.gene }}">
-      </div> 
-  </div>
-					
+  <div class='col-12 col-md-6 order-1 order-md-2' style="border: 5px solid white;">
+    <div  style="height: 400px; background: white; border: 50px solid white;">
+      <div id="litemol-viewer-af3"></div>
+    </div>
+  </div>				
 </div>
 <div class="form-group mb-2">
   <div class="input-group mb-0">
@@ -46,6 +41,14 @@
   </div>
 </div>
 
+<div>
+  <!-- <iframe src="https://avivator.gehlenborglab.org/?image_url=https://repeatome-test2.s3.us-east-1.amazonaws.com/microscopy_tead1.ome.tif" 
+        width="100%" height="700" frameborder="0"></iframe> -->
+  <iframe src="https://avivator.gehlenborglab.org/?image_url=https://altemoselab-share.s3.us-west-1.amazonaws.com/repeatome/microscopy_tead1.ome.tif" 
+        width="100%" height="700" frameborder="0"></iframe>
+</div>
+
+
 <!-- LITEMOL SCRIPTS -->
 
 <script crossorigin src="https://cdn.jsdelivr.net/npm/pdbe-molstar@dev/build/pdbe-molstar-plugin.js"></script>
@@ -55,6 +58,13 @@
 var $j = jQuery.noConflict();
 
 function openLitmol(evt, litmolViewerType) {
+
+  var litMoleDivId = '#litemol-viewer'
+  if (litmolViewerType == 'PDB') {
+    litMoleDivId = '#litemol-viewer'
+  } else {
+    litMoleDivId = '#litemol-viewer-af3'
+  }
 
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("litmol-tabcontent");
@@ -75,8 +85,8 @@ function openLitmol(evt, litmolViewerType) {
   } else {
     moleculeId = '{{protein.UNIPROT}}'
   }
-  $j('#litemol-viewer').data('moleculeId', moleculeId)
-  console.log('litemol-viewer.data1 = ' + $j('#litemol-viewer').data('moleculeId'));
+  $j(litMoleDivId).data('moleculeId', moleculeId)
+  console.log('litemol-viewer.data1 = ' + $j(litMoleDivId).data('moleculeId'));
 
   // Refresh litemol-viewer
   // Set options (uncomment lines to explore various options)
@@ -84,7 +94,6 @@ function openLitmol(evt, litmolViewerType) {
   if (litmolViewerType == 'PDB') {
     options = {
       // DATA
-      // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
       moleculeId: moleculeId,
       assemblyId: '1',
       // INTERFACE
@@ -105,7 +114,6 @@ function openLitmol(evt, litmolViewerType) {
   } else {
     options = {
       // DATA
-      // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
       moleculeId: moleculeId,
       assemblyId: '1',
       // INTERFACE
@@ -131,7 +139,7 @@ function openLitmol(evt, litmolViewerType) {
   }
 
     // Get element from HTML/Template to place the viewer
-  const viewerContainer = document.getElementById('litemol-viewer');
+  const viewerContainer = document.getElementById(litMoleDivId);
 
   // Call render method to display the 3D view
   viewerInstance.render(viewerContainer, options);
@@ -139,43 +147,16 @@ function openLitmol(evt, litmolViewerType) {
 }
 
 // Create litmodel plugin instance
-const viewerInstance = new PDBeMolstarPlugin();
+const molstarPluginPdb = new PDBeMolstarPlugin();
+const molstarPluginAf3 = new PDBeMolstarPlugin();
 
 // Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
 
-// Set options (uncomment lines to explore various options)
-const options = {
-  // DATA
-  // moleculeId: $j('#litemol-viewer').data('moleculeId'), // PDB ID or URL to a structure file
+
+pdbOptions = {
   moleculeId: '{{protein.PDB_lower}}',
   assemblyId: '1',
-  // APPEARANCE
-  // visualStyle: 'cartoon', // cartoon | ball-and-stick | carbohydrate | ellipsoid | gaussian-surface | molecular-surface | point | putty | spacefill
-  // hideStructure: ['het', 'water'],
-  // loadMaps: true,
-  // mapSettings: { '2fo-fc': { opacity: 0.8, wireframe: true } },
-  // bgColor: { r: 60, g: 0, b: 100 };
-  //bgColor: '#77bbff';
-
-  // highlightColor: '#ffff00',
-  // selectColor: '#77bbff',
-  // lighting: 'flat', // flat | matte | glossy | metallic | plastic
-
-  // BEHAVIOR
-  // validationAnnotation: true,
-  // domainAnnotation: true,
-  // symmetryAnnotation: true,
-  // pdbeUrl: 'https://www.ebi.ac.uk/pdbe/',
-  // pdbeUrl: 'https://www.rcsb.org/3d-view/',
-  // encoding: 'cif', // cif | bcif
-  // lowPrecisionCoords: true,
-  // selectInteraction: false,
-  // granularity: 'chain', // element | residue | chain | entity | model | operator | structure | elementInstances | residueInstances | chainInstances
-  // subscribeEvents: true,
-
-
-  // INTERFACE
   hideControls: true,
   hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
   sequencePanel: false,
@@ -191,10 +172,37 @@ const options = {
   reactive: false,
 };
 
-// Get element from HTML/Template to place the viewer
-const viewerContainer = document.getElementById('litemol-viewer');
+af3Options = {
+  moleculeId: '{{protein.UNIPROT}}',
+  assemblyId: '1',
+  hideControls: true,
+  hideCanvasControls: ['expand', 'selection', 'animation', 'controlToggle', 'controlInfo', 'trajectory'],
+  sequencePanel: false,
+  leftPanel: false,
+  rightPanel: false,
+  topPanel: false,
+  bottomPanel: false,
+  pdbeLink: true,
+  loadingOverlay: false,
+  expanded: false,
+  landscape: false,
+  layoutShowControls: false,
+  reactive: false,
+  alphafoldView: true,
+  customData: {
+    url: 'https://alphafold.ebi.ac.uk/files/AF-{{protein.UNIPROT}}-F1-model_v4.cif',
+    format: 'cif',
+  }
+};
 
-// Call render method to display the 3D view
-viewerInstance.render(viewerContainer, options);
+// Get element from HTML/Template to place the viewer and call render method to display the 3D view
+// const viewerContainerPdb = document.getElementById('litemol-viewer');
+// molstarPluginPdb.render(viewerContainerPdb, pdbOptions);
+molstarPluginPdb.render('litemol-viewer', pdbOptions);
+
+// const viewerContainerAf3 = document.getElementById('litemol-viewer-af3');
+// molstarPluginAf3.render(viewerContainerAf3, af3Options);
+molstarPluginAf3.render('litemol-viewer-af3', af3Options);
+
 
 </script>
