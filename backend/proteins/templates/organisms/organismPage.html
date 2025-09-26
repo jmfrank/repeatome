@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n favit_tags %}
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 {% block title %}{{ object }} in the repeatOme Database {% endblock %}
 {% block meta-description %}Proteins derived from {{ object.scientific_name }} at FPbase{% endblock %}
@@ -11,34 +12,41 @@
 
 {% block content %}
 
-			<h1 class="name text-center mb-4">{{ object }}</h1>
+  <h1 class="name text-center mb-4">{{ object }}</h1>
 
-			<a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{object.id}}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> View on Pubmed Taxonomy Browser</a>
+  <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{object.id}}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> View on Pubmed Taxonomy Browser</a>
 
-			<div class="row mt-2">
-				<dt class="col-sm-3">scientific_name</dt>
-				<dd class="col-sm-9"><em>{{ object.scientific_name }}</em></dd>
-				<dt class="col-sm-3">division</dt>
-				<dd class="col-sm-9"><em>{{ object.division }}</em></dd>
-				{% if object.common_name %}
-				    <dt class="col-sm-3">common_name</dt>
-				    <dd class="col-sm-9"><em>{{ object.common_name | default:''}}</em></dd>
-				{% endif %}
-			</div>
+  <div class="row mt-2">
+    <dt class="col-sm-3">scientific_name</dt>
+    <dd class="col-sm-9"><em>{{ object.scientific_name }}</em></dd>
+    <dt class="col-sm-3">division</dt>
+    <dd class="col-sm-9"><em>{{ object.division }}</em></dd>
+    {% if object.common_name %}
+        <dt class="col-sm-3">common_name</dt>
+        <dd class="col-sm-9"><em>{{ object.common_name | default:''}}</em></dd>
+    {% endif %}
+  </div>
 
-      <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
+  <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
 
-      <div id="network-container" style="position: relative;">
-        <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px; position: relative;'>
-        </div>
-      </div>
+  <h5 class='pt-3'><strong>Karyotype Viewer</strong></h5>
+  <div id='karyotype_div'></div>
 
-      <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
-			{% with proteins=object.proteinTF.all removebutton=False %}
-        <div class="table-responsive mt-2">
-			    {% include '_proteintable.html' with id='organismProteins' %}
-        </div>
-			{% endwith %}
+  <br>
+  <h5 class='pt-3'><strong>Network Graph</strong></h5>
+  <div id="network-container" style="position: relative;">
+    <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px; position: relative;'>
+    </div>
+  </div>
+
+  <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
+  {% with proteins=object.proteinTF.all removebutton=False %}
+    <div class="table-responsive mt-2">
+      {% include '_proteintable.html' with id='organismProteins' %}
+    </div>
+  {% endwith %}
+
+  {% render_bundle 'karyotypeViewer' %}
 
 {% endblock content %}
 

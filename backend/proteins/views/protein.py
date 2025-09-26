@@ -48,6 +48,8 @@ from ..forms import (
 )
 from ..models import Excerpt, Organism, ProteinTF
 
+from pyjaspar import jaspardb
+
 if TYPE_CHECKING:
     import maxminddb
 

@@ -42,6 +42,23 @@
   });
 </script> -->
 
+<!-- JASPAR Logos -->
+ <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
+ <script src="{% static 'motif_viewer/scroller.js' %}"></script>
+ <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+
+<script>
+  // Use jQuery.noConflict() to prevent conflicts
+  var $j = jQuery.noConflict();
+  $j(document).ready(function() {
+    var zoom         = 1;
+    var column_width = 34;
+    // console.log(document.querySelector('div[data-logo]').dataset.logo);
+    $j("#logo").hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+  });
+
+</script>
+
 
 <!-- PDB Viewer -->
 <meta
@@ -89,7 +106,7 @@ function setColor(chart){
 
 var chart_raw_data = JSON.parse('{{ chart_data }}'.replaceAll('&#x27;', '"'))
 var organ_chart_data = JSON.parse('{{ organ_data }}'.replaceAll('&#x27;', '"').replaceAll('&amp;', '&'))
-{% comment %} console.log(chart_raw_data) {% endcomment %}
+// console.log(chart_raw_data)
 
 // Connect organs and tissues
 var all_organs = [...new Set(organ_chart_data.map(item => item.organ))];
@@ -348,6 +365,10 @@ window.onload = function () {
       </div>
 
       <div class='row' id='struct-micro-names'>
+        <!--<div class='logo-holder'>
+          <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
+          <div class="logo-col" id="logo_info"></div>
+        </div>-->
         {% for jaspar_item in protein.jaspar %}
           {% if forloop.counter|divisibleby:2 %}
           <div class="col-12 col-md-6 order-md-2" style="padding:2px">

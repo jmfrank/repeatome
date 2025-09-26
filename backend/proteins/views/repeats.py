@@ -9,8 +9,12 @@ from math import log2
 
 def RepeatTable(request):
     items = Repeat.objects.all()
+    repeat_lst = []
+    for item in items:
+        if item.parent_repeat == None:
+            repeat_lst.append(item)
     # print(items)
-    return render(request, "repeatTable.html", {"repeats": items})
+    return render(request, "repeatTable.html", {"repeats": repeat_lst})
 
 class RepeatDetailView(DetailView):
     """renders html for single protein page"""
@@ -108,6 +112,7 @@ class RepeatDetailView(DetailView):
             for i in range(len(threshold_lst)):
                 threshold_lst[i] = float(threshold_lst[i])
             context["threshold"] = threshold_lst
+        context['subrepeats'] = self.object.children.all()
         # print(context['proteomics_datapoints'])
         # print(context['threshold'])
         # proteomics_datapoints = [

@@ -16,12 +16,13 @@ def GetNetworkData(organism):
     print(organism)
     enrichment_data = {}
     for protrep in ProteinRepeats.objects.all():
-        if not protrep.motif_enrichment == None:
-            enrichment_float = float(protrep.motif_enrichment)
-        else:
-            enrichment_float = 0.0
-        if not protrep.repeat.name in enrichment_data.keys():
-            enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
+        if protrep.repeat.parent_repeat == None:
+            if not protrep.motif_enrichment == None:
+                enrichment_float = float(protrep.motif_enrichment)
+            else:
+                enrichment_float = 0.0
+            if not protrep.repeat.name in enrichment_data.keys():
+                enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
     
     # Normalize enrichment from 7 to 35
     # log_vals = {k: math.log2(v) for k, v in enrichment_data.items() if v > 0}

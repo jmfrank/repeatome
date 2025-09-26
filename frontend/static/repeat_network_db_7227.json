@@ -5,6 +5,3863 @@
         "allowSelfLoops": true
     },
     "attributes": {},
-    "nodes": [],
-    "edges": []
+    "nodes": [
+        {
+            "key": "D1",
+            "attributes": {
+                "node_type": "repeat",
+                "label": "D1",
+                "aliases": "None",
+                "dfam_id": null,
+                "x": 0,
+                "y": 0,
+                "size": 40,
+                "color": "rgb(140, 90, 230)",
+                "zIndex": 100,
+                "url": "/repeatTable/d1"
+            }
+        },
+        {
+            "key": "insv_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "insv",
+                "aliases": "'CG3227'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 63.63961030678928,
+                "y": 63.63961030678928,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-insv"
+            }
+        },
+        {
+            "key": "Cp36_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Cp36",
+                "aliases": "'s36', 'CG1478'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 61.09206709796476,
+                "y": 66.0890258492117,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cp36"
+            }
+        },
+        {
+            "key": "mRpL9_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpL9",
+                "aliases": "'CG4923'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 58.45032434971652,
+                "y": 68.43653690400279,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrpl9"
+            }
+        },
+        {
+            "key": "Fancd2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Fancd2",
+                "aliases": "'CG31192', 'CG31194', 'FAD', 'CG17269'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 55.71845543788507,
+                "y": 70.67852377926704,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-fancd2"
+            }
+        },
+        {
+            "key": "Daxx_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Daxx",
+                "aliases": "'CG9537'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 52.90067270632258,
+                "y": 72.81152949374527,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-daxx"
+            }
+        },
+        {
+            "key": "Cp19_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Cp19",
+                "aliases": "'s19', 'CG6524'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 50.00132097176421,
+                "y": 74.83226510722908,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cp19"
+            }
+        },
+        {
+            "key": "mTerf3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mTerf3",
+                "aliases": "'CG5047'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 47.0248708244354,
+                "y": 76.7376147918683,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mterf3"
+            }
+        },
+        {
+            "key": "mldr_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mldr",
+                "aliases": "'MRPP3', 'PRORP', 'CG15896'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 43.97591173472595,
+                "y": 78.52464063655174,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mldr"
+            }
+        },
+        {
+            "key": "Orc1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Orc1",
+                "aliases": "'CG10667'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 40.859144976559215,
+                "y": 80.1905871769531,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-orc1"
+            }
+        },
+        {
+            "key": "Orc5_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Orc5",
+                "aliases": "'CG7833'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 37.67937637836853,
+                "y": 81.73288564425731,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-orc5"
+            }
+        },
+        {
+            "key": "polo_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "polo",
+                "aliases": "'CG12306'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 34.44150891285808,
+                "y": 83.1491579260158,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-polo"
+            }
+        },
+        {
+            "key": "Ar1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ar1",
+                "aliases": "'Akr1B', 'CG6084'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 31.150535136974373,
+                "y": 84.43722023302358,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ar1"
+            }
+        },
+        {
+            "key": "fs(1)K10_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "fs(1)K10",
+                "aliases": "'CG3218'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 27.81152949374527,
+                "y": 85.59508646656381,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-fs1k10"
+            }
+        },
+        {
+            "key": "Nup160_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup160",
+                "aliases": "'CG4738'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 24.429640487856688,
+                "y": 86.62097128082826,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup160"
+            }
+        },
+        {
+            "key": "mt:Cyt-b_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mt:Cyt-b",
+                "aliases": "'Cob', 'cytb'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 21.010082747031493,
+                "y": 87.51329283579089,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mtcyt-b"
+            }
+        },
+        {
+            "key": "yl_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "yl",
+                "aliases": "'CG1372'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 17.55812898145155,
+                "y": 88.27067523629074,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-yl"
+            }
+        },
+        {
+            "key": "Nup133_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup133",
+                "aliases": "'CG6958'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 14.079101853620783,
+                "y": 88.8919506535624,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup133"
+            }
+        },
+        {
+            "key": "GstD3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "GstD3",
+                "aliases": "'gstD22', 'GSTD3-3', 'CG4381'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 10.578365771205393,
+                "y": 89.37616112594337,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-gstd3"
+            }
+        },
+        {
+            "key": "ken_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "ken",
+                "aliases": "'CG5575'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 7.06131861550605,
+                "y": 89.72256003598152,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ken"
+            }
+        },
+        {
+            "key": "Vm34Ca_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Vm34Ca",
+                "aliases": "'VM34C.1', 'CG9271'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 3.53338341831618,
+                "y": 89.93061326166506,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-vm34ca"
+            }
+        },
+        {
+            "key": "elg1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "elg1",
+                "aliases": "'CG16838'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 5.5109105961630896e-15,
+                "y": 90.0,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-elg1"
+            }
+        },
+        {
+            "key": "Ino80_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ino80",
+                "aliases": "'CG31212'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -3.5333834183161694,
+                "y": 89.93061326166506,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ino80"
+            }
+        },
+        {
+            "key": "Su(var)3-9_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Su(var)3-9",
+                "aliases": "'KMT1', 'CG6476'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -7.061318615506039,
+                "y": 89.72256003598152,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-suvar3-9"
+            }
+        },
+        {
+            "key": "Pen_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Pen",
+                "aliases": "'CG4799'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -10.578365771205402,
+                "y": 89.37616112594337,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pen"
+            }
+        },
+        {
+            "key": "mRpL19_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpL19",
+                "aliases": "'CG8039'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -14.079101853620793,
+                "y": 88.89195065356239,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrpl19"
+            }
+        },
+        {
+            "key": "pAbp_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "pAbp",
+                "aliases": "'CG5119'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -17.558128981451517,
+                "y": 88.27067523629074,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pabp"
+            }
+        },
+        {
+            "key": "AlaRS-m_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "AlaRS-m",
+                "aliases": "'Aats-ala-m', 'alaS', 'CG4633'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -21.01008274703146,
+                "y": 87.5132928357909,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-alars-m"
+            }
+        },
+        {
+            "key": "Su(var)205_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Su(var)205",
+                "aliases": "'HP1', 'HP1a', 'Su(var)2-5', 'CG8409'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -24.42964048785668,
+                "y": 86.62097128082826,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-suvar205"
+            }
+        },
+        {
+            "key": "Iswi_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Iswi",
+                "aliases": "'CG8625'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -27.81152949374526,
+                "y": 85.59508646656383,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-iswi"
+            }
+        },
+        {
+            "key": "Brr2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Brr2",
+                "aliases": "'l(3)72Ab', 'CG5931'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -31.150535136974362,
+                "y": 84.43722023302358,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-brr2"
+            }
+        },
+        {
+            "key": "bor_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "bor",
+                "aliases": "'CG6815', 'Dmel_CG6815'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -34.441508912858076,
+                "y": 83.1491579260158,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-bor"
+            }
+        },
+        {
+            "key": "E2f2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "E2f2",
+                "aliases": "'CG1071'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -37.6793763783685,
+                "y": 81.73288564425734,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-e2f2"
+            }
+        },
+        {
+            "key": "Nipped-A_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nipped-A",
+                "aliases": "'Tra1', 'CG2905'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -40.85914497655921,
+                "y": 80.19058717695312,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nipped-a"
+            }
+        },
+        {
+            "key": "mRpL55_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpL55",
+                "aliases": "'CG14283'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -43.975911734725955,
+                "y": 78.52464063655174,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrpl55"
+            }
+        },
+        {
+            "key": "Nup75_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup75",
+                "aliases": "'CG5733'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -47.02487082443539,
+                "y": 76.73761479186831,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup75"
+            }
+        },
+        {
+            "key": "mRpS25_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpS25",
+                "aliases": "'CG14413'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -50.00132097176421,
+                "y": 74.83226510722906,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrps25"
+            }
+        },
+        {
+            "key": "l(1)G0020_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "l(1)G0020",
+                "aliases": "'CG1994'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -52.900672706322574,
+                "y": 72.81152949374527,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-l1g0020"
+            }
+        },
+        {
+            "key": "Ge-1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ge-1",
+                "aliases": "'CG6181'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -55.71845543788507,
+                "y": 70.67852377926704,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ge-1"
+            }
+        },
+        {
+            "key": "Heatr1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Heatr1",
+                "aliases": "'l(2)k09022', 'CG10805'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -58.45032434971652,
+                "y": 68.43653690400278,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-heatr1"
+            }
+        },
+        {
+            "key": "pont_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "pont",
+                "aliases": "'CG4003'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -61.09206709796473,
+                "y": 66.08902584921171,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pont"
+            }
+        },
+        {
+            "key": "eco_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "eco",
+                "aliases": "'CG8598'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -63.63961030678927,
+                "y": 63.63961030678928,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-eco"
+            }
+        },
+        {
+            "key": "Yp1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Yp1",
+                "aliases": "'CG2985'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -66.08902584921168,
+                "y": 61.09206709796478,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-yp1"
+            }
+        },
+        {
+            "key": "Fkbp39_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Fkbp39",
+                "aliases": "'FK506-bp1', 'CG6226'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -68.43653690400278,
+                "y": 58.45032434971654,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-fkbp39"
+            }
+        },
+        {
+            "key": "Nxt1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nxt1",
+                "aliases": "'CG12752'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -70.67852377926702,
+                "y": 55.718455437885076,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nxt1"
+            }
+        },
+        {
+            "key": "Rif1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Rif1",
+                "aliases": "'CG30085'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -72.81152949374525,
+                "y": 52.900672706322595,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rif1"
+            }
+        },
+        {
+            "key": "Nup98-96_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup98-96",
+                "aliases": "'Nup145', 'Nup98', 'CG10198'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -74.83226510722908,
+                "y": 50.001320971764194,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup98-96"
+            }
+        },
+        {
+            "key": "bonsai_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "bonsai",
+                "aliases": "'mRpS15', 'CG4207'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -76.7376147918683,
+                "y": 47.0248708244354,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-bonsai"
+            }
+        },
+        {
+            "key": "waw_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "waw",
+                "aliases": "'CG1410'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -78.52464063655175,
+                "y": 43.97591173472593,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-waw"
+            }
+        },
+        {
+            "key": "Kdm3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Kdm3",
+                "aliases": "'JHDM2', 'CG8165'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -80.1905871769531,
+                "y": 40.859144976559215,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-kdm3"
+            }
+        },
+        {
+            "key": "Rcc1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Rcc1",
+                "aliases": "'Bj1', 'CG10480'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -81.73288564425732,
+                "y": 37.67937637836852,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rcc1"
+            }
+        },
+        {
+            "key": "Spt20_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Spt20",
+                "aliases": "'CG17689'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -83.1491579260158,
+                "y": 34.44150891285809,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-spt20"
+            }
+        },
+        {
+            "key": "aurB_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "aurB",
+                "aliases": "'ial', 'CG6620'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -84.43722023302357,
+                "y": 31.150535136974398,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-aurb"
+            }
+        },
+        {
+            "key": "Orc2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Orc2",
+                "aliases": "'CG3041'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -85.59508646656381,
+                "y": 27.811529493745276,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-orc2"
+            }
+        },
+        {
+            "key": "Mccc2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Mccc2",
+                "aliases": "'l(2)04524', 'CG3267'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -86.62097128082826,
+                "y": 24.429640487856673,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mccc2"
+            }
+        },
+        {
+            "key": "lark_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "lark",
+                "aliases": "'CG8597'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -87.51329283579089,
+                "y": 21.010082747031497,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-lark"
+            }
+        },
+        {
+            "key": "Cdk1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Cdk1",
+                "aliases": "'cdc2', 'CG5363'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -88.27067523629074,
+                "y": 17.558128981451535,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cdk1"
+            }
+        },
+        {
+            "key": "Mybbp1A_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Mybbp1A",
+                "aliases": "'l(1)Bi', 'CG6189'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -88.89195065356239,
+                "y": 14.079101853620788,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mybbp1a"
+            }
+        },
+        {
+            "key": "Hcf_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Hcf",
+                "aliases": "'CG1710'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.37616112594337,
+                "y": 10.578365771205418,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-hcf"
+            }
+        },
+        {
+            "key": "Ythdf_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ythdf",
+                "aliases": "'CG6422'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.72256003598152,
+                "y": 7.061318615506056,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ythdf"
+            }
+        },
+        {
+            "key": "borr_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "borr",
+                "aliases": "'CG4454'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.93061326166506,
+                "y": 3.5333834183162054,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-borr"
+            }
+        },
+        {
+            "key": "Nup44A_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup44A",
+                "aliases": "'seh1', 'CG8722'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -90.0,
+                "y": 1.1021821192326179e-14,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup44a"
+            }
+        },
+        {
+            "key": "Zmynd8_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Zmynd8",
+                "aliases": "'CG1815'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.93061326166506,
+                "y": -3.5333834183161437,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-zmynd8"
+            }
+        },
+        {
+            "key": "Nop10_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nop10",
+                "aliases": "'CG7637'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.72256003598152,
+                "y": -7.061318615506034,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nop10"
+            }
+        },
+        {
+            "key": "LanB1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "LanB1",
+                "aliases": "'lamB1', 'CG7123'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -89.37616112594337,
+                "y": -10.578365771205357,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-lanb1"
+            }
+        },
+        {
+            "key": "Roe1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Roe1",
+                "aliases": "'CG6155'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -88.8919506535624,
+                "y": -14.079101853620767,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-roe1"
+            }
+        },
+        {
+            "key": "Rae1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Rae1",
+                "aliases": "'CG9862'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -88.27067523629074,
+                "y": -17.558128981451514,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rae1"
+            }
+        },
+        {
+            "key": "Idgf4_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Idgf4",
+                "aliases": "'CG1780'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -87.51329283579089,
+                "y": -21.010082747031515,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-idgf4"
+            }
+        },
+        {
+            "key": "ash2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "ash2",
+                "aliases": "'CG6677'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -86.62097128082827,
+                "y": -24.429640487856652,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ash2"
+            }
+        },
+        {
+            "key": "Act42A_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Act42A",
+                "aliases": "'CG12051'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -85.59508646656381,
+                "y": -27.811529493745297,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-act42a"
+            }
+        },
+        {
+            "key": "Parp_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Parp",
+                "aliases": "'CG40411'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -84.43722023302358,
+                "y": -31.150535136974337,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-parp"
+            }
+        },
+        {
+            "key": "DMAP1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "DMAP1",
+                "aliases": "'CG11132'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -83.14915792601583,
+                "y": -34.44150891285803,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-dmap1"
+            }
+        },
+        {
+            "key": "Pdhb_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Pdhb",
+                "aliases": "'CG11876'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -81.73288564425731,
+                "y": -37.67937637836853,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pdhb"
+            }
+        },
+        {
+            "key": "Yp3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Yp3",
+                "aliases": "'CG11129'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -80.19058717695313,
+                "y": -40.859144976559165,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-yp3"
+            }
+        },
+        {
+            "key": "trr_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "trr",
+                "aliases": "'KMT2C', 'CG3848'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -78.52464063655174,
+                "y": -43.975911734725955,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-trr"
+            }
+        },
+        {
+            "key": "Nup358_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup358",
+                "aliases": "'RanBP2', 'CG11856'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -76.73761479186831,
+                "y": -47.02487082443538,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup358"
+            }
+        },
+        {
+            "key": "Xpc_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Xpc",
+                "aliases": "'mus210', 'Xpcc', 'CG8153'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -74.83226510722908,
+                "y": -50.00132097176421,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-xpc"
+            }
+        },
+        {
+            "key": "Orc6_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Orc6",
+                "aliases": "'CG1584'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -72.81152949374527,
+                "y": -52.900672706322574,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-orc6"
+            }
+        },
+        {
+            "key": "Naxd_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Naxd",
+                "aliases": "'CG10424'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -70.67852377926704,
+                "y": -55.71845543788507,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-naxd"
+            }
+        },
+        {
+            "key": "Tdp1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Tdp1",
+                "aliases": "'gkt', 'CG8825', 'CG8826'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -68.43653690400279,
+                "y": -58.45032434971652,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-tdp1"
+            }
+        },
+        {
+            "key": "Ankle2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ankle2",
+                "aliases": "'l(1)G0222', 'l(1)G0316', 'CG8465'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -66.0890258492117,
+                "y": -61.09206709796476,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ankle2"
+            }
+        },
+        {
+            "key": "tsu_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "tsu",
+                "aliases": "'Y14', 'CG8781'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -63.639610306789294,
+                "y": -63.63961030678927,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-tsu"
+            }
+        },
+        {
+            "key": "Gle1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Gle1",
+                "aliases": "'CG14749'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -61.09206709796475,
+                "y": -66.0890258492117,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-gle1"
+            }
+        },
+        {
+            "key": "Yp2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Yp2",
+                "aliases": "'CG2979'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -58.45032434971657,
+                "y": -68.43653690400275,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-yp2"
+            }
+        },
+        {
+            "key": "Nup54_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup54",
+                "aliases": "'CG8831'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -55.71845543788509,
+                "y": -70.67852377926702,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup54"
+            }
+        },
+        {
+            "key": "sle_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "sle",
+                "aliases": "'CG12819'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -52.900672706322595,
+                "y": -72.81152949374525,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-sle"
+            }
+        },
+        {
+            "key": "Klp61F_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Klp61F",
+                "aliases": "'KLP2', 'CG9191'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -50.001320971764265,
+                "y": -74.83226510722903,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-klp61f"
+            }
+        },
+        {
+            "key": "mle_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mle",
+                "aliases": "'nap', 'CG11680'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -47.024870824435375,
+                "y": -76.73761479186831,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mle"
+            }
+        },
+        {
+            "key": "cactin_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "cactin",
+                "aliases": "'CG1676'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -43.975911734725976,
+                "y": -78.52464063655172,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cactin"
+            }
+        },
+        {
+            "key": "Top2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Top2",
+                "aliases": "'CG10223'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -40.85914497655922,
+                "y": -80.1905871769531,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-top2"
+            }
+        },
+        {
+            "key": "Nup107_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup107",
+                "aliases": "'CG6743'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -37.679376378368524,
+                "y": -81.73288564425732,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup107"
+            }
+        },
+        {
+            "key": "Aatf_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Aatf",
+                "aliases": "'CG11188'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -34.441508912858055,
+                "y": -83.14915792601582,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-aatf"
+            }
+        },
+        {
+            "key": "Nca_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nca",
+                "aliases": "'CG7641'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -31.1505351369744,
+                "y": -84.43722023302357,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nca"
+            }
+        },
+        {
+            "key": "nudC_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "nudC",
+                "aliases": "'CG9710'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -27.81152949374528,
+                "y": -85.59508646656381,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nudc"
+            }
+        },
+        {
+            "key": "Gyf_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Gyf",
+                "aliases": "'CG11148'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -24.42964048785668,
+                "y": -86.62097128082826,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-gyf"
+            }
+        },
+        {
+            "key": "Dlc90F_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Dlc90F",
+                "aliases": "'Tctex', 'CG12363'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -21.01008274703146,
+                "y": -87.5132928357909,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-dlc90f"
+            }
+        },
+        {
+            "key": "Cp190_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Cp190",
+                "aliases": "'DMAP190', 'E(mod)4-1', 'CG6384'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -17.55812898145158,
+                "y": -88.27067523629073,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cp190"
+            }
+        },
+        {
+            "key": "Tsr1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Tsr1",
+                "aliases": "'CG7338'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -14.079101853620793,
+                "y": -88.89195065356239,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-tsr1"
+            }
+        },
+        {
+            "key": "Ada2b_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ada2b",
+                "aliases": "'Ada2S', 'CG9638'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -10.578365771205384,
+                "y": -89.37616112594337,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ada2b"
+            }
+        },
+        {
+            "key": "indra_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "indra",
+                "aliases": "'CG2199'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -7.061318615506101,
+                "y": -89.72256003598152,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-indra"
+            }
+        },
+        {
+            "key": "mEFTs_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mEFTs",
+                "aliases": "'CG6412'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -3.533383418316211,
+                "y": -89.93061326166506,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mefts"
+            }
+        },
+        {
+            "key": "mof_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mof",
+                "aliases": "'CG3025'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": -1.6532731788489267e-14,
+                "y": -90.0,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mof"
+            }
+        },
+        {
+            "key": "Nup93-1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup93-1",
+                "aliases": "'CG11092'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 3.533383418316178,
+                "y": -89.93061326166506,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup93-1"
+            }
+        },
+        {
+            "key": "Nup58_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup58",
+                "aliases": "'CG7360'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 7.061318615505988,
+                "y": -89.72256003598153,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup58"
+            }
+        },
+        {
+            "key": "Bap60_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Bap60",
+                "aliases": "'CG4303'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 10.578365771205352,
+                "y": -89.37616112594337,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-bap60"
+            }
+        },
+        {
+            "key": "Hmgcr_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Hmgcr",
+                "aliases": "'HmG-CoAR', 'CG10367'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 14.079101853620761,
+                "y": -88.8919506535624,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-hmgcr"
+            }
+        },
+        {
+            "key": "Prosbeta6_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Prosbeta6",
+                "aliases": "'l(3)73Ai', 'PROS-26', 'Pros26', 'CG4097'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 17.558128981451546,
+                "y": -88.27067523629074,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-prosbeta6"
+            }
+        },
+        {
+            "key": "EMC8-9_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "EMC8-9",
+                "aliases": "'CG3501'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 21.01008274703143,
+                "y": -87.5132928357909,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-emc8-9"
+            }
+        },
+        {
+            "key": "spt4_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "spt4",
+                "aliases": "'CG12372'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 24.429640487856723,
+                "y": -86.62097128082824,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-spt4"
+            }
+        },
+        {
+            "key": "PIG-K_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "PIG-K",
+                "aliases": "'CG4406'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 27.81152949374525,
+                "y": -85.59508646656383,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pig-k"
+            }
+        },
+        {
+            "key": "Larp4B_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Larp4B",
+                "aliases": "'CG11505'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 31.150535136974298,
+                "y": -84.4372202330236,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-larp4b"
+            }
+        },
+        {
+            "key": "Chd3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Chd3",
+                "aliases": "'CG9594'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 34.4415089128581,
+                "y": -83.1491579260158,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-chd3"
+            }
+        },
+        {
+            "key": "lola_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "lola",
+                "aliases": "'CG12052'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 37.679376378368495,
+                "y": -81.73288564425734,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-lola"
+            }
+        },
+        {
+            "key": "SuUR_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "SuUR",
+                "aliases": "'Su(UR)ES', 'CG7869'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 40.8591449765592,
+                "y": -80.19058717695312,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-suur"
+            }
+        },
+        {
+            "key": "Rbbp5_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Rbbp5",
+                "aliases": "'CG5585'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 43.97591173472595,
+                "y": -78.52464063655174,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rbbp5"
+            }
+        },
+        {
+            "key": "Nup188_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup188",
+                "aliases": "'CG8771'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 47.02487082443541,
+                "y": -76.73761479186828,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup188"
+            }
+        },
+        {
+            "key": "Ns3_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ns3",
+                "aliases": "'l(1)G0431', 'CG14788'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 50.001320971764166,
+                "y": -74.83226510722909,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ns3"
+            }
+        },
+        {
+            "key": "Noc2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Noc2",
+                "aliases": "'CG9246'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 52.90067270632256,
+                "y": -72.81152949374528,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-noc2"
+            }
+        },
+        {
+            "key": "dre4_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "dre4",
+                "aliases": "'spt16', 'CG1828'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 55.718455437885055,
+                "y": -70.67852377926704,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-dre4"
+            }
+        },
+        {
+            "key": "Thg_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Thg",
+                "aliases": "'l(2)35Bc', 'CG4103'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 58.45032434971655,
+                "y": -68.43653690400278,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-thg"
+            }
+        },
+        {
+            "key": "Nup205_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup205",
+                "aliases": "'CG11943'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 61.09206709796473,
+                "y": -66.08902584921172,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup205"
+            }
+        },
+        {
+            "key": "kra_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "kra",
+                "aliases": "'ecp', 'eIF-5C', 'exba', 'CG2922'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 63.63961030678926,
+                "y": -63.639610306789294,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-kra"
+            }
+        },
+        {
+            "key": "Dmac2_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Dmac2",
+                "aliases": "'CG4042'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 66.0890258492117,
+                "y": -61.09206709796475,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-dmac2"
+            }
+        },
+        {
+            "key": "Hsp27_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Hsp27",
+                "aliases": "'CG4466'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 68.43653690400275,
+                "y": -58.45032434971657,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-hsp27"
+            }
+        },
+        {
+            "key": "pita_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "pita",
+                "aliases": "'spdk', 'CG3941'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 70.67852377926701,
+                "y": -55.71845543788509,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-pita"
+            }
+        },
+        {
+            "key": "YL-1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "YL-1",
+                "aliases": "'CG4621'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 72.81152949374525,
+                "y": -52.9006727063226,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-yl-1"
+            }
+        },
+        {
+            "key": "Ssrp_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Ssrp",
+                "aliases": "'CF5', 'SSRP1', 'CG4817'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 74.83226510722908,
+                "y": -50.001320971764194,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ssrp"
+            }
+        },
+        {
+            "key": "Sec13_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Sec13",
+                "aliases": "'CG6773'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 76.73761479186831,
+                "y": -47.02487082443538,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-sec13"
+            }
+        },
+        {
+            "key": "hop_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "hop",
+                "aliases": "'HD-160', 'CG1594'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 78.52464063655172,
+                "y": -43.97591173472598,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-hop"
+            }
+        },
+        {
+            "key": "Chc_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Chc",
+                "aliases": "'CG9012'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 80.1905871769531,
+                "y": -40.85914497655923,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-chc"
+            }
+        },
+        {
+            "key": "His3.3A_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "His3.3A",
+                "aliases": "'CG5825'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 81.73288564425731,
+                "y": -37.679376378368524,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-his33a"
+            }
+        },
+        {
+            "key": "Zwilch_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Zwilch",
+                "aliases": "'CG18729'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 83.14915792601582,
+                "y": -34.44150891285806,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-zwilch"
+            }
+        },
+        {
+            "key": "Polr2J_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Polr2J",
+                "aliases": "'Rpb11', 'CG6840'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 84.43722023302355,
+                "y": -31.150535136974405,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-polr2j"
+            }
+        },
+        {
+            "key": "Coprox_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Coprox",
+                "aliases": "'CG3433'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 85.59508646656381,
+                "y": -27.81152949374529,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-coprox"
+            }
+        },
+        {
+            "key": "bocks_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "bocks",
+                "aliases": "'CG9424'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 86.62097128082826,
+                "y": -24.429640487856684,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-bocks"
+            }
+        },
+        {
+            "key": "ptch_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "ptch",
+                "aliases": "'CG12128'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 87.51329283579088,
+                "y": -21.010082747031547,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-ptch"
+            }
+        },
+        {
+            "key": "mRpS16_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpS16",
+                "aliases": "'CG8338'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 88.27067523629073,
+                "y": -17.558128981451585,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrps16"
+            }
+        },
+        {
+            "key": "; ; _D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "; ; ",
+                "aliases": "'CG32857;', 'CG33502'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 88.89195065356239,
+                "y": -14.079101853620799,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-"
+            }
+        },
+        {
+            "key": "Rrp5_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Rrp5",
+                "aliases": "'CG5728'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.37616112594337,
+                "y": -10.57836577120539,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rrp5"
+            }
+        },
+        {
+            "key": "Polr2D_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Polr2D",
+                "aliases": "'Rpb4', 'CG43662'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.72256003598152,
+                "y": -7.0613186155061065,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-polr2d"
+            }
+        },
+        {
+            "key": "RfC4_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "RfC4",
+                "aliases": "'RfC40', 'CG14999'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.93061326166506,
+                "y": -3.533383418316217,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-rfc4"
+            }
+        },
+        {
+            "key": "UK114_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "UK114",
+                "aliases": "'CG15261'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 90.0,
+                "y": -2.2043642384652358e-14,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-uk114"
+            }
+        },
+        {
+            "key": "mRpS10_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "mRpS10",
+                "aliases": "'CG4247'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.93061326166506,
+                "y": 3.5333834183161725,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-mrps10"
+            }
+        },
+        {
+            "key": "TfIIA-L_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "TfIIA-L",
+                "aliases": "'CG5930'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.72256003598153,
+                "y": 7.061318615505982,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-tfiia-l"
+            }
+        },
+        {
+            "key": "Psat_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Psat",
+                "aliases": "'CG11899'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 89.37616112594338,
+                "y": 10.578365771205345,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-psat"
+            }
+        },
+        {
+            "key": "scny_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "scny",
+                "aliases": "'Usp36', 'CG5505'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 88.8919506535624,
+                "y": 14.079101853620756,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-scny"
+            }
+        },
+        {
+            "key": "FRG1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "FRG1",
+                "aliases": "'CG6480'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 88.27067523629074,
+                "y": 17.558128981451542,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-frg1"
+            }
+        },
+        {
+            "key": "Sps1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Sps1",
+                "aliases": "'ptuf', 'SelD', 'CG8553'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 87.5132928357909,
+                "y": 21.010082747031426,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-sps1"
+            }
+        },
+        {
+            "key": "nito_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "nito",
+                "aliases": "'CG2910'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 86.62097128082827,
+                "y": 24.429640487856645,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nito"
+            }
+        },
+        {
+            "key": "Nup154_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Nup154",
+                "aliases": "'Nup155', 'CG4579'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 85.59508646656383,
+                "y": 27.811529493745244,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-nup154"
+            }
+        },
+        {
+            "key": "xmas_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "xmas",
+                "aliases": "'xmas-1', 'xmas-2', 'CG46386'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 84.43722023302361,
+                "y": 31.15053513697429,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-xmas"
+            }
+        },
+        {
+            "key": "egg_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "egg",
+                "aliases": "'CG12196'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 83.14915792601583,
+                "y": 34.44150891285802,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-egg"
+            }
+        },
+        {
+            "key": "Panx_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Panx",
+                "aliases": "'CG9754'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 81.73288564425734,
+                "y": 37.67937637836849,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-panx"
+            }
+        },
+        {
+            "key": "Dd_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Dd",
+                "aliases": "'l(1)G0269', 'CG1696'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 80.19058717695309,
+                "y": 40.859144976559264,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-dd"
+            }
+        },
+        {
+            "key": "Asun_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Asun",
+                "aliases": "'IntS13', 'Mat89Bb', 'ovary2', 'CG6814'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 78.52464063655178,
+                "y": 43.97591173472587,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-asun"
+            }
+        },
+        {
+            "key": "WDR79_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "WDR79",
+                "aliases": "'CG9226'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 76.73761479186834,
+                "y": 47.02487082443534,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-wdr79"
+            }
+        },
+        {
+            "key": "Noc1_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Noc1",
+                "aliases": "'CG7839'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 74.8322651072291,
+                "y": 50.001320971764166,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-noc1"
+            }
+        },
+        {
+            "key": "Sxl_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Sxl",
+                "aliases": "'Sx1', 'CG43770'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 72.81152949374524,
+                "y": 52.900672706322624,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-sxl"
+            }
+        },
+        {
+            "key": "Npl4_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Npl4",
+                "aliases": "'CG4673'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 70.6785237792671,
+                "y": 55.718455437885,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-npl4"
+            }
+        },
+        {
+            "key": "Chrac-16_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "Chrac-16",
+                "aliases": "'CHRAC', 'CHRAC16', 'joey', 'CG15736'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 68.43653690400282,
+                "y": 58.45032434971648,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-chrac-16"
+            }
+        },
+        {
+            "key": "cutlet_D1",
+            "attributes": {
+                "node_type": "protein",
+                "label": "cutlet",
+                "aliases": "'CG33122'",
+                "gene_family": "None",
+                "enrichment": 0.0,
+                "x": 66.08902584921167,
+                "y": 61.09206709796478,
+                "size": 7.0,
+                "color": "#D44657",
+                "url": "/proteinTable/none-cutlet"
+            }
+        }
+    ],
+    "edges": [
+        {
+            "key": "insv_D1_edge",
+            "source": "D1",
+            "target": "insv_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Cp36_D1_edge",
+            "source": "D1",
+            "target": "Cp36_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpL9_D1_edge",
+            "source": "D1",
+            "target": "mRpL9_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Fancd2_D1_edge",
+            "source": "D1",
+            "target": "Fancd2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Daxx_D1_edge",
+            "source": "D1",
+            "target": "Daxx_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Cp19_D1_edge",
+            "source": "D1",
+            "target": "Cp19_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mTerf3_D1_edge",
+            "source": "D1",
+            "target": "mTerf3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mldr_D1_edge",
+            "source": "D1",
+            "target": "mldr_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Orc1_D1_edge",
+            "source": "D1",
+            "target": "Orc1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Orc5_D1_edge",
+            "source": "D1",
+            "target": "Orc5_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "polo_D1_edge",
+            "source": "D1",
+            "target": "polo_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ar1_D1_edge",
+            "source": "D1",
+            "target": "Ar1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "fs(1)K10_D1_edge",
+            "source": "D1",
+            "target": "fs(1)K10_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup160_D1_edge",
+            "source": "D1",
+            "target": "Nup160_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mt:Cyt-b_D1_edge",
+            "source": "D1",
+            "target": "mt:Cyt-b_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "yl_D1_edge",
+            "source": "D1",
+            "target": "yl_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup133_D1_edge",
+            "source": "D1",
+            "target": "Nup133_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "GstD3_D1_edge",
+            "source": "D1",
+            "target": "GstD3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ken_D1_edge",
+            "source": "D1",
+            "target": "ken_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Vm34Ca_D1_edge",
+            "source": "D1",
+            "target": "Vm34Ca_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "elg1_D1_edge",
+            "source": "D1",
+            "target": "elg1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ino80_D1_edge",
+            "source": "D1",
+            "target": "Ino80_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Su(var)3-9_D1_edge",
+            "source": "D1",
+            "target": "Su(var)3-9_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Pen_D1_edge",
+            "source": "D1",
+            "target": "Pen_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpL19_D1_edge",
+            "source": "D1",
+            "target": "mRpL19_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "pAbp_D1_edge",
+            "source": "D1",
+            "target": "pAbp_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "AlaRS-m_D1_edge",
+            "source": "D1",
+            "target": "AlaRS-m_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Su(var)205_D1_edge",
+            "source": "D1",
+            "target": "Su(var)205_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Iswi_D1_edge",
+            "source": "D1",
+            "target": "Iswi_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Brr2_D1_edge",
+            "source": "D1",
+            "target": "Brr2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "bor_D1_edge",
+            "source": "D1",
+            "target": "bor_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "E2f2_D1_edge",
+            "source": "D1",
+            "target": "E2f2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nipped-A_D1_edge",
+            "source": "D1",
+            "target": "Nipped-A_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpL55_D1_edge",
+            "source": "D1",
+            "target": "mRpL55_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup75_D1_edge",
+            "source": "D1",
+            "target": "Nup75_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpS25_D1_edge",
+            "source": "D1",
+            "target": "mRpS25_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "l(1)G0020_D1_edge",
+            "source": "D1",
+            "target": "l(1)G0020_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ge-1_D1_edge",
+            "source": "D1",
+            "target": "Ge-1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Heatr1_D1_edge",
+            "source": "D1",
+            "target": "Heatr1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "pont_D1_edge",
+            "source": "D1",
+            "target": "pont_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "eco_D1_edge",
+            "source": "D1",
+            "target": "eco_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Yp1_D1_edge",
+            "source": "D1",
+            "target": "Yp1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Fkbp39_D1_edge",
+            "source": "D1",
+            "target": "Fkbp39_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nxt1_D1_edge",
+            "source": "D1",
+            "target": "Nxt1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Rif1_D1_edge",
+            "source": "D1",
+            "target": "Rif1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup98-96_D1_edge",
+            "source": "D1",
+            "target": "Nup98-96_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "bonsai_D1_edge",
+            "source": "D1",
+            "target": "bonsai_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "waw_D1_edge",
+            "source": "D1",
+            "target": "waw_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Kdm3_D1_edge",
+            "source": "D1",
+            "target": "Kdm3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Rcc1_D1_edge",
+            "source": "D1",
+            "target": "Rcc1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Spt20_D1_edge",
+            "source": "D1",
+            "target": "Spt20_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "aurB_D1_edge",
+            "source": "D1",
+            "target": "aurB_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Orc2_D1_edge",
+            "source": "D1",
+            "target": "Orc2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Mccc2_D1_edge",
+            "source": "D1",
+            "target": "Mccc2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "lark_D1_edge",
+            "source": "D1",
+            "target": "lark_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Cdk1_D1_edge",
+            "source": "D1",
+            "target": "Cdk1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Mybbp1A_D1_edge",
+            "source": "D1",
+            "target": "Mybbp1A_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Hcf_D1_edge",
+            "source": "D1",
+            "target": "Hcf_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ythdf_D1_edge",
+            "source": "D1",
+            "target": "Ythdf_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "borr_D1_edge",
+            "source": "D1",
+            "target": "borr_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup44A_D1_edge",
+            "source": "D1",
+            "target": "Nup44A_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Zmynd8_D1_edge",
+            "source": "D1",
+            "target": "Zmynd8_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nop10_D1_edge",
+            "source": "D1",
+            "target": "Nop10_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "LanB1_D1_edge",
+            "source": "D1",
+            "target": "LanB1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Roe1_D1_edge",
+            "source": "D1",
+            "target": "Roe1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Rae1_D1_edge",
+            "source": "D1",
+            "target": "Rae1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Idgf4_D1_edge",
+            "source": "D1",
+            "target": "Idgf4_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ash2_D1_edge",
+            "source": "D1",
+            "target": "ash2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Act42A_D1_edge",
+            "source": "D1",
+            "target": "Act42A_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Parp_D1_edge",
+            "source": "D1",
+            "target": "Parp_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "DMAP1_D1_edge",
+            "source": "D1",
+            "target": "DMAP1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Pdhb_D1_edge",
+            "source": "D1",
+            "target": "Pdhb_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Yp3_D1_edge",
+            "source": "D1",
+            "target": "Yp3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "trr_D1_edge",
+            "source": "D1",
+            "target": "trr_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup358_D1_edge",
+            "source": "D1",
+            "target": "Nup358_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Xpc_D1_edge",
+            "source": "D1",
+            "target": "Xpc_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Orc6_D1_edge",
+            "source": "D1",
+            "target": "Orc6_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Naxd_D1_edge",
+            "source": "D1",
+            "target": "Naxd_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Tdp1_D1_edge",
+            "source": "D1",
+            "target": "Tdp1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ankle2_D1_edge",
+            "source": "D1",
+            "target": "Ankle2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "tsu_D1_edge",
+            "source": "D1",
+            "target": "tsu_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Gle1_D1_edge",
+            "source": "D1",
+            "target": "Gle1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Yp2_D1_edge",
+            "source": "D1",
+            "target": "Yp2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup54_D1_edge",
+            "source": "D1",
+            "target": "Nup54_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "sle_D1_edge",
+            "source": "D1",
+            "target": "sle_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Klp61F_D1_edge",
+            "source": "D1",
+            "target": "Klp61F_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mle_D1_edge",
+            "source": "D1",
+            "target": "mle_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "cactin_D1_edge",
+            "source": "D1",
+            "target": "cactin_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Top2_D1_edge",
+            "source": "D1",
+            "target": "Top2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup107_D1_edge",
+            "source": "D1",
+            "target": "Nup107_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Aatf_D1_edge",
+            "source": "D1",
+            "target": "Aatf_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nca_D1_edge",
+            "source": "D1",
+            "target": "Nca_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "nudC_D1_edge",
+            "source": "D1",
+            "target": "nudC_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Gyf_D1_edge",
+            "source": "D1",
+            "target": "Gyf_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Dlc90F_D1_edge",
+            "source": "D1",
+            "target": "Dlc90F_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Cp190_D1_edge",
+            "source": "D1",
+            "target": "Cp190_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Tsr1_D1_edge",
+            "source": "D1",
+            "target": "Tsr1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ada2b_D1_edge",
+            "source": "D1",
+            "target": "Ada2b_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "indra_D1_edge",
+            "source": "D1",
+            "target": "indra_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mEFTs_D1_edge",
+            "source": "D1",
+            "target": "mEFTs_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mof_D1_edge",
+            "source": "D1",
+            "target": "mof_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup93-1_D1_edge",
+            "source": "D1",
+            "target": "Nup93-1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup58_D1_edge",
+            "source": "D1",
+            "target": "Nup58_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Bap60_D1_edge",
+            "source": "D1",
+            "target": "Bap60_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Hmgcr_D1_edge",
+            "source": "D1",
+            "target": "Hmgcr_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Prosbeta6_D1_edge",
+            "source": "D1",
+            "target": "Prosbeta6_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "EMC8-9_D1_edge",
+            "source": "D1",
+            "target": "EMC8-9_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "spt4_D1_edge",
+            "source": "D1",
+            "target": "spt4_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "PIG-K_D1_edge",
+            "source": "D1",
+            "target": "PIG-K_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Larp4B_D1_edge",
+            "source": "D1",
+            "target": "Larp4B_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Chd3_D1_edge",
+            "source": "D1",
+            "target": "Chd3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "lola_D1_edge",
+            "source": "D1",
+            "target": "lola_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "SuUR_D1_edge",
+            "source": "D1",
+            "target": "SuUR_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Rbbp5_D1_edge",
+            "source": "D1",
+            "target": "Rbbp5_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup188_D1_edge",
+            "source": "D1",
+            "target": "Nup188_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ns3_D1_edge",
+            "source": "D1",
+            "target": "Ns3_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Noc2_D1_edge",
+            "source": "D1",
+            "target": "Noc2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "dre4_D1_edge",
+            "source": "D1",
+            "target": "dre4_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Thg_D1_edge",
+            "source": "D1",
+            "target": "Thg_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup205_D1_edge",
+            "source": "D1",
+            "target": "Nup205_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "kra_D1_edge",
+            "source": "D1",
+            "target": "kra_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Dmac2_D1_edge",
+            "source": "D1",
+            "target": "Dmac2_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Hsp27_D1_edge",
+            "source": "D1",
+            "target": "Hsp27_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "pita_D1_edge",
+            "source": "D1",
+            "target": "pita_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "YL-1_D1_edge",
+            "source": "D1",
+            "target": "YL-1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Ssrp_D1_edge",
+            "source": "D1",
+            "target": "Ssrp_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Sec13_D1_edge",
+            "source": "D1",
+            "target": "Sec13_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "hop_D1_edge",
+            "source": "D1",
+            "target": "hop_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Chc_D1_edge",
+            "source": "D1",
+            "target": "Chc_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "His3.3A_D1_edge",
+            "source": "D1",
+            "target": "His3.3A_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Zwilch_D1_edge",
+            "source": "D1",
+            "target": "Zwilch_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Polr2J_D1_edge",
+            "source": "D1",
+            "target": "Polr2J_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Coprox_D1_edge",
+            "source": "D1",
+            "target": "Coprox_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "bocks_D1_edge",
+            "source": "D1",
+            "target": "bocks_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "ptch_D1_edge",
+            "source": "D1",
+            "target": "ptch_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpS16_D1_edge",
+            "source": "D1",
+            "target": "mRpS16_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "; ; _D1_edge",
+            "source": "D1",
+            "target": "; ; _D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Rrp5_D1_edge",
+            "source": "D1",
+            "target": "Rrp5_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Polr2D_D1_edge",
+            "source": "D1",
+            "target": "Polr2D_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "RfC4_D1_edge",
+            "source": "D1",
+            "target": "RfC4_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "UK114_D1_edge",
+            "source": "D1",
+            "target": "UK114_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "mRpS10_D1_edge",
+            "source": "D1",
+            "target": "mRpS10_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "TfIIA-L_D1_edge",
+            "source": "D1",
+            "target": "TfIIA-L_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Psat_D1_edge",
+            "source": "D1",
+            "target": "Psat_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "scny_D1_edge",
+            "source": "D1",
+            "target": "scny_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "FRG1_D1_edge",
+            "source": "D1",
+            "target": "FRG1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Sps1_D1_edge",
+            "source": "D1",
+            "target": "Sps1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "nito_D1_edge",
+            "source": "D1",
+            "target": "nito_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Nup154_D1_edge",
+            "source": "D1",
+            "target": "Nup154_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "xmas_D1_edge",
+            "source": "D1",
+            "target": "xmas_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "egg_D1_edge",
+            "source": "D1",
+            "target": "egg_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Panx_D1_edge",
+            "source": "D1",
+            "target": "Panx_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Dd_D1_edge",
+            "source": "D1",
+            "target": "Dd_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Asun_D1_edge",
+            "source": "D1",
+            "target": "Asun_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "WDR79_D1_edge",
+            "source": "D1",
+            "target": "WDR79_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Noc1_D1_edge",
+            "source": "D1",
+            "target": "Noc1_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Sxl_D1_edge",
+            "source": "D1",
+            "target": "Sxl_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Npl4_D1_edge",
+            "source": "D1",
+            "target": "Npl4_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "Chrac-16_D1_edge",
+            "source": "D1",
+            "target": "Chrac-16_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        },
+        {
+            "key": "cutlet_D1_edge",
+            "source": "D1",
+            "target": "cutlet_D1",
+            "attributes": {
+                "size": 3,
+                "color": "black"
+            }
+        }
+    ]
 }

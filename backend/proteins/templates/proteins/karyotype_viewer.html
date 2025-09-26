@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static i18n favit_tags %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}Karyotype Viewer {% endblock %}
+{% block meta-description %}Karyotype Viewer{% endblock %}
+
+
+{% block content %}
+
+  <h1 class="name text-center mb-4">Karyotype Viewer</h1>
+
+  <h5 class='pt-3'><strong>Karyotype Viewer</strong></h5>
+  <div id='karyotype_div'></div>
+
+  {% render_bundle 'karyotypeViewer' %}
+
+{% endblock content %}

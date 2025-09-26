@@ -169,8 +169,15 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 {% block content %}
     <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
     <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
-    <div class="text-center organism " style="padding-bottom: 30px">Organism: {{repeat.parental_organism.scientific_name}}</div>  
-    
+    <div class="text-center organism ">Organism: {{repeat.parental_organism.scientific_name}}</div>  
+    {% if subrepeats %}
+    <div class="text-center subfamilies" style="padding-bottom: 15px; color: rgba(113, 124, 161, 1); font-size: 1.4rem; font-weight: 600;margin-top: 5px;">Subfamilies: 
+      {% for child in subrepeats %}
+      <a href="/repeatTable/{{child.slug}}">{{child.name}}</a> 
+      {% endfor %}
+    {% endif %}
+    </div>
+
     <div id="karyoplot-info" >
       {% if repeat.karyoplot_exists %}
         <svg width=auto height=auto style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
@@ -197,6 +204,15 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
       {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat threshold=threshold %}
   </div>
   {% endif %}
+
+  {% comment %} {% if subrepeats %}
+  <h3>Subfamilies</h3>
+  <ul>
+    {% for child in subrepeats %}
+    <li><a href="/repeatTable/{{child.slug}}">{{child.name}}</a></li>
+    {% endfor %}
+    </ul>
+  {% endif %} {% endcomment %}
 
    <div class="Proteins" style="margin-top: 0px;">
      <h3>Proteins</h3>

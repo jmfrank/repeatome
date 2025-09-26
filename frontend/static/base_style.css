@@ -11077,6 +11077,15 @@ h6.dropdown-header:after {
     padding-top: 0
 }
 
+.repeat .subfamilies {
+  color: rgb(154, 169, 218);
+  font-family: Raleway, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 5px;
+  padding-top: 0;
+}
+
 .repeat .attribute-data .attr-name {
     margin-left: 0.3rem;
     color: black;
