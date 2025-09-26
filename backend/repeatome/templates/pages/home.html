@@ -67,7 +67,7 @@
         </main>
     <div class="home-stats">
         <span>
-          {% webp_picture 'images/gfp_white_40.png' 'gfpicon' 'white gfp icon' %}{{stats.proteins}} <a href="{% url 'proteins:table' %}" class='text-white'>Proteins</a>
+          {% webp_picture 'images/gfp_white_40.png' 'gfpicon' 'white gfp icon' %}{{stats.proteins}} <a href="{% url 'proteins:proteinTable' %}" class='text-white'>Proteins</a>
         </span>
         <span>
           <i class="fas fa-chart-area mr-2" ></i>{{stats.repeats}} <a href="{% url 'proteins:repeatTable' %}" class='text-white'>Repeats</a>

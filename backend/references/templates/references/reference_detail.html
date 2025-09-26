@@ -14,7 +14,7 @@
 	<ol class='protein-list'>
 		<h5>Primary Proteins: </h5>
 		{% for protein in reference.primary_proteins.all %}
-			<li><a href="{{ protein.get_absolute_url }}">{{ protein.name }}</a></li>
+			<li><a href="{{ protein.get_absolute_url }}">{{ protein.gene_family.gene_family }}</a></li>
 		{% endfor %}
 	</ol>
   {% endif %}
@@ -23,13 +23,13 @@
 	    <ol class='protein-list'>
 	    	<h5>Secondary Proteins:</h5>
 	    	{% for protein in reference.protein_secondary_reference.all %}
-	    		<li class='mr-1'><a href="{{ protein.get_absolute_url }}">{{ protein.name }}{% if not forloop.last %},{% endif %}</a></li>
+	    		<li class='mr-1'><a href="{{ protein.get_absolute_url }}">{{ protein.gene }}{% if not forloop.last %},{% endif %}</a></li>
 	    	{% endfor %}
 	    </ol>
 	{% endif %}
 
 
-{% if reference.bleach_measurements.count %}
+{% comment %} {% if reference.bleach_measurements.count %}
 
 <h4 class='mt-4'>Bleach Measurements</h4>
   <table class="table table-striped mt-4 flip-scroll">
@@ -86,11 +86,11 @@
         </div>
       </a>
 {% endif %}
+ {% endcomment %}
 
 
 
-
-
+{% comment %} 
 {% if reference.oser_measurements.count %}
 <div class="attributes mt-4">
   <h4>OSER Measurements</h4>
@@ -119,7 +119,7 @@
       </tbody>
     </table>
   </div>
-{% endif %}
+{% endif %} {% endcomment %}
 
 
 <div class="excerpts mt-3">
