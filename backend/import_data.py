@@ -770,6 +770,8 @@ def update_PDB_from_uniprot(results):
 
 def update_microscopy():
     raw_df =  load_dataframe_from_excel(settings.IMPORT_MICROSCOPY, sheet_name='Sheet1', dtype=str)
+    raw_df = raw_df.where(pd.notnull(raw_df), None)
+    # Filter rows where protein is not null
     df = raw_df[raw_df['protein'].notnull()]
     print(f"Found {len(df)} microscopy records to process")
     for row in df.to_dict(orient='records'):
@@ -778,7 +780,7 @@ def update_microscopy():
             print(f"Protein with UNIPROT {row['protein']} does not exist. Skipped.")
             continue
         uniprot = row['protein']
-        channels	= json.loads(row['channels'].strip())
+        channels	= json.loads(row['channels'])
         # Placeholder if name is empty
         print(f"Channels: {channels}")
         # Do we need this?
@@ -797,13 +799,13 @@ def update_microscopy():
         print(f"Adding Microscopy to protein: {gene}, uniprot: {uniprot}")
 
         display_name = name
-        local_tiff_file	= row['local_tiff_file'].strip()
-        cell_type = row['cell_type'].strip()
-        pixel_size = row['pixel_size'].strip()
-        magnification = row['magnification'].strip()
-        expression = row['expression'].strip()
-        microscopy = row['microscopy'].strip()
-        description	= row['description'].strip()
+        local_tiff_file	= row['local_tiff_file'].strip() if row['local_tiff_file'] else None
+        cell_type = row['cell_type'].strip() if row['cell_type'] else None
+        pixel_size = row['pixel_size'].strip() if row['pixel_size'] else None
+        magnification = row['magnification'].strip() if row['magnification'] else None
+        expression = row['expression'].strip() if row['expression'] else None
+        microscopy = row['microscopy'].strip() if row['microscopy'] else None
+        description	= row['description'].strip() if row['description'] else None
         url	= row['url'].strip()
         obj = Microscopy(
             id = shortuuid(),
