@@ -16,7 +16,8 @@ from proteins.models import (
     ProteinTF,
     Repeat,
     GeneFamily,
-    Proteomics
+    Proteomics,
+    microscopy
 )
 from proteins.util.maintain import validate_node
 
