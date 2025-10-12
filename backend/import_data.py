@@ -859,6 +859,7 @@ if __name__ == "__main__":
         for org in Organism.objects.all():
             GetNetworkData(org.id)
         update_PDB_from_uniprot()
+        update_microscopy()
     elif command == 'import_repeat':
         import_repeat()
     
