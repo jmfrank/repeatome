@@ -140,11 +140,29 @@ def import_repeat_families():
         child_arr = row['children']
         if pd.notna(child_arr):
             # print(child_arr)
-            child_arr = child_arr.strip(' ').split(',')
+            child_arr = [x.strip() for x in child_arr.strip(' ').split(',')]
             for child in child_arr:
+                print(f"Mapping child {child} to parent {parent}")
                 parent_repeats_dict[child] = parent
 
     return parent_repeats_dict
+
+
+def update_repeat_families():
+    parent_repeats_dict = import_repeat_families()
+    for child, parent in parent_repeats_dict.items():
+        child_obj = get_obj_if_exists(Repeat, name=child)
+        parent_obj = get_obj_if_exists(Repeat, name=parent)
+        if child_obj and parent_obj:
+            print(f"Updating repeat {child} to have parent {parent}")
+            child_obj.parent_repeat = parent_obj
+            child_obj.save()
+        else:
+            if not child_obj:
+                print(f"Child repeat {child} does not exist")
+            if not parent_obj:
+                print(f"Parent repeat {parent} does not exist")
+
 
 def import_repeat():
     # (1) From repeats sheet we have name, dfam_id and parent organism id
@@ -881,6 +899,9 @@ if __name__ == "__main__":
         # Before running this command delete existing microscopy records
         Microscopy.objects.all().delete()
         update_microscopy()
+
+    elif command == 'update_repeat_families':
+        update_repeat_families()
 
     elif command == 'get_proteomics_without_proteins':
         get_proteomics_without_proteins()
