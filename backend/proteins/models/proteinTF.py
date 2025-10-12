@@ -192,3 +192,10 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
             indx = self.jaspar[0].find('.')
             return self.jaspar[0][:indx]
         return ""
+
+    def get_microscopies(self):
+        microscopies = self.microscopy_set.all()
+        print(f"Found {len(microscopies)} microscopies for protein {self.gene}")
+        for m in microscopies:
+            print(m)
+        return microscopies
