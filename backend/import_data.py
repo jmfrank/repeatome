@@ -14,7 +14,7 @@ django.setup()
 
 from django.conf import settings
 from references.models import Reference
-from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics
+from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy
 from proteins.util.helpers import shortuuid
 from proteins.util.repeat_network_data import GetNetworkData
 import json
@@ -768,9 +768,68 @@ def update_PDB_from_uniprot(results):
     print(f"Updated {len(saved)} proteins with PDB ids")
 
 
+def update_microscopy():
+    raw_df =  load_dataframe_from_excel(settings.IMPORT_MICROSCOPY, sheet_name='Sheet1', dtype=str)
+    df = raw_df[raw_df['protein'].notnull()]
+    print(f"Found {len(df)} microscopy records to process")
+    for row in df.to_dict(orient='records'):
+        print(f"\n***Processing microscopy for protein {row['protein']}")
+        if len(ProteinTF.objects.filter(UNIPROT = row['protein'])) == 0:
+            print(f"Protein with UNIPROT {row['protein']} does not exist. Skipped.")
+            continue
+        uniprot = row['protein']
+        channels	= json.loads(row['channels'].strip())
+        # Placeholder if name is empty
+        print(f"Channels: {channels}")
+        # Do we need this?
+        name = f"{uniprot}:{channels['1']}|{channels['2']}"
+        # This is used to display in dropdown menu
+        display_name = f"{channels['1']}|{channels['2']}"
+
+        # The protein column in the spreadsheet contains the uniprot id      							
+        protein_obj = ProteinTF.objects.get(UNIPROT=uniprot)
+        gene = protein_obj.gene
+
+        if not protein_obj:
+            print("Protein {gene} does not exist. Skipped.")
+            continue
+
+        print(f"Adding Microscopy to protein: {gene}, uniprot: {uniprot}")
+
+        display_name = name
+        local_tiff_file	= row['local_tiff_file'].strip()
+        cell_type = row['cell_type'].strip()
+        pixel_size = row['pixel_size'].strip()
+        magnification = row['magnification'].strip()
+        expression = row['expression'].strip()
+        microscopy = row['microscopy'].strip()
+        description	= row['description'].strip()
+        url	= row['url'].strip()
+        obj = Microscopy(
+            id = shortuuid(),
+            proteintf = protein_obj,
+            name = name,
+            display_name = display_name,
+            url = url,
+            local_tiff_file = local_tiff_file,
+            cell_type = cell_type,
+            pixel_size = pixel_size,
+            magnification = magnification,
+            channels = channels,
+            expression = expression,
+            microscopy = microscopy,
+            description = description
+        )
+        print(f"Adding Microscopy: {obj}")
+        obj.save()
+
+
 def delete_all_records():
     # Delete all records in all tables
     print("DELETING ALL OBJECTS")
+    Microscopy.objects.all().delete()
+    ProteinReferences.objects.all().delete()
+    ProteinRepeats.objects.all().delete()
     ProteinTF.objects.all().delete()
     Repeat.objects.all().delete()
     Proteomics.objects.all().delete()
@@ -812,7 +871,14 @@ if __name__ == "__main__":
      
     elif command == 'update_proteomics':
         update_proteomics()
-        
+
+    elif command == 'update_microscopy':
+        # Download google sheet from https://docs.google.com/spreadsheets/d/1HOvL2E9wabhGQOcfUvCHYIz5tjmqXsIJ1N1cv5CBky0/edit?gid=0#gid=0
+        # Save it to local folder and set IMPORT_MICROSCOPY in settings file
+        # Before running this command delete existing microscopy records
+        Microscopy.objects.all().delete()
+        update_microscopy()
+
     elif command == 'get_proteomics_without_proteins':
         get_proteomics_without_proteins()
         
@@ -835,5 +901,6 @@ if __name__ == "__main__":
         print("- update_proteomics to update proteomics data in Proteomics table")
         print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")
         print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")
+        print("- update_microscopy overwrite microscopy table")
         print("- get_proteomics_without_proteins to import proteomics data without creating new ProteinTF objects")
         print("- network_data to update network data")

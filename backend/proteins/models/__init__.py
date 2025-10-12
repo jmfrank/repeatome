@@ -5,6 +5,7 @@ from .organism import Organism
 from .proteinTF import ProteinTF, ProteinRepeats, ProteinReferences
 from .proteomics import Proteomics
 from .repeat import Repeat
+from .microscopy import Microscopy
 from .gene_family import GeneFamily
 
 __all__ = [
@@ -17,4 +18,5 @@ __all__ = [
     "GeneFamily",
     "Excerpt",
     "Proteomics",
+    "Microscopy",
 ]

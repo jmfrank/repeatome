@@ -19,7 +19,7 @@ IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx
 IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
 IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
-
+IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/microscopy_data.xlsx"
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
