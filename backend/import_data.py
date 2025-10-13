@@ -140,11 +140,29 @@ def import_repeat_families():
         child_arr = row['children']
         if pd.notna(child_arr):
             # print(child_arr)
-            child_arr = child_arr.strip(' ').split(',')
+            child_arr = [x.strip() for x in child_arr.strip(' ').split(',')]
             for child in child_arr:
+                print(f"Mapping child {child} to parent {parent}")
                 parent_repeats_dict[child] = parent
 
     return parent_repeats_dict
+
+
+def update_repeat_families():
+    parent_repeats_dict = import_repeat_families()
+    for child, parent in parent_repeats_dict.items():
+        child_obj = get_obj_if_exists(Repeat, name=child)
+        parent_obj = get_obj_if_exists(Repeat, name=parent)
+        if child_obj and parent_obj:
+            print(f"Updating repeat {child} to have parent {parent}")
+            child_obj.parent_repeat = parent_obj
+            child_obj.save()
+        else:
+            if not child_obj:
+                print(f"Child repeat {child} does not exist")
+            if not parent_obj:
+                print(f"Parent repeat {parent} does not exist")
+
 
 def import_repeat():
     # (1) From repeats sheet we have name, dfam_id and parent organism id
@@ -770,6 +788,8 @@ def update_PDB_from_uniprot(results):
 
 def update_microscopy():
     raw_df =  load_dataframe_from_excel(settings.IMPORT_MICROSCOPY, sheet_name='Sheet1', dtype=str)
+    raw_df = raw_df.where(pd.notnull(raw_df), None)
+    # Filter rows where protein is not null
     df = raw_df[raw_df['protein'].notnull()]
     print(f"Found {len(df)} microscopy records to process")
     for row in df.to_dict(orient='records'):
@@ -778,7 +798,7 @@ def update_microscopy():
             print(f"Protein with UNIPROT {row['protein']} does not exist. Skipped.")
             continue
         uniprot = row['protein']
-        channels	= json.loads(row['channels'].strip())
+        channels	= json.loads(row['channels'])
         # Placeholder if name is empty
         print(f"Channels: {channels}")
         # Do we need this?
@@ -797,13 +817,13 @@ def update_microscopy():
         print(f"Adding Microscopy to protein: {gene}, uniprot: {uniprot}")
 
         display_name = name
-        local_tiff_file	= row['local_tiff_file'].strip()
-        cell_type = row['cell_type'].strip()
-        pixel_size = row['pixel_size'].strip()
-        magnification = row['magnification'].strip()
-        expression = row['expression'].strip()
-        microscopy = row['microscopy'].strip()
-        description	= row['description'].strip()
+        local_tiff_file	= row['local_tiff_file'].strip() if row['local_tiff_file'] else None
+        cell_type = row['cell_type'].strip() if row['cell_type'] else None
+        pixel_size = row['pixel_size'].strip() if row['pixel_size'] else None
+        magnification = row['magnification'].strip() if row['magnification'] else None
+        expression = row['expression'].strip() if row['expression'] else None
+        microscopy = row['microscopy'].strip() if row['microscopy'] else None
+        description	= row['description'].strip() if row['description'] else None
         url	= row['url'].strip()
         obj = Microscopy(
             id = shortuuid(),
@@ -857,6 +877,7 @@ if __name__ == "__main__":
         for org in Organism.objects.all():
             GetNetworkData(org.id)
         update_PDB_from_uniprot()
+        update_microscopy()
     elif command == 'import_repeat':
         import_repeat()
     
@@ -878,6 +899,9 @@ if __name__ == "__main__":
         # Before running this command delete existing microscopy records
         Microscopy.objects.all().delete()
         update_microscopy()
+
+    elif command == 'update_repeat_families':
+        update_repeat_families()
 
     elif command == 'get_proteomics_without_proteins':
         get_proteomics_without_proteins()
