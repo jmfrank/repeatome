@@ -10,7 +10,7 @@
 {% block extrahead %}
 {% load static %}
 <link rel='stylesheet' href="{% static 'base.css' %}">
-<link rel='stylesheet' href="{% static 'base_style.css' %}">
+{% comment %} <link rel='stylesheet' href="{% static 'base_style.css' %}"> {% endcomment %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'base_proj.js' %}"></script>
@@ -184,6 +184,16 @@ window.onload = function () {
   <h1 class="text-center name display-4">{{ protein.gene | safe }}</h1>
   <div class="text-center aliases" style="font-size: 20px;">a.k.a {{ protein.aliases_as_str | safe }}</div>
   <div class="text-center gene_family" style="font-size: 24px;">{{protein.gene_family.gene_family | safe}}</div>
+  
+  <div class="container-button" data-toggle="tooltip" data-placement="top" title="Add to collection">
+    <a class="btn collection-add-button" style='background-color:purple;', href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal">
+      <i class="fas fa-book d-none d-sm-inline"></i>
+        <a class='collection-add-button d-block d-sm-none' href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal" style="text-decoration: none;"><button type="button" class="btn btn-info btn-block"><i class="fas fa-book mr-2"></i>Add to collection</button>
+        </a>
+    </a>
+  </div>
+  {% favorite_button protein %}
+  
   <div class="attributes">
      <h3>Attributes</h3>
   </div>

@@ -1,5 +1,8 @@
 /* COMPILING SCSS SCRIPTS: 
-    sass --watch frontend/src/css/style.scss frontend/static/base.css */
+    sass --watch frontend/src/css/style.scss frontend/static/base.css 
+    
+    Note: if css not updating then hard refresh page with ctrl+shift+R
+    */
 
 
 @import "_options.scss";  // custom bootstrap overrides

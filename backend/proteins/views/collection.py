@@ -30,10 +30,10 @@ from .mixins import OwnableObject
 
 
 def serialized_proteins_response(queryset, format="json", filename="FPbase_proteins"):
-    from proteins.api.serializers import ProteinSerializer
+    from proteins.api.serializers import ProteinSerializer2
 
-    ProteinSerializer.Meta.on_demand_fields = ()
-    serializer = ProteinSerializer(queryset, many=True)
+    ProteinSerializer2.Meta.on_demand_fields = ()
+    serializer = ProteinSerializer2(queryset, many=True)
     if format == "csv":
         from django.http import StreamingHttpResponse
         from rest_framework_csv.renderers import CSVStreamingRenderer
@@ -65,9 +65,9 @@ class CollectionList(ListView):
 class CollectionDetail(DetailView):
     queryset = ProteinCollection.objects.all().prefetch_related(
         "proteins",
-        "proteins__states",
-        "proteins__states__spectra",
-        "proteins__default_state",
+        # "proteins__states",
+        # "proteins__states__spectra",
+        # "proteins__default_state",
     )
 
     def get(self, request, *args, **kwargs):
@@ -84,10 +84,11 @@ class CollectionDetail(DetailView):
 
         _ids = []
         for prot in self.object.proteins.all():
-            for state in prot.states.all():
-                _ids.extend(sp.id for sp in state.spectra.all())
+            # for state in prot.states.all():
+                # _ids.extend(sp.id for sp in state.spectra.all())
+            _ids.extend(prot.id)
 
-        context["spectra_ids"] = ",".join([str(i) for i in _ids])
+        # context["spectra_ids"] = ",".join([str(i) for i in _ids])
         return context
 
     def render_to_response(self, *args, **kwargs):
