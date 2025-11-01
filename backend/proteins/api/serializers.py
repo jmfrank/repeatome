@@ -13,7 +13,7 @@ class ProteinSerializer(ModelSerializer):
         model = ProteinTF
         fields = (
             # 'url',
-            "uuid",
+            "id",
             "gene",
             "slug",
             "seq",
@@ -37,7 +37,7 @@ class ProteinSerializer2(ModelSerializer):
         fields = (
             "gene",
             "slug",
-            "seq",
+            # "seq",
             # "agg",
             "doi",
             # "states",

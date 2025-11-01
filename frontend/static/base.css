@@ -1,6 +1,9 @@
 @charset "UTF-8";
 /* COMPILING SCSS SCRIPTS: 
-    sass --watch frontend/src/css/style.scss frontend/static/base.css */
+    sass --watch frontend/src/css/style.scss frontend/static/base.css 
+
+    Note: if css not updating then hard refresh page with ctrl+shift+R
+    */
 @import url("https://fonts.googleapis.com/css?family=Raleway:100,500,600");
 /*!
  * Bootstrap v4.6.2 (https://getbootstrap.com/)
@@ -23,7 +26,7 @@
   --gray: #868e96;
   --gray-dark: #343a40;
   --primary: rgb(72, 40, 96);
-  --secondary: #3085d6;
+  --secondary: rgb(61, 32, 83);
   --success: rgb(104, 68, 132);
   --info: rgb(81, 113, 255);
   --warning: #ffc107;
@@ -1540,21 +1543,21 @@ pre code {
 .table-secondary,
 .table-secondary > th,
 .table-secondary > td {
-  background-color: rgb(197.04, 220.84, 243.52);
+  background-color: rgb(200.68, 192.56, 206.84);
 }
 .table-secondary th,
 .table-secondary td,
 .table-secondary thead th,
 .table-secondary tbody + tbody {
-  border-color: rgb(147.36, 191.56, 233.68);
+  border-color: rgb(154.12, 139.04, 165.56);
 }
 
 .table-hover .table-secondary:hover {
-  background-color: rgb(175.7557258065, 208.2956451613, 239.3042741935);
+  background-color: rgb(188.1559493671, 178.1637974684, 195.7362025316);
 }
 .table-hover .table-secondary:hover > td,
 .table-hover .table-secondary:hover > th {
-  background-color: rgb(175.7557258065, 208.2956451613, 239.3042741935);
+  background-color: rgb(188.1559493671, 178.1637974684, 195.7362025316);
 }
 
 .table-success,
@@ -2296,35 +2299,35 @@ fieldset:disabled a.btn {
 
 .btn-secondary {
   color: #fff;
-  background: #3085d6 linear-gradient(180deg, rgb(79.05, 151.3, 220.15), #3085d6) repeat-x;
-  border-color: #3085d6;
+  background: rgb(61, 32, 83) linear-gradient(180deg, rgb(90.1, 65.45, 108.8), rgb(61, 32, 83)) repeat-x;
+  border-color: rgb(61, 32, 83);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .btn-secondary:hover {
   color: #fff;
-  background: rgb(36.9909274194, 113.6794354839, 186.7590725806) linear-gradient(180deg, rgb(69.6922883065, 134.8775201613, 196.9952116935), rgb(36.9909274194, 113.6794354839, 186.7590725806)) repeat-x;
-  border-color: rgb(34.8830645161, 107.2016129032, 176.1169354839);
+  background: rgb(40.7108695652, 21.3565217391, 55.3934782609) linear-gradient(180deg, rgb(72.8542391304, 56.4030434783, 85.3344565217), rgb(40.7108695652, 21.3565217391, 55.3934782609)) repeat-x;
+  border-color: rgb(33.947826087, 17.8086956522, 46.1913043478);
 }
 .btn-secondary:focus, .btn-secondary.focus {
   color: #fff;
-  background: rgb(36.9909274194, 113.6794354839, 186.7590725806) linear-gradient(180deg, rgb(69.6922883065, 134.8775201613, 196.9952116935), rgb(36.9909274194, 113.6794354839, 186.7590725806)) repeat-x;
-  border-color: rgb(34.8830645161, 107.2016129032, 176.1169354839);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(79.05, 151.3, 220.15, 0.5);
+  background: rgb(40.7108695652, 21.3565217391, 55.3934782609) linear-gradient(180deg, rgb(72.8542391304, 56.4030434783, 85.3344565217), rgb(40.7108695652, 21.3565217391, 55.3934782609)) repeat-x;
+  border-color: rgb(33.947826087, 17.8086956522, 46.1913043478);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(90.1, 65.45, 108.8, 0.5);
 }
 .btn-secondary.disabled, .btn-secondary:disabled {
   color: #fff;
-  background-color: #3085d6;
-  border-color: #3085d6;
+  background-color: rgb(61, 32, 83);
+  border-color: rgb(61, 32, 83);
   background-image: none;
 }
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
   color: #fff;
-  background-color: rgb(34.8830645161, 107.2016129032, 176.1169354839);
+  background-color: rgb(33.947826087, 17.8086956522, 46.1913043478);
   background-image: none;
-  border-color: rgb(32.7752016129, 100.7237903226, 165.4747983871);
+  border-color: rgb(27.1847826087, 14.2608695652, 36.9891304348);
 }
 .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(79.05, 151.3, 220.15, 0.5);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(90.1, 65.45, 108.8, 0.5);
 }
 
 .btn-success {
@@ -2551,28 +2554,28 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #3085d6;
-  border-color: #3085d6;
+  color: rgb(61, 32, 83);
+  border-color: rgb(61, 32, 83);
 }
 .btn-outline-secondary:hover {
   color: #fff;
-  background-color: #3085d6;
-  border-color: #3085d6;
+  background-color: rgb(61, 32, 83);
+  border-color: rgb(61, 32, 83);
 }
 .btn-outline-secondary:focus, .btn-outline-secondary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(48, 133, 214, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(61, 32, 83, 0.5);
 }
 .btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
-  color: #3085d6;
+  color: rgb(61, 32, 83);
   background-color: transparent;
 }
 .btn-outline-secondary:not(:disabled):not(.disabled):active, .btn-outline-secondary:not(:disabled):not(.disabled).active, .show > .btn-outline-secondary.dropdown-toggle {
   color: #fff;
-  background-color: #3085d6;
-  border-color: #3085d6;
+  background-color: rgb(61, 32, 83);
+  border-color: rgb(61, 32, 83);
 }
 .btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-secondary.dropdown-toggle:focus {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(48, 133, 214, 0.5);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(61, 32, 83, 0.5);
 }
 
 .btn-outline-success {
@@ -4590,15 +4593,15 @@ a.badge-primary:focus, a.badge-primary.focus {
 
 .badge-secondary {
   color: #fff;
-  background-color: #3085d6;
+  background-color: rgb(61, 32, 83);
 }
 a.badge-secondary:hover, a.badge-secondary:focus {
   color: #fff;
-  background-color: rgb(34.8830645161, 107.2016129032, 176.1169354839);
+  background-color: rgb(33.947826087, 17.8086956522, 46.1913043478);
 }
 a.badge-secondary:focus, a.badge-secondary.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(48, 133, 214, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(61, 32, 83, 0.5);
 }
 
 .badge-success {
@@ -4738,15 +4741,15 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-secondary {
-  color: rgb(24.96, 69.16, 111.28);
-  background: rgb(213.6, 230.6, 246.8) linear-gradient(180deg, rgb(219.81, 234.26, 248.03), rgb(213.6, 230.6, 246.8)) repeat-x;
-  border-color: rgb(197.04, 220.84, 243.52);
+  color: rgb(31.72, 16.64, 43.16);
+  background: rgb(216.2, 210.4, 220.6) linear-gradient(180deg, rgb(222.02, 217.09, 225.76), rgb(216.2, 210.4, 220.6)) repeat-x;
+  border-color: rgb(200.68, 192.56, 206.84);
 }
 .alert-secondary hr {
-  border-top-color: rgb(175.7557258065, 208.2956451613, 239.3042741935);
+  border-top-color: rgb(188.1559493671, 178.1637974684, 195.7362025316);
 }
 .alert-secondary .alert-link {
-  color: rgb(15.6164885496, 43.2706870229, 69.6235114504);
+  color: rgb(4.667826087, 2.4486956522, 6.3513043478);
 }
 
 .alert-success {
@@ -5082,17 +5085,17 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .list-group-item-secondary {
-  color: rgb(24.96, 69.16, 111.28);
-  background-color: rgb(197.04, 220.84, 243.52);
+  color: rgb(31.72, 16.64, 43.16);
+  background-color: rgb(200.68, 192.56, 206.84);
 }
 .list-group-item-secondary.list-group-item-action:hover, .list-group-item-secondary.list-group-item-action:focus {
-  color: rgb(24.96, 69.16, 111.28);
-  background-color: rgb(175.7557258065, 208.2956451613, 239.3042741935);
+  color: rgb(31.72, 16.64, 43.16);
+  background-color: rgb(188.1559493671, 178.1637974684, 195.7362025316);
 }
 .list-group-item-secondary.list-group-item-action.active {
   color: #fff;
-  background-color: rgb(24.96, 69.16, 111.28);
-  border-color: rgb(24.96, 69.16, 111.28);
+  background-color: rgb(31.72, 16.64, 43.16);
+  border-color: rgb(31.72, 16.64, 43.16);
 }
 
 .list-group-item-success {
@@ -5960,13 +5963,13 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-  background-color: #3085d6 !important;
+  background-color: rgb(61, 32, 83) !important;
 }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
 button.bg-secondary:hover,
 button.bg-secondary:focus {
-  background-color: rgb(34.8830645161, 107.2016129032, 176.1169354839) !important;
+  background-color: rgb(33.947826087, 17.8086956522, 46.1913043478) !important;
 }
 
 .bg-success {
@@ -6034,7 +6037,7 @@ button.bg-dark:focus {
 }
 
 .bg-gradient-secondary {
-  background: #3085d6 linear-gradient(180deg, rgb(79.05, 151.3, 220.15), #3085d6) repeat-x !important;
+  background: rgb(61, 32, 83) linear-gradient(180deg, rgb(90.1, 65.45, 108.8), rgb(61, 32, 83)) repeat-x !important;
 }
 
 .bg-gradient-success {
@@ -6114,7 +6117,7 @@ button.bg-dark:focus {
 }
 
 .border-secondary {
-  border-color: #3085d6 !important;
+  border-color: rgb(61, 32, 83) !important;
 }
 
 .border-success {
@@ -9137,11 +9140,11 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .text-secondary {
-  color: #3085d6 !important;
+  color: rgb(61, 32, 83) !important;
 }
 
 a.text-secondary:hover, a.text-secondary:focus {
-  color: rgb(30.6673387097, 94.2459677419, 154.8326612903) !important;
+  color: rgb(20.4217391304, 10.7130434783, 27.7869565217) !important;
 }
 
 .text-success {
@@ -10246,7 +10249,7 @@ h6.dropdown-header:after {
   font-weight: 200;
 }
 .protein .attributes .table-header th {
-  background-color: #3085d6;
+  background-color: rgb(61, 32, 83);
   border-color: rgba(255, 255, 255, 0.05);
   color: white;
   text-align: center;
@@ -10395,7 +10398,7 @@ h6.dropdown-header:after {
 }
 
 #seq-badge {
-  color: #3085d6;
+  color: rgb(61, 32, 83);
   font-size: 1.25rem;
   margin-left: 0.5rem;
 }
@@ -10464,6 +10467,22 @@ h6.dropdown-header:after {
 
 .repeat {
   font-size: 0.9rem;
+  /* Karyoplot LOGO*/
+}
+.repeat #karyoplot-info {
+  /* margin: auto; */
+  /* text-align: center; */
+  /* background-color: red !important; */
+  /* padding-top: 300px !important; */
+  /* border: 1px solid black !important; */
+  width: 100% !important;
+  height: auto !important;
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  position: relative !important;
+  height: 700px !important;
+  object-fit: contain !important;
 }
 .repeat .name {
   padding-top: 1.5rem;
@@ -10534,7 +10553,7 @@ h6.dropdown-header:after {
   font-weight: 200;
 }
 .repeat .attributes .table-header th {
-  background-color: #3085d6;
+  background-color: rgb(61, 32, 83);
   border-color: rgba(255, 255, 255, 0.05);
   color: white;
   text-align: center;
@@ -10682,7 +10701,7 @@ h6.dropdown-header:after {
 }
 
 #seq-badge {
-  color: #3085d6;
+  color: rgb(61, 32, 83);
   font-size: 1.25rem;
   margin-left: 0.5rem;
 }
@@ -11075,7 +11094,7 @@ h6 {
   }
 }
 .fretpage .table-header th {
-  background-color: #3085d6;
+  background-color: rgb(61, 32, 83);
   border-color: rgba(255, 255, 255, 0.05);
   color: white;
   text-align: center;
@@ -12027,7 +12046,7 @@ circle {
   margin: 3rem 1rem 0.3rem;
 }
 .noUi-slider .noUi-connect {
-  background-color: rgb(72.8, 132.4024096386, 189.2);
+  background-color: rgb(59.4215686275, 43.5, 71.5);
 }
 .noUi-slider .noUi-tooltip {
   /*  position: relative;*/
@@ -12059,8 +12078,8 @@ circle {
   width: 0;
   position: absolute;
   pointer-events: none;
-  border-color: rgba(56.8362903226, 119.729848426, 179.6637096774, 0);
-  border-top-color: rgb(91.5342741935, 145.0082102604, 195.9657258065);
+  border-color: rgba(46.5525895141, 31.6168478261, 57.8831521739, 0);
+  border-top-color: rgb(72.597655584, 53.1456521739, 87.3543478261);
   border-width: 4px;
   margin-left: -4px;
 }
@@ -12111,35 +12130,35 @@ circle {
 }
 .chartaxis-options .btn {
   color: #fff;
-  background: rgb(56.8362903226, 119.729848426, 179.6637096774) linear-gradient(180deg, rgb(86.5608467742, 140.0203711621, 190.9641532258), rgb(56.8362903226, 119.729848426, 179.6637096774)) repeat-x;
-  border-color: rgb(56.8362903226, 119.729848426, 179.6637096774);
+  background: rgb(46.5525895141, 31.6168478261, 57.8831521739) linear-gradient(180deg, rgb(77.819701087, 65.1243206522, 87.4506793478), rgb(46.5525895141, 31.6168478261, 57.8831521739)) repeat-x;
+  border-color: rgb(46.5525895141, 31.6168478261, 57.8831521739);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 .chartaxis-options .btn:hover {
   color: #fff;
-  background: rgb(47.6439516129, 100.3655071901, 150.6060483871) linear-gradient(180deg, rgb(78.747358871, 123.5606811115, 166.265141129), rgb(47.6439516129, 100.3655071901, 150.6060483871)) repeat-x;
-  border-color: rgb(44.5798387097, 93.9107267781, 140.9201612903);
+  background: rgb(26.6572090793, 18.1046195652, 33.1453804348) linear-gradient(180deg, rgb(60.9086277174, 53.6389266304, 66.4235733696), rgb(26.6572090793, 18.1046195652, 33.1453804348)) repeat-x;
+  border-color: rgb(20.025415601, 13.6005434783, 24.8994565217);
 }
 .chartaxis-options .btn:focus, .chartaxis-options .btn.focus {
   color: #fff;
-  background: rgb(47.6439516129, 100.3655071901, 150.6060483871) linear-gradient(180deg, rgb(78.747358871, 123.5606811115, 166.265141129), rgb(47.6439516129, 100.3655071901, 150.6060483871)) repeat-x;
-  border-color: rgb(44.5798387097, 93.9107267781, 140.9201612903);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(86.5608467742, 140.0203711621, 190.9641532258, 0.5);
+  background: rgb(26.6572090793, 18.1046195652, 33.1453804348) linear-gradient(180deg, rgb(60.9086277174, 53.6389266304, 66.4235733696), rgb(26.6572090793, 18.1046195652, 33.1453804348)) repeat-x;
+  border-color: rgb(20.025415601, 13.6005434783, 24.8994565217);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 0.2rem rgba(77.819701087, 65.1243206522, 87.4506793478, 0.5);
 }
 .chartaxis-options .btn.disabled, .chartaxis-options .btn:disabled {
   color: #fff;
-  background-color: rgb(56.8362903226, 119.729848426, 179.6637096774);
-  border-color: rgb(56.8362903226, 119.729848426, 179.6637096774);
+  background-color: rgb(46.5525895141, 31.6168478261, 57.8831521739);
+  border-color: rgb(46.5525895141, 31.6168478261, 57.8831521739);
   background-image: none;
 }
 .chartaxis-options .btn:not(:disabled):not(.disabled):active, .chartaxis-options .btn:not(:disabled):not(.disabled).active, .show > .chartaxis-options .btn.dropdown-toggle {
   color: #fff;
-  background-color: rgb(44.5798387097, 93.9107267781, 140.9201612903);
+  background-color: rgb(20.025415601, 13.6005434783, 24.8994565217);
   background-image: none;
-  border-color: rgb(41.5157258065, 87.4559463661, 131.2342741935);
+  border-color: rgb(13.3936221228, 9.0964673913, 16.6535326087);
 }
 .chartaxis-options .btn:not(:disabled):not(.disabled):active:focus, .chartaxis-options .btn:not(:disabled):not(.disabled).active:focus, .show > .chartaxis-options .btn.dropdown-toggle:focus {
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(86.5608467742, 140.0203711621, 190.9641532258, 0.5);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125), 0 0 0 0.2rem rgba(77.819701087, 65.1243206522, 87.4506793478, 0.5);
 }
 
 .state-col {
@@ -13683,7 +13702,7 @@ h6 {
   }
 }
 .fretpage .table-header th {
-  background-color: #3085d6;
+  background-color: rgb(61, 32, 83);
   border-color: rgba(255, 255, 255, 0.05);
   color: white;
   text-align: center;
@@ -14221,6 +14240,10 @@ a.object-flag:active:focus {
   margin-left: 4px;
   background-color: #fafafa;
   border: 1px solid #d4d4d4;
+}
+
+.favorite {
+  background-color: pink;
 }
 
 .network_tooltip {

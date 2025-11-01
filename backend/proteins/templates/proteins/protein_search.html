@@ -11,7 +11,7 @@
 
 {% block extrahead %}
     <link rel="preload" href="{% static 'images/GFP_spinner.gif' %}" as="image">
-    <link rel='stylesheet' href="{% static 'base_style.css' %}">
+    {% comment %} <link rel='stylesheet' href="{% static 'base_style.css' %}"> {% endcomment %}
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="{% static 'algolia.js' %}"></script>
     <script src="{% static 'search_logic.js' %}"></script>

@@ -28,8 +28,12 @@ IMPORT_FAMILY_DATA = Path(__file__).resolve(strict=True).parent.parent.parent.pa
 IMPORT_DATA_FILE = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent / 'repeatome_data/satellite_binders_database.xlsx'
 IMPORT_ENRICHMENT_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = "/Users/caris/Documents/Repeatome_Project/repeatome_colab/repeatome_data/TFs_summary_Qscore.csv"
-
-
+IMPORT_DATA_FOLDER = Path(__file__).resolve(strict=True).parent.parent.parent.parent.parent / 'repeatome_data/'
+# IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
+# IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
+# IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
+# IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
+IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/microscopy_data.xlsx"
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -144,18 +148,23 @@ FIXTURE_DIRS = (str(APPS_DIR / "fixtures"),)
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "postmaster@mg.fpbase.org"
+EMAIL_HOST_PASSWORD = "<your_mailgun_smtp_password>"
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("Talley Lambert", "talley.lambert+fpbase@gmail.com")]
+ADMINS = [("Carissa Penn", "carissapenn123@gmail.com")]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = [*ADMINS, ("Anna Jost", "anna_jost@hms.harvard.edu")]
 
-EMAIL_SUBJECT_PREFIX = "[FPbase] "
-SERVER_EMAIL = "FPbase <info@mg.fpbase.org>"
-DEFAULT_FROM_EMAIL = "FPbase <info@mg.fpbase.org>"
+EMAIL_SUBJECT_PREFIX = "[Repeatome] "
+SERVER_EMAIL = "Repeatome <info@mg.fpbase.org>"
+DEFAULT_FROM_EMAIL = "Repeatome <info@mg.fpbase.org>"
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -320,8 +329,10 @@ AUTHENTICATION_BACKENDS = [
 
 # Some really nice defaults
 ACCOUNT_AUTHENTICATION_METHOD = "username"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 ACCOUNT_ADAPTER = "repeatome.users.adapters.AccountAdapter"

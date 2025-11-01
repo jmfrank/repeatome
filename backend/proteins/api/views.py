@@ -39,7 +39,7 @@ class ProteinListAPIView(ListAPIView):
     # queryset = ProteinTF.objects.all().prefetch_related("states", "transitions").select_related("default_state")
     queryset = ProteinTF.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class = ProteinSerializer
+    serializer_class = ProteinSerializer2
     lookup_field = "slug"  # Don't use Protein.id!
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProteinFilter

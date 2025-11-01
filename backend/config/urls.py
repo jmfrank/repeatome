@@ -29,7 +29,7 @@ sitemaps = {
     "references": ReferencesSitemap(),
     "proteins": ProteinSitemap(),
     "organisms": OrganismsSitemap(),
-    "microscopes": MicroscopeSitemap(),
+    # "microscopes": MicroscopeSitemap(),
     "collections": ProteinCollectionSitemap(),
 }
 
@@ -122,8 +122,8 @@ urlpatterns = [  # noqa: RUF005
         cache_page(60 * 30)(ReferenceListView.as_view()),
         name="reference-list",
     ),
+    path("avatar/", include(("avatar.urls", "avatar"), namespace="avatar")),
     path("fav/", include("favit.urls")),
-    path("avatar/", include("avatar.urls")),
     re_path(r"^test500/", repeatome.views.test500),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
     path("graphql/batch/", csrf_exempt(GraphQLView.as_view(batch=True))),

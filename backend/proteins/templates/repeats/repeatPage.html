@@ -9,7 +9,7 @@
 
 {% block extrahead %}
 {% load static %}
-<link rel='stylesheet' href="{% static 'base_style.css' %}">
+{% comment %} <link rel='stylesheet' href="{% static 'base_style.css' %}"> {% endcomment %}
 <link rel='stylesheet' href="{% static 'base.css' %}">
 <script src="{% static 'base_proj.js' %}"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -178,13 +178,14 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     {% endif %}
     </div>
 
-    <div id="karyoplot-info" >
-      {% if repeat.karyoplot_exists %}
+    
+    {% if repeat.karyoplot_exists %}
+      <div id="karyoplot-info" >
         <svg width=auto height=auto style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
           <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
         </svg>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
     
     <div class="attribute-data">
         {% if repeat.dfam_id %}

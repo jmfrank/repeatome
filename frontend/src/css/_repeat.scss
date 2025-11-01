@@ -1,4 +1,4 @@
-// single protein pages
+// single repeat pages
 // ------------------------
 
 .fpbase-id {
@@ -12,6 +12,24 @@
 
 .repeat {
 	font-size: 0.9rem;
+
+  /* Karyoplot LOGO*/
+
+  #karyoplot-info {
+      /* margin: auto; */
+      /* text-align: center; */
+      /* background-color: red !important; */
+      /* padding-top: 300px !important; */
+      /* border: 1px solid black !important; */
+      width: 100% !important; 
+      height: auto !important; 
+      display: flex;
+      justify-content: center !important;
+      align-items: center;
+      position: relative !important;
+      height: 700px !important;
+      object-fit: contain !important;
+  }
 
 	.name {
 		padding-top: 1.5rem;

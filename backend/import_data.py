@@ -702,6 +702,7 @@ def submit_uniprot_to_pdb_mapping(uniprot_ids):
 
     job_id = response_data.get("jobId")
     print("Job id: {job_id}")
+    print(job_id)
     return job_id
 
 
@@ -740,7 +741,7 @@ def get_uniprot_to_pdb_mapping_results(job_id):
     return all_results
 
 
-def update_PDB_from_uniprot(results):
+def update_PDB_from_uniprot():
 
     protein_objs = ProteinTF.objects.all()
     uniprot_ids = [obj.UNIPROT for obj in protein_objs if obj.UNIPROT]
