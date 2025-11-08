@@ -351,7 +351,7 @@ def import_protein():
                 cloned_fusion=row['cloned_fusion'],
                 imaging_results=row['imaging_results'],
                 notes=row['notes'],
-                articles=row['articles'],
+                # articles=row['articles'],
                 ENSEMBL=row['ensembl'],
                 UNIPROT=row['uniprot'],
                 PDB=row['PDB'],

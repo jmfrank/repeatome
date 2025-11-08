@@ -4,7 +4,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="collectionModalLongTitle"><strong>Add {{ protein.name }} to your collection</strong></h4>
+        <h4 class="modal-title" id="collectionModalLongTitle"><strong>Add {{ protein.gene }} to your collection</strong></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -12,10 +12,15 @@
       {% if user.is_authenticated %}
       <div class="container">
         <p class='mt-4' id="currentmemberships"></p>
-    		<form id="collectionForm" class='mt-4 mb-2' data-action-url="{% url 'proteins:add_to_collection' %}">
+    		<form id="collectionForm" class='mt-4 mb-2' data-action-url="{% url 'proteins:add_to_collection' %}" action="{% url 'proteins:add_to_collection' %}" method="post">
           <div class="input-group" id="collectionSelection">
+              <select name="collectionChoice" class="form-control custom-select" id="collectionSelect">
+                {% for collection in collections %}
+                  <option value='{{collection.id}}'>{{ collection.name }}</option>
+                {% endfor %}
+              </select>
               <div class="input-group-append">
-                <button class="btn btn-info" type="submit" >Add</button>
+                <button class="btn btn-info" type="submit">Add</button>
               </div>
           </div>
           <input type="hidden" name="protein" class='hidden' value="{{ protein.id }}">
@@ -40,3 +45,22 @@
     </div>
   </div>
 </div>
+
+
+<script>
+document.getElementById('collectionForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const url = form.action;
+  const fd = new FormData(form);
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+    },
+    body: fd
+  });
+});
+</script>

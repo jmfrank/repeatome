@@ -185,14 +185,16 @@ window.onload = function () {
   <div class="text-center aliases" style="font-size: 20px;">a.k.a {{ protein.aliases_as_str | safe }}</div>
   <div class="text-center gene_family" style="font-size: 24px;">{{protein.gene_family.gene_family | safe}}</div>
   
-  <div class="container-button" data-toggle="tooltip" data-placement="top" title="Add to collection">
-    <a class="btn collection-add-button" style='background-color:purple;', href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal">
-      <i class="fas fa-book d-none d-sm-inline"></i>
-        <a class='collection-add-button d-block d-sm-none' href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal" style="text-decoration: none;"><button type="button" class="btn btn-info btn-block"><i class="fas fa-book mr-2"></i>Add to collection</button>
-        </a>
-    </a>
+  <div class="like_buttons float-sm-right">
+    <div class="container-button" data-toggle="tooltip" data-placement="top" title="Add to collection">
+      <a class="btn collection-add-button" style='background-color:purple;', href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal">
+        <i class="fas fa-book d-none d-sm-inline"></i>
+          <a class='collection-add-button d-block d-sm-none' href="#" data-action-url="{% url 'proteins:add_to_collection' %}?id={{ protein.id }}" data-toggle="modal" data-target="#collectionModal" style="text-decoration: none;"><button type="button" class="btn btn-info btn-block"><i class="fas fa-book mr-2"></i>Add to collection</button>
+          </a>
+      </a>
+    </div>
+    {% favorite_button protein %}
   </div>
-  {% favorite_button protein %}
   
   <div class="attributes">
      <h3>Attributes</h3>
@@ -252,7 +254,7 @@ window.onload = function () {
            {% comment %} <td>{{ repeat.proteomics | safe }}</td> {% endcomment %}
            <td>{{ repeat.parental_organism.scientific_name | safe }}</td>
          </tr>
-         {%endfor%}
+         {% endfor %}
        </tbody>
      </table>
    </div>
@@ -461,6 +463,100 @@ window.onload = function () {
    </div>
 
 
-
+   <!-- MODALS -->
+    {% include 'proteins/modals/_add_to_collection_modal.html' with user=user protein=protein collections=collections %}
 
 {% endblock content %}
+
+{% block javascript %}
+<script>
+// --- CSRF helper (standard Django pattern) ---
+function getCookie(name) {
+  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return m ? m.pop() : '';
+}
+
+// --- Favorite click handler ---
+document.addEventListener('click', async (e) => {
+  const link = e.target.closest('a.favorite');
+  if (!link) return;
+
+  e.preventDefault(); // stop page navigation
+
+  const url   = link.dataset.actionUrl;
+  const model = link.dataset.model;
+  const rawId = link.dataset.target_object_id;  // "target_123"
+  const id    = rawId ? rawId.replace(/^target_/, '') : null;
+
+  const countEl = link.parentElement.querySelector('.fav-count');
+  const heartBi = link.querySelector('.bi');     // bootstrap heart
+  const heartFa = link.querySelector('.fa-heart'); // fontawesome heart (if present)
+
+  if (!url || !model || !id) {
+    console.warn('Missing favorite data attributes', { url, model, id });
+    return;
+  }
+
+  // visual feedback (toggle state before server response)
+  const wasFilled = heartBi?.classList.contains('bi-heart-fill') || heartFa?.classList.contains('fa-heart');
+  if (heartBi) heartBi.classList.toggle('bi-heart-fill', !wasFilled);
+  if (heartBi) heartBi.classList.toggle('bi-heart', wasFilled);
+  if (heartBi) heartBi.classList.toggle('text-danger', !wasFilled);
+
+  if (heartFa) heartFa.classList.toggle('far', wasFilled);
+  if (heartFa) heartFa.classList.toggle('fas', !wasFilled);
+  if (heartFa) heartFa.classList.toggle('text-danger', !wasFilled);
+
+  try {
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': getCookie('csrftoken'),
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body: new URLSearchParams({
+        target_model: model,
+        target_object_id: id,
+      }).toString(),
+    });
+
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json(); // {status:"added"|"deleted", fav_count:<int>}
+    console.log('Favorite response:', data);
+
+    // update badge count if returned
+    if (countEl && typeof data.fav_count === 'number') {
+      countEl.textContent = data.fav_count;
+    }
+
+    // adjust icon according to server result
+    const added = data.status === 'added';
+    if (heartBi) {
+      heartBi.classList.toggle('bi-heart-fill', added);
+      heartBi.classList.toggle('bi-heart', !added);
+      heartBi.classList.toggle('text-danger', added);
+    }
+    if (heartFa) {
+      heartFa.classList.toggle('fas', added);
+      heartFa.classList.toggle('far', !added);
+      heartFa.classList.toggle('text-danger', added);
+    }
+
+  } catch (err) {
+    console.error('Favorite toggle failed:', err);
+    // revert optimistic UI on error
+    if (heartBi) {
+      heartBi.classList.toggle('bi-heart-fill');
+      heartBi.classList.toggle('bi-heart');
+      heartBi.classList.toggle('text-danger');
+    }
+    if (heartFa) {
+      heartFa.classList.toggle('fas');
+      heartFa.classList.toggle('far');
+      heartFa.classList.toggle('text-danger');
+    }
+  }
+});
+</script>
+{% endblock javascript %}

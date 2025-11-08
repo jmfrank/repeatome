@@ -531,6 +531,38 @@ function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
     if (!hasFitRef.current) { setTimeout(fitToView, 0); hasFitRef.current = true; }
   }, [karyos, beds, visibleFamilies, familyColor, selectedId]);
 
+  // zooming
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    const handleWheel = (e) => {
+      // now this works; listener is non-passive
+      e.preventDefault();
+
+      // zoom to cursor (same logic you had)
+      const factor = Math.pow(1.0015, e.deltaY);
+      const rect = svg.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+
+      setView((v) => {
+        const cx = v.x + px * v.w;
+        const cy = v.y + py * v.h;
+        const newW = Math.max(50, Math.min(5000, v.w * factor));
+        const newH = Math.max(50, Math.min(5000, v.h * factor));
+        return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
+      });
+    };
+
+    // 👇 non-passive wheel listener
+    svg.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      svg.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   // Toolbar
   const doZoomIn  = ()=>{ const svg=svgRef.current; if (!svg) return; const r=svg.getBoundingClientRect(); zoomBy(1.2, r.width/2, r.height/2); };
   const doZoomOut = ()=>{ const svg=svgRef.current; if (!svg) return; const r=svg.getBoundingClientRect(); zoomBy(1/1.2, r.width/2, r.height/2); };

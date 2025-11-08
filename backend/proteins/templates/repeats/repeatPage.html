@@ -180,8 +180,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 
     
     {% if repeat.karyoplot_exists %}
-      <div id="karyoplot-info" >
-        <svg width=auto height=auto style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
+      <div id="karyoplot-info" style="overflow: visible;">
+        <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
           <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
         </svg>
       </div>
