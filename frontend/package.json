@@ -67,9 +67,9 @@
     "webpack-dev-server": "^4.15.0"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve --mode development --hot --open",
+    "dev": "NODE_ENV=development webpack serve --mode development --hot --open",
     "start": "webpack-dev-server --mode development",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build": "webpack --mode production",
     "clean": "pnpm exec -- rm -rf dist"
   },
   "browserslist": {

@@ -99,16 +99,18 @@ class CollectionDetail(DetailView):
 
 @login_required
 def collection_remove(request):
+    print("removing")
     if not is_ajax(request):
         return HttpResponseNotAllowed([])
     try:
-        protein = int(request.POST["target_protein"])
+        protein = request.POST["target_protein"]
         collection = int(request.POST["target_collection"])
+        print(protein, collection)
     except (KeyError, ValueError):
         return HttpResponseBadRequest()
 
     col = get_object_or_404(ProteinCollection, id=collection)
-
+    print(col)
     if col.owner != request.user:
         return HttpResponseNotAllowed([])
     col.proteins.remove(protein)
@@ -121,6 +123,7 @@ def add_to_collection(request):
         return HttpResponseNotAllowed([])
 
     if request.method == "GET":
+        print("COLLECTION GET")
         qs = ProteinCollection.objects.filter(owner=request.user)
         widget = forms.Select(attrs={"class": "form-control custom-select", "id": "collectionSelect"})
         choicefield = forms.ChoiceField(choices=qs.values_list("id", "name"), widget=widget)
@@ -137,9 +140,12 @@ def add_to_collection(request):
         return JsonResponse(response)
 
     elif request.method == "POST":
+        print("COLLECTION")
+        print(ProteinCollection.objects.get(id=request.POST.get("collectionChoice")))
+        print(request.POST.get("protein"))
         try:
             collection = ProteinCollection.objects.get(id=request.POST.get("collectionChoice"))
-            collection.proteins.add(int(request.POST.get("protein")))
+            collection.proteins.add(request.POST.get("protein"))
             status = "success"
         except Exception:
             status = "error"

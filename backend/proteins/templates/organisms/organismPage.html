@@ -34,10 +34,23 @@
 
   <br>
   <h5 class='pt-3'><strong>Network Graph</strong></h5>
-  <div id="network-container" style="position: relative;">
-    <div class='mb-0' id="network" data-slug='{{protein.slug}}' style='height:500px; position: relative;'>
-    </div>
-  </div>
+  {% with oid=object.id|default:organism.id|stringformat:"s"|default:"" %}
+    <!-- DEBUG: oid renders as “[{{ oid }}]” -->
+    {% if oid %}
+      {% with json_path='repeat_network_db_'|add:oid|add:'.json' %}
+        <div id="network-container"
+            style="position: relative; width:100%; height:600px;"
+            data-network="{% static json_path %}">
+        </div>
+      {% endwith %}
+    {% else %}
+      <!-- No object.id / organism.id available here -->
+      <div id="network-container"
+          style="position: relative; width:100%; height:600px;"
+          data-network="">
+      </div>
+    {% endif %}
+  {% endwith %}
 
   <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
   {% with proteins=object.proteinTF.all removebutton=False %}
@@ -47,6 +60,7 @@
   {% endwith %}
 
   {% render_bundle 'karyotypeViewer' %}
+  {% render_bundle 'network' %}
 
 {% endblock content %}
 

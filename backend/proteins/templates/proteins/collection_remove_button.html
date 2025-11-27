@@ -1,4 +1,49 @@
 {% load i18n %}
-<a class="btn btn-sm collection-remove" href='' data-action-url="{% url 'proteins:collection-remove' %}" data-object="{{ target_protein }}" data-collection="{{ target_collection }}">
-  <i class="fas fa-times-circle text-danger"></i>
+<a class="btn btn-sm collection-remove" href='' data-action-url="{% url 'proteins:collection-remove' %}" data-target-protein="{{ target_protein }}" data-target-collection="{{ target_collection }}">
+  <i class="bi bi-x-circle-fill text-danger"></i>
 </a>
+
+<script>
+function getCookie(name) {
+  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return m ? m.pop() : '';
+}
+
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.collection-remove');
+  if (!btn) return;
+
+  e.preventDefault(); // stop <a> navigation immediately
+  console.log('remove clicked', btn.dataset); // should log on click
+
+  const url = btn.dataset.actionUrl || '/ajax/remove_from_collection/';
+  const protein = btn.dataset.targetProtein;
+  const collection = btn.dataset.targetCollection;
+
+  if (!protein || !collection) {
+    console.warn('Missing ids', { protein, collection });
+    return;
+  }
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': getCookie('csrftoken'),
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+    body: new URLSearchParams({
+      target_protein: protein,
+      target_collection: collection
+    }).toString(),
+  });
+
+  console.log('remove response status:', resp.status);
+  if (!resp.ok) return;
+
+  const data = await resp.json();
+  if (data.status === 'deleted') {
+    (btn.closest('[data-protein-row]') || btn.closest('li') || btn.closest('tr') || btn.parentElement)?.remove();
+  }
+});
+</script>

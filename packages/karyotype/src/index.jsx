@@ -1,13 +1,16 @@
 // src/index.jsx
 import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App"; // your main app component
-import "./index.css"
+import { createRoot } from "react-dom/client";   // ✅ named import
+import App from "./App";
+import "./index.css";
 
-// Find the root div in your HTML
 const rootElement = document.getElementById("karyotype_div");
+if (!rootElement) {
+  throw new Error("Missing <div id=\"karyotype_div\"> in your HTML/template");
+}
 
-ReactDOM.createRoot(rootElement).render(
+const root = createRoot(rootElement);
+root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>

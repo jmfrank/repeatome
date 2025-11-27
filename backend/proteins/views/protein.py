@@ -46,7 +46,7 @@ from references.models import Reference  # breaks application modularity
 from ..forms import (
     ProteinForm,
 )
-from ..models import Excerpt, Organism, ProteinTF
+from ..models import Excerpt, Organism, ProteinTF, ProteinCollection
 
 from pyjaspar import jaspardb
 
@@ -227,10 +227,10 @@ class ProteinDetailView2(DetailView):
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
-        #  print(self.object)
         context = self.get_context_data(object=self.object)
         context['chart_data'] = get_chart_expression_data(self.object)
         context['organ_data'] = get_chart_organ_data()
+        context['collections'] = ProteinCollection.objects.all()
         #  print(context['protein'].repeats.all()[0].parental_organism)
         # print(context['protein'].primary_reference)
         return render(request, 'proteins/proteinPage.html', context)

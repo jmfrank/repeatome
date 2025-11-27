@@ -102,7 +102,8 @@ module.exports = {
     // simpleSpectraViewer: "./src/simple-spectra-viewer.js",
     microscopeForm: "./src/microscope-form.js",
     // blast: "./src/blast-app.js",
-    karyotypeViewer: './src/karyotype.js'
+    karyotypeViewer: './src/karyotype.js',
+    network: './src/network.js'
   },
   output: {
     path: path.resolve("./dist/"),
@@ -117,6 +118,10 @@ module.exports = {
       "@repeatome/karyotype": path.resolve(
         __dirname,
         '../packages/karyotype/src/index.jsx'
+      ),
+      "@repeatome/network": path.resolve(
+        __dirname,
+        '../packages/network/src/index.jsx'
       )
     //   "@fpbase/spectra": path.resolve(
     //     __dirname,

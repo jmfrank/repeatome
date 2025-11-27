@@ -27,6 +27,7 @@ class OrganismDetailView(DetailView):
     model = Organism
     queryset = Organism.objects.all().prefetch_related("proteinTF__repeats")
     template_name = "organisms/organismPage.html"
+    # json_filename = f"repeat_network_db_{organism.id}.json"
     
     def get(self, request, *args, **kwargs):
         slug = kwargs.get("pk")
