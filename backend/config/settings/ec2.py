@@ -79,10 +79,6 @@ if env("MAILGUN_API_KEY", default=False) and env("MAILGUN_DOMAIN", default=False
     }
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-#ALLOWED_HOSTS = env.list(
-#    "DJANGO_ALLOWED_HOSTS",
-#    default=["fpbase.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1", "repeatome-dev2-load-balancer-1437249466.us-east-1.elb.amazonaws.com"],
-#)
 
 ALLOWED_HOSTS = [
         "*",
@@ -90,7 +86,8 @@ ALLOWED_HOSTS = [
         "172.31.21.8",
         "13.222.167.56",
         "repeatome-dev2-load-balancer-1437249466.us-east-1.elb.amazonaws.com",
-        "135.180.58.132"
+        "135.180.58.132",
+        "www.askperkins.com"
 ]
 
 # CACHING
@@ -321,4 +318,11 @@ if REDIS_URL.startswith("rediss://"):
     REDIS_URL += "?ssl_cert_reqs=none"
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.askperkins.com",
+    # Add other trusted origins as needed
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
