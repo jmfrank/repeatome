@@ -180,19 +180,6 @@ if os.getenv("DESKTOP_LOG"):
 
 X_FRAME_OPTIONS = "ALLOW-FROM http://127.0.0.1:8000"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
