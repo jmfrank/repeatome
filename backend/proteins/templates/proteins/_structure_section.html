@@ -53,6 +53,7 @@
             data-name="{{ item.name }}"
             data-expression="{{ item.expression }}"
             data-celltype="{{ item.cell_type }}"
+            data-pixelsize="{{ item.pixel_size }}"
             daata-channels="{{ item.channels_as_str }}"
             data-magnification="{{ item.magnification }}"
             data-description="{{ item.description }}"
@@ -62,14 +63,14 @@
           </option>
         {% endfor %}
         <option value="N/A" 
-                data-name="N/A"
-                data-expression="N/A"
-                data-celltype="N/A"
-                data-pixelsize="N/A"
-                data-channels="N/A"
-                data-magnification="N/A"
-                data-description="N/A"
-                data-description="N/A"
+                data-name="N/A" 
+                data-expression="N/A" 
+                data-celltype="N/A" 
+                data-pixelsize="N/A" 
+                data-channels="N/A" 
+                data-magnification="N/A" 
+                data-description="N/A" 
+                data-url="N/A" 
                 data-miscroscopy="N/A">
                   N/A
         </option>
@@ -251,40 +252,40 @@ molstarPluginPdb.render('litemol-viewer', pdbOptions);
 molstarPluginAf3.render('litemol-viewer-af3', af3Options);
 
 // Display microscopy div
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
-      const microscopy_select = document.getElementById('microscopy-select');
-      const microscopy_info = document.getElementById('microscopy-info');
-      const microscopy_viewer = document.getElementById('microscopy-viewer');
+  const microscopy_select = document.getElementById('microscopy-select');
+  const microscopy_info = document.getElementById('microscopy-info');
+  const microscopy_viewer = document.getElementById('microscopy-viewer');
 
-      microscopy_select.addEventListener('change', function() {
-          const selectedOption = this.options[this.selectedIndex];
-          const mName = selectedOption.dataset.name;
-          const mCellType = selectedOption.dataset.celltype;
-          const mPixelSize = selectedOption.dataset.pixelsize;
-          const mMagnification = selectedOption.dataset.magnification;
-          const mChannels = selectedOption.dataset.channels;
-          const mMicroscopy = selectedOption.dataset.microscopy;
-          const mDescription = selectedOption.dataset.description;
-          const mUrl = selectedOption.dataset.url;
-          const mExpression = selectedOption.dataset.expression;
+  microscopy_select.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const mName = selectedOption.dataset.name;
+      const mCellType = selectedOption.dataset.celltype;
+      const mPixelSize = selectedOption.dataset.pixelsize;
+      const mMagnification = selectedOption.dataset.magnification;
+      const mChannels = selectedOption.dataset.channels;
+      const mMicroscopy = selectedOption.dataset.microscopy;
+      const mDescription = selectedOption.dataset.description;
+      const mUrl = selectedOption.dataset.url;
+      const mExpression = selectedOption.dataset.expression;
 
-          microscopy_info.innerHTML = `
-            <table>
-              <tr><th>Cell Type</th><td>${mCellType}</td></tr>
-              <tr><th>Pixel Size</th><td>${mPixelSize}</td></tr>
-              <tr><th>Magnification</th><td>${magnification}</td></tr>
-              <tr><th>Channels</th><td>${mChannels}</td></tr>
-              <tr><th>Expression</th><td>${mExpression}</td></tr>
-              <tr><th>Microscopy</th><td>${microscopy}</td></tr>
-              <tr><th>Description</th><td>${description}</td></tr>
-            </table>
-          `;
+      microscopy_info.innerHTML = `
+        <table class="table" width="100%">
+          <tr><th>Cell Type</th><td>${mCellType}</td></tr>
+          <tr><th>Pixel Size</th><td>${mPixelSize}</td></tr>
+          <tr><th>Magnification</th><td>${mMagnification}</td></tr>
+          <tr><th>Channels</th><td>${mChannels}</td></tr>
+          <tr><th>Expression</th><td>${mExpression}</td></tr>
+          <tr><th>Microscopy</th><td>${mMicroscopy}</td></tr>
+          <tr><th>Description</th><td>${mDescription}</td></tr>
+        </table>
+      `;
 
-          microscopy_viewer.innerHTML = `
-            <iframe src="https://avivator.gehlenborglab.org/?image_url=${mUrl}" width="100%" height="100%" frameborder="0"></iframe>
-          `;
-      });
+      microscopy_viewer.innerHTML = `
+        <iframe src="https://avivator.gehlenborglab.org/?image_url=${mUrl}" width="100%" height="100%" frameborder="0"></iframe>
+      `;
   });
+});
 
 </script>

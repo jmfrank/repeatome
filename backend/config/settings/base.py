@@ -104,6 +104,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "repeatome.middleware.CanonicalDomainMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "repeatome.middleware.LoginRequiredMiddleware"
 ]
 
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"

@@ -26,6 +26,8 @@ import unicodedata
 import re
 from UniProtMapper import ProtMapper
 from pyjaspar import jaspardb
+from django.contrib.auth import get_user_model
+
 
 def slugify(value, allow_unicode=False):
     """
@@ -845,6 +847,28 @@ def update_microscopy():
         obj.save()
 
 
+def create_user(username, email, password, is_staff=False, is_superuser=False):
+
+    User = get_user_model()
+    if User.objects.filter(username=username).exists():
+        print(f"User '{username}' already exists.")
+        return
+
+    try:
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            is_staff=is_staff,
+            is_superuser=is_superuser
+        )
+        print(f"User '{username}' created successfully.")
+        return user
+    except Exception as e:
+        print(f"Error creating user '{username}': {e}")
+        return None
+
+
 def delete_all_records():
     # Delete all records in all tables
     print("DELETING ALL OBJECTS")
@@ -913,10 +937,22 @@ if __name__ == "__main__":
     elif command == 'network_data':
         for org in Organism.objects.all():
             GetNetworkData(org.id)
+
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
+
     elif command == 'update_PDB_from_uniprot':
         update_PDB_from_uniprot()
+
+    elif command == 'create_user':
+        if len(sys.argv) != 5:
+            print("Usage: python backend/import_data.py create_user <username> <email> <password>")
+            sys.exit(1)
+        username = sys.argv[2]
+        email = sys.argv[3]
+        password = sys.argv[4]
+        create_user(username, email, password, is_staff=False, is_superuser=False)
+
     else:
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        
@@ -928,4 +964,5 @@ if __name__ == "__main__":
         print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")
         print("- update_microscopy overwrite microscopy table")
         print("- get_proteomics_without_proteins to import proteomics data without creating new ProteinTF objects")
+        print("- create_user <username> <email> <password> to create a new user with the least privileges")
         print("- network_data to update network data")
