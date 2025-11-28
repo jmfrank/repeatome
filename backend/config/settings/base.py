@@ -317,6 +317,8 @@ ACCOUNT_FORMS = {"signup": "repeatome.forms.CustomSignupForm"}
 AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "users:redirect"
 LOGIN_URL = "account_login"
+SIGNUP_URL = "account_signup"
+
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"

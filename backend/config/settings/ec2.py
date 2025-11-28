@@ -189,3 +189,136 @@ if os.getenv("DESKTOP_LOG"):
 X_FRAME_OPTIONS = "ALLOW-FROM http://0.0.0.0:8000"
 
 
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.BCryptPasswordHasher",
+]
+
+# PASSWORD VALIDATION
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
+# ------------------------------------------------------------------------------
+
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
+# AUTHENTICATION CONFIGURATION
+# ------------------------------------------------------------------------------
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# Some really nice defaults
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+ACCOUNT_ADAPTER = "repeatome.users.adapters.AccountAdapter"
+SOCIALACCOUNT_ADAPTER = "repeatome.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
+ACCOUNT_FORMS = {"signup": "repeatome.forms.CustomSignupForm"}
+
+# Custom user app defaults
+# Select the correct user model
+AUTH_USER_MODEL = "users.User"
+LOGIN_REDIRECT_URL = "users:redirect"
+LOGIN_URL = "account_login"
+SIGNUP_URL = "account_signup"
+
+
+# SLUGLIFIER
+AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
+
+# django-rest-framework
+# -------------------------------------------------------------------------------
+# django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# By Default swagger ui is available only to admin user(s). You can change permission classes to change that
+# See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Repeatome API",
+    "DESCRIPTION": "Documentation of API endpoints of repeatome",
+    "VERSION": "1.0.0",
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+}
+
+# django-compressor
+# ------------------------------------------------------------------------------
+# INSTALLED_APPS += ['compressor']
+# STATICFILES_FINDERS += ['compressor.finders.CompressorFinder']
+
+# Location of root django.contrib.admin URL, use {% url 'admin:index' %}
+ADMIN_URL = r"^admin/"
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
+SITE_ID = 1
+# CANONICAL_URL = env('CANONICAL_URL', default='https://www.fpbase.org')
+CANONICAL_URL = env("CANONICAL_URL", default=None)
+
+
+# AVATAR CONFIGURATION
+# ------------------------------------------------------------------------------
+
+AVATAR_AUTO_GENERATE_SIZES = (80, 36)
+AVATAR_CACHE_ENABLED = True
+AVATAR_GRAVATAR_DEFAULT = "identicon"
+AVATAR_CLEANUP_DELETED = True
+AVATAR_MAX_AVATARS_PER_USER = 8
+
+# Your common stuff: Below this line define 3rd party library settings
+# ------------------------------------------------------------------------------
+
+MODERATION_MODERATORS = ("talley.lambert+fpbase@gmail.com",)
+
+# v3 API for django-recaptcha
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_V3_PUBLIC_KEY", default="")
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_V3_PRIVATE_KEY", default="")
+# NOCAPTCHA = True
+
+GOOGLE_API_PRIVATE_KEY = env("GOOGLE_API_PRIVATE_KEY", default="").replace("#", "\n")
+GOOGLE_API_CLIENT_EMAIL = env("GOOGLE_API_CLIENT_EMAIL", default="")
+GOOGLE_API_PRIVATE_KEY_ID = env("GOOGLE_API_PRIVATE_KEY_ID", default="")
+
+MAXMIND_API_KEY = env("MAXMIND_API_KEY", default="")
+
+# ALGOLIA_SUFFIX = "dev" if (DEBUG or ("staging" in env("SENTRY_PROJECT", default=""))) else "prod"
+# ALGOLIA_PUBLIC_KEY = "16eb3452bff9e69bb3d4942c25bf8c9c"
+# # ALGOLIA = {
+# #     "APPLICATION_ID": "9WAWQMVNTB",
+# #     "API_KEY": env("ALGOLIA_API_KEY", default=""),
+# #     "INDEX_SUFFIX": ALGOLIA_SUFFIX,
+# # }
+# ALGOLIA = {
+#   'APPLICATION_ID': 'XSSHY1QSOB',
+#   'API_KEY': 'ec5b5984639b89c7c5fd3cfe1bb4ebdd', # Your Write API Key
+#   "INDEX_SUFFIX": ALGOLIA_SUFFIX,
+# }
+
+# if ALGOLIA["API_KEY"]:
+#     INSTALLED_APPS += ["algoliasearch_django"]
+
+REDIS_URL = env("REDIS_URL", default="redis://localhost/")
+if REDIS_URL.startswith("rediss://"):
+    REDIS_URL += "?ssl_cert_reqs=none"
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+
