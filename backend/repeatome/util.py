@@ -40,7 +40,7 @@ def clear_view_cache(*args, **kwargs):
 
 
 def uncache_protein_page(slug, request):
-    clear_view_cache("proteins:protein-detail", args=[slug], request=request)
+    clear_view_cache("proteins:proteinTable-detail", args=[slug], request=request)
 
 
 def show_queries():

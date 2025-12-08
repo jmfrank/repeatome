@@ -62,7 +62,7 @@ def ProteinTable(request):          # Lists all proteins
 def check_switch_type(object, request):
     suggested = suggested_switch_type(object)
     if suggested and object.switch_type != suggested:
-        disp = dict(Protein.SWITCHING_CHOICES).get(suggested).lower()
+        disp = dict(ProteinTF.SWITCHING_CHOICES).get(suggested).lower()
         actual = object.get_switch_type_display().lower()
         msg = (
             "<i class='fa fa-exclamation-circle mr-2'></i><strong>Warning:</strong> "
@@ -641,16 +641,16 @@ def problems_gaps(request):
         request,
         "problems_gaps.html",
         {
-            "noseqs": Protein.objects.filter(seq__isnull=True).values("name", "slug"),
-            "nostates": Protein.objects.filter(states=None).values("name", "slug"),
-            "noparent": Protein.objects.filter(parent_organism__isnull=True),
-            "only2p": (
-                State.objects.filter(spectra__subtype="2p")
-                .exclude(spectra__subtype="ex")
-                .distinct("protein")
-                .values("protein__name", "protein__slug")
-            ),
-            "nolineage": Protein.objects.filter(lineage=None).annotate(ns=Count("states__spectra")).order_by("-ns"),
+            "noseqs": ProteinTF.objects.filter(seq__isnull=True).values("name", "slug"),
+            "nostates": ProteinTF.objects.filter(states=None).values("name", "slug"),
+            "noparent": ProteinTF.objects.filter(parent_organism__isnull=True),
+            # "only2p": (
+            #     State.objects.filter(spectra__subtype="2p")
+            #     .exclude(spectra__subtype="ex")
+            #     .distinct("protein")
+            #     .values("protein__name", "protein__slug")
+            # ),
+            "nolineage": ProteinTF.objects.filter(lineage=None).annotate(ns=Count("states__spectra")).order_by("-ns"),
             "request": request,
         },
     )
@@ -667,12 +667,12 @@ def problems_inconsistencies(request):
         operator.or_,
         (Q(name__startswith=item) for item in ["PA", "rs", "mPA", "PS", "mPS"]),
     )
-    switchers = Protein.objects.exclude(name__startswith="mCerulean").filter(titles)
-    switchers = switchers | Protein.objects.filter(names)
+    switchers = ProteinTF.objects.exclude(name__startswith="mCerulean").filter(titles)
+    switchers = switchers | ProteinTF.objects.filter(names)
     switchers = switchers.annotate(ns=Count("states")).filter(ns=1)
 
     gb_mismatch = []
-    with_genbank = Protein.objects.exclude(genbank=None).exclude(seq=None).values("slug", "name", "genbank", "seq")
+    with_genbank = ProteinTF.objects.exclude(genbank=None).exclude(seq=None).values("slug", "name", "genbank", "seq")
     gbseqs = get_cached_gbseqs([g["genbank"] for g in with_genbank])
     for item in with_genbank:
         if item["genbank"] in gbseqs:
@@ -689,7 +689,7 @@ def problems_inconsistencies(request):
                     )
                 )
     p = list(
-        Protein.objects.annotate(ndark=Count("states", filter=Q(states__is_dark=True)))
+        ProteinTF.objects.annotate(ndark=Count("states", filter=Q(states__is_dark=True)))
         .annotate(nfrom=Count("transitions__from_state", distinct=True))
         .prefetch_related("states", "transitions")
     )
@@ -697,15 +697,15 @@ def problems_inconsistencies(request):
     for prot in p:
         suggestion = suggested_switch_type(prot)
         if (prot.switch_type or suggestion) and (prot.switch_type != suggestion):
-            bad_switch.append((prot, dict(Protein.SWITCHING_CHOICES).get(suggestion)))
+            bad_switch.append((prot, dict(ProteinTF.SWITCHING_CHOICES).get(suggestion)))
 
     return render(
         request,
         "problems_inconsistencies.html",
         {
-            "histags": Protein.objects.filter(seq__icontains="HHHHH").values("name", "slug"),
-            "linprobs": [(node.protein, v) for node, v in check_lineages()[0].items()],
-            "nomet": Protein.objects.exclude(seq__isnull=True).exclude(seq__istartswith="M"),
+            # "histags": Protein.objects.filter(seq__icontains="HHHHH").values("name", "slug"),
+            # "linprobs": [(node.protein, v) for node, v in check_lineages()[0].items()],
+            "nomet": ProteinTF.objects.exclude(seq__isnull=True).exclude(seq__istartswith="M"),
             "bad_switch": bad_switch,
             "switchers": switchers,
             "request": request,
@@ -835,7 +835,7 @@ def flag_object(request):
 
 
 def protein_history(request, slug):
-    protein = get_object_or_404(Protein, slug=slug)
+    protein = get_object_or_404(ProteinTF, slug=slug)
     return render(
         request,
         "history.html",
@@ -846,8 +846,8 @@ def protein_history(request, slug):
                     "modified",
                     "created_by_id",
                     "status_changed",
-                    "emhex",
-                    "exhex",
+                    # "emhex",
+                    # "exhex",
                     "updated_by_id",
                     "status",
                     "seq_comment",

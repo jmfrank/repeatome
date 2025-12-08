@@ -19,8 +19,8 @@
   </ul>
 </div>
 
-<h4 class='font-weight-bold'>No Fluorescent States</h4>
-<p>What good is a fluorescent protein without fluorescence?!  Nothing has been entered about the fluorescent properties of these proteins.  They will not be shown in color in many places on the website.  Even just entering excitation minimum and maximum is better than nothing.</p>
+{% comment %} <h4 class='font-weight-bold'>No Fluorescent States</h4>
+<p>What good is a fluorescent protein without fluorescence?!  Nothing has been entered about the fluorescent properties of these proteins.  They will not be shown in color in many places on the website.  Even just entering excitation minimum and maximum is better than nothing.</p> {% endcomment %}
 
 <div>
   <ul class="row">
@@ -32,7 +32,7 @@
   </ul>
 </div>
 
-<h4 class='font-weight-bold'>Only 2P Spectra</h4>
+{% comment %} <h4 class='font-weight-bold'>Only 2P Spectra</h4>
 <p>Having only 2P spectra looks strange in some places on the site.  Better to find the 1P spectra for these as well.</p>
 <div>
   <ul class="row">
@@ -41,7 +41,7 @@
     {% empty %}
       <p>None!  🎉🍾🏆</p>
     {% endfor %}
-  </ul>
+  </ul> {% endcomment %}
 </div>
 
 <h4 class='font-weight-bold'>Parental organism missing</h4>
@@ -56,7 +56,7 @@
   </ul>
 </div>
 
-<h4 class='font-weight-bold'>No Lineage</h4>
+{% comment %} <h4 class='font-weight-bold'>No Lineage</h4>
 <p>No lineage information (parent protein and mutations) has been entered for the following proteins.  Lineage trees will not show up on these pages.</p>
 <div>
   <ul class="row">
@@ -66,6 +66,6 @@
       <p>None!  🎉🍾🏆</p>
     {% endfor %}
   </ul>
-</div>
+</div> {% endcomment %}
 
 {% endblock content %}
