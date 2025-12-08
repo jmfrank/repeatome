@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static i18n favit_tags %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %}Organism Network{% endblock %}
+{% block meta-description %}Organism Network{% endblock %}
+
+
+{% block content %}
+
+  <h1 class="name text-center mb-4">Organism Network</h1>
+
+  <h5 class='pt-3'><strong>Organism Network</strong></h5>
+  <div id="network-container"
+        style="position: relative; width:100%; height:600px;"
+        data-network="{% static 'repeat_network_db_all.json' %}">
+    </div>
+
+  {% render_bundle 'network' %}
+
+{% endblock content %}

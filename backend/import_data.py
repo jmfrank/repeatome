@@ -16,7 +16,7 @@ from django.conf import settings
 from references.models import Reference
 from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy
 from proteins.util.helpers import shortuuid
-from proteins.util.repeat_network_data import GetNetworkData
+from proteins.util.repeat_network_data import GetNetworkData, GetNetworkDataAll
 import json
 import requests
 import os
@@ -877,6 +877,7 @@ if __name__ == "__main__":
         update_proteomics()
         for org in Organism.objects.all():
             GetNetworkData(org.id)
+        GetNetworkDataAll()
         update_PDB_from_uniprot()
         update_microscopy()
     elif command == 'import_repeat':
@@ -913,6 +914,7 @@ if __name__ == "__main__":
     elif command == 'network_data':
         for org in Organism.objects.all():
             GetNetworkData(org.id)
+        GetNetworkDataAll()
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
     elif command == 'update_PDB_from_uniprot':
