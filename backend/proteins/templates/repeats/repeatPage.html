@@ -167,37 +167,36 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 {% block container-class %}container repeat{% endblock %}
 
 {% block content %}
-    <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
-    <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
-    <div class="text-center organism ">Organism: {{repeat.parental_organism.scientific_name}}</div>  
-    {% if subrepeats %}
+  <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
+  <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
+  <div class="text-center organism ">Organism: {{repeat.parental_organism.scientific_name}}</div>  
+  {% if subrepeats %}
     <div class="text-center subfamilies" style="padding-bottom: 15px; color: rgba(113, 124, 161, 1); font-size: 1.4rem; font-weight: 600;margin-top: 5px;">Subfamilies: 
       {% for child in subrepeats %}
       <a href="/repeatTable/{{child.slug}}">{{child.name}}</a> 
       {% endfor %}
-    {% endif %}
     </div>
-
-    
-    {% if repeat.karyoplot_exists %}
-      <div id="karyoplot-info" style="overflow: visible;">
-        <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
-          <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
-        </svg>
-      </div>
-    {% endif %}
-    
-    <div class="attribute-data">
-        {% if repeat.dfam_id %}
-          <div class="attributes" >
-            <h3>Motif </h3>
-          </div>
-          <div class='logo-holder'>
-            <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
-            <div class="logo-col" id="logo_info"></div>
-          </div>
-        {% endif %}
-    </div>
+  {% endif %}
+  
+  {% if repeat.karyoplot_exists %}
+  <div id="karyoplot-info" style="overflow: visible;">
+    <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
+      <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
+    </svg>
+  </div>
+  {% endif %}
+  
+  <div class="attribute-data">
+      {% if repeat.dfam_id %}
+        <div class="attributes" >
+          <h3>Motif </h3>
+        </div>
+        <div class='logo-holder'>
+          <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
+          <div class="logo-col" id="logo_info"></div>
+        </div>
+      {% endif %}
+  </div>
 
   {% if proteomics_datapoints %}
   <h3>Proteomics</h3>  
@@ -380,6 +379,14 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
        <li>Search <a href="https://knowledge.brc.riken.jp/resource/dna/list?query={{ repeat.name | urlencode }}" target="_blank" rel="noopener">RIKEN BRC</a> for {{ repeat.name | safe}}</li>
      </ul>
    </div>
+
+  {% comment %} <div class="text-left text-md-right mt-3">
+    <a href="{% url 'proteins:protein-history' slug=protein.slug %}" class="text-muted">Change history</a>
+      <p>Something missing or incorrect?
+      <a href="{% url 'proteins:update' slug=protein.slug %}" class='text-secondary d-none d-sm-inline'>Submit a change</a>
+      <a role="button" href="{% url 'proteins:update' slug=protein.slug %}" class="btn btn-info btn-block mt-2 mb-3 d-block d-sm-none text-white"><i class="fas fa-upload mr-2"></i>Submit a change</a>
+      </p>
+  </div> {% endcomment %}
 
 {% endblock content %}
 
