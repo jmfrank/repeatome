@@ -1368,76 +1368,14 @@
         "organism": 9606
     },
     {
-        "key": "mon",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "mon",
-            "aliases": "None",
-            "dfam_id": null,
-            "x": 675,
-            "y": -210,
-            "size": 50,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/mon"
-        }
-    },
-    {
-        "key": "OSR2_mon",
-        "attributes": {
-            "node_type": "protein",
-            "label": "OSR2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 29.96385,
-            "x": 738.6396103067893,
-            "y": -146.36038969321072,
-            "size": 25.88089362129355,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000164920-osr2"
-        },
-        "organism": 9606
-    },
-    {
-        "key": "dhor",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "dhor",
-            "aliases": "None",
-            "dfam_id": null,
-            "x": 900,
-            "y": -210,
-            "size": 50,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/dhor"
-        }
-    },
-    {
-        "key": "OSR2_dhor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "OSR2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 61.66,
-            "x": 963.6396103067893,
-            "y": -146.36038969321072,
-            "size": 28.77793709016251,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000164920-osr2"
-        },
-        "organism": 9606
-    },
-    {
         "key": "rDNA",
         "attributes": {
             "node_type": "repeat",
             "label": "rDNA",
             "aliases": "None",
             "dfam_id": null,
-            "x": 0,
-            "y": -420,
+            "x": 675,
+            "y": -210,
             "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
@@ -1452,8 +1390,8 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 1.482,
-            "x": 63.63961030678928,
-            "y": -356.3603896932107,
+            "x": 738.6396103067893,
+            "y": -146.36038969321072,
             "size": 13.810882403275176,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000124813-runx2"
@@ -1468,8 +1406,8 @@
             "aliases": "",
             "gene_family": "KRAB-ZF",
             "enrichment": 5.148,
-            "x": -87.32577131803909,
-            "y": -398.22364438870585,
+            "x": 587.6742286819609,
+            "y": -188.22364438870588,
             "size": 18.809808959743435,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000169957-znf768"
@@ -1484,8 +1422,8 @@
             "aliases": "",
             "gene_family": "PRDM",
             "enrichment": 2.498,
-            "x": 37.70788116389453,
-            "y": -501.7197387301844,
+            "x": 712.7078811638945,
+            "y": -291.7197387301844,
             "size": 15.906847664392352,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000057657-prdm1"
