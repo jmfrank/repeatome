@@ -44,21 +44,21 @@ def check_existence(form, fieldname, value):
         if isinstance(instanceVal, str) and instanceVal.upper() == value.upper():
             return value
 
-    if fieldname == "name":
+    if fieldname == "gene":
         slug = slugify(value)
-        query = Protein.objects.filter(slug=slug)
-        query = query | Protein.objects.filter(name__iexact=value)
-        query = query | Protein.objects.filter(name__iexact=value.replace(" ", ""))
-        query = query | Protein.objects.filter(name__iexact=value.replace(" ", "").replace("monomeric", "m"))
+        query = ProteinTF.objects.filter(slug=slug)
+        query = query | ProteinTF.objects.filter(gene__iexact=value)
+        query = query | ProteinTF.objects.filter(gene__iexact=value.replace(" ", ""))
+        query = query | ProteinTF.objects.filter(gene__iexact=value.replace(" ", "").replace("monomeric", "m"))
     else:
-        query = Protein.objects.filter(**{fieldname: value}).exclude(id=form.instance.id)
+        query = ProteinTF.objects.filter(**{fieldname: value}).exclude(id=form.instance.id)
 
     if query.exists():
         prot = query.first()
         raise forms.ValidationError(
             mark_safe(
                 f'<a href="{prot.get_absolute_url()}" style="text-decoration: underline;">'
-                f"{prot.name}</a> already has this {Protein._meta.get_field(fieldname).verbose_name.lower()}"
+                f"{prot.name}</a> already has this {ProteinTF._meta.get_field(fieldname).verbose_name.lower()}"
             )
         )
     return value
@@ -111,7 +111,7 @@ class ProteinForm(forms.ModelForm):
         prot = cast("ProteinTF | None", getattr(self, "instance", None))
         if prot and prot.pk:
             for attr, field in [
-                ("gene", "name"),
+                ("gene", "gene"),
                 ("aliases", "aliases"),
                 # ("seq_validated", "seq"),
                 ("primary_reference", "reference_doi"),
@@ -138,7 +138,7 @@ class ProteinForm(forms.ModelForm):
         self.helper.layout = Layout(
             Field("confirmation", css_class="custom-checkbox"),
             Div(
-                Div("name", css_class="col-md-4 col-sm-12"),
+                Div("gene", css_class="col-md-4 col-sm-12"),
                 Div("aliases", css_class="col-md-4 col-sm-6"),
                 Div("reference_doi", css_class="col-md-4 col-sm-6"),
                 css_class="row",
@@ -155,9 +155,9 @@ class ProteinForm(forms.ModelForm):
             ),
             Div(
                 # Div("ipg_id", css_class="col-lg-3 col-sm-6"),
-                Div("ENSEMBL", css_class="col-lg-3 col-sm-6"),
-                Div("UNIPROT", css_class="col-lg-3 col-sm-6"),
-                Div("PDB", css_class="col-lg-3 col-sm-6"),
+                Div("ENSEMBL", css_class="col-md-4 col-sm-6"), # col-lg-3 col-sm-6
+                Div("UNIPROT", css_class="col-md-4 col-sm-6"),
+                Div("PDB", css_class="col-md-4 col-sm-6"),
                 css_class="row",
             ),
             # Div(Div("seq", css_class="col"), css_class="row"),
@@ -191,10 +191,10 @@ class ProteinForm(forms.ModelForm):
             #     'NCBI <a class="text-info" href="https://www.ncbi.nlm.nih.gov/ipg/docs/about/"'
             #     ' target="_blank" rel="noopener">Identical Protein Group ID</a>'
             # ),
-            # "ENSEMBL": (
-            #     'NCBI <a class="text-info" href="https://www.ncbi.nlm.nih.gov/genbank/sequenceids/"'
-            #     ' target="_blank" rel="noopener">GenBank ID</a>'
-            # ),
+            "ENSEMBL": (
+                'NCBI <a class="text-info" href="https://www.ncbi.nlm.nih.gov/genbank/sequenceids/"'
+                ' target="_blank" rel="noopener">GenBank ID</a>'
+            ),
             "UNIPROT": (
                 '<a class="text-info" href="https://www.uniprot.org/help/accession_numbers"'
                 ' target="_blank" rel="noopener">UniProt accession number</a>'

@@ -22,8 +22,9 @@ def add_or_remove(request):
     fav = Favorite.objects.get_favorite(user, obj_id, model=app_model)
     print(obj_id)
     print(fav)
+    print(app_model)
     if fav is None:
-        Favorite.objects.create(user, obj_id, app_model)
+        Favorite.objects.create(user, obj_id, model=app_model)
         status = "added"
     else:
         fav.delete()
@@ -35,7 +36,7 @@ def add_or_remove(request):
 
     if str(app_model) == "proteins.ProteinTF":
         try:
-            slug = apps.get_model(app_model).objects.get(id=obj_id).slug
+            slug = apps.get_model(app_model).objects.get(pk=obj_id).slug
             uncache_protein_page(slug, request)
         except Exception as e:
             import logging
@@ -59,6 +60,7 @@ def remove(request):
     except (KeyError, ValueError):
         return HttpResponseBadRequest()
 
+    print(app_model, obj_id)  
     Favorite.objects.get_favorite(user, obj_id, model=app_model).delete()
     status = "deleted"
 

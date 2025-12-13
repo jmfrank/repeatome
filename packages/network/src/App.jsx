@@ -1,21 +1,26 @@
 // App.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  forceSimulation,
+  forceManyBody,
+  forceLink,
+  forceCollide,
+  forceCenter,
+  forceY,
+} from "d3-force";
 
 export default function App() {
-  // 1) Read JSON from the mounting DIV's data attribute
+  // ---------- 1) Load JSON from data-network ----------
   const [dataset, setDataset] = useState(null);
 
   useEffect(() => {
     const el = document.getElementById("network-container");
-    if (!el) {
-      console.error("Missing #network-container");
-      return;
-    }
+    if (!el) return;
 
     const normalize = (json) => {
       if (Array.isArray(json)) return json;
       if (Array.isArray(json?.nodes)) return json.nodes;
-      if (json && typeof json === "object") return Object.values(json); // dict -> array
+      if (json && typeof json === "object") return Object.values(json);
       return [];
     };
 
@@ -23,7 +28,6 @@ export default function App() {
 
     const load = (url) => {
       if (!url) return;
-      // cache-buster query param + cache:'no-store' to avoid stale files
       const sep = url.includes("?") ? "&" : "?";
       const cacheBuster = `${sep}_=${Date.now()}`;
       fetch(url + cacheBuster, {
@@ -32,32 +36,27 @@ export default function App() {
         signal: abort.signal,
       })
         .then((res) => {
-          if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
+          if (!res.ok)
+            throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
           return res.json();
         })
         .then((json) => {
           const arr = normalize(json);
-          if (!arr.length) {
-            console.warn("Fetched JSON normalized to empty array:", json);
-          }
           setDataset(arr);
         })
         .catch((err) => {
-          if (err.name !== "AbortError") {
+          if (err.name !== "AbortError")
             console.error("Error fetching network data:", err);
-          }
         });
     };
 
-    // Initial load
     load(el.getAttribute("data-network"));
 
-    // Observe data-network changes and refetch
     const mo = new MutationObserver((mutations) => {
       for (const m of mutations) {
         if (m.type === "attributes" && m.attributeName === "data-network") {
-          abort.abort();                 // cancel any in-flight fetch
-          abort = new AbortController(); // new controller for next fetch
+          abort.abort();
+          abort = new AbortController();
           load(el.getAttribute("data-network"));
         }
       }
@@ -70,26 +69,75 @@ export default function App() {
     };
   }, []);
 
-  // 2) Fallback sample (only if nothing provided)
-  const data = useMemo(() => {
-    if (Array.isArray(dataset) && dataset.length) return dataset;
-    return [
-      // { key: "HSat3", attributes: { node_type: "repeat", label: "HSat3", size: 45, color: "#8C5AE6", url: "/repeatTable/hsat3" } },
-      // { key: "BCLAF1_HSat3", attributes: { node_type: "protein", label: "BCLAF1", size: 7, color: "#9DD6FB", url: "/proteinTable/bclaf1" } },
-      // { key: "HSat7", attributes: { node_type: "repeat", label: "HSat7", size: 45, color: "#60A5FA", url: "/repeatTable/hsat7" } },
-      // { key: "CTCF_HSat7", attributes: { node_type: "protein", label: "CTCF", size: 7, color: "#9DD6FB", url: "/proteinTable/ctcf" } },
-    ];
-  }, [dataset]);
+  // ---------- 2) Data split ----------
+  const data = useMemo(() => (Array.isArray(dataset) ? dataset : []), [dataset]);
 
-  // 3) Interactions and viewport
+  const repeats = useMemo(
+    () => data.filter((d) => d.attributes?.node_type === "repeat"),
+    [data]
+  );
+  const proteins = useMemo(
+    () => data.filter((d) => d.attributes?.node_type === "protein"),
+    [data]
+  );
+
+  const satelliteKeys = useMemo(() => repeats.map((r) => r.key), [repeats]);
+
+  const proteinsWithSat = useMemo(() => {
+    return proteins.map((p) => {
+      let sat = null;
+      for (const s of satelliteKeys) {
+        if (p.key.endsWith("_" + s)) {
+          sat = s;
+          break;
+        }
+      }
+      if (!sat) {
+        const idx = p.key.lastIndexOf("_");
+        if (idx > -1) {
+          const suffix = p.key.slice(idx + 1);
+          if (satelliteKeys.includes(suffix)) sat = suffix;
+        }
+      }
+      return { ...p, _satelliteKey: sat };
+    });
+  }, [proteins, satelliteKeys]);
+
+  const groupBy = (arr, keyFn) => {
+    const m = new Map();
+    for (const item of arr) {
+      const k = keyFn(item);
+      const list = m.get(k) || [];
+      list.push(item);
+      m.set(k, list);
+    }
+    return m;
+  };
+
+  const proteinsBySatellite = useMemo(
+    () => groupBy(proteinsWithSat.filter((p) => p._satelliteKey), (p) => p._satelliteKey),
+    [proteinsWithSat]
+  );
+
+  const tfClonesByLabel = useMemo(
+    () => groupBy(proteinsWithSat, (p) => p.attributes?.label || p.key),
+    [proteinsWithSat]
+  );
+
+  // ---------- 3) SVG + viewport (pan/zoom) ----------
   const svgRef = useRef(null);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [hover, setHover] = useState(null); // { type: 'repeat'|'protein', node }
+  const [hover, setHover] = useState(null);
   const [isPanning, setIsPanning] = useState(false);
   const panStartRef = useRef({ clientX: 0, clientY: 0, viewX: 0, viewY: 0 });
-  const [view, setView] = useState({ x: -400, y: -300, w: 800, h: 600 });
+  const [view, setView] = useState({ x: -600, y: -300, w: 1200, h: 600 });
+  const [fitDone, setFitDone] = useState(false); // <-- NEW: whether we've auto-fit this dataset
 
-  // keep SVG sized to parent
+  // reset auto-fit whenever dataset changes
+  useEffect(() => {
+    setFitDone(false);
+  }, [dataset]);
+
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
@@ -106,216 +154,215 @@ export default function App() {
     return () => ro.disconnect();
   }, []);
 
-  // global mouse for tooltip anchoring
   useEffect(() => {
     const onMove = (e) => setMouse({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
-  
-  // zooming
+
+  // zoom via non-passive wheel listener
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
 
     const handleWheel = (e) => {
-      // now this works; listener is non-passive
       e.preventDefault();
-
-      // zoom to cursor (same logic you had)
       const factor = Math.pow(1.0015, e.deltaY);
       const rect = svg.getBoundingClientRect();
       const px = (e.clientX - rect.left) / rect.width;
       const py = (e.clientY - rect.top) / rect.height;
-
       setView((v) => {
         const cx = v.x + px * v.w;
         const cy = v.y + py * v.h;
-        const newW = Math.max(50, Math.min(5000, v.w * factor));
-        const newH = Math.max(50, Math.min(5000, v.h * factor));
+        const newW = Math.max(50, Math.min(10000, v.w * factor));
+        const newH = Math.max(50, Math.min(10000, v.h * factor));
         return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
       });
     };
 
-    // 👇 non-passive wheel listener
     svg.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      svg.removeEventListener("wheel", handleWheel);
-    };
+    return () => svg.removeEventListener("wheel", handleWheel);
   }, []);
 
-  // 4) Split data
-  const repeats = useMemo(() => data.filter(d => d.attributes?.node_type === "repeat"), [data]);
-  const proteins = useMemo(() => data.filter(d => d.attributes?.node_type === "protein"), [data]);
-
-  // 5) Assign proteins to satellites based on key suffix (e.g., LABEL_HSat3 → HSat3)
-  const satelliteKeys = useMemo(() => repeats.map(r => r.key), [repeats]);
-  const proteinsWithSat = useMemo(() => {
-    return proteins.map((p) => {
-      let sat = null;
-      for (const s of satelliteKeys) {
-        if (p.key.endsWith("_" + s)) { sat = s; break; }
-      }
-      if (!sat) {
-        const idx = p.key.lastIndexOf("_");
-        if (idx > -1) {
-          const suffix = p.key.slice(idx + 1);
-          if (satelliteKeys.includes(suffix)) sat = suffix;
-        }
-      }
-      return { ...p, _satelliteKey: sat };
-    });
-  }, [proteins, satelliteKeys]);
-
-  // groupBy helper
-  const groupBy = (arr, keyFn) => {
-    const m = new Map();
-    for (const item of arr) {
-      const k = keyFn(item);
-      const list = m.get(k) || [];
-      list.push(item);
-      m.set(k, list);
-    }
-    return m;
-  };
-
-  const proteinsBySatellite = useMemo(
-    () => groupBy(proteinsWithSat.filter(p => p._satelliteKey), p => p._satelliteKey),
-    [proteinsWithSat]
-  );
-
-  const tfClonesByLabel = useMemo(
-    () => groupBy(proteinsWithSat, p => p.attributes?.label || p.key),
-    [proteinsWithSat]
-  );
-
-  // --- Layout (grid for satellites, size-aware non-overlapping circular orbits)
+  // ---------- 4) Layout: d3-force on full graph (more horizontal & tighter) ----------
   const { satPositions, proteinPositions } = useMemo(() => {
-    const n = repeats.length;
-    if (n === 0) return { satPositions: new Map(), proteinPositions: new Map() };
-
-    // 1) Grid layout for satellites
-    const cols = Math.min(n, Math.max(2, Math.ceil(Math.sqrt(n))));
-    const rows = Math.ceil(n / cols);
-    const gridX = 280, gridY = 280;
-    const startX = -((cols - 1) * gridX) / 2;
-    const startY = -((rows - 1) * gridY) / 2;
-
     const satPositions = new Map();
-    repeats.forEach((s, i) => {
-      const r = Math.floor(i / cols);
-      const c = i % cols;
-      satPositions.set(s.key, { x: startX + c * gridX, y: startY + r * gridY });
+    const proteinPositions = new Map();
+
+    if (!repeats.length && !proteinsWithSat.length) {
+      return { satPositions, proteinPositions };
+    }
+
+    // Build nodes
+    const nodes = [];
+    const nodeIndex = new Map();
+
+    repeats.forEach((s) => {
+      const size = Number(s.attributes?.size ?? 40);
+      const node = {
+        id: s.key,
+        type: "repeat",
+        raw: s,
+        size,
+      };
+      nodes.push(node);
+      nodeIndex.set(s.key, node);
     });
 
-    // 2) Size-aware orbit around each satellite
-    function placeOrbitForSatellite(satKey, list) {
-      const satPos = satPositions.get(satKey) || { x: 0, y: 0 };
-      const sat = repeats.find((r) => r.key === satKey);
+    proteinsWithSat.forEach((p) => {
+      const size = Number(p.attributes?.size ?? 6);
+      const node = {
+        id: p.key,
+        type: "protein",
+        raw: p,
+        size,
+      };
+      nodes.push(node);
+      nodeIndex.set(p.key, node);
+    });
 
-      // Base radius: satellite radius + margin
-      const baseR = (sat?.attributes?.size || 30) + 42; // margin off the satellite
-      const pad = 4; // min gap between adjacent TF circles (px)
-      const m = list.length;
+    // Build links
+    const links = [];
 
-      const sizes = list.map((p) => Number(p.attributes?.size ?? 6)); // each is TF radius (px)
-
-      // Edge case: 0/1 item(s)
-      if (m === 0) return new Map();
-      if (m === 1) {
-        const R = Math.max(baseR, sizes[0] + pad + 2);
-        const pos = new Map();
-        pos.set(list[0].key, { x: satPos.x + R, y: satPos.y });
-        return pos;
-      }
-
-      // We need central angles α_i such that chord between centers ≥ r_i + r_{i+1} + pad
-      // Minimal α_i(R) = 2 * arcsin( (r_i + r_{i+1} + pad) / (2R) ).
-      // Increase R until Σ α_i(R) ≤ 2π. Then distribute leftover angle evenly.
-
-      const pairs = new Array(m).fill(0).map((_, i) => {
-        const a = sizes[i];
-        const b = sizes[(i + 1) % m];
-        return a + b + pad; // required chord length between centers (px)
+    // protein → satellite (binding)
+    proteinsWithSat.forEach((p) => {
+      if (!p._satelliteKey || !nodeIndex.has(p._satelliteKey)) return;
+      links.push({
+        source: p.key,
+        target: p._satelliteKey,
+        kind: "binding",
       });
+    });
 
-      const TWO_PI = Math.PI * 2;
-
-      // Find minimal R so that sum of minimal angles ≤ 2π
-      let R = baseR;
-      const maxIter = 500;
-      let sumAngles = Infinity;
-
-      for (let iter = 0; iter < maxIter; iter++) {
-        let s = 0;
-        let tooSmall = false;
-        for (let k = 0; k < m; k++) {
-          const chord = pairs[k];
-          const ratio = chord / (2 * R);
-          if (ratio >= 1) { // impossible → R too small
-            tooSmall = true;
-            break;
-          }
-          const theta = 2 * Math.asin(Math.min(0.999999, ratio)); // clamp for safety
-          s += theta;
-        }
-        if (!tooSmall && s <= TWO_PI) {
-          sumAngles = s;
-          break;
-        }
-        R += 1; // grow orbit until everything fits
+    // clone links
+    for (const [, clones] of tfClonesByLabel.entries()) {
+      if (clones.length < 2) continue;
+      for (let i = 0; i < clones.length - 1; i++) {
+        const a = clones[i].key;
+        const b = clones[i + 1].key;
+        if (!nodeIndex.has(a) || !nodeIndex.has(b)) continue;
+        links.push({
+          source: a,
+          target: b,
+          kind: "clone",
+        });
       }
-
-      // If somehow still too small, ensure we have a sane sumAngles
-      if (!isFinite(sumAngles)) {
-        // brute fallback (very unlikely): space evenly
-        const angle = TWO_PI / m;
-        const pos = new Map();
-        for (let i = 0, a = 0; i < m; i++, a += angle) {
-          pos.set(list[i].key, { x: satPos.x + R * Math.cos(a), y: satPos.y + R * Math.sin(a) });
-        }
-        return pos;
-      }
-
-      // Compute the minimal angle per edge with this R
-      const minAngles = pairs.map((chord) => {
-        const ratio = chord / (2 * R);
-        return 2 * Math.asin(Math.min(0.999999, ratio));
-      });
-
-      // Distribute remaining angle to fill the circle (keeps a complete loop)
-      const leftover = Math.max(0, TWO_PI - sumAngles);
-      const extraPerEdge = leftover / m;
-      const finalAngles = minAngles.map((a) => a + extraPerEdge);
-
-      // Place each TF at the center of its edge’s span around the circle
-      const pos = new Map();
-      let accum = 0;
-      for (let i = 0; i < m; i++) {
-        const centerAngle = accum + finalAngles[i] / 2;
-        const x = satPos.x + R * Math.cos(centerAngle);
-        const y = satPos.y + R * Math.sin(centerAngle);
-        pos.set(list[i].key, { x, y });
-        accum += finalAngles[i];
-      }
-
-      return pos;
     }
 
-    // Build positions for all proteins by satellite
-    const proteinPositions = new Map();
-    for (const [satKey, list] of proteinsBySatellite.entries()) {
-      const posMap = placeOrbitForSatellite(satKey, list);
-      for (const p of list) {
-        proteinPositions.set(p.key, posMap.get(p.key));
-      }
+    // Force simulation (tweaked)
+    const sim = forceSimulation(nodes)
+      .force(
+        "charge",
+        forceManyBody().strength((d) => (d.type === "repeat" ? -100 : -120)) // less repulsion
+      )
+      .force(
+        "collide",
+        forceCollide().radius((d) => {
+          const base =
+            d.type === "repeat"
+              ? Number(d.size || 40)
+              : Number(d.size || 6);
+          const pad = d.type === "repeat" ? 15 : 4; // smaller padding
+          return base + pad;
+        })
+      )
+      .force(
+        "link",
+        forceLink(links)
+          .id((d) => d.id)
+          .distance((lnk) =>
+            lnk.kind === "binding"
+              ? 90 // closer TFs to sats
+              : 60 // clones closer too
+          )
+          .strength((lnk) =>
+            lnk.kind === "binding" ? 0.7 : 0.2
+          )
+      )
+      .force("center", forceCenter(0, 0))
+      // strong vertical compression → horizontal band
+      .force("y", forceY(0).strength(0.02))
+      .stop();
+
+    const iterations = 280;
+    for (let i = 0; i < iterations; i++) {
+      sim.tick();
     }
+
+    repeats.forEach((s) => {
+      const node = nodeIndex.get(s.key);
+      if (node) satPositions.set(s.key, { x: node.x, y: node.y });
+    });
+
+    proteinsWithSat.forEach((p) => {
+      const node = nodeIndex.get(p.key);
+      if (node) proteinPositions.set(p.key, { x: node.x, y: node.y });
+    });
 
     return { satPositions, proteinPositions };
-  }, [repeats, proteinsBySatellite]);
+  }, [repeats, proteinsWithSat, tfClonesByLabel]);
 
-  // 7) Links
+   // ---------- 4.5) Auto-fit view to all satellites on load ----------
+  useEffect(() => {
+    if (fitDone) return;
+    if (!svgRef.current) return;
+    if (!repeats.length) return;
+    if (satPositions.size === 0) return;
+
+    const xs = [];
+    const ys = [];
+    for (const { x, y } of satPositions.values()) {
+      xs.push(x);
+      ys.push(y);
+    }
+    if (!xs.length) return;
+
+    let minX = Math.min(...xs);
+    let maxX = Math.max(...xs);
+    let minY = Math.min(...ys);
+    let maxY = Math.max(...ys);
+
+    // Add a little margin around satellites
+    const margin = 80;
+    minX -= margin;
+    maxX += margin;
+    minY -= margin;
+    maxY += margin;
+
+    let boxW = maxX - minX || 1;
+    let boxH = maxY - minY || 1;
+
+    const parent = svgRef.current.parentElement;
+    if (!parent) {
+      setView({ x: minX, y: minY, w: boxW, h: boxH });
+      setFitDone(true);
+      return;
+    }
+
+    const rect = parent.getBoundingClientRect();
+    const viewportAspect = rect.width / rect.height;
+    const boxAspect = boxW / boxH;
+
+    // Adjust to match container aspect ratio
+    if (boxAspect > viewportAspect) {
+      // box is "wider" than viewport; expand height
+      const targetH = boxW / viewportAspect;
+      const extraH = targetH - boxH;
+      minY -= extraH / 2;
+      boxH = targetH;
+    } else {
+      // box is "taller"; expand width
+      const targetW = boxH * viewportAspect;
+      const extraW = targetW - boxW;
+      minX -= extraW / 2;
+      boxW = targetW;
+    }
+
+    setView({ x: minX, y: minY, w: boxW, h: boxH });
+    setFitDone(true);
+  }, [satPositions, repeats.length, fitDone]);
+
+  // ---------- 5) Links based on positions ----------
   const psLinks = useMemo(() => {
     const links = [];
     for (const [satKey, list] of proteinsBySatellite.entries()) {
@@ -332,32 +379,35 @@ export default function App() {
   const cloneLinks = useMemo(() => {
     const links = [];
     for (const [, clones] of tfClonesByLabel.entries()) {
-      const pts = clones.map(c => proteinPositions.get(c.key)).filter(Boolean);
-      for (let i = 0; i < pts.length - 1; i++) links.push({ a: pts[i], b: pts[i + 1] });
+      const pts = clones.map((c) => proteinPositions.get(c.key)).filter(Boolean);
+      for (let i = 0; i < pts.length - 1; i++) {
+        links.push({ a: pts[i], b: pts[i + 1] });
+      }
     }
     return links;
   }, [tfClonesByLabel, proteinPositions]);
 
-  // 8) ViewBox & handlers
   const vb = `${view.x} ${view.y} ${view.w} ${view.h}`;
-  const onWheel = (e) => {
-    e.preventDefault();
-    const factor = Math.pow(1.0015, e.deltaY);
-    const rect = svgRef.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    setView((v) => {
-      const cx = v.x + px * v.w;
-      const cy = v.y + py * v.h;
-      const newW = Math.max(50, Math.min(5000, v.w * factor));
-      const newH = Math.max(50, Math.min(5000, v.h * factor));
-      return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
-    });
-  };
 
+  // ---------- 6) Render ----------
   return (
-    <div style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative", margin: 0, padding: 0, touchAction: "none", overscrollBehavior: "contain"}}>
-      <svg ref={svgRef} viewBox={vb} onWheel={onWheel} style={{ width: "100%", height: "100%", display: "block" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+        position: "relative",
+        margin: 0,
+        padding: 0,
+        touchAction: "none",
+        overscrollBehavior: "contain",
+      }}
+    >
+      <svg
+        ref={svgRef}
+        viewBox={vb}
+        style={{ width: "100%", height: "100%", display: "block" }}
+      >
         {/* Pan background */}
         <rect
           x={view.x - view.w}
@@ -369,7 +419,12 @@ export default function App() {
           onMouseDown={(e) => {
             if (e.button !== 0) return;
             setIsPanning(true);
-            panStartRef.current = { clientX: e.clientX, clientY: e.clientY, viewX: view.x, viewY: view.y };
+            panStartRef.current = {
+              clientX: e.clientX,
+              clientY: e.clientY,
+              viewX: view.x,
+              viewY: view.y,
+            };
           }}
           onMouseMove={(e) => {
             if (!isPanning) return;
@@ -378,7 +433,11 @@ export default function App() {
             const scaleY = view.h / rect.height;
             const dx = (e.clientX - panStartRef.current.clientX) * scaleX;
             const dy = (e.clientY - panStartRef.current.clientY) * scaleY;
-            setView((v) => ({ ...v, x: panStartRef.current.viewX - dx, y: panStartRef.current.viewY - dy }));
+            setView((v) => ({
+              ...v,
+              x: panStartRef.current.viewX - dx,
+              y: panStartRef.current.viewY - dy,
+            }));
           }}
           onMouseUp={() => setIsPanning(false)}
           onMouseLeave={() => setIsPanning(false)}
@@ -387,18 +446,36 @@ export default function App() {
         {/* Dotted clone connectors */}
         <g>
           {cloneLinks.map((lnk, i) => (
-            <line key={`clone-${i}`} x1={lnk.a.x} y1={lnk.a.y} x2={lnk.b.x} y2={lnk.b.y} stroke="#888" strokeDasharray="4 4" strokeWidth="1" opacity="0.6" />
+            <line
+              key={`clone-${i}`}
+              x1={lnk.a.x}
+              y1={lnk.a.y}
+              x2={lnk.b.x}
+              y2={lnk.b.y}
+              stroke="#888"
+              strokeDasharray="4 4"
+              strokeWidth="1"
+              opacity="0.6"
+            />
           ))}
         </g>
 
         {/* Protein → Satellite connectors */}
         <g>
           {psLinks.map((lnk, i) => (
-            <line key={`ps-${i}`} x1={lnk.a.x} y1={lnk.a.y} x2={lnk.b.x} y2={lnk.b.y} stroke="#bdbdbd" strokeWidth="1.2" />
+            <line
+              key={`ps-${i}`}
+              x1={lnk.a.x}
+              y1={lnk.a.y}
+              x2={lnk.b.x}
+              y2={lnk.b.y}
+              stroke="#bdbdbd"
+              strokeWidth="1.2"
+            />
           ))}
         </g>
 
-        {/* Satellites (above lines) */}
+        {/* Satellites */}
         <g>
           {repeats.map((s) => {
             const pos = satPositions.get(s.key) || { x: 0, y: 0 };
@@ -415,7 +492,7 @@ export default function App() {
                   style={{ cursor: url ? "pointer" : "default" }}
                   onMouseEnter={() => setHover({ type: "repeat", node: s })}
                   onMouseLeave={() => setHover(null)}
-                  onClick={() => window.open(url, '_blank')}
+                  onClick={() => url && window.open(url, "_blank")}
                 />
                 <text
                   x={0}
@@ -423,12 +500,12 @@ export default function App() {
                   textAnchor="middle"
                   dominantBaseline="middle"
                   fill="#fff"
-                  fontSize="12"
+                  fontSize="20"
                   fontWeight="600"
                   style={{ cursor: url ? "pointer" : "default", userSelect: "none" }}
                   onMouseEnter={() => setHover({ type: "repeat", node: s })}
                   onMouseLeave={() => setHover(null)}
-                  onClick={() => window.open(url, '_blank')}
+                  onClick={() => url && window.open(url, "_blank")}
                 >
                   {label}
                 </text>
@@ -437,7 +514,7 @@ export default function App() {
           })}
         </g>
 
-        {/* Proteins (on top) */}
+        {/* Proteins */}
         <g>
           {proteinsWithSat.map((p) => {
             const pos = proteinPositions.get(p.key) || { x: 0, y: 0 };
@@ -454,7 +531,7 @@ export default function App() {
                 style={{ cursor: url ? "pointer" : "default" }}
                 onMouseEnter={() => setHover({ type: "protein", node: p })}
                 onMouseLeave={() => setHover(null)}
-                onClick={() => url && (window.location.href = url)}
+                onClick={() => url && window.open(url, "_blank")}
               />
             );
           })}
@@ -487,18 +564,25 @@ export default function App() {
               </div>
               <div style={{ color: "#555", marginBottom: 4 }}>Satellite (repeat)</div>
               {hover.node.attributes?.aliases && (
-                <div><b>Aliases:</b> {String(hover.node.attributes.aliases)}</div>
+                <div>
+                  <b>Aliases:</b> {String(hover.node.attributes.aliases)}
+                </div>
               )}
               {hover.node.attributes?.dfam_id != null && (
-                <div><b>Dfam:</b> {String(hover.node.attributes.dfam_id)}</div>
+                <div>
+                  <b>Dfam:</b> {String(hover.node.attributes.dfam_id)}
+                </div>
               )}
               {hover.node.attributes?.url && (
                 <div
-                  style={{ color: "#2563eb", textDecoration: "underline", marginTop: 6, pointerEvents: "auto", cursor: "pointer" }}
-                  onClick={() => {
-                    // use anchor fallback to reliably open new tab if desired
-                    window.location.href = hover.node.attributes.url;
+                  style={{
+                    color: "#2563eb",
+                    textDecoration: "underline",
+                    marginTop: 6,
+                    pointerEvents: "auto",
+                    cursor: "pointer",
                   }}
+                  onClick={() => window.open(hover.node.attributes.url, "_blank")}
                 >
                   Open page
                 </div>
@@ -511,20 +595,30 @@ export default function App() {
               </div>
               <div style={{ color: "#555", marginBottom: 4 }}>Transcription factor</div>
               {hover.node.attributes?.gene_family && (
-                <div><b>Family:</b> {String(hover.node.attributes.gene_family)}</div>
+                <div>
+                  <b>Family:</b> {String(hover.node.attributes.gene_family)}
+                </div>
               )}
               {hover.node.attributes?.enrichment != null && (
-                <div><b>Enrichment:</b> {String(hover.node.attributes.enrichment)}</div>
+                <div>
+                  <b>Enrichment:</b> {String(hover.node.attributes.enrichment)}
+                </div>
               )}
               {hover.node.attributes?.aliases && (
-                <div><b>Aliases:</b> {String(hover.node.attributes.aliases)}</div>
+                <div>
+                  <b>Aliases:</b> {String(hover.node.attributes.aliases)}
+                </div>
               )}
               {hover.node.attributes?.url && (
                 <div
-                  style={{ color: "#2563eb", textDecoration: "underline", marginTop: 6, pointerEvents: "auto", cursor: "pointer" }}
-                  onClick={() => {
-                    window.location.href = hover.node.attributes.url;
+                  style={{
+                    color: "#2563eb",
+                    textDecoration: "underline",
+                    marginTop: 6,
+                    pointerEvents: "auto",
+                    cursor: "pointer",
                   }}
+                  onClick={() => window.open(hover.node.attributes.url, "_blank")}
                 >
                   Open page
                 </div>

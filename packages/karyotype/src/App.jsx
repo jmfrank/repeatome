@@ -546,13 +546,13 @@ function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
       const px = (e.clientX - rect.left) / rect.width;
       const py = (e.clientY - rect.top) / rect.height;
 
-      setView((v) => {
-        const cx = v.x + px * v.w;
-        const cy = v.y + py * v.h;
-        const newW = Math.max(50, Math.min(5000, v.w * factor));
-        const newH = Math.max(50, Math.min(5000, v.h * factor));
-        return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
-      });
+      // setView((v) => {
+      //   const cx = v.x + px * v.w;
+      //   const cy = v.y + py * v.h;
+      //   const newW = Math.max(50, Math.min(5000, v.w * factor));
+      //   const newH = Math.max(50, Math.min(5000, v.h * factor));
+      //   return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
+      // });
     };
 
     // 👇 non-passive wheel listener

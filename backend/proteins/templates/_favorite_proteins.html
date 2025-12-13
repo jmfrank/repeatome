@@ -1,11 +1,11 @@
 {% load favit_tags %}
 {% user_favorites user "proteins.ProteinTF" as favorite_list %}
 {% if favorite_list %}
-<ul style='list-style: none;'>
+<ul id = 'favorite_lise' style='list-style: none;'>
 {% for fav_obj in favorite_list %}
   {% with protein=fav_obj|get_object %}
       {% if protein %}
-        <li>{% unfave_button protein %}<a href="{{ protein.get_absolute_url }}">{{ protein }}</a></li>
+        <li>{% unfave_button protein %}<a href="{{ protein.get_absolute_url }}">{{ protein.gene }}</a></li>
       {% endif %}
   {% endwith %}
 {% endfor %}

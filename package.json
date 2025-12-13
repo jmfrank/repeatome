@@ -25,6 +25,7 @@
     "@hms-dbmi/viv": "^0.18.0",
     "bootstrap": "^5.3.7",
     "d3": "^7.9.0",
+    "d3-force": "^3.0.0",
     "graphology": "^0.26.0",
     "itk-vtk-viewer": "^14.51.0",
     "psql": "^0.0.1",

@@ -1,1454 +1,14 @@
 [
     {
-        "key": "HSat3",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "HSat3",
-            "aliases": "HSATIII, HSAT3, hsat3",
-            "dfam_id": null,
-            "x": 0,
-            "y": 0,
-            "size": 40,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/hsat3"
-        }
-    },
-    {
-        "key": "BCLAF1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BCLAF1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 63.63961030678928,
-            "y": 63.63961030678928,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000029363-bclaf1"
-        }
-    },
-    {
-        "key": "ZNF621_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF621",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 55.49947889731083,
-            "y": 70.85060227074256,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000172888-znf621"
-        }
-    },
-    {
-        "key": "EWS_FLI1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EWS_FLI1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 46.54905410606914,
-            "y": 77.02717417788509,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/none-ews_fli1"
-        }
-    },
-    {
-        "key": "HES1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HES1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 36.919012294651885,
-            "y": 82.0791479682102,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000114315-hes1"
-        }
-    },
-    {
-        "key": "HOXA9_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA9",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 0.47642,
-            "x": 26.739671821990303,
-            "y": 85.93596424578163,
-            "size": 7.013852588010567,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000078399-hoxa9"
-        }
-    },
-    {
-        "key": "HSF4_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF4",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 8.36425,
-            "x": 15.983172810957592,
-            "y": 88.56939757554561,
-            "size": 7.243202445882604,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000102878-hsf4"
-        }
-    },
-    {
-        "key": "PLRG1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PLRG1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 4.995432403780585,
-            "y": 89.8612578094657,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000171566-plrg1"
-        }
-    },
-    {
-        "key": "TEAD2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD2",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 22.78061,
-            "x": -6.392813257787533,
-            "y": 89.7726681047804,
-            "size": 7.662378583937317,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000074219-tead2"
-        }
-    },
-    {
-        "key": "FAM181B_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FAM181B",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -17.67869499356763,
-            "y": 88.24660754569778,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000182103-fam181b"
-        }
-    },
-    {
-        "key": "TBX4_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TBX4",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 0.0,
-            "x": -28.193047457430183,
-            "y": 85.47018237410687,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000121075-tbx4"
-        }
-    },
-    {
-        "key": "ZNF8_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF8",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": -38.29578092557635,
-            "y": 81.44589101544817,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000278129-znf8"
-        }
-    },
-    {
-        "key": "BDP1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BDP1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -47.83939530918366,
-            "y": 76.23248819533347,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000145734-bdp1"
-        }
-    },
-    {
-        "key": "ZBTB17_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB17",
-            "aliases": "",
-            "gene_family": "ZBTB",
-            "enrichment": 8.4448,
-            "x": -56.832663761631885,
-            "y": 69.78573156281514,
-            "size": 7.245544551512618,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000116809-zbtb17"
-        }
-    },
-    {
-        "key": "TEAD3_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD3",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 12.37989,
-            "x": -65.16015485716822,
-            "y": 62.081834855212335,
-            "size": 7.359962881042244,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000007866-tead3"
-        }
-    },
-    {
-        "key": "NFAT5_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFAT5",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 0.0,
-            "x": -72.33896560622335,
-            "y": 53.545065645880335,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000102908-nfat5"
-        }
-    },
-    {
-        "key": "FLYWCH1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FLYWCH1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -78.26895102518387,
-            "y": 44.429396860832696,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000059122-flywch1"
-        }
-    },
-    {
-        "key": "NKX2-4_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NKX2-4",
-            "aliases": "",
-            "gene_family": "NKX",
-            "enrichment": 18.88765,
-            "x": -83.21968201979593,
-            "y": 34.2707531945835,
-            "size": 7.549185243981775,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000125816-nkx2-4"
-        }
-    },
-    {
-        "key": "CREBBP_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CREBBP",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -86.85833885147069,
-            "y": 23.571783385291354,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000005339-crebbp"
-        }
-    },
-    {
-        "key": "LIN54_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "LIN54",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 20.54089,
-            "x": -89.1327350307691,
-            "y": 12.464170487228854,
-            "size": 7.597255544562335,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000189308-lin54"
-        }
-    },
-    {
-        "key": "NFATc1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc1",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 0.0,
-            "x": -89.99254032014596,
-            "y": 1.1587435984301784,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000131196-nfatc1"
-        }
-    },
-    {
-        "key": "PRDM15_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PRDM15",
-            "aliases": "",
-            "gene_family": "PRDM",
-            "enrichment": 0.0,
-            "x": -89.47534982542538,
-            "y": -9.703698965742346,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000141956-prdm15"
-        }
-    },
-    {
-        "key": "NFATc4_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc4",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 0.0,
-            "x": -87.6518176274135,
-            "y": -20.424467351944475,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000100968-nfatc4"
-        }
-    },
-    {
-        "key": "BHLHE40_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BHLHE40",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.01704,
-            "x": -84.54843533911392,
-            "y": -30.847399918107723,
-            "size": 7.000495462196591,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000134107-bhlhe40"
-        }
-    },
-    {
-        "key": "ONECUT1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ONECUT1",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 2.01168,
-            "x": -80.1899270480744,
-            "y": -40.86044052655951,
-            "size": 7.058492452560973,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000169856-onecut1"
-        }
-    },
-    {
-        "key": "NEUROD1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NEUROD1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 2.03637,
-            "x": -74.62526924037347,
-            "y": -50.30973256539702,
-            "size": 7.0592103493704705,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000162992-neurod1"
-        }
-    },
-    {
-        "key": "ZBTB5_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB5",
-            "aliases": "",
-            "gene_family": "ZBTB",
-            "enrichment": 0.0,
-            "x": -67.98250764037532,
-            "y": -58.97778102748789,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000168795-zbtb5"
-        }
-    },
-    {
-        "key": "ZNF394_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF394",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": -60.372935413035094,
-            "y": -66.74660043487977,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000160908-znf394"
-        }
-    },
-    {
-        "key": "HSF5_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF5",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 0.0,
-            "x": -51.881917251881326,
-            "y": -73.54091828546159,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000176160-hsf5"
-        }
-    },
-    {
-        "key": "SOX1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SOX1",
-            "aliases": "",
-            "gene_family": "SOX",
-            "enrichment": 0.0,
-            "x": -42.633422173508755,
-            "y": -79.26153741743451,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000182968-sox1"
-        }
-    },
-    {
-        "key": "ZNF502_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF502",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": -32.762478371013366,
-            "y": -83.82493668944153,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000196653-znf502"
-        }
-    },
-    {
-        "key": "CUX1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CUX1",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 2.56911,
-            "x": -22.356966058515773,
-            "y": -87.17893133468874,
-            "size": 7.074700521354749,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000257923-cux1"
-        }
-    },
-    {
-        "key": "NFATc2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc2",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 0.0,
-            "x": -11.621553343092996,
-            "y": -89.24650972387461,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000101096-nfatc2"
-        }
-    },
-    {
-        "key": "FOXK2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FOXK2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.1457,
-            "x": -0.7694181776194197,
-            "y": -89.9967110269478,
-            "size": 7.004236434392216,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000141568-foxk2"
-        }
-    },
-    {
-        "key": "HSF1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF1",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 9.04682,
-            "x": 10.297093710846385,
-            "y": -89.4090032441367,
-            "size": 7.263049137873647,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000185122-hsf1"
-        }
-    },
-    {
-        "key": "MLLT1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "MLLT1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 21.20427991443104,
-            "y": -87.46644221248773,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000130382-mllt1"
-        }
-    },
-    {
-        "key": "TEAD4_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD4",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 42.10279,
-            "x": 32.487941253321914,
-            "y": -83.93172030359383,
-            "size": 8.224198404696372,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000197905-tead4"
-        }
-    },
-    {
-        "key": "STAT6_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "STAT6",
-            "aliases": "",
-            "gene_family": "STAT",
-            "enrichment": 0.0,
-            "x": 43.21082353677688,
-            "y": -78.94824082443844,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000166888-stat6"
-        }
-    },
-    {
-        "key": "TBX1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TBX1",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 0.01318,
-            "x": 52.41755906324377,
-            "y": -73.16009500985733,
-            "size": 7.000383227215439,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000184058-tbx1"
-        }
-    },
-    {
-        "key": "HOXA7_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA7",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 2.67168,
-            "x": 60.90342296638003,
-            "y": -66.2629087120254,
-            "size": 7.077682889752893,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000122592-hoxa7"
-        }
-    },
-    {
-        "key": "PIN1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PIN1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 68.48997064728374,
-            "y": -58.38770350625387,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000127445-pin1"
-        }
-    },
-    {
-        "key": "IRF3_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF3",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 15.73631,
-            "x": 75.22792804962661,
-            "y": -49.404036690944594,
-            "size": 7.457555558617554,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000126456-irf3"
-        }
-    },
-    {
-        "key": "TEAD1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD1",
-            "aliases": "TCF13, TEF1",
-            "gene_family": "TEAD",
-            "enrichment": 22.98106,
-            "x": 81.02215210648467,
-            "y": -39.18431916001172,
-            "size": 7.668206952323863,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000187079-tead1"
-        }
-    },
-    {
-        "key": "TBX5_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TBX5",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 0.21547,
-            "x": 85.32491047715874,
-            "y": -28.629698777053996,
-            "size": 7.006265096214762,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000089225-tbx5"
-        }
-    },
-    {
-        "key": "JUNB_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "JUNB",
-            "aliases": "",
-            "gene_family": "AP1",
-            "enrichment": 0.36196,
-            "x": 88.15768835923585,
-            "y": -18.116897724385712,
-            "size": 7.010524500978769,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000171223-junb"
-        }
-    },
-    {
-        "key": "ONECUT2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ONECUT2",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 4.26492,
-            "x": 89.7076933317359,
-            "y": -7.247741517136715,
-            "size": 7.124008605134188,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000119547-onecut2"
-        }
-    },
-    {
-        "key": "PKNOX1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PKNOX1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.38665,
-            "x": 89.92174052024606,
-            "y": 3.752410133439312,
-            "size": 7.040318817776025,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000160199-pknox1"
-        }
-    },
-    {
-        "key": "NFATc3_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc3",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 0.0,
-            "x": 88.80765478914628,
-            "y": 14.601385237429485,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000072736-nfatc3"
-        }
-    },
-    {
-        "key": "NKX2-2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NKX2-2",
-            "aliases": "",
-            "gene_family": "NKX",
-            "enrichment": 27.46235,
-            "x": 86.22241732861407,
-            "y": 25.801061024894135,
-            "size": 7.798506822450802,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000125820-nkx2-2"
-        }
-    },
-    {
-        "key": "HSF2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF2",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 3.1495,
-            "x": 82.20188195090374,
-            "y": 36.64492602980234,
-            "size": 7.091576184751443,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000025156-hsf2"
-        }
-    },
-    {
-        "key": "CUX2_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CUX2",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 2.72061,
-            "x": 77.11375134662421,
-            "y": 46.40548839578151,
-            "size": 7.079105598982894,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000111249-cux2"
-        }
-    },
-    {
-        "key": "IKZF1_HSat3",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IKZF1",
-            "aliases": "",
-            "gene_family": "IKAROS",
-            "enrichment": 2.34888,
-            "x": 70.88332430676138,
-            "y": 55.4576805791812,
-            "size": 7.068297021380845,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000185811-ikzf1"
-        }
-    },
-    {
-        "key": "unknown",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "unknown",
-            "aliases": "None",
-            "dfam_id": null,
-            "x": 225,
-            "y": 0,
-            "size": 40,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/unknown"
-        }
-    },
-    {
-        "key": "ELF1_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ELF1",
-            "aliases": "",
-            "gene_family": "ETS",
-            "enrichment": 0.0,
-            "x": 288.6396103067893,
-            "y": 63.63961030678928,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000120690-elf1"
-        }
-    },
-    {
-        "key": "IRF4_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF4",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 269.10991954602156,
-            "y": 78.4494423029476,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000137265-irf4"
-        }
-    },
-    {
-        "key": "POU2AF1_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU2AF1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 246.3087978419802,
-            "y": 87.44103804581474,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000110777-pou2af1"
-        }
-    },
-    {
-        "key": "IRF2_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF2",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 221.92730008326288,
-            "y": 89.94753201295566,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000168310-irf2"
-        }
-    },
-    {
-        "key": "RFX8_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX8",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.0,
-            "x": 197.77369042070316,
-            "y": 85.78302901327447,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000196460-rfx8"
-        }
-    },
-    {
-        "key": "IRF5_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF5",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 175.6393315875613,
-            "y": 75.25639118292396,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000128604-irf5"
-        }
-    },
-    {
-        "key": "RFX7_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX7",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.0,
-            "x": 157.1658277205375,
-            "y": 59.148331093617514,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000181827-rfx7"
-        }
-    },
-    {
-        "key": "IRF1_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF1",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 143.72327409079207,
-            "y": 38.653509872707374,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000125347-irf1"
-        }
-    },
-    {
-        "key": "IRF7_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF7",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 136.3086434054523,
-            "y": 15.291934652580053,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000185507-irf7"
-        }
-    },
-    {
-        "key": "BANP_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BANP",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 135.47184490277147,
-            "y": -9.203773404783057,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000172530-banp"
-        }
-    },
-    {
-        "key": "IRF9_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF9",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 141.27494009959497,
-            "y": -33.016879693175014,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000213928-irf9"
-        }
-    },
-    {
-        "key": "STAT4_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "STAT4",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 153.28753997256854,
-            "y": -54.38127505689843,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000138378-stat4"
-        }
-    },
-    {
-        "key": "IRF8_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF8",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 170.61872494310145,
-            "y": -71.71246002743138,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000140968-irf8"
-        }
-    },
-    {
-        "key": "SOX2_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SOX2",
-            "aliases": "",
-            "gene_family": "SOX",
-            "enrichment": 0.0,
-            "x": 191.9831203068248,
-            "y": -83.72505990040493,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000181449-sox2"
-        }
-    },
-    {
-        "key": "ZNF274_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF274",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 215.79622659521684,
-            "y": -89.52815509722852,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000171606-znf274"
-        }
-    },
-    {
-        "key": "RFX6_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX6",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.0,
-            "x": 240.2919346525799,
-            "y": -88.69135659454774,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000185002-rfx6"
-        }
-    },
-    {
-        "key": "FUS-CHOP_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FUS-CHOP",
-            "aliases": "",
-            "gene_family": "CEBP",
-            "enrichment": 0.0,
-            "x": 263.65350987270733,
-            "y": -81.27672590920795,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/none-fus-chop"
-        }
-    },
-    {
-        "key": "DDIT3_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DDIT3",
-            "aliases": "",
-            "gene_family": "CEBP",
-            "enrichment": 0.0,
-            "x": 284.1483310936175,
-            "y": -67.83417227946252,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000175197-ddit3"
-        }
-    },
-    {
-        "key": "NRF1_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NRF1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 300.256391182924,
-            "y": -49.360668412438656,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000106459-nrf1"
-        }
-    },
-    {
-        "key": "RNF2_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RNF2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 310.7830290132745,
-            "y": -27.226309579296803,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000121481-rnf2"
-        }
-    },
-    {
-        "key": "IRF6_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF6",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": 314.94753201295566,
-            "y": -3.0726999167371014,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000117595-irf6"
-        }
-    },
-    {
-        "key": "ZBED2_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBED2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 312.4410380458147,
-            "y": 21.30879784198036,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000177494-zbed2"
-        }
-    },
-    {
-        "key": "POU6F1_unknown",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU6F1",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 0.0,
-            "x": 303.44944230294755,
-            "y": 44.10991954602167,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000184271-pou6f1"
-        }
-    },
-    {
-        "key": "HSat1A",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "HSat1A",
-            "aliases": "SAR",
-            "dfam_id": "DF000001062",
-            "x": 450,
-            "y": 0,
-            "size": 40,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/hsat1a"
-        }
-    },
-    {
-        "key": "LEF1_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "LEF1",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 0.0,
-            "x": 513.6396103067893,
-            "y": 63.63961030678928,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000138795-lef1"
-        }
-    },
-    {
-        "key": "HOXA7_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA7",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 1.67708,
-            "x": 494.34698359293094,
-            "y": 78.31567560972908,
-            "size": 7.048763482433069,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000122592-hoxa7"
-        }
-    },
-    {
-        "key": "POU5F1_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU5F1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 5.31417,
-            "x": 471.5777991685866,
-            "y": 87.37504553955978,
-            "size": 7.154517038806343,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000204531-pou5f1"
-        }
-    },
-    {
-        "key": "DLX6_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DLX6",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.64208,
-            "x": 447.2106665698066,
-            "y": 89.95676527652161,
-            "size": 7.047745807733498,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000006377-dlx6"
-        }
-    },
-    {
-        "key": "TCF7_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF7",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 303.13167,
-            "x": 409.18982735470047,
-            "y": 80.21552099600706,
-            "size": 15.813983748510418,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000081059-tcf7"
-        }
-    },
-    {
-        "key": "TEF_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEF",
-            "aliases": "",
-            "gene_family": "CEBP",
-            "enrichment": 6.55167,
-            "x": 378.7790424040263,
-            "y": 55.0234059206854,
-            "size": 7.190499108541194,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000167074-tef"
-        }
-    },
-    {
-        "key": "ZNF382_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF382",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 366.5850674492404,
-            "y": 33.792736313477604,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000161298-znf382"
-        }
-    },
-    {
-        "key": "TCF7L2_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF7L2",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 38.45167,
-            "x": 360.39892904181147,
-            "y": 8.464519073500774,
-            "size": 8.11803690615067,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000148737-tcf7l2"
-        }
-    },
-    {
-        "key": "PBX3_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PBX3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 361.732498534405,
-            "y": -17.574077074520478,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000167081-pbx3"
-        }
-    },
-    {
-        "key": "RXRG_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RXRG",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.09042,
-            "x": 369.61100890616154,
-            "y": -40.46739565273214,
-            "size": 7.031705509883051,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000143171-rxrg"
-        }
-    },
-    {
-        "key": "NCOA2_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NCOA2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 383.3070518378499,
-            "y": -60.43219891283752,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000140396-ncoa2"
-        }
-    },
-    {
-        "key": "ZFAT_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZFAT",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 401.7831395460698,
-            "y": -75.9943048390221,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000066827-zfat"
-        }
-    },
-    {
-        "key": "E2F1_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "E2F1",
-            "aliases": "",
-            "gene_family": "E2F",
-            "enrichment": 0.0,
-            "x": 423.7328946372171,
-            "y": -86.08158441769332,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000101412-e2f1"
-        }
-    },
-    {
-        "key": "NANOG_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NANOG",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 447.57499996194707,
-            "y": -89.96732392827656,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000111704-nanog"
-        }
-    },
-    {
-        "key": "ZNF239_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF239",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 471.5918085638394,
-            "y": -87.37158464250557,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000196793-znf239"
-        }
-    },
-    {
-        "key": "HOXA9_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA9",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 1.23625,
-            "x": 494.10732601195303,
-            "y": -78.45090051793728,
-            "size": 7.035945724209865,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000078399-hoxa9"
-        }
-    },
-    {
-        "key": "BCL11A_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BCL11A",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.57167,
-            "x": 513.4850839273812,
-            "y": -63.79376238107737,
-            "size": 7.045698537002159,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000119866-bcl11a"
-        }
-    },
-    {
-        "key": "ZBTB32_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB32",
-            "aliases": "",
-            "gene_family": "ZBTB",
-            "enrichment": 619.05833,
-            "x": 538.6783830930608,
-            "y": -15.366989685698302,
-            "size": 25.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000011590-zbtb32"
-        }
-    },
-    {
-        "key": "TCF7L1_HSat1A",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF7L1",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 64.74583,
-            "x": 529.8305224685287,
-            "y": 41.55824445764937,
-            "size": 8.882576945535972,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000152284-tcf7l1"
-        }
-    },
-    {
         "key": "bsat",
         "attributes": {
             "node_type": "repeat",
             "label": "bsat",
             "aliases": "BSR, beta-sat",
             "dfam_id": "DF000000075",
-            "x": 675,
+            "x": 0,
             "y": 0,
-            "size": 40,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/bsat"
@@ -1462,12 +22,13 @@
             "aliases": "",
             "gene_family": "MEIS",
             "enrichment": 1.41693,
-            "x": 738.6396103067893,
+            "x": 63.63961030678928,
             "y": 63.63961030678928,
-            "size": 7.041199251773254,
+            "size": 13.63063119962965,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000143995-meis1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "SMAD5_bsat",
@@ -1477,12 +38,13 @@
             "aliases": "",
             "gene_family": "SMAD",
             "enrichment": 5.94362,
-            "x": 720.1023710570402,
-            "y": 77.8830926776349,
-            "size": 7.172819191367638,
+            "x": 45.12607177532097,
+            "y": 77.86936269245165,
+            "size": 19.386734007504387,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000113658-smad5"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "HLF_bsat",
@@ -1492,12 +54,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 6.36301,
-            "x": 698.2930451587793,
-            "y": 86.93350359459276,
-            "size": 7.185013551146303,
+            "x": 19.422794668647157,
+            "y": 87.87920713831898,
+            "size": 19.660455736522962,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000108924-hlf"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ATF4_bsat",
@@ -1507,12 +70,13 @@
             "aliases": "",
             "gene_family": "ATF",
             "enrichment": 9.84656,
-            "x": 674.6931903432668,
-            "y": 89.99947704200584,
-            "size": 7.286302713994657,
+            "x": -9.535229727456644,
+            "y": 89.49346006298241,
+            "size": 21.413271976391073,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000128272-atf4"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CEBPA_bsat",
@@ -1522,12 +86,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 2.32331,
-            "x": 651.3016268902646,
-            "y": 86.82388560731299,
-            "size": 7.067553537321758,
+            "x": -34.87682486779554,
+            "y": 82.96750621261988,
+            "size": 15.615805917032336,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000245848-cebpa"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ZEB1_bsat",
@@ -1537,12 +102,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 7.88528,
-            "x": 629.6216237259986,
-            "y": 77.72260267602431,
-            "size": 7.229275713001067,
+            "x": -56.780621030301226,
+            "y": 69.828082283658,
+            "size": 20.521552065761657,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000148516-zeb1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CEBPE_bsat",
@@ -1552,12 +118,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 3.23706,
-            "x": 611.0080469294633,
-            "y": 63.2853058949566,
-            "size": 7.094122116085572,
+            "x": -74.64267647922726,
+            "y": 50.28390247402654,
+            "size": 16.947307737706538,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000092067-cebpe"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "JDP2_bsat",
@@ -1567,12 +134,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 3.85669,
-            "x": 596.8740530128989,
-            "y": 44.68038056427764,
-            "size": 7.112138738202586,
+            "x": -85.42566574742091,
+            "y": 28.327647830519204,
+            "size": 17.650423599326203,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000140044-jdp2"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "SMAD3_bsat",
@@ -1582,12 +150,13 @@
             "aliases": "",
             "gene_family": "SMAD",
             "enrichment": 5.87117,
-            "x": 587.9732008074177,
-            "y": 22.94201870572743,
-            "size": 7.170712604739524,
+            "x": -89.96287098536149,
+            "y": 2.5849263183314,
+            "size": 19.33749832426355,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000166949-smad3"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ESR1_bsat",
@@ -1597,12 +166,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 5.49515,
-            "x": 585.001064614336,
-            "y": -0.437755008050216,
-            "size": 7.159779289295727,
+            "x": -86.64400785104186,
+            "y": -24.34781106195374,
+            "size": 19.07178598882389,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000091831-esr1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "MEIS3_bsat",
@@ -1612,12 +182,13 @@
             "aliases": "",
             "gene_family": "MEIS",
             "enrichment": 3.46344,
-            "x": 588.1700461968128,
-            "y": -23.676129804855744,
-            "size": 7.1007044360424,
+            "x": -76.25686301499682,
+            "y": -47.80053182875698,
+            "size": 17.218675536386588,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000105419-meis3"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "NFIL3_bsat",
@@ -1627,27 +198,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 6.30632,
-            "x": 597.2551707169785,
-            "y": -45.34028583670194,
-            "size": 7.1833652088971975,
+            "x": -59.38174020592784,
+            "y": -67.62994107727503,
+            "size": 19.624528993359355,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000165030-nfil3"
-        }
-    },
-    {
-        "key": "SMAD4_bsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SMAD4",
-            "aliases": "",
-            "gene_family": "SMAD",
-            "enrichment": 0.0,
-            "x": 611.5194149916588,
-            "y": -63.79823921550467,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000141646-smad4"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CEBPG_bsat",
@@ -1657,12 +214,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 2.34061,
-            "x": 629.8836760367525,
-            "y": -77.87501083173792,
-            "size": 7.0680565593875455,
+            "x": -38.54740464068298,
+            "y": -81.32710246570606,
+            "size": 15.645588279491092,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000153879-cebpg"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CREB1_bsat",
@@ -1672,12 +230,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 5.32276,
-            "x": 651.4763732189643,
-            "y": -86.87139335285548,
-            "size": 7.154766805254038,
+            "x": -15.230538623244367,
+            "y": -88.70192045973899,
+            "size": 18.943827938545276,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000118260-creb1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "FOSB::JUN_bsat",
@@ -1687,12 +246,13 @@
             "aliases": "",
             "gene_family": "AP1",
             "enrichment": 3.64675,
-            "x": 674.7208003571164,
-            "y": -89.99956692984368,
-            "size": 7.106034434590356,
+            "x": 10.465789102324507,
+            "y": -89.38941357043163,
+            "size": 17.425719866948718,
             "color": "#D44657",
             "url": "/proteinTable/none-fosbjun"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "DBP_bsat",
@@ -1702,12 +262,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 5.09632,
-            "x": 697.973689143793,
-            "y": -87.01844406287883,
-            "size": 7.14818274071201,
+            "x": 35.19446417393083,
+            "y": -82.83326440211022,
+            "size": 18.769304280678256,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000105516-dbp"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "JUN_bsat",
@@ -1717,12 +278,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 11.4711,
-            "x": 719.9931819684191,
-            "y": -77.94622233538152,
-            "size": 7.333538521321569,
+            "x": 59.5639782563301,
+            "y": -67.46949306375018,
+            "size": 22.026321911253,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000177606-jun"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CEBPD_bsat",
@@ -1732,12 +294,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 1.20877,
-            "x": 738.7307419799394,
-            "y": -63.548347946161435,
-            "size": 7.035146704188602,
+            "x": 75.69353849774784,
+            "y": -48.687659932368554,
+            "size": 12.992769317811623,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000221869-cebpd"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "CEBPB_bsat",
@@ -1747,12 +310,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 1.07337,
-            "x": 752.8256132050442,
-            "y": -45.20148149407115,
-            "size": 7.03120975692226,
+            "x": 83.89045439745234,
+            "y": -32.59435013908036,
+            "size": 12.515845637681654,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000172216-cebpb"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "TEF_bsat",
@@ -1762,12 +326,13 @@
             "aliases": "",
             "gene_family": "CEBP",
             "enrichment": 3.31902,
-            "x": 761.8043117301306,
-            "y": -23.769969816100147,
-            "size": 7.096505219467768,
+            "x": 89.14908859710881,
+            "y": -12.34665956057921,
+            "size": 17.04768664727566,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000167074-tef"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ATF3_bsat",
@@ -1777,27 +342,13 @@
             "aliases": "",
             "gene_family": "ATF",
             "enrichment": 15.53239,
-            "x": 764.999979591789,
-            "y": -0.06060921999327677,
-            "size": 7.45162629505365,
+            "x": 88.54790405223783,
+            "y": 16.101822504166535,
+            "size": 23.24310549892621,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000162772-atf3"
-        }
-    },
-    {
-        "key": "CREB5_bsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CREB5",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 761.877943842662,
-            "y": 23.499422836981662,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000146592-creb5"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ATF7_bsat",
@@ -1807,162 +358,204 @@
             "aliases": "",
             "gene_family": "ATF",
             "enrichment": 6.89681,
-            "x": 752.9059905904227,
-            "y": 45.06280761476114,
-            "size": 7.200534544135769,
+            "x": 78.08083537568734,
+            "y": 44.75916830141968,
+            "size": 19.98385412920578,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000170653-atf7"
-        }
+        },
+        "organism": 9606
     },
     {
-        "key": "HSat1B",
+        "key": "HSat1A",
         "attributes": {
             "node_type": "repeat",
-            "label": "HSat1B",
-            "aliases": "HSATI",
-            "dfam_id": "DF000000210",
-            "x": 900,
+            "label": "HSat1A",
+            "aliases": "SAR",
+            "dfam_id": "DF000001062",
+            "x": 225,
             "y": 0,
-            "size": 40,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
-            "url": "/repeatTable/hsat1b"
+            "url": "/repeatTable/hsat1a"
         }
     },
     {
-        "key": "IKZF2_HSat1B",
+        "key": "HOXA7_HSat1A",
         "attributes": {
             "node_type": "protein",
-            "label": "IKZF2",
+            "label": "HOXA7",
             "aliases": "",
-            "gene_family": "IKAROS",
-            "enrichment": 0.0,
-            "x": 963.6396103067893,
+            "gene_family": "HOX",
+            "enrichment": 1.67708,
+            "x": 288.6396103067893,
             "y": 63.63961030678928,
-            "size": 7.0,
+            "size": 14.307322915791438,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000030419-ikzf2"
-        }
+            "url": "/proteinTable/ensg00000122592-hoxa7"
+        },
+        "organism": 9606
     },
     {
-        "key": "POU4F1_HSat1B",
+        "key": "POU5F1_HSat1A",
         "attributes": {
             "node_type": "protein",
-            "label": "POU4F1",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 4.56475,
-            "x": 907.8415426497951,
-            "y": 89.65773925808884,
-            "size": 7.132726588139118,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000152192-pou4f1"
-        }
-    },
-    {
-        "key": "OTX2_HSat1B",
-        "attributes": {
-            "node_type": "protein",
-            "label": "OTX2",
+            "label": "POU5F1",
             "aliases": "",
             "gene_family": "None",
-            "enrichment": 4.29787,
-            "x": 847.9199319936874,
-            "y": 73.40072558536366,
-            "size": 7.124966673172785,
+            "enrichment": 5.31417,
+            "x": 255.25859175156307,
+            "y": 84.76094398490523,
+            "size": 18.937343996875725,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000165588-otx2"
-        }
+            "url": "/proteinTable/ensg00000204531-pou5f1"
+        },
+        "organism": 9606
     },
     {
-        "key": "ZBTB8A_HSat1B",
+        "key": "DLX6_HSat1A",
         "attributes": {
             "node_type": "protein",
-            "label": "ZBTB8A",
+            "label": "DLX6",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.64208,
+            "x": 216.14941868864707,
+            "y": 89.56376058680839,
+            "size": 14.222655150701435,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000006377-dlx6"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TCF7_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TCF7",
+            "aliases": "",
+            "gene_family": "TCF7/LEF",
+            "enrichment": 303.13167,
+            "x": 163.26055443732685,
+            "y": 65.48466126974866,
+            "size": 35.17116624772329,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000081059-tcf7"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TEF_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEF",
+            "aliases": "",
+            "gene_family": "CEBP",
+            "enrichment": 6.55167,
+            "x": 135.31293311925504,
+            "y": 7.498668837119093,
+            "size": 19.777753361353746,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000167074-tef"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TCF7L2_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TCF7L2",
+            "aliases": "",
+            "gene_family": "TCF7/LEF",
+            "enrichment": 38.45167,
+            "x": 147.69833676351146,
+            "y": -46.091787347341125,
+            "size": 26.88215354265837,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000148737-tcf7l2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "RXRG_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RXRG",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.09042,
+            "x": 181.23125209116526,
+            "y": -78.64029950663257,
+            "size": 12.57911309849998,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000143171-rxrg"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HOXA9_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXA9",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 1.23625,
+            "x": 210.10278576992363,
+            "y": -88.75850949730517,
+            "size": 13.083012570861671,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000078399-hoxa9"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "BCL11A_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "BCL11A",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.57167,
+            "x": 242.42377133826776,
+            "y": -88.29729436597567,
+            "size": 14.046719480806065,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000119866-bcl11a"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "ZBTB32_HSat1A",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZBTB32",
             "aliases": "",
             "gene_family": "ZBTB",
-            "enrichment": 0.0,
-            "x": 812.9313757093511,
-            "y": 22.782771212778727,
-            "size": 7.0,
+            "enrichment": 619.05833,
+            "x": 294.8293091675879,
+            "y": -56.779112190817365,
+            "size": 38.03765317288226,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000160062-zbtb8a"
-        }
+            "url": "/proteinTable/ensg00000011590-zbtb32"
+        },
+        "organism": 9606
     },
     {
-        "key": "NCOA2_HSat1B",
+        "key": "TCF7L1_HSat1A",
         "attributes": {
             "node_type": "protein",
-            "label": "NCOA2",
+            "label": "TCF7L1",
             "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 818.4073540103586,
-            "y": -37.98210263280667,
-            "size": 7.0,
+            "gene_family": "TCF7/LEF",
+            "enrichment": 64.74583,
+            "x": 313.03606694425605,
+            "y": 18.698954970438027,
+            "size": 28.97398098824927,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000140396-ncoa2"
-        }
-    },
-    {
-        "key": "ZNF211_HSat1B",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF211",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 6.92607,
-            "x": 862.1898771347182,
-            "y": -81.672483792966,
-            "size": 7.20138532018461,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000121417-znf211"
-        }
-    },
-    {
-        "key": "TCF12_HSat1B",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF12",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 923.8307222221615,
-            "y": -86.78765279905994,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000140262-tcf12"
-        }
-    },
-    {
-        "key": "DMBX1_HSat1B",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DMBX1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 973.7057812217043,
-            "y": -51.64743763729477,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000197587-dmbx1"
-        }
-    },
-    {
-        "key": "POU4F3_HSat1B",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU4F3",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 4.66623,
-            "x": 989.6588813193885,
-            "y": 7.828473705379172,
-            "size": 7.135677263239475,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000091010-pou4f3"
-        }
+            "url": "/proteinTable/ensg00000152284-tcf7l1"
+        },
+        "organism": 9606
     },
     {
         "key": "HSat2",
@@ -1971,9 +564,9 @@
             "label": "HSat2",
             "aliases": "HSATII, HSAT2",
             "dfam_id": null,
-            "x": 0,
-            "y": -210,
-            "size": 40,
+            "x": 450,
+            "y": 0,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/hsat2"
@@ -1987,12 +580,13 @@
             "aliases": "",
             "gene_family": "HOX",
             "enrichment": 2.89811,
-            "x": 63.63961030678928,
-            "y": -146.36038969321072,
-            "size": 7.0842666635307205,
+            "x": 513.6396103067893,
+            "y": 63.63961030678928,
+            "size": 16.503276400526765,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000122592-hoxa7"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "HOXA9_HSat2",
@@ -2002,12 +596,13 @@
             "aliases": "",
             "gene_family": "HOX",
             "enrichment": 3.82623,
-            "x": -55.71183457893862,
-            "y": -139.31625725919022,
-            "size": 7.1112530704497585,
+            "x": 380.43546624785057,
+            "y": 57.1032016952295,
+            "size": 17.618591300313,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000078399-hoxa9"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "DUX4_HSat2",
@@ -2017,27 +612,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 85.96226,
-            "x": -62.91086120888591,
-            "y": -274.36010831218584,
-            "size": 9.499474774856838,
+            "x": 456.8608438600504,
+            "y": -89.73811242458807,
+            "size": 30.111848910625977,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000260596-dux4"
-        }
-    },
-    {
-        "key": "FLYWCH1_HSat2",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FLYWCH1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 71.3135155850852,
-            "y": -264.9033923805789,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000059122-flywch1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "gsat",
@@ -2046,27 +627,12 @@
             "label": "gsat",
             "aliases": "gamma-sat, GSAT",
             "dfam_id": "DF000000148",
-            "x": 225,
-            "y": -210,
-            "size": 40,
+            "x": 675,
+            "y": 0,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/gsat"
-        }
-    },
-    {
-        "key": "BMI1_gsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BMI1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 288.6396103067893,
-            "y": -146.36038969321072,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000168283-bmi1"
         }
     },
     {
@@ -2077,12 +643,13 @@
             "aliases": "",
             "gene_family": "SMAD",
             "enrichment": 9.34281,
-            "x": 249.61072279283238,
-            "y": -123.43030366453651,
-            "size": 7.271655467425824,
+            "x": 738.6396103067893,
+            "y": 63.63961030678928,
+            "size": 21.202449807042687,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000113658-smad5"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ZNF343_gsat",
@@ -2092,27 +659,13 @@
             "aliases": "",
             "gene_family": "KRAB-ZF",
             "enrichment": 54.88561,
-            "x": 199.41188163776025,
-            "y": -123.71414832847734,
-            "size": 8.595877047644283,
+            "x": 664.028805168629,
+            "y": 89.32879090176974,
+            "size": 28.31071189784895,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000088876-znf343"
-        }
-    },
-    {
-        "key": "EBF4_gsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF4",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.0,
-            "x": 157.7494674274312,
-            "y": -150.1889151686256,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000088881-ebf4"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "EBF1_gsat",
@@ -2122,42 +675,13 @@
             "aliases": "",
             "gene_family": "EBF",
             "enrichment": 3.83632,
-            "x": 137.2525169054283,
-            "y": -189.99052198162443,
-            "size": 7.111546451527436,
+            "x": 601.050973833993,
+            "y": 51.29855289478652,
+            "size": 17.62916386224998,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000164330-ebf1"
-        }
-    },
-    {
-        "key": "EBF2_gsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF2",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.0,
-            "x": 138.46811651868217,
-            "y": -234.74334539175402,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000221818-ebf2"
-        }
-    },
-    {
-        "key": "NR2E3_gsat",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NR2E3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 160.84414751277816,
-            "y": -273.11914599895846,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000278570-nr2e3"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "EBF3_gsat",
@@ -2167,12 +691,13 @@
             "aliases": "",
             "gene_family": "EBF",
             "enrichment": 3.93754,
-            "x": 199.2018122409333,
-            "y": -296.2232770680165,
-            "size": 7.114489566758596,
+            "x": 585.0783710005296,
+            "y": -3.75508163447978,
+            "size": 17.73371200075664,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000108001-ebf3"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ZNF692_gsat",
@@ -2182,12 +707,13 @@
             "aliases": "",
             "gene_family": "KRAB-ZF",
             "enrichment": 5.01561,
-            "x": 244.4025214884657,
-            "y": -297.8836854022954,
-            "size": 7.145835982854798,
+            "x": 606.7287472849716,
+            "y": -58.64329503635287,
+            "size": 18.70521806046883,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000171163-znf692"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "RBPJ_gsat",
@@ -2197,12 +723,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 31.4886,
-            "x": 286.60001220995684,
-            "y": -275.6158402806302,
-            "size": 7.915575758426512,
+            "x": 671.3853361562345,
+            "y": -89.92738295589712,
+            "size": 26.080149309096175,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000168214-rbpj"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "TFAP2E_gsat",
@@ -2212,12 +739,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 33.27228,
-            "x": 312.17682260482644,
-            "y": -232.36518724550783,
-            "size": 7.967438787230276,
+            "x": 746.604620036905,
+            "y": -54.523191298478366,
+            "size": 26.301344763025792,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000116819-tfap2e"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "VEZF1_gsat",
@@ -2227,12 +755,444 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 2.21421,
-            "x": 311.3856124759769,
-            "y": -184.75072363115453,
-            "size": 7.064381299901093,
+            "x": 764.4154231404685,
+            "y": 10.241196444310539,
+            "size": 15.422719354119458,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000136451-vezf1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HSat3",
+        "attributes": {
+            "node_type": "repeat",
+            "label": "HSat3",
+            "aliases": "HSATIII, HSAT3, hsat3",
+            "dfam_id": null,
+            "x": 900,
+            "y": 0,
+            "size": 50,
+            "color": "rgb(140, 90, 230)",
+            "zIndex": 100,
+            "url": "/repeatTable/hsat3"
         }
+    },
+    {
+        "key": "HOXA9_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXA9",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 0.47642,
+            "x": 963.6396103067893,
+            "y": 63.63961030678928,
+            "size": 9.255027978192903,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000078399-hoxa9"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HSF4_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF4",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 8.36425,
+            "x": 948.6380678891949,
+            "y": 75.72541417520323,
+            "size": 20.75828325191371,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000102878-hsf4"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TEAD2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD2",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 22.78061,
+            "x": 921.877588614011,
+            "y": 87.30046458316302,
+            "size": 24.78059002166698,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000074219-tead2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "ZBTB17_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZBTB17",
+            "aliases": "",
+            "gene_family": "ZBTB",
+            "enrichment": 8.4448,
+            "x": 892.7963649925179,
+            "y": 89.71124590974632,
+            "size": 20.796759068191946,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000116809-zbtb17"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TEAD3_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD3",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 12.37989,
+            "x": 865.924347924233,
+            "y": 83.29975951712751,
+            "size": 22.332398122619956,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000007866-tead3"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "NKX2-4_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NKX2-4",
+            "aliases": "",
+            "gene_family": "NKX",
+            "enrichment": 18.88765,
+            "x": 840.6844408953585,
+            "y": 67.68799338216336,
+            "size": 24.028265650188487,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000125816-nkx2-4"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "LIN54_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "LIN54",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 20.54089,
+            "x": 821.2531821394373,
+            "y": 43.57681352319554,
+            "size": 24.365119922565714,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000189308-lin54"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "BHLHE40_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "BHLHE40",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 0.01704,
+            "x": 813.9036990333561,
+            "y": 26.21882834645909,
+            "size": 5,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000134107-bhlhe40"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "ONECUT1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ONECUT1",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 2.01168,
+            "x": 811.0435341465728,
+            "y": 13.665547294859488,
+            "size": 15.037625880297707,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000169856-onecut1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "NEUROD1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NEUROD1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 2.03637,
+            "x": 810.177538428587,
+            "y": -5.650256388168819,
+            "size": 15.086597306187988,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000162992-neurod1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "CUX1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "CUX1",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 2.56911,
+            "x": 813.6327044685618,
+            "y": -25.311860117051957,
+            "size": 16.01953133913389,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000257923-cux1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "FOXK2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "FOXK2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 0.1457,
+            "x": 818.2570537563582,
+            "y": -37.65754558397426,
+            "size": 4.498841187965414,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000141568-foxk2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HSF1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF1",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 9.04682,
+            "x": 826.4605725170246,
+            "y": -51.88403035112254,
+            "size": 21.07320779894352,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000185122-hsf1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TEAD4_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD4",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 42.10279,
+            "x": 848.3603473269584,
+            "y": -73.71123572297259,
+            "size": 27.246316963675717,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000197905-tead4"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TBX1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TBX1",
+            "aliases": "",
+            "gene_family": "TBX",
+            "enrichment": 0.01318,
+            "x": 866.55932036588,
+            "y": -83.55669300306319,
+            "size": 5,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000184058-tbx1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HOXA7_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXA7",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 2.67168,
+            "x": 879.5367742340251,
+            "y": -87.64277717673453,
+            "size": 16.176691042453207,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000122592-hoxa7"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "IRF3_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IRF3",
+            "aliases": "",
+            "gene_family": "IRF",
+            "enrichment": 15.73631,
+            "x": 904.7381844780732,
+            "y": -89.87518905600002,
+            "size": 23.295467748450587,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000126456-irf3"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TEAD1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD1",
+            "aliases": "TCF13, TEF1",
+            "gene_family": "TEAD",
+            "enrichment": 22.98106,
+            "x": 934.7528951943951,
+            "y": -83.01949334708918,
+            "size": 24.815759758245246,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000187079-tead1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "TBX5_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TBX5",
+            "aliases": "",
+            "gene_family": "TBX",
+            "enrichment": 0.21547,
+            "x": 952.0832050743732,
+            "y": -73.39849963848576,
+            "size": 6.069605008615487,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000089225-tbx5"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "JUNB_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "JUNB",
+            "aliases": "",
+            "gene_family": "AP1",
+            "enrichment": 0.36196,
+            "x": 959.2604068166643,
+            "y": -67.73628410182721,
+            "size": 8.151977693021557,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000171223-junb"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "ONECUT2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ONECUT2",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 4.26492,
+            "x": 970.8344770533146,
+            "y": -55.52005818245738,
+            "size": 18.054339623667836,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000119547-onecut2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "PKNOX1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PKNOX1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.38665,
+            "x": 981.4659060908491,
+            "y": -38.25318476672166,
+            "size": 13.543910664810431,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000160199-pknox1"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "NKX2-2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NKX2-2",
+            "aliases": "",
+            "gene_family": "NKX",
+            "enrichment": 27.46235,
+            "x": 988.8534083667953,
+            "y": -14.320328962824394,
+            "size": 25.53092630506834,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000125820-nkx2-2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "HSF2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF2",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 3.1495,
+            "x": 989.0820635908024,
+            "y": 12.821308295343936,
+            "size": 16.83722274665307,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000025156-hsf2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "CUX2_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "CUX2",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 2.72061,
+            "x": 983.60099991696,
+            "y": 33.329758668260155,
+            "size": 16.249548839798912,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000111249-cux2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "IKZF1_HSat3",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IKZF1",
+            "aliases": "",
+            "gene_family": "IKAROS",
+            "enrichment": 2.34888,
+            "x": 973.9036107758138,
+            "y": 51.36395929342877,
+            "size": 15.659747602457228,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000185811-ikzf1"
+        },
+        "organism": 9606
     },
     {
         "key": "HSat3_Y",
@@ -2241,9 +1201,9 @@
             "label": "HSat3_Y",
             "aliases": "None",
             "dfam_id": null,
-            "x": 450,
+            "x": 0,
             "y": -210,
-            "size": 40,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/hsat3_y"
@@ -2257,12 +1217,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 34.0488,
-            "x": 513.6396103067893,
+            "x": 63.63961030678928,
             "y": -146.36038969321072,
-            "size": 7.99001720887917,
+            "size": 26.393960113620707,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000131264-cdx4"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "ZNF410_HSat3_Y",
@@ -2272,117 +1233,92 @@
             "aliases": "",
             "gene_family": "KRAB-ZF",
             "enrichment": 7.362,
-            "x": 382.3751563451669,
-            "y": -150.61245483555177,
-            "size": 7.214060603949873,
+            "x": -63.639610306789294,
+            "y": -273.6396103067893,
+            "size": 20.2458915918782,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000119725-znf410"
-        }
+        },
+        "organism": 9606
     },
     {
-        "key": "BCL11b_HSat3_Y",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BCL11b",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 387.84258085494696,
-            "y": -275.08805762370076,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000127152-bcl11b"
-        }
-    },
-    {
-        "key": "HOXd9_HSat3_Y",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXd9",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 0.0,
-            "x": 510.928880850455,
-            "y": -276.23950089116806,
-            "size": 7.0,
-            "color": "#D44657",
-            "url": "/proteinTable/ensg00000128709-hoxd9"
-        }
-    },
-    {
-        "key": "rDNA",
+        "key": "HSat1B",
         "attributes": {
             "node_type": "repeat",
-            "label": "rDNA",
-            "aliases": "None",
-            "dfam_id": null,
-            "x": 675,
+            "label": "HSat1B",
+            "aliases": "HSATI",
+            "dfam_id": "DF000000210",
+            "x": 225,
             "y": -210,
-            "size": 40,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
-            "url": "/repeatTable/rdna"
+            "url": "/repeatTable/hsat1b"
         }
     },
     {
-        "key": "EWSR-FLI1_rDNA",
+        "key": "POU4F1_HSat1B",
         "attributes": {
             "node_type": "protein",
-            "label": "EWSR-FLI1",
+            "label": "POU4F1",
             "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 738.6396103067893,
+            "gene_family": "POU",
+            "enrichment": 4.56475,
+            "x": 288.6396103067893,
             "y": -146.36038969321072,
-            "size": 7.0,
+            "size": 18.327086486499297,
             "color": "#D44657",
-            "url": "/proteinTable/none-ewsr-fli1"
-        }
+            "url": "/proteinTable/ensg00000152192-pou4f1"
+        },
+        "organism": 9606
     },
     {
-        "key": "RUNX2_rDNA",
+        "key": "OTX2_HSat1B",
         "attributes": {
             "node_type": "protein",
-            "label": "RUNX2",
+            "label": "OTX2",
             "aliases": "",
             "gene_family": "None",
-            "enrichment": 1.482,
-            "x": 611.9973992809136,
-            "y": -145.72969346088843,
-            "size": 7.043091254421857,
+            "enrichment": 4.29787,
+            "x": 164.09292397219747,
+            "y": -143.74044906774964,
+            "size": 18.085235776983993,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000124813-runx2"
-        }
+            "url": "/proteinTable/ensg00000165588-otx2"
+        },
+        "organism": 9606
     },
     {
-        "key": "ZNF768_rDNA",
+        "key": "ZNF211_HSat1B",
         "attributes": {
             "node_type": "protein",
-            "label": "ZNF768",
+            "label": "ZNF211",
             "aliases": "",
             "gene_family": "KRAB-ZF",
-            "enrichment": 5.148,
-            "x": 611.1517762046068,
-            "y": -273.43031072108494,
-            "size": 7.1496854100969776,
+            "enrichment": 6.92607,
+            "x": 160.48450146207307,
+            "y": -272.7514975789642,
+            "size": 20.000849810355366,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000169957-znf768"
-        }
+            "url": "/proteinTable/ensg00000121417-znf211"
+        },
+        "organism": 9606
     },
     {
-        "key": "PRDM1_rDNA",
+        "key": "POU4F3_HSat1B",
         "attributes": {
             "node_type": "protein",
-            "label": "PRDM1",
+            "label": "POU4F3",
             "aliases": "",
-            "gene_family": "PRDM",
-            "enrichment": 2.498,
-            "x": 739.0630951333553,
-            "y": -273.2132884916982,
-            "size": 7.072632897129419,
+            "gene_family": "POU",
+            "enrichment": 4.66623,
+            "x": 290.4090575865204,
+            "y": -271.8195372486988,
+            "size": 18.41535631590124,
             "color": "#D44657",
-            "url": "/proteinTable/ensg00000057657-prdm1"
-        }
+            "url": "/proteinTable/ensg00000091010-pou4f3"
+        },
+        "organism": 9606
     },
     {
         "key": "censat",
@@ -2391,9 +1327,9 @@
             "label": "censat",
             "aliases": "None",
             "dfam_id": "DF000004163",
-            "x": 900,
+            "x": 450,
             "y": -210,
-            "size": 40,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/censat"
@@ -2407,12 +1343,13 @@
             "aliases": "",
             "gene_family": "PRDM",
             "enrichment": 0.59767,
-            "x": 963.6396103067893,
+            "x": 513.6396103067893,
             "y": -146.36038969321072,
-            "size": 7.0173781039340835,
+            "size": 10.165272903245116,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000057657-prdm1"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "MSANTD3_censat",
@@ -2422,12 +1359,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 1.40051,
-            "x": 836.3603896932107,
+            "x": 386.3603896932107,
             "y": -273.6396103067893,
-            "size": 7.0407218169570545,
+            "size": 13.583837699011369,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000066697-msantd3"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "mon",
@@ -2436,9 +1374,9 @@
             "label": "mon",
             "aliases": "None",
             "dfam_id": null,
-            "x": 0,
-            "y": -420,
-            "size": 40,
+            "x": 675,
+            "y": -210,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/mon"
@@ -2452,12 +1390,13 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 29.96385,
-            "x": 63.63961030678928,
-            "y": -356.3603896932107,
-            "size": 7.871241487050178,
+            "x": 738.6396103067893,
+            "y": -146.36038969321072,
+            "size": 25.88089362129355,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000164920-osr2"
-        }
+        },
+        "organism": 9606
     },
     {
         "key": "dhor",
@@ -2466,9 +1405,9 @@
             "label": "dhor",
             "aliases": "None",
             "dfam_id": null,
-            "x": 225,
-            "y": -420,
-            "size": 40,
+            "x": 900,
+            "y": -210,
+            "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
             "url": "/repeatTable/dhor"
@@ -2482,11 +1421,75 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 61.66,
-            "x": 288.6396103067893,
-            "y": -356.3603896932107,
-            "size": 8.792852056445149,
+            "x": 963.6396103067893,
+            "y": -146.36038969321072,
+            "size": 28.77793709016251,
             "color": "#D44657",
             "url": "/proteinTable/ensg00000164920-osr2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "rDNA",
+        "attributes": {
+            "node_type": "repeat",
+            "label": "rDNA",
+            "aliases": "None",
+            "dfam_id": null,
+            "x": 0,
+            "y": -420,
+            "size": 50,
+            "color": "rgb(140, 90, 230)",
+            "zIndex": 100,
+            "url": "/repeatTable/rdna"
         }
+    },
+    {
+        "key": "RUNX2_rDNA",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RUNX2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.482,
+            "x": 63.63961030678928,
+            "y": -356.3603896932107,
+            "size": 13.810882403275176,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000124813-runx2"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "ZNF768_rDNA",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZNF768",
+            "aliases": "",
+            "gene_family": "KRAB-ZF",
+            "enrichment": 5.148,
+            "x": -87.32577131803909,
+            "y": -398.22364438870585,
+            "size": 18.809808959743435,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000169957-znf768"
+        },
+        "organism": 9606
+    },
+    {
+        "key": "PRDM1_rDNA",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PRDM1",
+            "aliases": "",
+            "gene_family": "PRDM",
+            "enrichment": 2.498,
+            "x": 37.70788116389453,
+            "y": -501.7197387301844,
+            "size": 15.906847664392352,
+            "color": "#D44657",
+            "url": "/proteinTable/ensg00000057657-prdm1"
+        },
+        "organism": 9606
     }
 ]

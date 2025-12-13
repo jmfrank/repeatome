@@ -199,3 +199,8 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
         for m in microscopies:
             print(m)
         return microscopies
+    
+    def history(self, ignoreKeys=()):
+        from proteins.util.history import get_history
+
+        return get_history(self, ignoreKeys)

@@ -4,12 +4,13 @@ from django.db import models
 
 
 def _get_content_type_and_obj(obj, model=None):
+    print(obj, model)
     if isinstance(model, str):
         model = apps.get_model(*model.split("."))
 
-    if isinstance(obj, int):
+    if isinstance(obj, str):
         obj = model.objects.get(pk=obj)
-
+    print(obj, type(obj))
     return ContentType.objects.get_for_model(type(obj)), obj
 
 

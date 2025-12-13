@@ -16,7 +16,7 @@ from django.conf import settings
 from references.models import Reference
 from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy
 from proteins.util.helpers import shortuuid
-from proteins.util.repeat_network_data import GetNetworkData
+from proteins.util.repeat_network_data import GetNetworkData, GetNetworkDataAll
 import json
 import requests
 import os
@@ -134,21 +134,20 @@ def parse_microscopy_result(x):
     return obj
 
 def import_repeat_families():
-    df =  pd.read_csv(settings.IMPORT_FAMILY_DATA)
+    df = load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
 
     parent_repeats_dict = {}
     for row in df.to_dict(orient="records"):
-        parent = row['parent']
+        parent = row['parent_name']
         child_arr = row['children']
         if pd.notna(child_arr):
             # print(child_arr)
             child_arr = [x.strip() for x in child_arr.strip(' ').split(',')]
             for child in child_arr:
-                print(f"Mapping child {child} to parent {parent}")
+                # print(f"Mapping child {child} to parent {parent}")
                 parent_repeats_dict[child] = parent
 
     return parent_repeats_dict
-
 
 def update_repeat_families():
     parent_repeats_dict = import_repeat_families()
@@ -159,6 +158,13 @@ def update_repeat_families():
             print(f"Updating repeat {child} to have parent {parent}")
             child_obj.parent_repeat = parent_obj
             child_obj.save()
+            child_proteins = child_obj.get_protein_lst()
+            for protein in child_proteins:
+                if not get_obj_if_exists(ProteinRepeats, repeat=parent_obj, protein=protein):
+                    print('new pairing', parent_obj.name, protein.gene)
+                    protein_repeat_obj = ProteinRepeats(protein=protein, repeat=parent_obj)
+                    protein_repeat_obj.save()
+
         else:
             if not child_obj:
                 print(f"Child repeat {child} does not exist")
@@ -901,6 +907,7 @@ if __name__ == "__main__":
         update_proteomics()
         for org in Organism.objects.all():
             GetNetworkData(org.id)
+        GetNetworkDataAll()
         update_PDB_from_uniprot()
         update_microscopy()
     elif command == 'import_repeat':
@@ -937,7 +944,7 @@ if __name__ == "__main__":
     elif command == 'network_data':
         for org in Organism.objects.all():
             GetNetworkData(org.id)
-
+        GetNetworkDataAll()
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
 

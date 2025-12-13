@@ -1,4 +1,59 @@
 {% load i18n %}
-<a class="btn unfave" href='' data-action-url="{% url 'favit:remove' %}" data-model="{{ target_model }}" data-id="{{ target_object_id }}">
+<a class="btn unfave" href='' data-action-url="{% url 'favit:remove' %}" data-model="{{ target_model }}" data-target_object_id="{{ target_object_id }}">
   <i class="fas fa-times-circle text-danger"></i>
 </a>
+
+<script>
+function getCookie(name) {
+  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return m ? m.pop() : '';
+}
+
+document.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.unfave');
+  if (!btn) return;
+
+  e.preventDefault();
+
+  const url = btn.dataset.actionUrl;          // "/fav/remove"
+  const appModel = btn.dataset.model;   // from data-target_model
+  const objId    = btn.dataset.target_object_id;// from data-target_object_id
+
+  console.log('remove clicked', btn.dataset, 'url:', url);
+
+  if (!appModel || !objId) {
+    console.warn('Missing data attributes', { appModel, objId });
+    return;
+  }
+
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'X-CSRFToken': getCookie('csrftoken'),
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+    body: new URLSearchParams({
+      target_model: appModel,
+      target_object_id: objId,
+    }).toString(),
+  });
+
+  console.log('remove response status:', resp.status);
+
+  if (!resp.ok) {
+    const txt = await resp.text();
+    console.warn('Server error body:', txt);
+    return;
+  }
+
+  const data = await resp.json();
+  if (data.status === 'deleted') {
+    (btn.closest('[data-protein-row]') ||
+     btn.closest('li') ||
+     btn.closest('tr') ||
+     btn.parentElement
+    )?.remove();
+  }
+});
+</script>
