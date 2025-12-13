@@ -14,7 +14,7 @@ import os
 
 # Data to import
 # ------------------------------------------------------------------------------
-IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
+IMPORT_DATA_FOLDER = "/data/repeatome_data"
 IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
 IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
@@ -30,8 +30,7 @@ IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase26',  # Replace with your database name
+        'NAME': 'repeatome',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
@@ -80,10 +79,16 @@ if env("MAILGUN_API_KEY", default=False) and env("MAILGUN_DOMAIN", default=False
     }
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
-ALLOWED_HOSTS = env.list(
-    "DJANGO_ALLOWED_HOSTS",
-    default=["fpbase.org", "localhost", "testserver", "10.0.2.2", "127.0.0.1"],
-)
+
+ALLOWED_HOSTS = [
+        "*",
+        "127.0.0.1",
+        "172.31.21.8",
+        "13.222.167.56",
+        "repeatome-dev2-load-balancer-1437249466.us-east-1.elb.amazonaws.com",
+        "135.180.58.132",
+        "www.askperkins.com"
+]
 
 # CACHING
 # ------------------------------------------------------------------------------
@@ -178,9 +183,9 @@ if os.getenv("DESKTOP_LOG"):
     )
     LOGGING["loggers"]["django"]["handlers"].append("file")
 
-X_FRAME_OPTIONS = "ALLOW-FROM http://127.0.0.1:8000"
+X_FRAME_OPTIONS = "ALLOW-FROM http://0.0.0.0:8000"
 
-# All below is for login and authentication
+
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -313,3 +318,11 @@ if REDIS_URL.startswith("rediss://"):
     REDIS_URL += "?ssl_cert_reqs=none"
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.askperkins.com",
+    # Add other trusted origins as needed
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+

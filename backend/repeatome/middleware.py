@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
+from django.urls import reverse
+
 
 logger = logging.getLogger(__name__)
 
@@ -45,4 +47,22 @@ class BlackListMiddleware:
         if request.META.get("REMOTE_ADDR") in self.blacklist:
             return HttpResponseForbidden()
 
+        return self.get_response(request)
+
+
+
+class LoginRequiredMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # Define URLs that don't require authentication
+        self.exempt_urls = [
+            reverse(settings.LOGIN_URL), # Your login URL name
+            reverse(settings.SIGNUP_URL), # Your signup URL name
+            # Add other URLs to exempt, e.g., registration, password reset
+        ]
+
+    def __call__(self, request):
+        if not request.user.is_authenticated and request.path not in self.exempt_urls:
+            # Redirect to login page, preserving the original URL in 'next' parameter
+            return redirect(f"{reverse(settings.LOGIN_URL)}?next={request.path}")
         return self.get_response(request)
