@@ -4,6 +4,8 @@ repeatome_dir=/data/repeatome
 
 cd $repeatome_dir
 
+export PATH=/home/ubuntu/miniconda3/bin:$PATH
+
 conda activate repeatome
 
 export DJANGO_SETTINGS_MODULE=config.settings.ec2
