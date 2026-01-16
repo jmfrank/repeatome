@@ -170,20 +170,27 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   <h1 class="text-center name display-4">{{ repeat.name | safe }}</h1>
   <div class="text-center aliases">a.k.a {{ repeat.aliases_as_str | safe }}</div>
   <div class="text-center organism ">Organism: {{repeat.parental_organism.scientific_name}}</div>  
-  {% if subrepeats %}
+  {% comment %} {% if subrepeats %}
     <div class="text-center subfamilies" style="padding-bottom: 15px; color: rgba(113, 124, 161, 1); font-size: 1.4rem; font-weight: 600;margin-top: 5px;">Subfamilies: 
       {% for child in subrepeats %}
       <a href="/repeatTable/{{child.slug}}">{{child.name}}</a> 
       {% endfor %}
     </div>
-  {% endif %}
+  {% endif %} {% endcomment %}
   
-  {% if repeat.karyoplot_exists %}
-  <div id="karyoplot-info" style="overflow: visible;">
-    <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
-      <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
-    </svg>
-  </div>
+  {% if repeat.karyotype_data_exists %}
+    <div id='karyotype_div'
+      data-karyo-txt="{% static 'karyotype_viewer/karyotype.txt' %}"
+      data-karyo-bed="{% static 'karyotype_viewer/'|add:repeat.name|add:'_karyotype.bed' %}"
+      data-karyo-parent="{{repeat.name}}">
+    </div>
+    {% render_bundle 'karyotypeViewer' %}
+  {% elif repeat.karyoplot_exists %}
+    <div id="karyoplot-info" style="overflow: visible;">
+      <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
+        <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
+      </svg>
+    </div>
   {% endif %}
   
   <div class="attribute-data">
@@ -201,7 +208,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% if proteomics_datapoints %}
   <h3>Proteomics</h3>  
   <div class="proteomics mt-3">
-      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat threshold=threshold %}
+      {% include "proteomics_graph.html" with datapoints=proteomics_datapoints repeat=repeat threshold=threshold proteomics_list=proteomics_list proteomics_obj=proteomics_first_obj %}
   </div>
   {% endif %}
 
@@ -240,7 +247,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
            <td>{{ protein.dna_binding_domain | safe }}</td>
            <td>{{ protein.signaling_pathway | safe }}</td>
          </tr>
-         {%endfor%}
+         {% endfor %}
        </tbody>
      </table>
    </div>

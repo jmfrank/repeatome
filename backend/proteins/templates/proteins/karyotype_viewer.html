@@ -12,7 +12,11 @@
   <h1 class="name text-center mb-4">Karyotype Viewer</h1>
 
   <h5 class='pt-3'><strong>Karyotype Viewer</strong></h5>
-  <div id='karyotype_div'></div>
+  <div id='karyotype_div'
+      data-karyo-txt="{% static 'karyotype_viewer/karyotype.txt' %}"
+      data-karyo-bed="{% static 'karyotype_viewer/9606_karyotype.bed' %}"
+      data-karyo-parent="none">
+    </div>
 
   {% render_bundle 'karyotypeViewer' %}
 

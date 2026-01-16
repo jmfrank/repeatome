@@ -2,7 +2,7 @@ from django.conf import settings
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
 from ..models import Repeat, ProteinTF, ProteinRepeats, Proteomics
-from proteins.models.proteomics import get_proteomics
+from proteins.models.proteomics import get_proteomics, get_proteomics_list
 import os
 import pandas as pd
 from math import log2
@@ -50,16 +50,32 @@ class RepeatDetailView(DetailView):
         except (ValueError, TypeError): 
             return def_val
         
+    def get_proteomics_obj(self, repeat):
+        # repeat_name = repeat.name.lower()
+        prot_obj = get_proteomics(repeat.name)
+
+        return prot_obj
+    
+    def get_proteomics_objs(self, repeat):
+        # repeat_name = repeat.name.lower()
+        prot_objs = get_proteomics_list(repeat.name)
+        # for obj in prot_objs:
+        #     print(obj.name)
+        return prot_objs
+        
     def get_proteomics_data(self, repeat):
         taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
+        print(repeat)
         prot_obj = get_proteomics(repeat.name)
+        print(prot_obj)
     
         # df = pd.read_csv(file, dtype=str)
         datapoints = []
         data_format = 1
         # for row in df.to_dict(orient='records'):
         if not prot_obj == None:
+            # print("datapoints: ", prot_obj)
             SIG_THRESHOLD = prot_obj.thresholds[0]
             if len(prot_obj.thresholds) > 1:
                 LOG_THRESHOLD = prot_obj.thresholds[1]
@@ -107,6 +123,11 @@ class RepeatDetailView(DetailView):
         context["enrichment_datapoints"] = enrichment_datapoints
         context["qscore_datapoints"] = qscore_datapoints
         context["proteomics_datapoints"] = self.get_proteomics_data(self.object)
+        proteomics_objs = self.get_proteomics_objs(self.object)
+        context["proteomics_list"] = proteomics_objs
+        if (proteomics_objs != None and len(proteomics_objs) > 0):
+            context["proteomics_first_obj"] = proteomics_objs[0]
+        # print(self.get_proteomics_obj(self.object))
         if get_proteomics(self.object.name) != None:
             threshold_lst = list(get_proteomics(self.object.name).thresholds)
             for i in range(len(threshold_lst)):

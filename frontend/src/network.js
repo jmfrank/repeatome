@@ -4,7 +4,7 @@ import App from "@repeatome/network";
 
 const container = document.getElementById("network-container");
 
-const dataAttr = rootElement.getAttribute("data-network");
+const dataAttr = container.getAttribute("data-network");
 const data = dataAttr ? JSON.parse(dataAttr) : null;
 
 if (container) {
