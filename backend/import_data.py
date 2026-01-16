@@ -149,6 +149,7 @@ def import_repeat_families():
 
 def update_repeat_families():
     parent_repeats_dict = import_repeat_families()
+
     for child, parent in parent_repeats_dict.items():
         child_obj = get_obj_if_exists(Repeat, name=child)
         parent_obj = get_obj_if_exists(Repeat, name=parent)
@@ -162,7 +163,6 @@ def update_repeat_families():
                     print('new pairing', parent_obj.name, protein.gene)
                     protein_repeat_obj = ProteinRepeats(protein=protein, repeat=parent_obj)
                     protein_repeat_obj.save()
-
         else:
             if not child_obj:
                 print(f"Child repeat {child} does not exist")
@@ -193,7 +193,6 @@ def import_repeat():
                 aliases=aliases, 
                 dfam_id=row["dfam_id"],
                 motif=row["dfam_id"],
-                proteomics="more info",
                 parent_repeat=parent_repeat_obj,
                 parental_organism=parent_organism_obj
             )
@@ -202,7 +201,7 @@ def import_repeat():
     # (2) From master_proteins sheet we only have name
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, 'master_proteins')
     df = df[df['satellite'].notnull() & (df['satellite'] != '') & (df['satellite'] != '?')]
-    # print(f"Num rows = {len(df)}")
+    # print(f"Num rows = {len(df)})
 
     unique_satellites = set()
     for row in df[['gene', 'satellite']].to_dict(orient='records'):
@@ -221,10 +220,20 @@ def import_repeat():
                 parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
             obj = Repeat(
                 name=name, 
-                proteomics="more info",
                 parent_repeat=parent_repeat_obj
             )
             obj.save()
+    
+    # print(parent_repeats_dict)
+    for child, parent in parent_repeats_dict.items():
+        # print(child, parent)
+        child_obj = get_obj_if_exists(Repeat, name=child)
+        parent_obj = get_obj_if_exists(Repeat, name=parent)
+        parent_organism_obj = get_organism_obj(parent_organism_id)
+        if parent_obj and not child_obj:
+            print('Adding Child Repeat: ', child, parent)
+            child = Repeat(name=child, parent_repeat=parent_obj, parental_organism=parent_organism_obj)
+            child.save()
 
 def load_jaspar_from_url(gene, tax_group, tax_id=9606):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
@@ -481,7 +490,6 @@ def get_proteomic_data(mapper, uniprot_id):
     result_df.to_csv(cache_file, index=False)
     return result_df, failed
 
-
 def update_proteomics():
     file = input("Enter file: ")
     # file = "C:/Users/caris/Documents/CAMPS + INTERNSHIPS/2025 Summer - GRIPS Internship/repeatome_colab/repeatome_data/HSat3_epithelial_2.csv"
@@ -662,6 +670,99 @@ def get_proteomics_without_proteins():
             thresholds = '{' + thresholds + '}'
         )
         obj.save()
+
+def import_proteomics():
+    pr_df = load_dataframe_from_excel(settings.IMPORT_DATA_FOLDER / "proteomics_data/proteomics_datasets.xlsx", 'Sheet1')
+    pr_df = pr_df.where(pd.notnull(pr_df), None)
+
+    print(pr_df.to_dict(orient='records'))
+    print(pr_df)
+
+    log2C_vals = {}
+    significance = {}
+
+    for row in pr_df.to_dict(orient='records'):
+        pr_path = row['Path']
+        parent_organism_ncbi = row["Parent organism"]
+        parent_organism_obj = get_obj_if_exists(Organism, id=int(parent_organism_ncbi))
+        cell_type = row['Cell type']
+        cell_line = row['Cell line']
+        target_list = json.loads(row['Target'])
+        # print(target_list)
+        protein_target = target_list['protein']
+        protein_obj = get_obj_if_exists(ProteinTF, gene=protein_target)
+        repeat_target = target_list['repeat']
+        repeat_obj = get_obj_if_exists(Repeat, name=repeat_target)
+        print(repeat_target, repeat_obj.name)
+        method = row['Method']
+        desc = row['Description']
+        citation = row['Citation']
+        date_generated = row['Date generated/published'] # YYYY-MM-DD
+        x_axis_name = row['X-axis']
+        y_axis_name = row['Y-axis']
+        threshold = row['Threshold [ y, x]']
+        
+        if parent_organism_obj == None:
+            print("Adding Organism")
+            org_obj = Organism(id=int(parent_organism_ncbi))
+            org_obj.save()
+        else:
+            print(str(parent_organism_ncbi) + " Object Found")
+
+        if repeat_obj == None:
+            print("Adding Repeat")
+            repeat_obj = Repeat(name=repeat_target, parental_organism = parent_organism_obj)
+            repeat_obj.save()
+        else:
+            print(repeat_obj.name + " Object Found")
+
+        if protein_obj == None: # get uniprot to fill in information?
+            print("Adding Target Protein")
+            protein_obj = ProteinTF(gene=protein_target, parent_organism = parent_organism_obj, ENSEMBL = "none")
+            protein_obj.save()
+        else:
+            print(protein_obj.gene + " Object Found")
+
+        log2C_vals = {}
+        significance = {}
+
+        df = pd.read_csv(settings.IMPORT_DATA_FOLDER / "proteomics_data" / pr_path, dtype=str)
+
+        for row in df.to_dict(orient='records'):
+            log2C_vals[row[df.keys()[0]]] = row[df.keys()[2]]
+            significance[row[df.keys()[0]]] = row[df.keys()[1]]
+
+        if len(Proteomics.objects.filter(target_repeat=repeat_obj, cell_type=cell_type)) == 0:
+            print("Adding Proteomics")
+            if date_generated == "None" or date_generated == "NA":
+                date_obj = datetime.now()
+            else:
+                # print(date_generated)
+                cleaned_date = re.sub(r'(\d+)(st|nd|rd|th)', r'\1', str(date_generated))[0:10]
+                # print(cleaned_date)
+                date_obj = datetime.strptime(cleaned_date, "%Y-%m-%d")
+            
+            print('{' + threshold[1:len(threshold)-1] + '}')
+            # print(log2C_vals)
+            # print(significance)
+            obj = Proteomics(
+                id = shortuuid(),
+                cell_type = cell_type,
+                cell_line_name = cell_line,
+                target_repeat = repeat_obj,
+                target_protein = protein_obj,
+                method = method,
+                description = desc,
+                date_generated = date_obj.date(),
+                parent_organism = parent_organism_obj,
+                significance = significance,
+                log2vals = log2C_vals,
+                # UNIPROT = df.keys()[0],
+                x_label = x_axis_name,
+                y_label = y_axis_name,
+                thresholds = '{' + threshold[1:len(threshold)-1] + '}'
+            )
+            obj.save()
 
 def update_jaspar():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
@@ -888,6 +989,7 @@ if __name__ == "__main__":
         update_microscopy()
     elif command == 'import_repeat':
         import_repeat()
+        update_repeat_families()
     
     elif command == 'import_protein':
         import_protein()
@@ -925,6 +1027,8 @@ if __name__ == "__main__":
         load_jaspar_from_url('TCF7', 'vertebrates')
     elif command == 'update_PDB_from_uniprot':
         update_PDB_from_uniprot()
+    elif command == 'import_proteomics':
+        import_proteomics()
     else:
         print(f"Usage: python backend/import_data.py <command>")
         print("Command:")        

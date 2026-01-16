@@ -54,6 +54,7 @@ svg {
 .karyo_btns {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .bg-gray-100 {
