@@ -11558,6 +11558,14 @@ span.first-word {
   right: 0.22rem;
 }
 
+.protein_table th {
+  text-align: center;
+}
+
+.protein_table td {
+  text-align: center;
+}
+
 td a {
   color: rgb(72, 40, 96) !important;
 }

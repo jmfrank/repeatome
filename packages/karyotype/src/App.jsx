@@ -86,17 +86,24 @@ function ViewerPage(){
   const [sourceKaryo, setSourceKaryo] = useState("(none)");
   const [sourceBed, setSourceBed]     = useState("(none)");
   const [showDiag, setShowDiag]       = useState(false);
+  const [parent, setParent] = useState(null);
+  const [familyColors, setColors] = useState(null);
 
   const AUTOLOAD_DEFAULTS = false;
 
-  useEffect(()=>{
-    const kt = localStorage.getItem("karyo_tsv_text");
-    const bt = localStorage.getItem("elements_bed_text");
-    const ks = localStorage.getItem("karyo_tsv_name");
-    const bs = localStorage.getItem("elements_bed_name");
-    if (kt) { setKaryoText(kt); setSourceKaryo(ks || "(saved)"); }
-    if (bt) { setBedText(bt);   setSourceBed(bs || "(saved)"); }
-  }, []);
+  // useEffect(()=>{
+  //   // const kt = localStorage.getItem("karyo_tsv_text");
+  //   // const bt = localStorage.getItem("elements_bed_text");
+  //   // const ks = localStorage.getItem("karyo_tsv_name");
+  //   // const bs = localStorage.getItem("elements_bed_name");
+  //   console.log(el.getAttribute("data-karyo_tsv_text"))
+  //   const kt = el.getAttribute("data-karyo_tsv_text");
+  //   const bt = el.getAttribute("data-karyo_bed_text");
+  //   const ks = el.getAttribute("data-karyo_tsv_name");
+  //   const bs = el.getAttribute("data-karyo_bed_name");
+  //   if (kt) { setKaryoText(kt); setSourceKaryo(ks || "(saved)"); }
+  //   if (bt) { setBedText(bt);   setSourceBed(bs || "(saved)"); }
+  // }, []);
 
   useEffect(()=>{
     try{
@@ -106,39 +113,39 @@ function ViewerPage(){
     }catch{}
   }, []);
 
-  useEffect(()=>{
-    if (AUTOLOAD_DEFAULTS && !karyoText){
-      fetch(DEFAULT_KARYO_URL).then(r=>r.ok?r.text():Promise.reject()).then(t=>{ setKaryoText(t); setSourceKaryo(DEFAULT_KARYO_URL); }).catch(()=>{});
-    }
-    if (AUTOLOAD_DEFAULTS && !bedText){
-      fetch(DEFAULT_BED_URL).then(r=>r.ok?r.text():Promise.reject()).then(t=>{ setBedText(t); setSourceBed(DEFAULT_BED_URL); }).catch(()=>{});
-    }
-  }, [karyoText, bedText]);
+  // useEffect(()=>{
+  //   if (AUTOLOAD_DEFAULTS && !karyoText){
+  //     fetch(DEFAULT_KARYO_URL).then(r=>r.ok?r.text():Promise.reject()).then(t=>{ setKaryoText(t); setSourceKaryo(DEFAULT_KARYO_URL); }).catch(()=>{});
+  //   }
+  //   if (AUTOLOAD_DEFAULTS && !bedText){
+  //     fetch(DEFAULT_BED_URL).then(r=>r.ok?r.text():Promise.reject()).then(t=>{ setBedText(t); setSourceBed(DEFAULT_BED_URL); }).catch(()=>{});
+  //   }
+  // }, [karyoText, bedText]);
 
-  useEffect(()=>{ if (karyoText) localStorage.setItem("karyo_tsv_text", karyoText); }, [karyoText]);
-  useEffect(()=>{ if (bedText)   localStorage.setItem("elements_bed_text", bedText); }, [bedText]);
-  useEffect(()=>{ if (sourceKaryo) localStorage.setItem("karyo_tsv_name", sourceKaryo); }, [sourceKaryo]);
-  useEffect(()=>{ if (sourceBed)   localStorage.setItem("elements_bed_name", sourceBed); }, [sourceBed]);
+  // useEffect(()=>{ if (karyoText) localStorage.setItem("karyo_tsv_text", karyoText); }, [karyoText]);
+  // useEffect(()=>{ if (bedText)   localStorage.setItem("elements_bed_text", bedText); }, [bedText]);
+  // useEffect(()=>{ if (sourceKaryo) localStorage.setItem("karyo_tsv_name", sourceKaryo); }, [sourceKaryo]);
+  // useEffect(()=>{ if (sourceBed)   localStorage.setItem("elements_bed_name", sourceBed); }, [sourceBed]);
 
-  const onDropFiles = (files) => {
-    const list = Array.from(files);
-    const byExt = (exts)=> list.find(f=> exts.some(e=> f.name.toLowerCase().endsWith(e)));
-    const maybeK = byExt([".txt",".tsv",".csv"]);
-    const maybeB = byExt([".bed",".txt"]);
-    if (maybeK){ const r=new FileReader(); r.onload=()=>{ setKaryoText(String(r.result||"")); setSourceKaryo(maybeK.name); }; r.readAsText(maybeK); }
-    if (maybeB){ const r=new FileReader(); r.onload=()=>{ setBedText(String(r.result||"")); setSourceBed(maybeB.name); }; r.readAsText(maybeB); }
-  };
+  // const onDropFiles = (files) => {
+  //   const list = Array.from(files);
+  //   const byExt = (exts)=> list.find(f=> exts.some(e=> f.name.toLowerCase().endsWith(e)));
+  //   const maybeK = byExt([".txt",".tsv",".csv"]);
+  //   const maybeB = byExt([".bed",".txt"]);
+  //   if (maybeK){ const r=new FileReader(); r.onload=()=>{ setKaryoText(String(r.result||"")); setSourceKaryo(maybeK.name); }; r.readAsText(maybeK); }
+  //   if (maybeB){ const r=new FileReader(); r.onload=()=>{ setBedText(String(r.result||"")); setSourceBed(maybeB.name); }; r.readAsText(maybeB); }
+  // };
 
-  const loadDemo = async ()=>{
-    try{
-      const [kt, bt] = await Promise.all([
-        fetch(DEFAULT_KARYO_URL).then(r=>r.ok?r.text():""),
-        fetch(DEFAULT_BED_URL).then(r=>r.ok?r.text():"")
-      ]);
-      if (kt) { setKaryoText(kt); setSourceKaryo(DEFAULT_KARYO_URL); }
-      if (bt) { setBedText(bt);   setSourceBed(DEFAULT_BED_URL); }
-    }catch{}
-  };
+  // const loadDemo = async ()=>{
+  //   try{
+  //     const [kt, bt] = await Promise.all([
+  //       fetch(DEFAULT_KARYO_URL).then(r=>r.ok?r.text():""),
+  //       fetch(DEFAULT_BED_URL).then(r=>r.ok?r.text():"")
+  //     ]);
+  //     if (kt) { setKaryoText(kt); setSourceKaryo(DEFAULT_KARYO_URL); }
+  //     if (bt) { setBedText(bt);   setSourceBed(DEFAULT_BED_URL); }
+  //   }catch{}
+  // };
 
   const clearAll = ()=>{
     try{
@@ -154,29 +161,50 @@ function ViewerPage(){
   };
 
   useEffect(() => {
-    async function loadStaticFiles() {
+    const el = document.getElementById("karyotype_div");
+    if (!el) { return; }
+    async function loadFiles() {
       try {
-        const karyoResp = await fetch(`/static/karyotype_viewer/human_karyotype.txt?ts=${Date.now()}`);
+        console.log(el.getAttribute("data-karyo-txt"), typeof(el.getAttribute("data-karyo-txt")))
+        console.log(el.getAttribute("data-karyo-bed"))
+        // const karyoResp_old = await fetch(`/static/karyotype_viewer/human_karyotype.txt?ts=${Date.now()}`);
+        const karyoResp = await fetch(el.getAttribute("data-karyo-txt"))
+        // console.log(karyoResp)
         const karyo = await karyoResp.text();
+        // console.log(karyo)
         setKaryoText(karyo);
-        setSourceKaryo("/static/karyotype_viewer/human_karyotype.txt");
+        setSourceKaryo(el.getAttribute("data-karyo-txt"));
 
-        const bedResp = await fetch(`/static/karyotype_viewer/compiled.bed?ts=${Date.now()}`);
+        // const bedResp_old = await fetch(`/static/karyotype_viewer/compiled.bed?ts=${Date.now()}`);
+        const bedResp = await fetch(el.getAttribute("data-karyo-bed"))
         const bed = await bedResp.text();
         setBedText(bed);
-        setSourceBed("/static/karyotype_viewer/compiled.bed");
+        setSourceBed(el.getAttribute("data-karyo-bed"));
+
+        const familyColorsResp = await fetch("/static/karyotype_viewer/family_colors.json")
+        const familyColorsObj = await familyColorsResp.json();
+        console.log(familyColorsObj)
+        // console.log(familyColorsObj["HSat3"])
+        // console.log(console.log(Object.keys(familyColorsObj)))
+        setColors(familyColorsObj)
+        console.log(familyColors)
+
+        const parent_repeat = el.getAttribute("data-karyo-parent")
+        console.log(parent_repeat)
+        setParent(parent_repeat)
+
       } catch (err) {
         console.error("Error loading static files", err);
       }
     }
 
-    loadStaticFiles();
+    loadFiles();
   }, []);
 
   return (
     <div className="main-grid grid grid-cols-1 lg:grid-cols-12 gap-4">
       <div className="col-left lg:col-span-9">
-        <DataKaryotypeViewer karyoText={karyoText} bedText={bedText} onDropFiles={onDropFiles}/>
+        <DataKaryotypeViewer karyoText={karyoText} bedText={bedText} parent={parent} familyColors={familyColors} />
       </div>
       {/* <div className="col-right lg:col-span-3">
         <aside className="bg-white rounded-2xl shadow p-4 space-y-4">
@@ -241,7 +269,7 @@ function ElementPage({elementId}){
           <div className="p-4 bg-gray-50 rounded-xl">
             <h2 className="font-semibold">External Links</h2>
             <ul className="text-sm list-disc pl-5 mt-2">
-              <li><a className="text-blue-600 hover:underline" href="#">Repeat‑ome record</a></li>
+              <li><a className="text-blue-600 hover:underline" href="#">Repeat-ome record</a></li>
               <li><a className="text-blue-600 hover:underline" href="#">UCSC / Ensembl</a></li>
             </ul>
           </div>
@@ -254,7 +282,7 @@ function ElementPage({elementId}){
 }
 
 // -------------------- Data Karyotype Viewer (no d3) ------------------
-function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
+function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
   const containerRef = useRef(null);
   const svgRef = useRef(null);
   const gPanRef = useRef(null);
@@ -325,13 +353,33 @@ function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
   const beds   = useMemo(()=> bedText   ? parseBED(bedText)     : [], [bedText]);
   useEffect(()=>{ hasFitRef.current = false; }, [karyos, beds]);
 
+  
   const families = useMemo(()=> Array.from(new Set(beds.map(b=>b.family))), [beds]);
   const [visibleFamilies, setVisibleFamilies] = useState(new Set());
-  const familyColor = useMemo(()=>{
+  const familyColor = useMemo(() => {
     const m = new Map();
-    families.forEach((f,i)=> m.set(f, hsl(i, families.length || 1)) );
+
+    const parentColor =
+      parent && parent !== "none" && familyColors
+        ? familyColors[parent]
+        : null;
+
+    // debug once if you want:
+    console.log("parent =", parent, "parentColor =", parentColor);
+
+    families.forEach((f, i) => {
+      const c = parentColor
+        ? shadeFromParentHsl(parentColor, i, families.length || 1)
+        : hsl(i, families.length || 1);
+
+      m.set(f, c);
+    });
+
     return m;
-  }, [families]);
+  }, [families, parent, familyColors]);
+  console.log(familyColor)
+  console.log(families)
+  
   useEffect(()=>{ setVisibleFamilies(new Set(families)); }, [families]);
 
   // --------------------------- Draw ---------------------------
@@ -575,9 +623,9 @@ function DataKaryotypeViewer({karyoText, bedText, onDropFiles}){
           <button onClick={doZoomIn}  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">＋ Zoom in</button>
           <button onClick={doZoomOut} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">－ Zoom out</button>
           <button onClick={doReset}   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">⟲ Reset</button>
-          <button onClick={()=>{ setSelectedId(null); sessionStorage.removeItem("selected_element"); }} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">Clear selection</button>
+          {/* <button onClick={()=>{ setSelectedId(null); sessionStorage.removeItem("selected_element"); }} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">Clear selection</button> */}
         </div>
-        <div className="text-sm text-gray-600">Drop karyotype + BED or use upload buttons</div>
+        {/* <div className="text-sm text-gray-600">Drop karyotype + BED or use upload buttons</div> */}
       </div>
 
       <div className="kary_graph_holder grid grid-cols-12">
@@ -723,6 +771,49 @@ function parseBED(text){
 function hsl(i, total){ const hue = (i * 360 / Math.max(1,total)) % 360; return `hsl(${hue} 70% 45%)`; }
 function clamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
 function num(v){ const s = String(v).replace(/,/g, ""); const n = +s; return isFinite(n) ? n : NaN; }
+
+// function clamp(n, lo, hi) {
+//   return Math.min(hi, Math.max(lo, n));
+// }
+
+// Accepts: "hsl(308.57 70% 45%)"
+function parseHslString(str) {
+  const m = String(str)
+    .trim()
+    .match(/^hsl\(\s*([-\d.]+)\s+([-\d.]+)%\s+([-\d.]+)%\s*\)$/i);
+
+  if (!m) return null;
+
+  return {
+    h: ((Number(m[1]) % 360) + 360) % 360,
+    s: clamp(Number(m[2]), 0, 100),
+    l: clamp(Number(m[3]), 0, 100),
+  };
+}
+
+function toHslString({ h, s, l }) {
+  return `hsl(${h} ${s}% ${l}%)`;
+}
+
+function shadeFromParentHsl(parentHslStr, i, n) {
+  const p = parseHslString(parentHslStr);
+  if (!p) return parentHslStr; // fallback: just return parent color
+
+  const denom = Math.max(1, n - 1);
+  const t = denom === 0 ? 0.5 : i / denom; // 0..1
+
+  // lightness range around parent (tints -> shades)
+  const lMin = clamp(p.l - 18, 10, 90);
+  const lMax = clamp(p.l + 18, 10, 90);
+  const l = lMin + (lMax - lMin) * t;
+
+  // optional subtle saturation variation (keeps family cohesive)
+  const sMin = clamp(p.s - 8, 35, 95);
+  const sMax = clamp(p.s + 4, 35, 95);
+  const s = sMax - (sMax - sMin) * t;
+
+  return toHslString({ h: p.h, s: Math.round(s), l: Math.round(l) });
+}
 
 // --------------------------- Diagnostics -------------------------
 function Diagnostics(){

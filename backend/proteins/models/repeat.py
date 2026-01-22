@@ -86,7 +86,16 @@ class Repeat(models.Model):
     
     def karyoplot_exists(self):
         name_lower = self.repeat_lower()
-        file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyoplot/human_{name_lower}_blocks.svg"  # Replace with your actual path
+        file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyoplot/human_{name_lower}_blocks.svg"
+        if os.path.exists(file_path):
+            # File or directory exists
+            return True
+        else:
+            return False
+        
+    def karyotype_data_exists(self):
+        name_lower = self.repeat_lower()
+        file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyotype_viewer/{name_lower}_karyotype.bed"
         if os.path.exists(file_path):
             # File or directory exists
             return True
