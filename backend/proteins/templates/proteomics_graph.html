@@ -78,13 +78,6 @@
     }
 </style>
 
-{% block extrahead %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
-{% endblock %}
-
 <body>
 
 {% load static %}
@@ -100,34 +93,36 @@
         <select class="custom-select" name="proteomics-select" id="proteomics-select" width="100%">
             {% for item in proteomics_list %}
                 {% comment %} {{ item.get_data|json_script:"protdata-"|add:item.id }} {% endcomment %}
-                <option value="{{ item.id }}" 
+                <option value="{{ item.id }}"
+                    data-url="{% url 'proteins:proteomics_json' item.id %}"
                     data-cellType="{{ item.cell_type }}"
                     data-cellLine="{{ item.cell_line_name }}"
                     data-method="{{ item.method }}"
                     data-desc="{{ item.description }}"
                     data-date="{{ item.date_generated }}"
-                    data-xlabel="{{item.x_label}}"
-                    data-ylabel="{{item.y_label}}">
+                    data-xlabel="{{ item.x_label }}"
+                    data-ylabel="{{ item.y_label }}">
                     {{item.cell_type}} {{item.cell_line_name}}
                 </option>
             {% endfor %}
             <option value="N/A" 
-                    data-cellType="N/A"
-                    data-cellLine="N/A"
-                    data-method="N/A"
-                    data-desc="N/A"
-                    data-date="N/A"
-                    data-xlabel="N/A"
-                    data-ylabel="N/A">
-                    N/A
+                data-url="N/A" 
+                data-cellType="N/A"
+                data-cellLine="N/A"
+                data-method="N/A"
+                data-desc="N/A"
+                data-date="N/A"
+                data-xlabel="N/A"
+                data-ylabel="N/A">
+                N/A
             </option>
         </select>
 
-        {% for item in proteomics_list %}
+        {% comment %} {% for item in proteomics_list %}
             {% with sid="protdata-"|add:item.id %}
                 {{ item.get_data|json_script:sid }}
             {% endwith %}
-        {% endfor %}
+        {% endfor %} {% endcomment %}
 
         <div id='proteomics-info'>
             <table><tbody>
@@ -152,7 +147,8 @@
     <div class="chart" id='proteomics-chart' style='width: 73%;'></div>
 </div>
 
-{{ datapoints|json_script:'chart3-data' }}
+{{ proteomics_first_obj.get_data|json_script:"protdata-initial" }}
+{% comment %} {{ datapoints|json_script:'chart3-data' }} {% endcomment %}
 
 {% comment %} <script src="https://cdn.jsdelivr.net/npm/d3@7/+esm"></script> {% endcomment %}
 {% comment %} <script src="{% static 'volcano_plot.js'%}"></script> {% endcomment %}
@@ -197,197 +193,210 @@
 
 
 <script type="text/javascript">
-    function makeProteomics(prot_data, x_label, y_label, cell_type) {
-        // handle double-encoded json
-        if (typeof prot_data === "string") prot_data = JSON.parse(prot_data);
+        function makeProteomics(prot_data, x_label, y_label, cell_type) {
+            // handle double-encoded json
+            if (typeof prot_data === "string") prot_data = JSON.parse(prot_data);
 
-        // coerce & clean
-        const data = (Array.isArray(prot_data) ? prot_data : [])
-            .map(d => ({ ...d, x: +d.x, y: +d.y }))
-            .filter(d => Number.isFinite(d.x) && Number.isFinite(d.y));
+            // coerce & clean
+            const data = (Array.isArray(prot_data) ? prot_data : [])
+                .map(d => ({ ...d, x: +d.x, y: +d.y, f: +d.f }))
+                .filter(d => Number.isFinite(d.x) && Number.isFinite(d.y));
 
-        if (!data.length) {
-            console.error("No valid points to plot.");
-            document.getElementById("proteomics-chart").innerHTML = "";
-            return;
+            console.log("makeProteomics got:", typeof prot_data, Array.isArray(prot_data) ? prot_data.length : prot_data);
+            console.log("cleaned points:", data.length, "sample:", data[0]);
+
+            console.log("makeProteomics cleaned:", data.length, data[0]);
+
+            if (!data.length) {
+                console.error("No valid points to plot.");
+                document.getElementById("proteomics-chart").innerHTML = "";
+                return;
+            }
+
+            const container = document.getElementById("proteomics-chart");
+            container.innerHTML = "";
+            container.style.minHeight = "520px"; // ensure visible
+
+            // ---- margin convention ----
+            const margin = { top: 30, right: 30, bottom: 70, left: 80 };
+            const outerW = container.getBoundingClientRect().width || 800;
+            const outerH = 500;
+
+            const w = Math.max(300, outerW - margin.left - margin.right);
+            const h = outerH - margin.top - margin.bottom;
+
+            const svg = d3.select(container)
+                .append("svg")
+                .attr("width", w + margin.left + margin.right)
+                .attr("height", h + margin.top + margin.bottom);
+
+            const g = svg.append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            const xmin = d3.min(data, d => d.x);
+            const xmax = d3.max(data, d => d.x);
+            const ymin = d3.min(data, d => d.y);
+            const ymax = d3.max(data, d => d.y);
+
+            const xScale = d3.scale.linear().domain([xmin, xmax]).range([0, w]);
+            const yScale = d3.scale.linear().domain([0, ymax+1]).range([h, 0]);
+
+            const xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(10);
+            const yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10);
+
+            // Axes
+            g.append("g")
+                .attr("class", "axis x")
+                .attr("transform", `translate(0,${h})`)
+                .call(xAxis);
+
+            g.append("g")
+                .attr("class", "axis y")
+                .call(yAxis);
+
+            // Title
+            g.append("text")
+                .attr("class", "plot-title")
+                .attr("x", w / 2)
+                .attr("y", -10)                 
+                .attr("text-anchor", "middle")
+                .attr("fill", "#000")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 25)
+                .attr("font-weight", "bold")
+                .text("Proteomics" + (cell_type ? (" - " + cell_type) : ""));
+
+            // X label
+            g.append("text")
+                .attr("class", "xlabel")
+                .attr("x", w / 2)
+                .attr("y", h + 55)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#000")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 14)
+                .attr("font-weight", "bold")
+                .text((x_label && x_label !== "N/A") ? x_label : "x");
+
+            // Y label
+            g.append("text")
+                .attr("class", "ylabel")
+                .attr("transform", `translate(${-60},${h / 2}) rotate(-90)`)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#000")
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 14)
+                .attr("font-weight", "bold")
+                .text((y_label && y_label !== "N/A") ? y_label : "y");
+
+            // Points
+            const COLORS = ["rgb(51, 51, 51)", "rgb(176, 35, 35)"];
+            const OPACITY = [0.8, 1];
+
+            g.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", d => xScale(d.x))
+                .attr("cy", d => yScale(d.y))
+                .attr("r", 2.5)
+                .attr("fill", d => COLORS[d.f] || COLORS[0])
+                .attr("opacity", d => OPACITY[d.f] || 1)
+                .on("mouseover", function() { d3.select(this).transition().duration(100).attr("r", 7); })
+                .on("mouseout", function() { d3.select(this).transition().duration(100).attr("r", 2.5); })
+                .on("click", function(d) { window.open("/proteinTable/" + d.slug, "_blank"); });
+
+            // tipsy must target circles inside this plot
+            console.log("tipsy?", typeof $.fn.tipsy, $.fn.tipsy);
+            $('.tipsy').remove();
+            $('#proteomics-chart svg circle').tipsy({
+                gravity: 'w',
+                html: true,
+                title: function () {
+                    const d = this.__data__ || {};
+                    // pick whatever your data actually has
+                    return (
+                    d.name ||
+                    d.protein ||
+                    d.gene ||
+                    d.uniprot ||
+                    d.symbol ||
+                    d.label ||
+                    d.slug || // last resort
+                    ""
+                    );
+                }
+            });
         }
 
-        const container = document.getElementById("proteomics-chart");
-        container.innerHTML = "";
-        container.style.minHeight = "520px"; // ensure visible
+        const initial = JSON.parse(document.getElementById("protdata-initial").textContent);
+        console.log(initial)
+        makeProteomics(initial, "{{proteomics_first_obj.x_label}}", "{{proteomics_first_obj.y_label}}", "{{proteomics_first_obj.cell_type}}");
+        {% comment %} prot_data = JSON.parse('{{ proteomics_first_obj.get_data|escapejs }}'); {% endcomment %}
+        {% comment %} makeProteomics(prot_data, '{{proteomics_first_obj.x_label}}', '{{proteomics_first_obj.y_label}}', '{{proteomics_first_obj.cell_type}}'); {% endcomment %}
+    </script>
 
-        // ---- margin convention ----
-        const margin = { top: 30, right: 30, bottom: 70, left: 80 };
-        const outerW = container.getBoundingClientRect().width || 800;
-        const outerH = 500;
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const proteomics_select = document.getElementById("proteomics-select");
+        const proteomics_info = document.getElementById("proteomics-info");
+        const proteomics_graph = document.getElementById("proteomics-chart");
 
-        const w = Math.max(300, outerW - margin.left - margin.right);
-        const h = outerH - margin.top - margin.bottom;
+        console.log("wired proteomics?", !!proteomics_select, !!proteomics_info, !!proteomics_graph);
+        if (!proteomics_select) return;
 
-        const svg = d3.select(container)
-            .append("svg")
-            .attr("width", w + margin.left + margin.right)
-            .attr("height", h + margin.top + margin.bottom);
+        proteomics_select.addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
 
-        const g = svg.append("g")
-            .attr("transform", `translate(${margin.left},${margin.top})`);
+            const mCell_type = selectedOption.dataset.celltype;
+            const mCell_line_name = selectedOption.dataset.cellline;
+            const mMethod = selectedOption.dataset.method;
+            const mDescription = selectedOption.dataset.desc;
+            const mDate = selectedOption.dataset.date;
+            const mXLabel = selectedOption.dataset.xlabel;
+            const mYLabel = selectedOption.dataset.ylabel;
 
-        const xmin = d3.min(data, d => d.x);
-        const xmax = d3.max(data, d => d.x);
-        const ymin = d3.min(data, d => d.y);
-        const ymax = d3.max(data, d => d.y);
-
-        const xScale = d3.scale.linear().domain([xmin, xmax]).range([0, w]);
-        const yScale = d3.scale.linear().domain([ymin, ymax]).range([h, 0]);
-
-        const xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(10);
-        const yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10);
-
-        // Axes
-        g.append("g")
-            .attr("class", "axis x")
-            .attr("transform", `translate(0,${h})`)
-            .call(xAxis);
-
-        g.append("g")
-            .attr("class", "axis y")
-            .call(yAxis);
-
-        // Title
-        g.append("text")
-            .attr("class", "plot-title")
-            .attr("x", w / 2)
-            .attr("y", -10)                 
-            .attr("text-anchor", "middle")
-            .attr("fill", "#000")
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 25)
-            .attr("font-weight", "bold")
-            .text("Proteomics" + (cell_type ? (" - " + cell_type) : ""));
-
-        // X label
-        g.append("text")
-            .attr("class", "xlabel")
-            .attr("x", w / 2)
-            .attr("y", h + 55)
-            .attr("text-anchor", "middle")
-            .attr("fill", "#000")
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 14)
-            .attr("font-weight", "bold")
-            .text((x_label && x_label !== "N/A") ? x_label : "x");
-
-        // Y label
-        g.append("text")
-            .attr("class", "ylabel")
-            .attr("transform", `translate(${-60},${h / 2}) rotate(-90)`)
-            .attr("text-anchor", "middle")
-            .attr("fill", "#000")
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 14)
-            .attr("font-weight", "bold")
-            .text((y_label && y_label !== "N/A") ? y_label : "y");
-
-        // Points
-        const COLORS = ["rgb(51, 51, 51)", "rgb(176, 35, 35)"];
-        const OPACITY = [0.8, 1];
-
-        g.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", d => xScale(d.x))
-            .attr("cy", d => yScale(d.y))
-            .attr("r", 2.5)
-            .attr("fill", d => COLORS[d.f] || COLORS[0])
-            .attr("opacity", d => OPACITY[d.f] || 1)
-            .on("mouseover", function() { d3.select(this).transition().duration(100).attr("r", 7); })
-            .on("mouseout", function() { d3.select(this).transition().duration(100).attr("r", 2.5); })
-            .on("click", function(d) { window.open("/proteinTable/" + d.slug, "_blank"); });
-
-        // tipsy must target circles inside this plot
-        $('#proteomics-chart svg circle').tipsy({
-            gravity: 'w',
-            html: true,
-            title: function() { return this.__data__.name; }
-        });
-    }
-
-    prot_data = JSON.parse('{{ proteomics_first_obj.get_data|escapejs }}');
-    console.log(prot_data)
-    makeProteomics(prot_data, '{{proteomics_first_obj.x_label}}', '{{proteomics_first_obj.y_label}}', '{{proteomics_first_obj.cell_type}}');
-</script>
-
-<script>
-    // Display microscopy div
-    document.addEventListener('DOMContentLoaded', function() {
-
-      const proteomics_select = document.getElementById('proteomics-select');
-      const proteomics_info = document.getElementById('proteomics-info');
-      const proteomics_graph = document.getElementById('proteomics-chart');
-
-      proteomics_select.addEventListener('change', function() {
-          const selectedOption = this.options[this.selectedIndex];
-          // console.log(selectedOption.dataset)
-          const mCell_type = selectedOption.dataset.celltype; // must be lowercase
-          const mCell_line_name = selectedOption.dataset.cellline; // lowercase cellLine
-          const mMethod = selectedOption.dataset.method;
-          const mDescription = selectedOption.dataset.desc;
-          const mDate = selectedOption.dataset.date;
-          const mXLabel = selectedOption.dataset.xlabel;
-          const mYLabel = selectedOption.dataset.ylabel;
-
-          proteomics_info.innerHTML = `
+            proteomics_info.innerHTML = `
             <table>
-                <tr>
-                    <th><b>Cell Type</b></th><td>${mCell_type}</td>
-                </tr>
-                <tr>
-                    <th><b>Cell Line</b></th> <td>${mCell_line_name}</td>
-                </tr>
-                <tr>
-                    <th><b>Method</b></th> <td>${mMethod}</td>
-                </tr>
-                <tr>
-                    <th><b>Description</h></td> <td>${mDescription}</td>
-                </tr>
-                <tr>
-                    <th><b>Date Generated</b></td> <td>${mDate}</td>
-                </tr>
+                <tr><th><b>Cell Type</b></th><td>${mCell_type}</td></tr>
+                <tr><th><b>Cell Line</b></th><td>${mCell_line_name}</td></tr>
+                <tr><th><b>Method</b></th><td>${mMethod}</td></tr>
+                <tr><th><b>Description</b></th><td>${mDescription}</td></tr>
+                <tr><th><b>Date Generated</b></th><td>${mDate}</td></tr>
             </table>
-          `;
+            `;
 
-            const id = selectedOption.value;
-            if (!id || id === "N/A") {
-                document.getElementById('proteomics-chart').innerHTML = '';
-                return;
+            const url = selectedOption.dataset.url;
+            console.log("url:", url);
+
+            if (!url || url === "N/A") {
+            proteomics_graph.innerHTML = "";
+            return;
             }
 
-            const scriptEl = document.getElementById(`protdata-${id}`);
-            if (!scriptEl) {
-                console.error("Missing protdata script tag for id:", id);
-                return;
-            }
+            proteomics_graph.innerHTML = "Loading...";
 
-            let data;
-            try {
-                data = JSON.parse(scriptEl.textContent);
-                if (typeof data === "string") {
-                    data = JSON.parse(data);
-                }
-            } catch (e) {
-                console.error("protdata JSON parse failed for id:", id, e, scriptEl.textContent.slice(0, 200));
-                return;
-            }
+            fetch(url, { credentials: "same-origin" })
+                .then((r) => {
+                    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                    return r.json();
+                })
+                .then((data) => {
+                    console.log("FETCH OK: type", typeof data, "isArray", Array.isArray(data), "len", data?.length);
+                    console.log("FETCH first row:", data && data[0]);
+                    // let layout settle before measuring width
+                    requestAnimationFrame(() => {
+                    makeProteomics(data, mXLabel, mYLabel, mCell_type);
+                    });
+                })
+                .catch((err) => {
+                    console.error("proteomics fetch failed", err);
+                    proteomics_graph.innerHTML = `<pre style="color:#b00;">${String(err)}</pre>`;
+                });
+            });
+        });
+    </script>
 
-            console.log(data)
-            console.log(mXLabel, mYLabel)
-            console.log(mCell_type)
-            makeProteomics(data, mXLabel, mYLabel, mCell_type);
-      });
-  });
-
-</script>
 
 
 </body>
