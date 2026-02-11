@@ -7,6 +7,7 @@ from .proteomics import Proteomics
 from .repeat import Repeat
 from .microscopy import Microscopy
 from .gene_family import GeneFamily
+from .genome_references import GenomeReferences
 
 __all__ = [
     "Organism",
@@ -19,4 +20,5 @@ __all__ = [
     "Excerpt",
     "Proteomics",
     "Microscopy",
+    "GenomeReferences",
 ]
