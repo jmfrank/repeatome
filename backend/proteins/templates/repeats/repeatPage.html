@@ -179,11 +179,13 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% endif %} {% endcomment %}
   
   {% if repeat.karyotype_data_exists %}
-    <div id='karyotype_div'
-      data-karyo-txt="{% static 'karyotype_viewer/karyotype.txt' %}"
-      data-karyo-bed="{% static 'karyotype_viewer/'|add:repeat.name|add:'_karyotype.bed' %}"
-      data-karyo-parent="{{repeat.name}}">
-    </div>
+    {% with oid=repeat.parental_organism.id|stringformat:"s"  %}
+      <div id='karyotype_div'
+        data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'_karyotype.txt' %}"
+        data-karyo-bed="{% static 'karyotype_viewer/'|add:repeat.name|add:'_karyotype.bed' %}"
+        data-karyo-parent="{{repeat.name}}">
+      </div>
+    {% endwith %}
     {% render_bundle 'karyotypeViewer' %}
   {% elif repeat.karyoplot_exists %}
     <div id="karyoplot-info" style="overflow: visible;">

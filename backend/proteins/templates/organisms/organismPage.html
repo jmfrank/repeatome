@@ -30,11 +30,13 @@
   <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
 
   <h5 class='pt-3'><strong>Karyotype Viewer</strong></h5>
-  <div id='karyotype_div'
-      data-karyo-txt="{% static 'karyotype_viewer/karyotype.txt' %}"
-      data-karyo-bed="{% static 'karyotype_viewer/9606_karyotype.bed' %}"
-      data-karyo-parent="none">
-  </div>
+  {% with oid=object.id|stringformat:"s"  %}
+      <div id='karyotype_div'
+          data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'_karyotype.txt' %}"
+          data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'_karyotype.bed' %}"
+          data-karyo-parent="none">
+      </div>
+  {% endwith %}
   <br>
   <h5 class='pt-3'><strong>Network Graph</strong></h5>
   {% with oid=object.id|default:organism.id|stringformat:"s"|default:"" %}
