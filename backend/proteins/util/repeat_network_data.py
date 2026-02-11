@@ -11,12 +11,13 @@ def GetEnrichmentData(organism):
     print(organism)
     enrichment_data = {}
     for protrep in ProteinRepeats.objects.all():
-        if protrep.repeat.parent_repeat == None and protrep.repeat.parental_organism.id == organism:
-            if not protrep.motif_enrichment == None:
-                enrichment_float = float(protrep.motif_enrichment)
-            
-                if not protrep.repeat.name in enrichment_data.keys():
-                    enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
+        if protrep.repeat.parent_repeat == None and protrep.repeat.parental_organism != None:
+            if protrep.repeat.parental_organism.id == organism:
+                if not protrep.motif_enrichment == None:
+                    enrichment_float = float(protrep.motif_enrichment)
+                
+                    if not protrep.repeat.name in enrichment_data.keys():
+                        enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
     # print(enrichment_data)
     # Normalize enrichment from 7 to 35
     # log_vals = {-k: math.log2(v) for k, v in enrichment_data.items() if v > 0}
