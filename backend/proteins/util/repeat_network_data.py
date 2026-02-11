@@ -11,7 +11,7 @@ def GetEnrichmentData(organism):
     print(organism)
     enrichment_data = {}
     for protrep in ProteinRepeats.objects.all():
-        if protrep.repeat.parent_repeat == None and protrep.repeat.parental_organism.id == organism:
+        if protrep.repeat.parent_repeat is None and protrep.repeat.parental_organism is not None and protrep.repeat.parental_organism.id == organism:
             if not protrep.motif_enrichment == None:
                 enrichment_float = float(protrep.motif_enrichment)
             
