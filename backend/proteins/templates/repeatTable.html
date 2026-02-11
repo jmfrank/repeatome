@@ -21,7 +21,6 @@
             <th class="repeat text-nowrap">Repeat</th>
            <th>Aliases</th>
            <th>DFAM ID</th>
-           <th>Proteomics</th>
            <th>Parent Organism</th>
           </tr>
         </thead>
@@ -31,7 +30,6 @@
             <td class="repeat"><a href="/repeatTable/{{repeat.slug}}">{{repeat.name}}</a></td>
             <td class="text-center">{{repeat.aliases}}</td>
             <td class="text-center">{{repeat.dfam_id}}</td>
-            <td class="text-center">{{repeat.proteomics}}</td>
             <td class="text-center">{{repeat.parental_organism.scientific_name}}</td>
           </tr>
           {% endfor %}
