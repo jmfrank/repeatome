@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static i18n favit_tags %}
+
+{% block content %}
+
+        <h1 class="name text-center mb-4">Genome References</h1>
+
+        {% for item in items %}
+            <div class="row mt-2">
+                <dt class="col-sm-3">{{ item.reference }}</dt>
+                <dd class="col-sm-9"><em>{{ item.source }}</em></dd>
+            </div>
+        {% endfor %}
+
+      
+
+{% endblock content %}

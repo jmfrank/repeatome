@@ -239,7 +239,7 @@
             const ymax = d3.max(data, d => d.y);
 
             const xScale = d3.scale.linear().domain([xmin, xmax]).range([0, w]);
-            const yScale = d3.scale.linear().domain([0, ymax+1]).range([h, 0]);
+            const yScale = d3.scale.linear().domain([ymin, ymax+1]).range([h, 0]);
 
             const xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(10);
             const yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10);

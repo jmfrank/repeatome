@@ -181,8 +181,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% if repeat.karyotype_data_exists %}
     {% with oid=repeat.parental_organism.id|stringformat:"s"  %}
       <div id='karyotype_div'
-        data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'_karyotype.txt' %}"
-        data-karyo-bed="{% static 'karyotype_viewer/'|add:repeat.name|add:'_karyotype.bed' %}"
+        data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.txt' %}"
+        data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:repeat.name|add:'_karyotype.bed' %}"
         data-karyo-parent="{{repeat.name}}">
       </div>
     {% endwith %}
