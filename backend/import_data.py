@@ -14,7 +14,7 @@ django.setup()
 
 from django.conf import settings
 from references.models import Reference
-from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy
+from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy, GenomeReferences
 from proteins.util.helpers import shortuuid
 from proteins.util.repeat_network_data import GetNetworkData, GetNetworkDataAll
 import json
@@ -1031,7 +1031,36 @@ def update_microscopy():
 
 def import_genome_references():
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='reference_genomes', dtype=str)
+    print(df)
+    for row in df.to_dict(orient='records'):
+        parent_organism = row['taxonomy_id']
+        parent_organism_obj = None
+        if parent_organism:
+            parent_organism = int(parent_organism)
+            parent_organism_obj = get_organism_obj(parent_organism)
+            if parent_organism_obj == None:
+                print("Adding Organism")
+                org_obj = Organism(id=int(parent_organism))
+                org_obj.save()
+            else:
+                print(str(parent_organism) + " Object Found")
 
+        alias_lst = df['aliases'].values[0].split(' ')
+        alias_lst = str(alias_lst)
+        alias_lst = alias_lst.strip("'")
+        alias_lst = '{' + alias_lst[1:len(alias_lst)-1] + '}'
+        if len(df['aliases'].values[0].split(' ')) == 0:
+            alias_lst = ['null']
+        print(alias_lst)
+
+        obj = GenomeReferences(
+            id = shortuuid(),
+            organism = parent_organism_obj,
+            reference = row['reference'],
+            aliases = alias_lst,
+            source = row['source']
+        )
+        obj.save()
 
 def create_user(username, email, password, is_staff=False, is_superuser=False):
 
@@ -1099,6 +1128,9 @@ if __name__ == "__main__":
 
     elif command == 'import_refs':
         import_refs()
+    
+    elif command == 'import_genome_references':
+        import_genome_references()
     
     elif command == 'update_jaspar':
         update_jaspar()

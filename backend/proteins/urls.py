@@ -154,6 +154,7 @@ urlpatterns = [
     #     name="protein-detail",
     # ),
     # path("organisms/", views.OrganismListView.as_view(), name="organism-list"),
+    path("genome_references", views.genome_reference, name="genome_references"),
     path(
         "organismTable/<int:pk>/",
         views.OrganismDetailView.as_view(),
