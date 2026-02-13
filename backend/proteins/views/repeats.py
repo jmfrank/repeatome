@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from django.conf import settings
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
@@ -98,75 +99,12 @@ class RepeatDetailView(DetailView):
         # print(repeat)
         prot_obj = get_proteomics(repeat.name)
         # print(prot_obj)
+
+        prot_file = prot_obj.id + '_proteomics.json'
+        file_path = Path(__file__).parent.parent.parent.parent / 'frontend' / 'static' / 'proteomics' / prot_file
     
-        # df = pd.read_csv(file, dtype=str)
-        datapoints = []
-        data_format = 1
-        # for row in df.to_dict(orient='records'):
-        if not prot_obj == None:
-            # print("datapoints: ", prot_obj)
-            SIG_THRESHOLD = prot_obj.thresholds[0]
-            if len(prot_obj.thresholds) > 1:
-                LOG_THRESHOLD = prot_obj.thresholds[1]
-            for key in prot_obj.significance.keys():
-                keys = list(prot_obj.significance.keys())
-
-                # one DB query instead of N queries
-                proteins = ProteinTF.objects.filter(UNIPROT__in=keys).only("UNIPROT", "gene", "slug")
-                prot_map = {p.UNIPROT: p for p in proteins}
-
-                SIG_THRESHOLD = float(prot_obj.thresholds[0])
-
-                datapoints = []
-                for key in keys:
-                    sig = float(prot_obj.significance[key])
-                    f = 0 if sig < SIG_THRESHOLD else 1
-
-                    p = prot_map.get(key)
-                    if p:
-                        name = p.gene
-                        slug = p.slug
-                    else:
-                        name = key.split("|")[0]
-                        slug = "none"
-
-                    datapoints.append({
-                        "name": name,
-                        "x": prot_obj.log2vals[key],
-                        "y": sig,
-                        "slug": slug,
-                        "f": f,
-                    })
-                # protein_objs = ProteinTF.objects.filter(UNIPROT=key)
-                # if len(protein_objs) > 0:
-                #     if float(prot_obj.significance[key]) < SIG_THRESHOLD:
-                #         data_format = 0
-                #     else:
-                #         data_format = 1
-
-                #     datapoints.append({
-                #         "name": protein_objs[0].gene,
-                #         "x": prot_obj.log2vals[key],
-                #         "y": prot_obj.significance[key],
-                #         "slug": protein_objs[0].slug,
-                #         "f": data_format
-                #     })
-                #     # data_format += 1
-                #     # if data_format > 5:
-                #     #     data_format = 1
-                # else:
-                #     if float(prot_obj.significance[key]) < SIG_THRESHOLD:
-                #         data_format = 0
-                #     else:
-                #         data_format = 1
-
-                #     datapoints.append({
-                #         "name": key.split('|')[0],
-                #         "x": prot_obj.log2vals[key],
-                #         "y": prot_obj.significance[key],
-                #         "slug": 'none',
-                #         "f": data_format
-                #     })
+        with open(file_path, 'r') as file:
+            datapoints = json.load(file)
         
         return datapoints
 

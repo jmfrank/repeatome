@@ -753,13 +753,14 @@ def import_proteomics():
     pr_df = load_dataframe_from_excel(settings.IMPORT_DATA_FOLDER / "proteomics_data/proteomics_datasets.xlsx", 'Sheet1')
     pr_df = pr_df.where(pd.notnull(pr_df), None)
 
-    print(pr_df.to_dict(orient='records'))
-    print(pr_df)
+    # print(pr_df.to_dict(orient='records'))
+    # print(pr_df)
 
     log2C_vals = {}
     significance = {}
 
     for row in pr_df.to_dict(orient='records'):
+        new_id = shortuuid()
         pr_path = row['Path']
         parent_organism_ncbi = row["Parent organism"]
         parent_organism_obj = get_obj_if_exists(Organism, id=int(parent_organism_ncbi))
@@ -801,14 +802,56 @@ def import_proteomics():
         else:
             print(protein_obj.gene + " Object Found")
 
-        log2C_vals = {}
-        significance = {}
+        # log2C_vals = {}
+        # significance = {}
 
         df = pd.read_csv(settings.IMPORT_DATA_FOLDER / "proteomics_data" / pr_path, dtype=str)
 
+        datapoints = []
+        data_format = 1
+        
+        threshold_lst = threshold[1:len(threshold) - 1].split(',')
+        LOG_THRESHOLD = float(threshold_lst[0])
+        if len(threshold_lst) > 1:
+            SIG_THRESHOLD = float(threshold_lst[1])
+        
         for row in df.to_dict(orient='records'):
-            log2C_vals[row[df.keys()[0]]] = row[df.keys()[3]]
-            significance[row[df.keys()[0]]] = row[df.keys()[1]]
+            # log2C_vals[row[df.keys()[0]]] = row[df.keys()[3]]
+            # significance[row[df.keys()[0]]] = row[df.keys()[1]]
+            protein_objs = ProteinTF.objects.filter(UNIPROT=row[df.keys()[0]])
+            if len(protein_objs) > 0:
+                if float(row[df.keys()[1]]) < SIG_THRESHOLD or float(row[df.keys()[3]]) < LOG_THRESHOLD:
+                    data_format = 0
+                else:
+                    data_format = 1
+
+                datapoints.append({
+                    "name": protein_objs[0].gene,
+                    "x": row[df.keys()[1]],
+                    "y": row[df.keys()[3]],
+                    "slug": protein_objs[0].slug,
+                    "f": data_format
+                })
+                # data_format += 1
+                # if data_format > 5:
+                #     data_format = 1
+            else:
+                if float(row[df.keys()[1]]) < SIG_THRESHOLD or float(row[df.keys()[3]]) < LOG_THRESHOLD:
+                    data_format = 0
+                else:
+                    data_format = 1
+
+                datapoints.append({
+                    "name": str(row[df.keys()[0]]).split('|')[0],
+                    "x": row[df.keys()[1]],
+                    "y": row[df.keys()[3]],
+                    "slug": 'none',
+                    "f": data_format
+                })
+            
+            file_str = 'frontend/static/proteomics/' + new_id + '_proteomics.json'
+            with open(file_str, 'w', encoding='utf-8') as json_file:
+                json.dump(datapoints, json_file, indent=4, ensure_ascii=False)
 
         if len(Proteomics.objects.filter(target_repeat=repeat_obj, cell_type=cell_type)) == 0:
             print("Adding Proteomics")
@@ -824,7 +867,7 @@ def import_proteomics():
             # print(log2C_vals)
             # print(significance)
             obj = Proteomics(
-                id = shortuuid(),
+                id = new_id,
                 cell_type = cell_type,
                 cell_line_name = cell_line,
                 target_repeat = repeat_obj,

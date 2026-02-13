@@ -33,7 +33,7 @@ class OrganismDetailView(DetailView):
         slug = kwargs.get("pk")
         print(slug)
         if slug:
-            shutil.copyfile('frontend/static/repeat_network_db_' + str(slug) + '.json', 'frontend/static/repeat_network_db.json')  # just write to file, ignore return
+            shutil.copyfile('frontend/static/network/repeat_network_db_' + str(slug) + '.json', 'frontend/static/network/repeat_network_db.json')  # just write to file, ignore return
         return super().get(request, *args, **kwargs)
 
 # class RepeatDetailView(DetailView):
