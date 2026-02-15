@@ -17,11 +17,15 @@ from proteins.models import (
     Repeat,
     GeneFamily,
     Proteomics,
-    microscopy
+    GenomeReferences,
 )
 from proteins.util.maintain import validate_node
 
 ############### MODELS ################
+
+@admin.register(GenomeReferences)
+class GenomeReferences(VersionAdmin):
+    model = GenomeReferences
 
 @admin.register(Proteomics)
 class Proteomics(VersionAdmin):

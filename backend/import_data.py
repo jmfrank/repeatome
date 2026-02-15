@@ -14,7 +14,7 @@ django.setup()
 
 from django.conf import settings
 from references.models import Reference
-from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy
+from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy, GenomeReferences
 from proteins.util.helpers import shortuuid
 from proteins.util.repeat_network_data import GetNetworkData, GetNetworkDataAll
 import json
@@ -312,7 +312,6 @@ def get_jaspar_ids(gene, tax_group, use_cache):
 
 
 def import_protein():
-
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
 
     for row in df.to_dict(orient='records'):
@@ -336,8 +335,12 @@ def import_protein():
             # Get References
             prim_ref = row['primary_reference']
             if not (prim_ref == '') and not prim_ref == None:
-                pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=prim_ref))
-                if len(Reference.objects.filter(doi=prim_ref)) == 0:
+                ref_doi = prim_ref
+                if ref_doi.find('doi.org') >= 0:
+                    ref_doi = prim_ref[ref_doi.find('doi.org') + 2:]
+                print(ref_doi)
+                pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
+                if len(Reference.objects.filter(doi=ref_doi)) == 0:
                     prim_ref_obj = Reference(
                         # id = shortuuid(),
                         id = uuid.uuid4().int % 100000,
@@ -428,6 +431,79 @@ def import_protein():
                     # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
                     protein_repeat_obj.save()
                     # index += 1
+
+
+def import_refs():
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+
+    for row in df.to_dict(orient='records'):
+        gene = row['gene']
+        if not gene:
+            continue
+        parent_organism_obj = None
+        parent_organism = row['parent_organism']
+        if parent_organism:
+            parent_organism = int(parent_organism)
+            parent_organism_obj = get_organism_obj(parent_organism)
+
+        protein_obj = get_obj_if_exists(ProteinTF, gene=gene)
+
+        # Get References
+        prim_ref = row['primary_reference']
+        if not (prim_ref == '') and not prim_ref == None:
+            print("PRIMARY REFERENCE")
+            ref_doi = prim_ref
+            if ref_doi.find('doi.org') >= 0:
+                ref_doi = prim_ref[ref_doi.find('doi.org') + 8:]
+            print(ref_doi)
+            pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
+            print(Reference.objects.filter(doi=ref_doi))
+            if len(Reference.objects.filter(doi=ref_doi)) == 0:
+                pubmed = None
+                if len(pubmed_record['IdList']) > 0:
+                    pubmed = pubmed_record['IdList'][0]
+                print(pubmed)
+                prim_ref_obj = Reference(
+                    # id = shortuuid(),
+                    id = uuid.uuid4().int % 100000,
+                    created = datetime.now(),
+                    modified = datetime.now(),
+                    doi = ref_doi,
+                    pmid = pubmed
+                )
+                try:
+                    prim_ref_obj.save()
+                except:
+                    print("couldn't save")
+
+        refs = row['references']
+        if not refs == None:
+            for ref in refs.split(','):
+                print("REFERENCES")
+                ref_doi = ref
+                if ref_doi.find('doi.org') >= 0:
+                    ref_doi = ref[ref_doi.find('doi.org') + 8:]
+                print(ref_doi)
+                pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref))
+                print(Reference.objects.filter(doi=ref_doi))
+                if len(Reference.objects.filter(doi=ref_doi)) == 0:
+                    pubmed = None
+                    if len(pubmed_record['IdList']) > 0:
+                        pubmed = pubmed_record['IdList'][0]
+                    print(pubmed)
+                    ref_obj = Reference(id = uuid.uuid4().int % 100000,
+                        created = datetime.now(),
+                        modified = datetime.now(),
+                        doi = ref_doi,
+                        pmid = pubmed
+                    )
+                    ref_obj.save()
+                    protein_ref_obj = ProteinReferences(protein = protein_obj, reference = ref_obj)
+                    protein_ref_obj.save()
+                else:
+                    if len(ProteinReferences.objects.filter(protein=protein_obj, reference=Reference.objects.filter(doi=ref_doi)[0])) == 0:
+                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = Reference.objects.filter(doi=ref_doi)[0])
+                        protein_ref_obj.save()
 
 def update_proteinrepeats():
     en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE)
@@ -677,13 +753,14 @@ def import_proteomics():
     pr_df = load_dataframe_from_excel(settings.IMPORT_DATA_FOLDER / "proteomics_data/proteomics_datasets.xlsx", 'Sheet1')
     pr_df = pr_df.where(pd.notnull(pr_df), None)
 
-    print(pr_df.to_dict(orient='records'))
-    print(pr_df)
+    # print(pr_df.to_dict(orient='records'))
+    # print(pr_df)
 
     log2C_vals = {}
     significance = {}
 
     for row in pr_df.to_dict(orient='records'):
+        new_id = shortuuid()
         pr_path = row['Path']
         parent_organism_ncbi = row["Parent organism"]
         parent_organism_obj = get_obj_if_exists(Organism, id=int(parent_organism_ncbi))
@@ -725,14 +802,56 @@ def import_proteomics():
         else:
             print(protein_obj.gene + " Object Found")
 
-        log2C_vals = {}
-        significance = {}
+        # log2C_vals = {}
+        # significance = {}
 
         df = pd.read_csv(settings.IMPORT_DATA_FOLDER / "proteomics_data" / pr_path, dtype=str)
 
+        datapoints = []
+        data_format = 1
+        
+        threshold_lst = threshold[1:len(threshold) - 1].split(',')
+        LOG_THRESHOLD = float(threshold_lst[0])
+        if len(threshold_lst) > 1:
+            SIG_THRESHOLD = float(threshold_lst[1])
+        
         for row in df.to_dict(orient='records'):
-            log2C_vals[row[df.keys()[0]]] = row[df.keys()[2]]
-            significance[row[df.keys()[0]]] = row[df.keys()[1]]
+            # log2C_vals[row[df.keys()[0]]] = row[df.keys()[3]]
+            # significance[row[df.keys()[0]]] = row[df.keys()[1]]
+            protein_objs = ProteinTF.objects.filter(UNIPROT=row[df.keys()[0]])
+            if len(protein_objs) > 0:
+                if float(row[df.keys()[1]]) < SIG_THRESHOLD or float(row[df.keys()[3]]) < LOG_THRESHOLD:
+                    data_format = 0
+                else:
+                    data_format = 1
+
+                datapoints.append({
+                    "name": protein_objs[0].gene,
+                    "x": row[df.keys()[1]],
+                    "y": row[df.keys()[3]],
+                    "slug": protein_objs[0].slug,
+                    "f": data_format
+                })
+                # data_format += 1
+                # if data_format > 5:
+                #     data_format = 1
+            else:
+                if float(row[df.keys()[1]]) < SIG_THRESHOLD or float(row[df.keys()[3]]) < LOG_THRESHOLD:
+                    data_format = 0
+                else:
+                    data_format = 1
+
+                datapoints.append({
+                    "name": str(row[df.keys()[0]]).split('|')[0],
+                    "x": row[df.keys()[1]],
+                    "y": row[df.keys()[3]],
+                    "slug": 'none',
+                    "f": data_format
+                })
+            
+            file_str = 'frontend/static/proteomics/' + new_id + '_proteomics.json'
+            with open(file_str, 'w', encoding='utf-8') as json_file:
+                json.dump(datapoints, json_file, indent=4, ensure_ascii=False)
 
         if len(Proteomics.objects.filter(target_repeat=repeat_obj, cell_type=cell_type)) == 0:
             print("Adding Proteomics")
@@ -748,7 +867,7 @@ def import_proteomics():
             # print(log2C_vals)
             # print(significance)
             obj = Proteomics(
-                id = shortuuid(),
+                id = new_id,
                 cell_type = cell_type,
                 cell_line_name = cell_line,
                 target_repeat = repeat_obj,
@@ -953,6 +1072,38 @@ def update_microscopy():
         print(f"Adding Microscopy: {obj}")
         obj.save()
 
+def import_genome_references():
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='reference_genomes', dtype=str)
+    print(df)
+    for row in df.to_dict(orient='records'):
+        parent_organism = row['taxonomy_id']
+        parent_organism_obj = None
+        if parent_organism:
+            parent_organism = int(parent_organism)
+            parent_organism_obj = get_organism_obj(parent_organism)
+            if parent_organism_obj == None:
+                print("Adding Organism")
+                org_obj = Organism(id=int(parent_organism))
+                org_obj.save()
+            else:
+                print(str(parent_organism) + " Object Found")
+
+        alias_lst = df['aliases'].values[0].split(' ')
+        alias_lst = str(alias_lst)
+        alias_lst = alias_lst.strip("'")
+        alias_lst = '{' + alias_lst[1:len(alias_lst)-1] + '}'
+        if len(df['aliases'].values[0].split(' ')) == 0:
+            alias_lst = ['null']
+        print(alias_lst)
+
+        obj = GenomeReferences(
+            id = shortuuid(),
+            organism = parent_organism_obj,
+            reference = row['reference'],
+            aliases = alias_lst,
+            source = row['source']
+        )
+        obj.save()
 
 def create_user(username, email, password, is_staff=False, is_superuser=False):
 
@@ -1017,6 +1168,12 @@ if __name__ == "__main__":
     
     elif command == 'import_protein':
         import_protein()
+
+    elif command == 'import_refs':
+        import_refs()
+    
+    elif command == 'import_genome_references':
+        import_genome_references()
     
     elif command == 'update_jaspar':
         update_jaspar()

@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from django.conf import settings
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
@@ -6,6 +8,7 @@ from proteins.models.proteomics import get_proteomics, get_proteomics_list
 import os
 import pandas as pd
 from math import log2
+from django.http import JsonResponse
 
 def RepeatTable(request):
     items = Repeat.objects.all()
@@ -15,6 +18,33 @@ def RepeatTable(request):
             repeat_lst.append(item)
     # print(items)
     return render(request, "repeatTable.html", {"repeats": repeat_lst})
+
+def proteomics_json(request, pk):
+    obj = get_object_or_404(Proteomics, pk=pk)
+
+    # get_data might be a method
+    raw = obj.get_data() if callable(getattr(obj, "get_data", None)) else obj.get_data
+
+    # If raw is already a Python list/dict -> return it directly
+    if isinstance(raw, (list, dict)):
+        return JsonResponse(raw, safe=isinstance(raw, list) is False)
+
+    # If raw is a JSON string -> parse it
+    if isinstance(raw, str):
+        raw = raw.strip()
+        try:
+            parsed = json.loads(raw)
+        except json.JSONDecodeError:
+            # fallback: return as text so you can see it
+            return JsonResponse({"error": "Invalid JSON in get_data"}, status=500)
+
+        # If it was double-encoded, parse again
+        if isinstance(parsed, str):
+            parsed = json.loads(parsed)
+
+        return JsonResponse(parsed, safe=False)
+
+    return JsonResponse({"error": f"Unexpected get_data type: {type(raw)}"}, status=500)
 
 class RepeatDetailView(DetailView):
     """renders html for single protein page"""
@@ -66,50 +96,15 @@ class RepeatDetailView(DetailView):
     def get_proteomics_data(self, repeat):
         taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
-        print(repeat)
+        # print(repeat)
         prot_obj = get_proteomics(repeat.name)
-        print(prot_obj)
+        # print(prot_obj)
+
+        prot_file = prot_obj.id + '_proteomics.json'
+        file_path = Path(__file__).parent.parent.parent.parent / 'frontend' / 'static' / 'proteomics' / prot_file
     
-        # df = pd.read_csv(file, dtype=str)
-        datapoints = []
-        data_format = 1
-        # for row in df.to_dict(orient='records'):
-        if not prot_obj == None:
-            # print("datapoints: ", prot_obj)
-            SIG_THRESHOLD = prot_obj.thresholds[0]
-            if len(prot_obj.thresholds) > 1:
-                LOG_THRESHOLD = prot_obj.thresholds[1]
-            for key in prot_obj.significance.keys():
-                protein_objs = ProteinTF.objects.filter(UNIPROT=key)
-                if len(protein_objs) > 0:
-                    if float(prot_obj.significance[key]) < SIG_THRESHOLD:
-                        data_format = 0
-                    else:
-                        data_format = 1
-
-                    datapoints.append({
-                        "name": protein_objs[0].gene,
-                        "x": prot_obj.log2vals[key],
-                        "y": prot_obj.significance[key],
-                        "slug": protein_objs[0].slug,
-                        "f": data_format
-                    })
-                    # data_format += 1
-                    # if data_format > 5:
-                    #     data_format = 1
-                else:
-                    if float(prot_obj.significance[key]) < SIG_THRESHOLD:
-                        data_format = 0
-                    else:
-                        data_format = 1
-
-                    datapoints.append({
-                        "name": key.split('|')[0],
-                        "x": prot_obj.log2vals[key],
-                        "y": prot_obj.significance[key],
-                        "slug": 'none',
-                        "f": data_format
-                    })
+        with open(file_path, 'r') as file:
+            datapoints = json.load(file)
         
         return datapoints
 

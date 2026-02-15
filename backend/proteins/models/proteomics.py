@@ -14,11 +14,11 @@ from references.models import User
 from model_utils.models import TimeStampedModel
 
 def get_proteomics(repeat):
-    print(repeat)
+    # print(repeat)
     # repeat_obj = Repeat.objects.get(name=repeat)
     # print(repeat_obj)
     objs = Proteomics.objects.filter(target_repeat__name=repeat)
-    print(objs)
+    # print(objs)
     if len(objs) == 0:
         return None
     return objs[0]
@@ -106,8 +106,8 @@ class Proteomics(TimeStampedModel):
 
                     datapoints.append({
                         "name": protein_objs[0].gene,
-                        "x": self.log2vals[key],
-                        "y": self.significance[key],
+                        "x": self.significance[key],
+                        "y": self.log2vals[key],
                         "slug": protein_objs[0].slug,
                         "f": data_format
                     })
@@ -122,8 +122,8 @@ class Proteomics(TimeStampedModel):
 
                     datapoints.append({
                         "name": key.split('|')[0],
-                        "x": self.log2vals[key],
-                        "y": self.significance[key],
+                        "x": self.significance[key],
+                        "y": self.log2vals[key],
                         "slug": 'none',
                         "f": data_format
                     })

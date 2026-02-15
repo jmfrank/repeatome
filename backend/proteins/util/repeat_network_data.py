@@ -3,20 +3,22 @@ import sys
 from proteins.models import Repeat, ProteinRepeats, Organism
 import math
 
+
 def GetEnrichmentData(organism):
     # Define data
     data = []
-    
+   
     # Get enrichment data
     print(organism)
     enrichment_data = {}
     for protrep in ProteinRepeats.objects.all():
-        if protrep.repeat.parent_repeat is None and protrep.repeat.parental_organism is not None and protrep.repeat.parental_organism.id == organism:
-            if not protrep.motif_enrichment == None:
-                enrichment_float = float(protrep.motif_enrichment)
-            
-                if not protrep.repeat.name in enrichment_data.keys():
-                    enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
+        if protrep.repeat.parent_repeat == None and protrep.repeat.parental_organism != None:
+            if protrep.repeat.parental_organism.id == organism:
+                if not protrep.motif_enrichment == None:
+                    enrichment_float = float(protrep.motif_enrichment)
+               
+                    if not protrep.repeat.name in enrichment_data.keys():
+                        enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
     # print(enrichment_data)
     # Normalize enrichment from 7 to 35
     # log_vals = {-k: math.log2(v) for k, v in enrichment_data.items() if v > 0}
@@ -35,6 +37,7 @@ def GetEnrichmentData(organism):
         x_min = min(log_values)
         x_max = max(log_values)
 
+
     enrichment_normalized = {}
     for k, v in enrichment_data.items():
         log_v = math.log2(v) if v > 0 else 0
@@ -44,7 +47,7 @@ def GetEnrichmentData(organism):
             enrichment_normalized[k] = 5
     # print(x_min, x_max)
     # print(list(enrichment_normalized.values()))
-    
+   
     repeats = {}
     for protrep in ProteinRepeats.objects.all():
         if protrep.protein.gene + '_' + protrep.repeat.name in enrichment_normalized.keys():
@@ -55,7 +58,7 @@ def GetEnrichmentData(organism):
                 repeats[protrep.repeat.name]['proteins'].append(protrep.protein)
                 repeats[protrep.repeat.name]['enrichment'].append(enrichment_normalized[protrep.protein.gene + '_' + protrep.repeat.name])
     # print(repeats)
-    
+   
     # Loop through repeats
     spacing_x = 0
     spacing_y = 0
@@ -68,6 +71,7 @@ def GetEnrichmentData(organism):
                 # Getting protein data for one repeat
                 REP_SIZE = 50
                 repeat_data = { 'key': repeat.name, 'attributes': { 'node_type': 'repeat', 'label': repeat.name, 'aliases': repeat.aliases_as_str(), 'dfam_id': repeat.dfam_id, 'x': spacing_x, 'y': spacing_y, 'size': REP_SIZE, 'color': 'rgb(140, 90, 230)', 'zIndex': 100, 'url': '/repeatTable/' + repeat.slug} }
+
 
                 # Figure out x and y spacing to make them show up in a circle
                 protein_lst = []
@@ -108,8 +112,10 @@ def GetEnrichmentData(organism):
                     i += angle
                     indx += 1
 
+
                 # Add repeat to data
                 data.append(repeat_data)
+
 
                 # Add proteins to data
                 PROT_SIZE = 7
@@ -123,22 +129,26 @@ def GetEnrichmentData(organism):
                     data.append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#292BA5", 'url': '/proteinTable/' + protein_lst[i].slug}, 'organism': organism})
                     # data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
 
+
                 spacing_x += 225
                 spacing_x = spacing_x % 1125
                 if spacing_x == 0:
                     spacing_y -= 210
-        
+       
     # print(data)
     return data
+
 
 def GetNetworkData(organism):
     data = GetEnrichmentData(organism)
     # print(data)
 
+
     # Write data to json file
-    file_str = 'frontend/static/repeat_network_db_' + str(organism) + '.json'
+    file_str = 'frontend/static/network/repeat_network_db_' + str(organism) + '.json'
     with open(file_str, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, indent=4, ensure_ascii=False)
+
 
 def GetNetworkDataAll():
     print("GET ALL NETWORK DATA")
@@ -146,10 +156,12 @@ def GetNetworkDataAll():
     for organism in Organism.objects.all():
         data += GetEnrichmentData(organism.id)
 
+
     # print("ALL", data)
 
+
     # Write data to json file
-    file_str = 'frontend/static/repeat_network_db_all.json'
+    file_str = 'frontend/static/network/repeat_network_db_all.json'
     with open(file_str, 'w', encoding='utf-8') as json_file:
         json.dump(data, json_file, indent=4, ensure_ascii=False)
 

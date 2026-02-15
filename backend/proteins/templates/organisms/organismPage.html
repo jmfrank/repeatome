@@ -7,7 +7,7 @@
 {% block meta-description %}Proteins derived from {{ object.scientific_name }} at FPbase{% endblock %}
 
 {% block extrahead %}
-<script type='module' src="{% static 'repeat_network.js'%}"></script>
+<script type='module' src="{% static 'network/repeat_network.js'%}"></script>
 {% endblock %}
 
 {% block content %}
@@ -30,17 +30,19 @@
   <a href="{% url 'proteins:organismTable' %}" class='text-info'>See other organisms in the database</a>
 
   <h5 class='pt-3'><strong>Karyotype Viewer</strong></h5>
-  <div id='karyotype_div'
-      data-karyo-txt="{% static 'karyotype_viewer/karyotype.txt' %}"
-      data-karyo-bed="{% static 'karyotype_viewer/9606_karyotype.bed' %}"
-      data-karyo-parent="none">
-  </div>
+  {% with oid=object.id|stringformat:"s"  %}
+      <div id='karyotype_div'
+          data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.txt' %}"
+          data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.bed' %}"
+          data-karyo-parent="none">
+      </div>
+  {% endwith %}
   <br>
   <h5 class='pt-3'><strong>Network Graph</strong></h5>
   {% with oid=object.id|default:organism.id|stringformat:"s"|default:"" %}
     <!-- DEBUG: oid renders as “[{{ oid }}]” -->
     {% if oid %}
-      {% with json_path='repeat_network_db_'|add:oid|add:'.json' %}
+      {% with json_path='network/repeat_network_db_'|add:oid|add:'.json' %}
         <div id="network-container"
             style="position: relative; width:100%; height:600px;"
             data-network="{% static json_path %}">

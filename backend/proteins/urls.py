@@ -154,6 +154,7 @@ urlpatterns = [
     #     name="protein-detail",
     # ),
     # path("organisms/", views.OrganismListView.as_view(), name="organism-list"),
+    path("genome_references", views.genome_reference, name="genome_references"),
     path(
         "organismTable/<int:pk>/",
         views.OrganismDetailView.as_view(),
@@ -171,6 +172,7 @@ urlpatterns = [
        views.RepeatDetailView.as_view(),
        name="repeatTable-detail",
     ),
+    path("proteomics/<str:pk>/json/", views.proteomics_json, name="proteomics_json"),
     # re_path(
     #     r"^protein/(?P<slug>[-\w]+)/bleach/$",
     #     views.protein_bleach_formsets,
