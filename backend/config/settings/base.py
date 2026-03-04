@@ -47,6 +47,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    "django_vite",
     # Useful template tags:
     "django.contrib.humanize",
     "dal",
@@ -74,7 +75,7 @@ THIRD_PARTY_APPS = [
     "reversion",
     "reversion_compare",
     "avatar",
-    "mptt"
+    "mptt",
 ]
 
 # Apps specific for this project go here.
@@ -89,6 +90,8 @@ LOCAL_APPS = [
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+DJANGO_VITE_MANIFEST_PATH = ROOT_DIR / "frontend" / "static" / "karyotype" / "manifest.json"
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -127,6 +130,11 @@ FIXTURE_DIRS = (str(APPS_DIR / "fixtures"),)
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "postmaster@mg.fpbase.org"
+EMAIL_HOST_PASSWORD = "<your_mailgun_smtp_password>"
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -247,7 +255,7 @@ INSTALLED_APPS.append("webpack_loader")
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "/",
+        "BUNDLE_DIR_NAME": "dist/",
         "STATS_FILE": str(ROOT_DIR.parent / "frontend" / "dist" / "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
