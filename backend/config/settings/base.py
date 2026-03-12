@@ -15,6 +15,10 @@ import environ
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 APPS_DIR = ROOT_DIR / "repeatome"
+TOP_DIR = ROOT_DIR.parent
+
+print(f"ROOT_DIR: {ROOT_DIR}")
+print(f"TOP_DIR: {TOP_DIR}")
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -91,7 +95,8 @@ LOCAL_APPS = [
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-DJANGO_VITE_MANIFEST_PATH = ROOT_DIR / "frontend" / "static" / "karyotype" / "manifest.json"
+#DJANGO_VITE_MANIFEST_PATH = ROOT_DIR / "frontend" / "static" / "karyotype" / "manifest.json"
+DJANGO_VITE_MANIFEST_PATH = TOP_DIR / "packages" / "src" / "karyotype" / ".vite" / "manifest.json"
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
