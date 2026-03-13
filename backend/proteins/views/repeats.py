@@ -94,19 +94,22 @@ class RepeatDetailView(DetailView):
         return prot_objs
         
     def get_proteomics_data(self, repeat):
-        taxonomy = repeat.parental_organism.id
+        # taxonomy = repeat.parental_organism.id
         repeat_name = repeat.name.lower()
         # print(repeat)
         prot_obj = get_proteomics(repeat.name)
         # print(prot_obj)
 
-        prot_file = prot_obj.id + '_proteomics.json'
-        file_path = Path(__file__).parent.parent.parent.parent / 'frontend' / 'static' / 'proteomics' / prot_file
-    
-        with open(file_path, 'r') as file:
-            datapoints = json.load(file)
+        if prot_obj:
+            prot_file = prot_obj.id + '_proteomics.json'
+            file_path = Path(__file__).parent.parent.parent.parent / 'frontend' / 'static' / 'proteomics' / prot_file
         
-        return datapoints
+            with open(file_path, 'r') as file:
+                datapoints = json.load(file)
+        
+            return datapoints
+
+        return None
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
