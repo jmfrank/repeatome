@@ -186,9 +186,9 @@ def import_repeat():
 
         parent_repeat_obj = None
         if name in parent_repeats_dict.keys():
-            parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
+            parent_repeat_obj = get_obj_if_exists(Repeat, slug=parent_repeats_dict[name].lower())
 
-        existing_obj = get_obj_if_exists(Repeat, name=name)
+        existing_obj = get_obj_if_exists(Repeat, slug=name.lower())
         if not existing_obj:
             obj = Repeat(
                 name=name, 
@@ -215,11 +215,11 @@ def import_repeat():
             unique_satellites.add(satellite)
 
     for name in unique_satellites:
-        existing_obj = get_obj_if_exists(Repeat, name=name)
+        existing_obj = get_obj_if_exists(Repeat, slug=name.lower())
         if not existing_obj:
             parent_repeat_obj = None
             if name in parent_repeats_dict.keys():
-                parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
+                parent_repeat_obj = get_obj_if_exists(Repeat, slug=parent_repeats_dict[name].lower())
             obj = Repeat(
                 name=name, 
                 parent_repeat=parent_repeat_obj
@@ -462,6 +462,28 @@ def import_protein():
                     # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
                     protein_repeat_obj.save()
                     # index += 1
+        else:
+            protein_obj = ProteinTF.objects.get(gene=row['gene'])
+            satellite_str = row['satellite']
+            if satellite_str:
+                satellites = [x.strip() for x in satellite_str.split(',')]
+                for satellite in satellites:
+                    if len(Repeat.objects.filter(slug = satellite.lower())) == 0:
+                        print("CREATING REPEAT")
+                        repeat_obj = obj = Repeat(
+                            name=satellite, 
+                            parent_repeat=None
+                        )
+                        repeat_obj.save()
+                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                        # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
+                        protein_repeat_obj.save()
+                        # index += 1
+                    elif len(ProteinRepeats.objects.filter(protein=row['gene'], repeat=satellite)) == 0:
+                        print("ADD PROTEINREPEAT")
+                        repeat_obj = Repeat.objects.get(name = satellite)
+                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                        protein_repeat_obj.save()
 
 
 def import_refs():
@@ -824,20 +846,19 @@ def import_proteomics():
             repeat_obj = Repeat(name=repeat_target, parental_organism = parent_organism_obj)
             repeat_obj.save()
         else:
-            print(repeat_obj.name + " Object Found")
+            print("REPEAT: ", repeat_obj.name + " Object Found")
 
         if protein_obj == None: # get uniprot to fill in information?
             print("Adding Target Protein")
             protein_obj = ProteinTF(gene=protein_target, parent_organism = parent_organism_obj, ENSEMBL = "none")
             protein_obj.save()
         else:
-            print(protein_obj.gene + " Object Found")
+            print("PROTEIN: ", protein_obj.gene + " Object Found")
 
         # log2C_vals = {}
         # significance = {}
 
         df = pd.read_csv(settings.IMPORT_DATA_FOLDER / "proteomics_data" / pr_path, dtype=str)
-
         datapoints = []
         data_format = 1
         
@@ -883,6 +904,7 @@ def import_proteomics():
             file_str = 'frontend/static/proteomics/' + new_id + '_proteomics.json'
             with open(file_str, 'w', encoding='utf-8') as json_file:
                 json.dump(datapoints, json_file, indent=4, ensure_ascii=False)
+        print("Data Saved")
 
         if len(Proteomics.objects.filter(target_repeat=repeat_obj, cell_type=cell_type)) == 0:
             print("Adding Proteomics")

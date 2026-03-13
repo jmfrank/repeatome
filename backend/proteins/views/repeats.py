@@ -62,7 +62,7 @@ class RepeatDetailView(DetailView):
         # print(self.kwargs['slug'].lower())
         # print(Repeat.objects.all()[2].slug)
         # print(Repeat.objects.get(slug=self.kwargs['slug']))
-        obj = Repeat.objects.get(slug=self.kwargs['slug'].lower())
+        obj = Repeat.objects.filter(slug=self.kwargs['slug'].lower())[0]
         # print(query_set.get(gene=self.kwargs['slug']))
         # obj = query_set.get(gene=self.kwargs['slug'])
         # obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
