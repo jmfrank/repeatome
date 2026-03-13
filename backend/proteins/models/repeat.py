@@ -100,7 +100,10 @@ class Repeat(models.Model):
             if os.path.exists(file_path):
                 # File or directory exists
                 return True
-        return False
+            else:
+                return False
+        else:
+            return False
         
     def repeat_lower(self):
         return self.name.lower()
