@@ -186,9 +186,9 @@ def import_repeat():
 
         parent_repeat_obj = None
         if name in parent_repeats_dict.keys():
-            parent_repeat_obj = get_obj_if_exists(Repeat, slug=parent_repeats_dict[name].lower())
+            parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
 
-        existing_obj = get_obj_if_exists(Repeat, slug=name.lower())
+        existing_obj = get_obj_if_exists(Repeat, name=name)
         if not existing_obj:
             obj = Repeat(
                 name=name, 
@@ -215,11 +215,11 @@ def import_repeat():
             unique_satellites.add(satellite)
 
     for name in unique_satellites:
-        existing_obj = get_obj_if_exists(Repeat, slug=name.lower())
+        existing_obj = get_obj_if_exists(Repeat, name=name)
         if not existing_obj:
             parent_repeat_obj = None
             if name in parent_repeats_dict.keys():
-                parent_repeat_obj = get_obj_if_exists(Repeat, slug=parent_repeats_dict[name].lower())
+                parent_repeat_obj = get_obj_if_exists(Repeat, name=parent_repeats_dict[name])
             obj = Repeat(
                 name=name, 
                 parent_repeat=parent_repeat_obj
@@ -262,12 +262,12 @@ def load_jaspar_from_url(gene, tax_group, tax_id=9606):
         for result in response.json()['results']:
             jdb_obj = jaspardb()
             motif_data = jdb_obj.fetch_motif_by_id(result['base_id'] + '.' + result['version'])
-            # print(gene.strip(), tax_id)
-            # print(motif_data)
-            # print(motif_data.name)
-            if not motif_data is None and len(motif_data.species) > 0 and motif_data.species[0] != '':
-                if motif_data.name == gene.strip() and int(motif_data.species[0]) == tax_id:
-                    fixed_results.append(result)
+            if motif_data and motif_data.name and motif_data.species:
+                # print(gene.strip(), tax_id)
+                print(motif_data.name, motif_data.species)
+                if len(motif_data.species) > 0 and motif_data.species[0] != '':
+                    if motif_data.name == gene.strip() and int(motif_data.species[0]) == tax_id:
+                        fixed_results.append(result)
         fixed_response['results'] = fixed_results
 
         # print(response.json())
@@ -318,7 +318,6 @@ def import_protein():
     for row in df.to_dict(orient='records'):
         if len(ProteinTF.objects.filter(gene = row['gene'])) == 0:
             gene = row['gene']
-            print("--------------------------------------------------------------")
             if not gene:
                 continue
             gene_family_obj = None
@@ -334,40 +333,37 @@ def import_protein():
             # Get list of jaspar matrix_ids either from local .cache folder or from url
             jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
 
-            # Get References
-            prim_ref = row['primary_reference']
-            if not (prim_ref == '') and not prim_ref == None:
-                ref_doi = prim_ref
-                if ref_doi.find('doi.org') >= 0:
-                    ref_doi = prim_ref[ref_doi.find('doi.org') + 8:]
-                print("REF: ", ref_doi)
-                ref_doi = ref_doi.lower()
-                pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
-                # print("PUBMED: ", pubmed_record)
-                if len(Reference.objects.filter(doi=ref_doi)) == 0:
-                    print("Reference not found")
-                    if len(pubmed_record['IdList']) > 0:
+            # TODO: Remove this once Cassisa fixes the issues with duplicate doi key
+            skip_reference = True
+
+            if skip_reference:
+                prim_ref_obj = None
+            else:
+                # Get References
+                prim_ref = row['primary_reference']
+                if not (prim_ref == '') and not prim_ref == None:
+                    ref_doi = prim_ref
+                    if ref_doi.find('doi.org') >= 0:
+                        ref_doi = prim_ref[ref_doi.find('doi.org') + 2:]
+                    print(ref_doi)
+                    pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
+                    if len(Reference.objects.filter(doi=ref_doi)) == 0:
+                        if len(pubmed_record['IdList']) > 0:
+                            pmid = pubmed_record['IdList'][0]
+                        else:
+                            pmid = None
                         prim_ref_obj = Reference(
                             # id = shortuuid(),
                             id = uuid.uuid4().int % 100000,
                             created = datetime.now(),
                             modified = datetime.now(),
-                            doi = ref_doi,
-                            pmid = pubmed_record['IdList'][0])
+                            doi = prim_ref,
+                            pmid = pmid)
                         prim_ref_obj.save()
                     else:
-                        prim_ref_obj = Reference(
-                            # id = shortuuid(),
-                            id = uuid.uuid4().int % 100000,
-                            created = datetime.now(),
-                            modified = datetime.now(),
-                            doi = ref_doi,
-                            pmid = None)
-                        prim_ref_obj.save()
-                else:
-                    print("Reference found")
-                    prim_ref_obj = Reference.objects.filter(doi=ref_doi)[0]
-            else: prim_ref_obj = None
+                        prim_ref_obj = Reference.objects.filter(doi=prim_ref)[0]
+                else: 
+                    prim_ref_obj = None
 
             obj = ProteinTF(
                 gene=gene,
@@ -415,35 +411,33 @@ def import_protein():
             print(protein_obj.gene, protein_obj.slug, protein_obj)
             
             refs = row['references']
-            if not refs == None:
+            if refs:
                 for ref in refs.split(','):
-                    ref_doi = ref
-                    if ref_doi.find('doi.org') >= 0:
-                        ref_doi = ref[ref_doi.find('doi.org') + 8:]
-                    ref_doi = ref_doi.lower()
-                    pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
-                    if len(Reference.objects.filter(doi=ref_doi)) == 0:
+                    #                 10.1152/ajpcell.00339.2013
+                    # https://doi.org/10.1152/ajpcell.00339.2013
+                    # 1234567890123456789012345678901234567890123456789   
+                    pubmed_record = Entrez.read(Entrez.esearch(db="pubmed", term=ref))
+                    ref_no_prefix = ref.replace('https://doi.org/', '').strip()
+                    print(f"ref = {ref}, ref_no_prefix = {ref_no_prefix}")
+                    existing_refs = Reference.objects.filter(doi=ref_no_prefix)
+                    if not existing_refs:
+                        print(f"Adding reference with doi {ref}")
                         if len(pubmed_record['IdList']) > 0:
-                            ref_obj = Reference(id = uuid.uuid4().int % 100000,
-                                created = datetime.now(),
-                                modified = datetime.now(),
-                                doi = ref_doi,
-                                pmid = pubmed_record['IdList'][0])
-                            ref_obj.save()
-                            protein_ref_obj = ProteinReferences(protein = protein_obj, reference = ref_obj)
-                            protein_ref_obj.save()
+                            pmid = pubmed_record['IdList'][0]
                         else:
-                            ref_obj = Reference(id = uuid.uuid4().int % 100000,
-                                created = datetime.now(),
-                                modified = datetime.now(),
-                                doi = ref_doi,
-                                pmid = None)
-                            ref_obj.save()
-                            protein_ref_obj = ProteinReferences(protein = protein_obj, reference = ref_obj)
-                            protein_ref_obj.save()
+                            pmid = None
+                        ref_record_id = uuid.uuid4().int % 100000
+                        print(f"Creating Reference object with doi {ref}, pmid {pmid}, id = {ref_record_id}")
+                        ref_obj = Reference(id = ref_record_id,
+                            created = datetime.now(),
+                            modified = datetime.now(),
+                            doi = ref,
+                            pmid = pmid)
+                        ref_obj.save()
+                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = ref_obj)
+                        protein_ref_obj.save()
                     else:
-                        print(Reference.objects.filter(doi=ref_doi))
-                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = Reference.objects.filter(doi=ref_doi)[0])
+                        protein_ref_obj = ProteinReferences(protein = protein_obj, reference = existing_refs[0])
                         protein_ref_obj.save()
 
             satellite_str = row['satellite']
@@ -462,28 +456,6 @@ def import_protein():
                     # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
                     protein_repeat_obj.save()
                     # index += 1
-        else:
-            protein_obj = ProteinTF.objects.get(gene=row['gene'])
-            satellite_str = row['satellite']
-            if satellite_str:
-                satellites = [x.strip() for x in satellite_str.split(',')]
-                for satellite in satellites:
-                    if len(Repeat.objects.filter(slug = satellite.lower())) == 0:
-                        print("CREATING REPEAT")
-                        repeat_obj = obj = Repeat(
-                            name=satellite, 
-                            parent_repeat=None
-                        )
-                        repeat_obj.save()
-                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                        # protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj, motif_q_score=motif_q_scores[i], motif_enrichment=motif_enrichments[i])
-                        protein_repeat_obj.save()
-                        # index += 1
-                    elif len(ProteinRepeats.objects.filter(protein=row['gene'], repeat=satellite)) == 0:
-                        print("ADD PROTEINREPEAT")
-                        repeat_obj = Repeat.objects.get(name = satellite)
-                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                        protein_repeat_obj.save()
 
 
 def import_refs():
@@ -803,7 +775,7 @@ def get_proteomics_without_proteins():
         obj.save()
 
 def import_proteomics():
-    pr_df = load_dataframe_from_excel(settings.IMPORT_DATA_FOLDER / "proteomics_data/proteomics_datasets.xlsx", 'Sheet1')
+    pr_df = load_dataframe_from_excel(f"{settings.IMPORT_DATA_FOLDER}/proteomics_data/proteomics_datasets.xlsx", 'Sheet1')
     pr_df = pr_df.where(pd.notnull(pr_df), None)
 
     # print(pr_df.to_dict(orient='records'))
@@ -846,19 +818,20 @@ def import_proteomics():
             repeat_obj = Repeat(name=repeat_target, parental_organism = parent_organism_obj)
             repeat_obj.save()
         else:
-            print("REPEAT: ", repeat_obj.name + " Object Found")
+            print(repeat_obj.name + " Object Found")
 
         if protein_obj == None: # get uniprot to fill in information?
             print("Adding Target Protein")
             protein_obj = ProteinTF(gene=protein_target, parent_organism = parent_organism_obj, ENSEMBL = "none")
             protein_obj.save()
         else:
-            print("PROTEIN: ", protein_obj.gene + " Object Found")
+            print(protein_obj.gene + " Object Found")
 
         # log2C_vals = {}
         # significance = {}
 
-        df = pd.read_csv(settings.IMPORT_DATA_FOLDER / "proteomics_data" / pr_path, dtype=str)
+        df = pd.read_csv(f"{settings.IMPORT_DATA_FOLDER}/proteomics_data/{pr_path}", dtype=str)
+
         datapoints = []
         data_format = 1
         
@@ -904,7 +877,6 @@ def import_proteomics():
             file_str = 'frontend/static/proteomics/' + new_id + '_proteomics.json'
             with open(file_str, 'w', encoding='utf-8') as json_file:
                 json.dump(datapoints, json_file, indent=4, ensure_ascii=False)
-        print("Data Saved")
 
         if len(Proteomics.objects.filter(target_repeat=repeat_obj, cell_type=cell_type)) == 0:
             print("Adding Proteomics")
@@ -1149,16 +1121,12 @@ def import_genome_references():
             alias_lst = ['null']
         print(alias_lst)
 
-        source = row['source']
-        if source == 'genbank':
-           source = 'https://www.ncbi.nlm.nih.gov/datasets/genome/' + row['reference']
-
         obj = GenomeReferences(
             id = shortuuid(),
             organism = parent_organism_obj,
             reference = row['reference'],
             aliases = alias_lst,
-            source = source
+            source = row['source']
         )
         obj.save()
 
@@ -1188,13 +1156,11 @@ def delete_all_records():
     # Delete all records in all tables
     print("DELETING ALL OBJECTS")
     Microscopy.objects.all().delete()
-    Reference.objects.all().delete()
     ProteinReferences.objects.all().delete()
     ProteinRepeats.objects.all().delete()
     ProteinTF.objects.all().delete()
     Repeat.objects.all().delete()
     Proteomics.objects.all().delete()
-    GenomeReferences.objects.all().delete()
     GeneFamily.objects.all().delete()
     Organism.objects.all().delete()
     print("FINISHED DELETING")
@@ -1210,30 +1176,17 @@ if __name__ == "__main__":
 
     if command == 'reset': 
         delete_all_records()
-        print("ORGANISMS")
         import_organisms()
-        print("GENE FAMILY")
         import_gene_family()
-        print("REPEAT + FAMILIES")
         import_repeat()
-        update_repeat_families()
-        print("PROTEIN")
         import_protein()
-        update_PDB_from_uniprot()
-        print("PROTEIN REPEATS")
         update_proteinrepeats()
-        print("PROTEOMICS")
         import_proteomics()
-        print("NETWORK DATA")
         for org in Organism.objects.all():
             GetNetworkData(org.id)
         GetNetworkDataAll()
-        print("MICROSCOPY")
+        update_PDB_from_uniprot()
         update_microscopy()
-        print("GENOME REFS")
-        import_genome_references()
-        print("REFERENCES")
-        import_refs()
     elif command == 'import_repeat':
         import_repeat()
         update_repeat_families()
@@ -1253,14 +1206,8 @@ if __name__ == "__main__":
     elif command == 'update_proteinrepeats':
         update_proteinrepeats()
      
-    # elif command == 'update_proteomics':
-    #     update_proteomics()
-    
-    # elif command == 'get_proteomics_without_proteins':
-    #     get_proteomics_without_proteins()    
-
-    elif command == 'import_proteomics':
-        import_proteomics()
+    elif command == 'update_proteomics':
+        update_proteomics()
 
     elif command == 'update_microscopy':
         # Download google sheet from https://docs.google.com/spreadsheets/d/1HOvL2E9wabhGQOcfUvCHYIz5tjmqXsIJ1N1cv5CBky0/edit?gid=0#gid=0
@@ -1272,6 +1219,9 @@ if __name__ == "__main__":
     elif command == 'update_repeat_families':
         update_repeat_families()
 
+    elif command == 'get_proteomics_without_proteins':
+        get_proteomics_without_proteins()
+        
     elif command == 'save_proteins':
         save_proteins()
         
@@ -1284,6 +1234,8 @@ if __name__ == "__main__":
 
     elif command == 'update_PDB_from_uniprot':
         update_PDB_from_uniprot()
+    elif command == 'import_proteomics':
+        import_proteomics()
 
     elif command == 'create_user':
         if len(sys.argv) != 5:
