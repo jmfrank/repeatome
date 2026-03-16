@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/bash -x
+
+source ~/.bashrc
+
+export PATH=/data/miniconda3/bin:$PATH
 
 repeatome_dir=/data/repeatome
 
 cd $repeatome_dir
-
-export PATH=/home/ubuntu/miniconda3/bin:$PATH
 
 conda init bash
 conda activate repeatome
