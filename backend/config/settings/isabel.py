@@ -15,10 +15,10 @@ import os
 # Data to import
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
-IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
+IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database.xlsx"
 IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
-IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
+# IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
 IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/microscopy_data.xlsx"
 IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 
@@ -31,7 +31,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase26',  # Replace with your database name
+        'NAME': 'fpbase30',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
@@ -41,10 +41,20 @@ DATABASES = {
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
+STATIC_ROOT = str(ROOT_DIR / "staticfiles")
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
+STATIC_URL = "/static/"
+
 STATICFILES_DIRS = [
     str(ROOT_DIR.parent / "frontend" / "dist"),
     str(ROOT_DIR.parent / "frontend" / "static"),
     os.path.join(os.environ['CONDA_PREFIX'], 'lib', 'python3.13', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+]
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
 # DEBUG
