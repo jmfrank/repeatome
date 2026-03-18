@@ -95,10 +95,13 @@ class Repeat(models.Model):
         
     def karyotype_data_exists(self):
         name_lower = self.repeat_lower()
-        file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyotype_viewer/{self.parental_organism.id}/{name_lower}_karyotype.bed"
-        if os.path.exists(file_path):
-            # File or directory exists
-            return True
+        if self.parental_organism:
+            file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyotype_viewer/{self.parental_organism.id}/{name_lower}_karyotype.bed"
+            if os.path.exists(file_path):
+                # File or directory exists
+                return True
+            else:
+                return False
         else:
             return False
         
