@@ -30,8 +30,7 @@ IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        #'NAME': 'fpbase15',  # This db is working.
-        'NAME': 'fpbase30',  # Replace with your database name
+        'NAME': 'fpbase31',  # Replace with your database name
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development
