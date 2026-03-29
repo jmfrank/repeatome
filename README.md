@@ -1,5 +1,3 @@
-[![Logo](_resources/logo_green_wide@1x.gif)](https://www.fpbase.org)
-
 # Repeatome: The Repeat and Protein Database
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -8,12 +6,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.1038/s41592-019-0352-8.svg)](https://doi.org/10.1038/s41592-019-0352-8)
 
 Source code for <https://www.repeatome.org>
-
-Documentation and info on using the site: <https://help.fpbase.org>.
-
-See also: [Using FPbase: The Fluorescent Protein
-Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
-2023;2564:1-45. doi: 10.1007/978-1-0716-2667-2_1
 
 ## Installation for local development
 
@@ -107,14 +99,9 @@ Database](https://pubmed.ncbi.nlm.nih.gov/36107335/) (2023) *Methods Mol Biol* .
     python backend/manage.py runserver
     ```
 
-### How to cite FPbase
+### How to cite Repeatome
 
-If you have used FPbase in a publication, or are referencing an FPbase protein
-collection or microscope in your methods, please cite the following paper:
-
-Lambert, TJ (2019) FPbase: a community-editable fluorescent protein database.
-*Nature Methods*. doi:
-[10.1038/s41592-019-0352-8](https://doi.org/10.1038/s41592-019-0352-8)
+stay tuned - manuscript in preparation
 
 ### Contributing
 
@@ -122,12 +109,7 @@ If you would like to contribute to the website directly (for instance, to add a
 feature or fix an error), please branch off of develop and submit a pull
 request.
 
-If you have data that you would like to contribute to the database, please do
-*not* do that here.  All data can be submitted directly on the website:
-
-[Submit a fluorescent protein](https://www.fpbase.org/submit/)
-
-[Submit spectral information](https://www.fpbase.org/spectra/submit/)
+If you have data that you would like to contribute to the database, please reach out to Matt Franklin at jmfrank@stanford.edu
 
 ### Thank you to these providers for supporting open source projects
 
