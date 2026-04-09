@@ -255,10 +255,12 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    </div>
 
   <!--Motif Q-Score & Enrichment Graph-->
-
+  {% if enrichment_datapoints %}
   <div id="qScoreChartContainer" style="height: 370px; width: 100%;"></div>
+  {% endif %}
+  {% if qscore_datapoints %}
   <div id="enrichmentChartContainer" style="height: 370px; width: 100%;"></div>
-
+  {% endif %}
   <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
 

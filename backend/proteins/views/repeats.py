@@ -170,8 +170,9 @@ class RepeatDetailView(DetailView):
                     "y": float(obj.motif_q_score * -1)
                     # "y": "-" + str(protein.motif_q_score * -1)
                 })
-        # return json.dumps(datapoints)
-        return datapoints
+        # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
+        sorted_datapoints = sorted(datapoints, key=lambda d: d['y'])
+        return sorted_datapoints
 
     def get_motif_chart_enrichment_data(self, repeat):
         datapoints = []
@@ -181,8 +182,9 @@ class RepeatDetailView(DetailView):
                     "label": obj.protein.gene,
                     "y": float(obj.motif_enrichment)
                 })
-        # return json.dumps(datapoints)
-        return datapoints
+        # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
+        sorted_datapoints = sorted(datapoints, key=lambda d: d['y'])
+        return sorted_datapoints
 
 
     
