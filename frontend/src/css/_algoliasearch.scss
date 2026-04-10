@@ -38,6 +38,7 @@
   font-size: 0.72em;
   margin-top: 4px;
   font-weight: 500;
+  text-align: right;
   color: #aaa;
 
   .asearch{
@@ -49,7 +50,11 @@
       text-decoration: none;
     }
   }
-  .branding {
+}
+
+.branding {
+    text-align: right;
+    color: white;
     float: right;
     padding-right: 0.7rem;
     a {
@@ -63,7 +68,6 @@
     }
 
   }
-}
 
 // .algolia-autocomplete {
 //   width: 100%;

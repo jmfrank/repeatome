@@ -503,10 +503,11 @@ class ProteinUpdateView(ProteinCreateUpdateMixin, UpdateView):
         if queryset is None:
             queryset = self.get_queryset()
         try:
+            print(self.kwargs.get("slug"))
             obj = queryset.get(slug=self.kwargs.get("slug"))
         except ProteinTF.DoesNotExist:
             try:
-                obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
+                obj = queryset.get(slug=self.kwargs.get("slug", "").upper())
             except ProteinTF.DoesNotExist as e:
                 raise Http404("No protein found matching this query") from e
         if obj.status == "hidden" and obj.created_by != self.request.user and not self.request.user.is_staff:
@@ -632,7 +633,7 @@ class ComparisonView(base.TemplateView):
 
 def protein_tree(request, organism):
     """renders html for protein table page"""
-    _, tree = Protein.objects.filter(parent_organism=organism).to_tree()
+    _, tree = ProteinTF.objects.filter(parent_organism=organism).to_tree()
     return render(request, "tree.html", {"tree": tree.replace("\n", ""), "request": request})
 
 
@@ -641,8 +642,8 @@ def problems_gaps(request):
         request,
         "problems_gaps.html",
         {
-            "noseqs": ProteinTF.objects.filter(seq__isnull=True).values("name", "slug"),
-            "nostates": ProteinTF.objects.filter(states=None).values("name", "slug"),
+            # "noseqs": ProteinTF.objects.filter(seq__isnull=True).values("name", "slug"),
+            # "nostates": ProteinTF.objects.filter(states=None).values("name", "slug"),
             "noparent": ProteinTF.objects.filter(parent_organism__isnull=True),
             # "only2p": (
             #     State.objects.filter(spectra__subtype="2p")
@@ -650,7 +651,7 @@ def problems_gaps(request):
             #     .distinct("protein")
             #     .values("protein__name", "protein__slug")
             # ),
-            "nolineage": ProteinTF.objects.filter(lineage=None).annotate(ns=Count("states__spectra")).order_by("-ns"),
+            # "nolineage": ProteinTF.objects.filter(lineage=None).annotate(ns=Count("states__spectra")).order_by("-ns"),
             "request": request,
         },
     )
@@ -667,37 +668,35 @@ def problems_inconsistencies(request):
         operator.or_,
         (Q(name__startswith=item) for item in ["PA", "rs", "mPA", "PS", "mPS"]),
     )
-    switchers = ProteinTF.objects.exclude(name__startswith="mCerulean").filter(titles)
-    switchers = switchers | ProteinTF.objects.filter(names)
-    switchers = switchers.annotate(ns=Count("states")).filter(ns=1)
+    # switchers = ProteinTF.objects.exclude(name__startswith="mCerulean").filter(titles)
+    # switchers = switchers | ProteinTF.objects.filter(names)
+    # switchers = switchers.annotate(ns=Count("states")).filter(ns=1)
 
-    gb_mismatch = []
-    with_genbank = ProteinTF.objects.exclude(genbank=None).exclude(seq=None).values("slug", "name", "genbank", "seq")
-    gbseqs = get_cached_gbseqs([g["genbank"] for g in with_genbank])
-    for item in with_genbank:
-        if item["genbank"] in gbseqs:
-            gbseq = gbseqs.get(item["genbank"])[0]
-            ourseq = item["seq"]
-            if ourseq != gbseq:
-                gb_mismatch.append(
-                    (
-                        item["name"],
-                        item["slug"],
-                        item["genbank"],
-                        str(ourseq.mutations_to(gbseq)),
-                        ourseq,
-                    )
-                )
-    p = list(
-        ProteinTF.objects.annotate(ndark=Count("states", filter=Q(states__is_dark=True)))
-        .annotate(nfrom=Count("transitions__from_state", distinct=True))
-        .prefetch_related("states", "transitions")
-    )
-    bad_switch = []
-    for prot in p:
-        suggestion = suggested_switch_type(prot)
-        if (prot.switch_type or suggestion) and (prot.switch_type != suggestion):
-            bad_switch.append((prot, dict(ProteinTF.SWITCHING_CHOICES).get(suggestion)))
+    # gb_mismatch = []
+    # with_uniprot = ProteinTF.objects.exclude(UNIPROT=None).exclude(protein_sequence=None).values("slug", "gene", "UNIPROT", "protein_sequence")
+    # gbseqs = get_cached_gbseqs([g["UNIPROT"] for g in with_uniprot])
+    # for item in with_uniprot:
+    #     if item["UNIPROT"] in gbseqs:
+    #         gbseq = gbseqs.get(item["UNIPROT"])[0]
+    #         ourseq = item["protein_sequence"]
+    #         if ourseq != gbseq:
+    #             gb_mismatch.append(
+    #                 (
+    #                     item["gene"],
+    #                     item["slug"],
+    #                     item["UNIPROT"],
+    #                     str(ourseq.mutations_to(gbseq)),
+    #                     ourseq,
+    #                 )
+    #             )
+    # p = list(
+    #     ProteinTF.objects.all()
+    # )
+    # bad_switch = []
+    # for prot in p:
+    #     suggestion = suggested_switch_type(prot)
+    #     if (prot.switch_type or suggestion) and (prot.switch_type != suggestion):
+    #         bad_switch.append((prot, dict(ProteinTF.SWITCHING_CHOICES).get(suggestion)))
 
     return render(
         request,
@@ -705,11 +704,11 @@ def problems_inconsistencies(request):
         {
             # "histags": Protein.objects.filter(seq__icontains="HHHHH").values("name", "slug"),
             # "linprobs": [(node.protein, v) for node, v in check_lineages()[0].items()],
-            "nomet": ProteinTF.objects.exclude(seq__isnull=True).exclude(seq__istartswith="M"),
-            "bad_switch": bad_switch,
-            "switchers": switchers,
+            # "nomet": ProteinTF.objects.exclude(protein_sequence__isnull=True).exclude(protein_sequence__istartswith="M"),
+            # "bad_switch": bad_switch,
+            # "switchers": switchers,
             "request": request,
-            "mismatch": gb_mismatch,
+            # "mismatch": gb_mismatch,
         },
     )
 
@@ -718,7 +717,7 @@ def add_reference(request, slug=None):
     try:
         with reversion.create_revision():
             doi = request.POST.get("reference_doi").lower()
-            p = Protein.objects.get(slug=slug)
+            p = ProteinTF.objects.get(slug=slug)
             ref, created = Reference.objects.get_or_create(doi=doi)
             p.references.add(ref)
             if not request.user.is_staff:
@@ -744,7 +743,7 @@ def add_protein_excerpt(request, slug=None):
     try:
         with reversion.create_revision():
             doi = request.POST.get("excerpt_doi").lower()
-            p = Protein.objects.get(slug=slug)
+            p = ProteinTF.objects.get(slug=slug)
             content = request.POST.get("excerpt_content")
             if content:
                 ref, created = Reference.objects.get_or_create(doi=doi)
