@@ -349,13 +349,46 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
     try { svg.releasePointerCapture(e.pointerId); } catch {}
   };
 
-  const karyos = useMemo(()=> karyoText ? parseKaryo(karyoText) : [], [karyoText]);
-  const beds   = useMemo(()=> bedText   ? parseBED(bedText)     : [], [bedText]);
-  useEffect(()=>{ hasFitRef.current = false; }, [karyos, beds]);
+  const karyos = useMemo(() => (karyoText ? parseKaryo(karyoText) : []), [karyoText]);
+  const beds   = useMemo(() => (bedText ? parseBED(bedText) : []), [bedText]);
+  console.log("RAW BED TEXT:", bedText);
+  console.log("PARSED BEDS:", beds.slice(0, 20));
 
-  
-  const families = useMemo(()=> Array.from(new Set(beds.map(b=>b.family))), [beds]);
+  useEffect(() => {
+    hasFitRef.current = false;
+  }, [karyos, beds]);
+
+  // chromosomes that exist in the TXT
+  const byKey = useMemo(() => new Map(karyos.map((k) => [k.key, k])), [karyos]);
+
+  // only BED rows that truly match a chromosome in the TXT
+  const matchedBeds = useMemo(() => {
+    return beds.filter((b) => {
+      const k = byKey.get(b.key);
+      if (!k) return false;
+
+      // optional extra safety: ignore invalid coordinates
+      if (!isFinite(b.start) || !isFinite(b.end)) return false;
+      if (b.end < b.start) return false;
+
+      return true;
+    });
+  }, [beds, byKey]);
+  console.log("MATCHED: ", matchedBeds)
+
+  // families ONLY from rows that are actually matched
+  const families = useMemo(() => {
+    return Array.from(
+      new Set(
+        matchedBeds
+          .map((b) => String(b.family || "").trim())
+          .filter(Boolean)
+      )
+    );
+  }, [matchedBeds]);
+
   const [visibleFamilies, setVisibleFamilies] = useState(new Set());
+
   const familyColor = useMemo(() => {
     const m = new Map();
 
@@ -363,9 +396,6 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
       parent && parent !== "none" && familyColors
         ? familyColors[parent]
         : null;
-
-    // debug once if you want:
-    console.log("parent =", parent, "parentColor =", parentColor);
 
     families.forEach((f, i) => {
       const c = parentColor
@@ -377,6 +407,10 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
 
     return m;
   }, [families, parent, familyColors]);
+
+  useEffect(() => {
+    setVisibleFamilies(new Set(families));
+  }, [families]);
   console.log(familyColor)
   console.log(families)
   
@@ -435,7 +469,13 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
       const {x,y,height,k,scale} = pos;
       const ceY1 = scale(k.ceStart);
       const ceY2 = scale(k.ceEnd);
-      const pathD = chromosomePath(x, y, height, CHR_W, ceY1, ceY2);
+      var pinch = true
+      // console.log(ceY1, ceY2)
+      if (ceY1 < 22 && ceY2 < 22) {
+        console.log("NO PINCH: ", parent)
+        pinch = false
+      }
+      const pathD = chromosomePath(x, y, height, CHR_W, ceY1, ceY2, pinch);
 
       const p = document.createElementNS(NS, "path");
       p.setAttribute("d", pathD);
@@ -481,7 +521,7 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
     const byChrElems = new Map();
     const familyShown = (fam)=> visibleFamilies.has(fam);
 
-    for (const b of beds){
+    for (const b of matchedBeds){
       if (!familyShown(b.family)) continue;
       if (!byKey.has(b.key)) continue; // BED chr not in karyotype
       const pos = layoutPos.get(b.key); if (!pos) continue;
@@ -617,21 +657,18 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
   const doReset   = ()=>{ fitToView(); };
 
   return (
-    <div ref={containerRef} className="kary_card bg-white rounded-2xl shadow overflow-hidden">
+    <div ref={containerRef} className="kary_card bg-white rounded-2xl shadow overflow-hidden flex flex-col flex-1 min-h-0">
       <div className="kary_btns_div flex items-center justify-between border-b px-3 py-2">
         <div className="flex items-center gap-2">
-          <button onClick={doZoomIn}  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">＋ Zoom in</button>
-          <button onClick={doZoomOut} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">－ Zoom out</button>
+          <button onClick={doZoomIn}  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">+ Zoom in</button>
+          <button onClick={doZoomOut} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">- Zoom out</button>
           <button onClick={doReset}   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">⟲ Reset</button>
-          {/* <button onClick={()=>{ setSelectedId(null); sessionStorage.removeItem("selected_element"); }} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border hover:bg-gray-50">Clear selection</button> */}
         </div>
-        {/* <div className="text-sm text-gray-600">Drop karyotype + BED or use upload buttons</div> */}
       </div>
 
-      <div className="kary_graph_holder grid grid-cols-12">
-        <div className="kary_graph col-span-9 border-r">
-          {/* <div className="relative w-full h-[72vh] bg-gray-50"> */}
-          <div className="kary_svg_holder relative w-full h-full bg-gray-50">
+      <div className="kary_graph_holder grid grid-cols-12 flex-1 min-h-0">
+        <div className="kary_graph col-span-9 border-r h-full min-h-0">
+          <div className="kary_svg_holder relative w-full h-full min-h-0 bg-gray-50">
             <svg
               ref={svgRef}
               className="absolute inset-0 w-full h-full block"
@@ -651,22 +688,36 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
             )}
           </div>
         </div>
-        <div className="col-span-3 max-h-[72vh] overflow-auto p-3">
+
+        <div className="col-span-3 h-full min-h-0 overflow-hidden p-3 flex flex-col justify-end">
           {families.length ? (
-            <div className="karyo_btns space-y-2">
-              {families.map((fam)=> (
-                <button key={fam} onClick={()=>{
-                  const next = new Set(visibleFamilies);
-                  if (next.has(fam)) next.delete(fam); else next.add(fam);
-                  setVisibleFamilies(next);
-                }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl border ${visibleFamilies.has(fam)?"hover:opacity-70":"bg-gray-100 opacity-70"}`} style={{background: familyColor.get(fam) || "#10b981"}}>
-                  <span className="inline-block w-5 h-5"/>
-                  <span className="text-sm font-medium flex-1 text-left">{fam}</span>
-                </button>
-              ))}
+            <div className="family-scroll mt-auto">
+              <div className="karyo_btns">
+                {families.map((fam) => (
+                  <button
+                    key={fam}
+                    onClick={() => {
+                      const next = new Set(visibleFamilies);
+                      if (next.has(fam)) next.delete(fam);
+                      else next.add(fam);
+                      setVisibleFamilies(next);
+                    }}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl border ${
+                      visibleFamilies.has(fam) ? "hover:opacity-70" : "bg-gray-100 opacity-70"
+                    }`}
+                    style={{ background: familyColor.get(fam) || "#10b981" }}
+                  >
+                    <span className="text-sm font-medium flex-1 text-left break-words">
+                      {fam}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
-            <div className="text-sm text-gray-500 p-2">Legend appears after loading a BED (column 5 = family).</div>
+            <div className="text-sm text-gray-500 p-2 mt-auto">
+              Legend appears after loading BED rows that match chromosomes in the karyotype file.
+            </div>
           )}
         </div>
       </div>
@@ -677,17 +728,39 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
 function karyotypeReady(karyos){ return Array.isArray(karyos) && karyos.length>0; }
 
 // ---------------------------- Geometry ----------------------------
-function chromosomePath(x, y, height, width, ceY1, ceY2){
+function chromosomePath(x, y, height, width, ceY1, ceY2, pinch = true){
+  if (!pinch) {
+    const left = x;
+    const right = x + width;
+    const top = y;
+    const bottom = y + height;
+    const r = Math.min(width / 2, 8);
+
+    return [
+      `M ${left} ${top + r}`,
+      `Q ${left} ${top} ${left + r} ${top}`,
+      `L ${right - r} ${top}`,
+      `Q ${right} ${top} ${right} ${top + r}`,
+      `L ${right} ${bottom - r}`,
+      `Q ${right} ${bottom} ${right - r} ${bottom}`,
+      `L ${left + r} ${bottom}`,
+      `Q ${left} ${bottom} ${left} ${bottom - r}`,
+      `L ${left} ${top + r}`,
+      `Z`
+    ].join(" ");
+  }
+
   const cx = x + width/2;
   const left = x, right = x + width;
   const top = y, bottom = y + height;
   let a = Math.max(top, Math.min(ceY1, ceY2));
   let b = Math.min(bottom, Math.max(ceY1, ceY2));
   const outerR = 4;
-  const waist  = width * 0.45;
+  const waist  = width * 0.45;
   const innerR = Math.min(waist * 0.25, 6);
   const aIn = Math.max(a, top + outerR);
   const bIn = Math.min(b, bottom - outerR);
+
   return [
     `M ${left} ${top+outerR}`,
     `Q ${left} ${top} ${left+outerR} ${top}`,
@@ -710,7 +783,7 @@ function chromosomePath(x, y, height, width, ceY1, ceY2){
     `Q ${cx - waist/2} ${aIn} ${cx - waist/2 - innerR} ${aIn}`,
     `Q ${left} ${aIn} ${left} ${aIn - innerR}`,
     `L ${left} ${top+outerR}`,
-    "Z"
+    `Z`
   ].join(" ");
 }
 
