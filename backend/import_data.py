@@ -687,45 +687,42 @@ def import_refs():
         refs = row['references']
         create_protein_references(protein_obj, refs)
 
-
 # Add enrichment and q score data from other files
 def update_proteinrepeats():
+    for org in Organism.objects.all():
+        en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FOLDER + '/' + str(org.id) + '_mean_ENR.csv')
+        en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+        en_df = en_df.where(pd.notnull(en_df), None)
 
-
-    en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE)
-    en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-    en_df = en_df.where(pd.notnull(en_df), None)
-
-
-    enrich_lookup = dict()
-    for row in en_df.to_dict(orient="records"):
-        gene = row["Gene"]
-       
-        for key, value in row.items():
-            if key != 'Gene':
-                lookup_key = gene,key.lower()
-                enrich_lookup[lookup_key] = value
+        enrich_lookup = dict()
+        for row in en_df.to_dict(orient="records"):
+            gene = row["Gene"]
+        
+            for key, value in row.items():
+                if key != 'Gene':
+                    lookup_key = gene,key.lower()
+                    enrich_lookup[lookup_key] = value
                
+    # print(enrich_lookup)
 
+    for org in Organism.objects.all():
+        qs_df = pd.read_csv(settings.IMPORT_QSCORE_FOLDER + '/' + str(org.id) + '_mean_ENR.csv')
+        qs_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+        qs_df = qs_df.where(pd.notnull(qs_df), None)
 
-    qs_df = pd.read_csv(settings.IMPORT_QSCORE_FILE)
-    qs_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-    qs_df = qs_df.where(pd.notnull(qs_df), None)
-
-
-    qscore_lookup = dict()
-    for row in qs_df.to_dict(orient="records"):
-        gene = row["Gene"]
-       
-        for key, value in row.items():
-            if key != 'Gene':
-                lookup_key = gene,key.lower()
-                qscore_lookup[lookup_key] = value              
+        qscore_lookup = dict()
+        for row in qs_df.to_dict(orient="records"):
+            gene = row["Gene"]
+        
+            for key, value in row.items():
+                if key != 'Gene':
+                    lookup_key = gene,key.lower()
+                    qscore_lookup[lookup_key] = value              
 
     objs = ProteinRepeats.objects.all()
     for obj in objs:
-       
         lookup_key = obj.protein.gene, obj.repeat.name.lower()
+        print(lookup_key)
         enrichment = enrich_lookup.get(lookup_key)
         # print(f"enrichment:{enrichment}, lookup_key:{lookup_key},  enrichment:{len(enrich_lookup)}")
         q_score = qscore_lookup.get(lookup_key)

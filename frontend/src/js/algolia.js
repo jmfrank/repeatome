@@ -174,6 +174,21 @@ function highlightRefHits(high) {
   return str
 }
 
+function menuFooter(query) {
+  return (
+    '<div class="search-footer">' +
+      '<a class="asearch" href="/search/?q=' + encodeURIComponent(query || "") + '">' +
+        'Advanced search for: <em>' + (query || "") + '</em>' +
+      '</a>' +
+      '<div class="branding">' +
+        'search powered by <a href="https://algolia.com">' +
+          '<img src="' + window.FPBASE.imageDir + 'logo-algolia-nebula-blue-full.svg" />' +
+        '</a>' +
+      '</div>' +
+    '</div>'
+  )
+}
+
 export default async function initAutocomplete() {
   const [{ default: algoliasearch }] = await Promise.all([
     import("algoliasearch"),
@@ -193,16 +208,15 @@ export default async function initAutocomplete() {
   )
 
   function empty(context) {
-    if (context.hasOwnProperty("query")) {
-      var p = context.query.trim().replace(/\s/g, "%20")
-      return (
-        '<div class="empty"><span class="nohits"></span>No results... try the <a href="/search/?name__icontains=' +
-        p +
-        '">advanced search</a></div>'
-      )
-    } else {
-      return '<div class="empty"><span class="nohits"></span>No results... try the <a href="/search/">advanced search</a></div>'
-    }
+    var q = context && context.query ? context.query.trim() : ""
+    var p = encodeURIComponent(q)
+
+    return (
+      '<div class="empty">' +
+        '<span class="nohits"></span>No results... try the <a href="/search/?q=' + p + '">advanced search</a>' +
+      '</div>' +
+      menuFooter(q)
+    )
   }
   $("#algolia-search-input")
     .autocomplete(
@@ -332,7 +346,10 @@ export default async function initAutocomplete() {
                 window.FPBASE.imageDir +
                 'logo-algolia-nebula-blue-full.svg" /></a></div></div>'
               )
-            }
+            },
+            // footer: function(ctx) {
+            //   return menuFooter(ctx.query)
+            // }
           }
         }
       ]

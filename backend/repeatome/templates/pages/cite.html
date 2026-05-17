@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}How to cite FPbase in your paper{% endblock %}
-{% block meta-description %}How to cite FPbase in your research and ideas for using FPbase to distribute your methods.{% endblock %}
+{% block title %}How to cite Repeatome in your paper{% endblock %}
+{% block meta-description %}How to cite Repeatome in your research and ideas for using Repeatome to distribute your methods.{% endblock %}
 
 {% block content %}
 
-<h1 class='mb-3'>Citing FPbase</h1>
+<h1 class='mb-3'>Citing Repeatome</h1>
 
-<p>If you have used FPbase in a publication, or are referencing an FPbase protein collection or microscope in your methods, please cite the following paper:</p>
-<p class="small">Lambert, TJ (2019) FPbase: a community-editable fluorescent protein database. <em>Nature Methods.</em> <strong>16</strong>, 277–278. doi: <a href="https://doi.org/10.1038/s41592-019-0352-8">10.1038/s41592-019-0352-8</a></p>
+<p>If you have used Repeatome in a publication, or are referencing an Repeatome protein or repeat collection in your methods, please cite the following paper:</p>
+<p class="small">coming soon</p>
+{% comment %} <p class="small">Lambert, TJ (2019) FPbase: a community-editable fluorescent protein database. <em>Nature Methods.</em> <strong>16</strong>, 277–278. doi: <a href="https://doi.org/10.1038/s41592-019-0352-8">10.1038/s41592-019-0352-8</a></p> {% endcomment %}
 
-<p>The source code is available and can be referenced at GitHub: <a href="https://github.com/tlambert03/FPbase">https://github.com/tlambert03/FPbase</a></p>
+<p>The source code is available and can be referenced at GitHub: <a href="https://github.com/jmfrank/repeatome">https://github.com/jmfrank/repeatome</a></p>
 
-<p>For referencing individual fluorescent proteins, please reference the original papers (found in the reference sections throughout the site).</p>
-<h4 class='mb-3 mt-4'><strong>Ideas for using FPbase in your publications/methods</strong></h4>
+{% comment %} <p>For referencing individual fluorescent proteins, please reference the original papers (found in the reference sections throughout the site).</p> {% endcomment %}
+<h4 class='mb-3 mt-4'><strong>Ideas for using Repeatome in your publications/methods</strong></h4>
 
 <h5><strong>Protein Collections</strong></h5>
 
-<p>If you have used a set of fluorescent proteins in your publication, consider creating a public <a href="{% url 'proteins:collections' %}">protein collection</a> on FPbase, and providing the collection URL in your publication.  (collection IDs in the URL will be static over time).  This creates a single page where readers can see the attributes of the fluorescent proteins used in your study, and links where they can easily download the properties and spectra of your protein collection.  For example from the Remus-Emsermann lab, see: </p>
+<p>If you have used a set of proteins in your publication, consider creating a public <a href="{% url 'proteins:collections' %}">protein collection</a> on Repeatome, and providing the collection URL in your publication.  (collection IDs in the URL will be static over time).  This creates a single page where readers can see the attributes of the proteins used in your study, and links where they can easily download the properties of your protein collection.  
+    {% comment %} For example from the Remus-Emsermann lab, see:  {% endcomment %}
+</p>
 
-<p class="small"><a class="text-muted" href="https://www.biorxiv.org/content/early/2018/09/07/402172">Schlechter, R et al. (2018) Chromatic Bacteria - A broad host-range plasmid and chromosomal insertion toolbox for fluorescent protein expression in bacteria. bioRxiv. doi: 10.1101/402172</a></p>
+{% comment %} <p class="small"><a class="text-muted" href="https://www.biorxiv.org/content/early/2018/09/07/402172">Schlechter, R et al. (2018) Chromatic Bacteria - A broad host-range plasmid and chromosomal insertion toolbox for fluorescent protein expression in bacteria. bioRxiv. doi: 10.1101/402172</a></p> {% endcomment %}
 {% comment %} 
 <h5><strong>Microscopes</strong></h5>
 

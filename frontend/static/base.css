@@ -14577,6 +14577,7 @@ canvas {
   font-size: 0.72em;
   margin-top: 4px;
   font-weight: 500;
+  text-align: right;
   color: #aaa;
 }
 .search-footer .asearch {
@@ -14588,17 +14589,20 @@ canvas {
   color: rgb(72, 40, 96);
   text-decoration: none;
 }
-.search-footer .branding {
+
+.branding {
+  text-align: right;
+  color: white;
   float: right;
   padding-right: 0.7rem;
 }
-.search-footer .branding a {
+.branding a {
   opacity: 0.7;
 }
-.search-footer .branding a:hover {
+.branding a:hover {
   opacity: 1;
 }
-.search-footer .branding img {
+.branding img {
   height: 1.22em;
 }
 
