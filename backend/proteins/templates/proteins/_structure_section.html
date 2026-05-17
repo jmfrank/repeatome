@@ -59,28 +59,16 @@
             data-description="{{ item.description }}"
             data-url="{{ item.url }}"
             data-miscroscopy="{{ item.microscopy }}">
-              {{ item.display_name }}
+            {{ item.display_name }}
           </option>
         {% endfor %}
-        <option value="N/A" 
-                data-name="N/A" 
-                data-expression="N/A" 
-                data-celltype="N/A" 
-                data-pixelsize="N/A" 
-                data-channels="N/A" 
-                data-magnification="N/A" 
-                data-description="N/A" 
-                data-url="N/A" 
-                data-miscroscopy="N/A">
-                  N/A
-        </option>
       </select>
       <div name="microscopy-info" id="microscopy-info" style="padding-top: 10px;">
         <table class="table" width="100%">
             <tr><td class="font-weight-bold">Cell Type</td><td>{{ protein.get_microscopies.0.cell_type }}</td></tr>
             <tr><td class="font-weight-bold">Pixel Size</td><td>{{ protein.get_microscopies.0.pixel_size }}</td></tr>
             <tr><td class="font-weight-bold">Magnification</td><td>{{ protein.get_microscopies.0.magnification }}</td></tr>
-            <tr><td class="font-weight-bold">Channels</td><td>{{ protein.get_microscopies.0.channels_as_str }}</td></tr>
+            <tr><td class="font-weight-bold">Channels</td><td>{{ protein.get_microscopies.0.channels_as_str|safe }}</td></tr>
             <tr><td class="font-weight-bold">Expression</td><td>{{ protein.get_microscopies.0.expression }}</td></tr>
             <tr><td class="font-weight-bold">Microscopy</td><td>{{ protein.get_microscopies.0.microscopy }}</td></tr>
             <tr><td class="font-weight-bold">Description</td><td>{{ protein.get_microscopies.0.description }}</td></tr>
