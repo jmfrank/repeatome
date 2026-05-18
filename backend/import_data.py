@@ -240,7 +240,7 @@ def update_repeat_families():
 
 
 def is_valid_repeat_name(name):
-    if '?' in name or 'unknown' in name.lower() or not name:
+    if not name or '?' in name or 'unknown' in name.lower():
         return False
     return True
 
@@ -248,6 +248,8 @@ def import_repeat():
 
     # Get repeat names from parent_name and children in repeats sheet
     repeat_df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
+    repeat_df = repeat_df.where(pd.notnull(repeat_df), None)
+    repeat_df = repeat_df[repeat_df['parent_name'].notnull() & repeat_df['organism'].notnull() & repeat_df['taxonomy_id'].notnull()]
 
    # Get repeat names from satellite column in master_proteins sheet
     protein_df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, 'master_proteins')
@@ -310,6 +312,8 @@ def import_repeat():
     # First create repeat that is a parent of other repeats
     for row in repeat_df.to_dict(orient="records"):
         name = row['parent_name']
+        if not is_valid_repeat_name(name):
+            raise Exception(f"Invalid satellite name in parent_name column in repeats sheet: {name}.")
         aliases = parse_array(row['aliases'])
         parent_organism_id = row['taxonomy_id']
         parent_organism_obj = get_organism_obj(parent_organism_id)
@@ -547,7 +551,7 @@ def create_protein_repeats(protein_obj, satellite_str):
         if get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj):
             print(f"Protein {protein_obj.gene} already has repeat {repeat_obj.name}. Skipped.")
         else:
-            print(f"Creating ProteinRepeats: satellite = {satellite}, protein = {row['gene']}")
+            print(f"Creating ProteinRepeats: satellite = {satellite}, protein = {protein_obj.gene}")
             protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
             protein_repeat_obj.save()
 
@@ -748,10 +752,11 @@ def update_proteinrepeats():
                     # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
                     if not protein_repeat_obj:
                         print(f"""Creating ProteinRepeat - 
-                        protein:{protein_repeat_obj.protein.gene}, 
-                        repeat:{protein_repeat_obj.repeat.name}, 
-                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                        gene: {raw_gene},
+                        repeat: {raw_repeat},
+                        protein_obj:{protein_obj.gene}, 
+                        repeat_obj:{repeat_obj.name}""")
+                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
                         protein_repeat_obj.save()
                     
                     if data_type == 'motif_enrichment':
@@ -760,10 +765,8 @@ def update_proteinrepeats():
                         protein_repeat_obj.motif_q_score = value
 
                     print(f"""Updating ProteinRepeat - 
-                        gene: {raw_gene},
-                        repeat: {raw_repeat},
-                        protein:{protein_repeat_obj.protein.gene}, 
-                        repeat:{protein_repeat_obj.repeat.name}, 
+                        protein_obj:{protein_obj.gene}, 
+                        repeat_obj:{repeat_obj.name}, 
                         motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
                         motif_q_score:{protein_repeat_obj.motif_q_score}""")
                     protein_repeat_obj.save()
@@ -1005,8 +1008,14 @@ def import_proteomics():
         # print(target_list)
         protein_target = target_list['protein']
         protein_obj = get_obj_if_exists(ProteinTF, gene=protein_target)
+        if not protein_obj:
+            print(f"Protein {protein_target} not found in database. Skipped importing this proteomics data.")
+            continue
         repeat_target = target_list['repeat']
         repeat_obj = get_obj_if_exists(Repeat, name=repeat_target)
+        if not repeat_obj:
+            print(f"Repeat {repeat_target} not found in database. Skipped importing this proteomics data.")
+            continue
         print(repeat_target, repeat_obj.name)
         method = row['Method']
         desc = row['Description']
@@ -1183,17 +1192,35 @@ def submit_uniprot_to_pdb_mapping(uniprot_ids):
 def get_uniprot_to_pdb_mapping_results(job_id):
     url = f"https://rest.uniprot.org/idmapping/status/{job_id}"
 
+    max_tries = 5
+    wait_time = 5
+
 
     all_results = []
     while url:
-        print(f"\nCalling URL {url}")
-        response = requests.get(url)
-        print(f"Returned: {response.status_code}")
 
+        tries = 0
+        got_result = False
+        while not got_result and tries < max_tries:
 
-        # Raise an HTTPError for bad responses (4xx or 5xx)
-        response.raise_for_status()
+            try:
 
+                print(f"\nCalling URL {url}")
+                response = requests.get(url)
+                print(f"Returned: {response.status_code}")
+                # Raise an HTTPError for bad responses (4xx or 5xx)
+                response.raise_for_status()
+                got_result = True
+                break
+
+            except requests.exceptions.HTTPError as e:
+                print(f"{tries}/{max_tries}: {e.response.status_code} {e.response.text}. Wait {wait_time} seconds and retrying...")
+                tries += 1
+                time.sleep(wait_time)
+
+        if not got_result:
+            print(f"Failed to get results after {max_tries} tries. Exiting.")
+            break
 
         # Get the JSON response from the server
         response_data = response.json()
@@ -1450,18 +1477,18 @@ def delete_all_records():
     print("FINISHED DELETING")
 
 def update():
-    print("ORGANISMS")
-    import_organisms()
-    print("GENE FAMILY")
-    import_gene_family()
-    print("REPEAT + FAMILIES")
-    import_repeat()
-    update_repeat_families()
-    print("PROTEIN")
-    import_protein()
-    update_PDB_from_uniprot()
-    print("PROTEIN REPEATS")
-    update_proteinrepeats()
+    # print("ORGANISMS")
+    # import_organisms()
+    # print("GENE FAMILY")
+    # import_gene_family()
+    # print("REPEAT + FAMILIES")
+    # import_repeat()
+    # update_repeat_families()
+    # print("PROTEIN")
+    # import_protein()
+    # update_PDB_from_uniprot()
+    # print("PROTEIN REPEATS")
+    # update_proteinrepeats()
     print("PROTEOMICS")
     import_proteomics()
     print("NETWORK DATA")
