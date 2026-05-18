@@ -687,16 +687,6 @@ def import_refs():
         refs = row['references']
         create_protein_references(protein_obj, refs)
 
-def validate_repeat_data(df, file_name):
-    repeats = Repeat.objects.all()
-    repeat_names_lower = set([r.name.lower() for r in repeats])
-    missing = set()
-    for col in df.columns:
-        if col.lower() not in repeat_names_lower:
-            missing.add(col)
-    
-    if missing:
-        raise Exception(f"{file_name}: Missing repeats in database: {missing}. Please add these repeats to the database before running the import.")
 
 # Add enrichment and q score data from other files
 def update_proteinrepeats():
