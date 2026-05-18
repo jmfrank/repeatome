@@ -687,112 +687,101 @@ def import_refs():
         refs = row['references']
         create_protein_references(protein_obj, refs)
 
-def update_proteinrepeats_enrichment(key, gene, repeat, value):
-    protein_repeat_obj = get_obj_if_exists(ProteinRepeats, protein__gene=gene, repeat__name=repeat)
-    if protein_repeat_obj:
-        protein_repeat_obj.motif_enrichment = value
-        print(f"Updating ProteinRepeat enrichment: {key} = {value}")
-        protein_repeat_obj.save()
-    else:
-        print(f"ProteinRepeat not found for gene: {gene}, repeat: {repeat}. Skipping enrichment update.")
-
+def validate_repeat_data(df, file_name):
+    repeats = Repeat.objects.all()
+    repeat_names_lower = set([r.name.lower() for r in repeats])
+    missing = set()
+    for col in df.columns:
+        if col.lower() not in repeat_names_lower:
+            missing.add(col)
+    
+    if missing:
+        raise Exception(f"{file_name}: Missing repeats in database: {missing}. Please add these repeats to the database before running the import.")
 
 # Add enrichment and q score data from other files
-def update_proteinrepeats_old():
+def update_proteinrepeats():
 
-    lookup = dict()
+    # Need to get all ProteinTF, Repeat objects in the database
+    # so that we can lookup these objects by name and by aliases case-insensitively.
+    # This is because the spreadsheet we are importing may use name or aliases
+    # and it is case-insensitive.
+    existing_proteins = ProteinTF.objects.all()
+    existing_protein_lookup = dict()
+    for obj in existing_proteins:
+        existing_protein_lookup[obj.gene.lower()] = obj
+    if obj.aliases:
+        for alias in obj.aliases:
+            if alias:
+                existing_protein_lookup[alias.lower()] = obj
+
+    existing_repeats = Repeat.objects.all()
+    existing_repeat_lookup = dict()
+    for obj in existing_repeats:
+        existing_repeat_lookup[obj.name.lower()] = obj 
+        if obj.aliases:
+            for alias in obj.aliases:
+                if alias:
+                    existing_repeat_lookup[alias.lower()] = obj
+
+    missing_genes = set()
+    missing_repeats = set()
 
     # Load enrichment data from other files and update the lookup dictionary
     for org in Organism.objects.all():
-        file_name = settings.IMPORT_ENRICHMENT_FOLDER + '/' + str(org.id) + '_mean_ENR.csv'
-        print(f"Loading enrichment data from {file_name}")
-        en_df = pd.read_csv(file_name)
-        en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-        en_df = en_df.where(pd.notnull(en_df), None)
+        for file_type, data_type in [('ENR', 'motif_enrichment'), ('Qscore', 'motif_q_score')]: 
+            file_name = f"{settings.IMPORT_ENRICHMENT_FOLDER}/{org.id}_mean_{file_type}.csv"
+            print(f"Loading enrichment data from {file_name}")
+            en_df = pd.read_csv(file_name)
+            en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+            en_df = en_df.where(pd.notnull(en_df), None)
 
-        for row in en_df.to_dict(orient="records"):
-            gene = row["Gene"].strip()
-            for repeat, value in row.items():
-                if repeat == 'Gene':
+            for row in en_df.to_dict(orient="records"):
+                # This could be gene name or alias, so we need to look it up in 
+                # the existing_protein_lookup dictionary
+                raw_gene = row["Gene"].strip()
+                # Lookup the protein object by gene name or alias, case-insensitively
+                protein_obj = existing_protein_lookup.get(raw_gene.lower())
+                if not protein_obj:
+                    missing_genes.add(raw_gene)
                     continue
-                key = f"{gene.lower()},{repeat.lower()}"
-                if lookup.get(key):
-                    lookup[key]['enrichment'] = value
-                else:
-                    lookup[key] = {'gene': gene, 'repeat':  repeat, 'enrichment': value, 'q_score': None}
+                for raw_repeat, value in row.items():
+                    if raw_repeat == 'Gene':
+                        continue
+                    # Lookup the repeat object by name or alias, case-insensitively
+                    repeat_obj = existing_repeat_lookup.get(raw_repeat.lower())
+                    if not repeat_obj:
+                        missing_repeats.add(raw_repeat)
+                        continue
 
-    # Load q score data from other files and update the lookup dictionary
-    for org in Organism.objects.all():
-        file_name = settings.IMPORT_QSCORE_FOLDER + '/' + str(org.id) + '_mean_Qscore.csv'
-        print(f"Loading q score data from {file_name}")
-        qs_df = pd.read_csv(file_name)
-        qs_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-        qs_df = qs_df.where(pd.notnull(qs_df), None)
+                    protein_repeat_obj = get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj)
 
-        for row in qs_df.to_dict(orient="records"):
-            gene = row["Gene"].strip()
-            for repeat, value in row.items():
-                if repeat == 'Gene':
-                    continue
-                key = f"{gene.lower()},{repeat.lower()}"
-                if lookup.get(key):
-                    lookup[key]['q_score'] = value
-                else:
-                    lookup[key] = {'gene': gene, 'repeat':  repeat, 'enrichment': None, 'q_score': value}
+                    # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
+                    if not protein_repeat_obj:
+                        print(f"""Creating ProteinRepeat - 
+                        protein:{protein_repeat_obj.protein.gene}, 
+                        repeat:{protein_repeat_obj.repeat.name}, 
+                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
+                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                        protein_repeat_obj.save()
+                    
+                    if data_type == 'motif_enrichment':
+                        protein_repeat_obj.motif_enrichment = value
+                    else:
+                        protein_repeat_obj.motif_q_score = value
 
-    # Need to get all ProteinRepeats objects in the database
-    # so that we can construct a lookup by lowercase gene and repeat names. 
-    # This is because the spreadsheet sometimes contains names in different cases than the database.
-    objs = ProteinRepeats.objects.all()
-    existing_protein_repeat_lookup = dict()
-    for obj in objs:
-        existing_key = f"{obj.protein.gene.lower()},{obj.repeat.name.lower()}"
-        existing_protein_repeat_lookup[existing_key] = obj
+                    print(f"""Updating ProteinRepeat - 
+                        gene: {raw_gene},
+                        repeat: {raw_repeat},
+                        protein:{protein_repeat_obj.protein.gene}, 
+                        repeat:{protein_repeat_obj.repeat.name}, 
+                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
+                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                    protein_repeat_obj.save()
 
-    for key, item in lookup.items():
-        gene = item['gene']
-        repeat = item['repeat']
-        enrichment = item['enrichment']
-        q_score = item['q_score']
-        
-        # Lookup ProteinRepeats object with lowercase gene and repeat names. 
-        # This is because the spreadsheet sometimes contains names in different cases than the database.
-        protein_repeat_obj = existing_protein_repeat_lookup.get(key)
-
-        # If the protein_repeat_obj does not exist, then create a new one
-        if protein_repeat_obj:
-            protein_repeat_obj.motif_enrichment = enrichment
-            protein_repeat_obj.motif_q_score = q_score
-            print(f"""Updating ProteinRepeat - 
-                  protein:{protein_repeat_obj.protein.gene}, 
-                  repeat:{protein_repeat_obj.repeat.name}, 
-                  key:{key}, 
-                  motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                  motif_q_score:{protein_repeat_obj.motif_q_score}""")
-            protein_repeat_obj.save()
-        else:
-            # Find existing protein using case-sensitive gene name
-            protein_objs = ProteinTF.objects.filter(gene=gene)
-            
-            # Find existing repeat using case-sensitive repeat name
-            repeat_objs = Repeat.objects.filter(name=repeat)
-
-            # Associate the protein and repeat with a new ProteinRepeats object
-            if protein_objs and repeat_objs:
-                protein_obj = protein_objs[0]
-                repeat_obj = repeat_objs[0]
-                protein_repeat_obj = ProteinRepeats(protein=protein_obj, 
-                                                    repeat=repeat_obj, 
-                                                    motif_enrichment=enrichment, 
-                                                    motif_q_score=q_score)
-                print(f"""Creating ProteinRepeat - 
-                    protein:{protein_repeat_obj.protein.gene}, 
-                    repeat:{protein_repeat_obj.repeat.name}, 
-                    key:{key}, 
-                    motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                    motif_q_score:{protein_repeat_obj.motif_q_score}""")
-                protein_repeat_obj.save()
-                existing_protein_repeat_lookup[key] = protein_repeat_obj
+    if missing_genes:
+        print(f"Missing genes in database: {sorted(missing_genes)}")
+    if missing_repeats:
+        print(f"Missing repeats in database: {sorted(missing_repeats)}")                              
 
 
 def get_proteomic_data(mapper, uniprot_id):
