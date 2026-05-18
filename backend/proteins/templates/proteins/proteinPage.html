@@ -248,7 +248,7 @@ window.onload = function () {
        <tbody>
         {% for repeat in protein.repeats.all %}
          <tr>
-           <td><a href="/repeatTable/{{repeat.name}}">{{repeat.name | safe}}</td>
+           <td><a href="/repeatTable/{{repeat.slug}}">{{repeat.name | safe}}</td>
            <td>{{ repeat.aliases_as_str | safe }}</td>
            {% comment %} <td>{{ repeat.motif | safe }}</td> {% endcomment %}
            {% comment %} <td>{{ repeat.proteomics | safe }}</td> {% endcomment %}
