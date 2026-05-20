@@ -15,11 +15,10 @@ import os
 # Data to import
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FOLDER = "/data/repeatome_data"
-IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database_master.xlsx"
-IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
-IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
-IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
-IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/microscopy_data.xlsx"
+IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database.xlsx"
+IMPORT_ENRICHMENT_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
+IMPORT_QSCORE_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
+IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/repeatome_subimages_only_with_urls.csv"
 IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 
 # DATABASE CONFIGURATION
@@ -212,13 +211,20 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-# Some really nice defaults
+# ACCOUNT_AUTHENTICATION_METHOD is depreciated. Use ACCOUNT_LOGIN_METHODS instead
 ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_LOGIN_METHODS = {'username'}
+
+# ACCOUNT_EMAIL_REQUIRED is depreciated in favor of ACCOUNT_SIGNUP_FIELDS instead
+#ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ['email', 'username*', 'password1*', 'password2*']
+
 # ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
+
+# Set env: export DJANGO_ACCOUNT_ALLOW_REGISTRATION=FALSE if we want to disable signup.
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 ACCOUNT_ADAPTER = "repeatome.users.adapters.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "repeatome.users.adapters.SocialAccountAdapter"

@@ -4,6 +4,12 @@ import { resolve } from "path";
 
 const external = ['react']
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: { api: 'modern-compiler' }, // or 'modern'
+      sass: { api: 'modern-compiler' }
+    }
+  },
   build: {
     lib: {
       entry: 'src/index.jsx',

@@ -28,9 +28,9 @@
           {% for repeat in repeats  %}
           <tr>
             <td class="repeat"><a href="/repeatTable/{{repeat.slug}}">{{repeat.name}}</a></td>
-            <td class="text-center">{{repeat.aliases}}</td>
-            <td class="text-center">{{repeat.dfam_id}}</td>
-            <td class="text-center">{{repeat.parental_organism.scientific_name}}</td>
+            <td class="text-left">{{repeat.aliases_as_str}}</td>
+            <td class="text-left">{{repeat.dfam_id|default_if_none:""}}</td>
+            <td class="text-left">{{repeat.parental_organism.scientific_name}}</td>
           </tr>
           {% endfor %}
         </tbody>

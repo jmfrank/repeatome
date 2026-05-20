@@ -240,7 +240,7 @@ def update_repeat_families():
 
 
 def is_valid_repeat_name(name):
-    if '?' in name or 'unknown' in name.lower() or not name:
+    if not name or '?' in name or 'unknown' in name.lower():
         return False
     return True
 
@@ -248,6 +248,8 @@ def import_repeat():
 
     # Get repeat names from parent_name and children in repeats sheet
     repeat_df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
+    repeat_df = repeat_df.where(pd.notnull(repeat_df), None)
+    repeat_df = repeat_df[repeat_df['parent_name'].notnull() & repeat_df['organism'].notnull() & repeat_df['taxonomy_id'].notnull()]
 
    # Get repeat names from satellite column in master_proteins sheet
     protein_df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, 'master_proteins')
@@ -310,6 +312,8 @@ def import_repeat():
     # First create repeat that is a parent of other repeats
     for row in repeat_df.to_dict(orient="records"):
         name = row['parent_name']
+        if not is_valid_repeat_name(name):
+            raise Exception(f"Invalid satellite name in parent_name column in repeats sheet: {name}.")
         aliases = parse_array(row['aliases'])
         parent_organism_id = row['taxonomy_id']
         parent_organism_obj = get_organism_obj(parent_organism_id)
@@ -547,7 +551,7 @@ def create_protein_repeats(protein_obj, satellite_str):
         if get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj):
             print(f"Protein {protein_obj.gene} already has repeat {repeat_obj.name}. Skipped.")
         else:
-            print(f"Creating ProteinRepeats: satellite = {satellite}, protein = {row['gene']}")
+            print(f"Creating ProteinRepeats: satellite = {satellite}, protein = {protein_obj.gene}")
             protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
             protein_repeat_obj.save()
 
@@ -687,50 +691,90 @@ def import_refs():
         refs = row['references']
         create_protein_references(protein_obj, refs)
 
+
 # Add enrichment and q score data from other files
 def update_proteinrepeats():
+
+    # Need to get all ProteinTF, Repeat objects in the database
+    # so that we can lookup these objects by name and by aliases case-insensitively.
+    # This is because the spreadsheet we are importing may use name or aliases
+    # and it is case-insensitive.
+    existing_proteins = ProteinTF.objects.all()
+    existing_protein_lookup = dict()
+    for obj in existing_proteins:
+        existing_protein_lookup[obj.gene.lower()] = obj
+    if obj.aliases:
+        for alias in obj.aliases:
+            if alias:
+                existing_protein_lookup[alias.lower()] = obj
+
+    existing_repeats = Repeat.objects.all()
+    existing_repeat_lookup = dict()
+    for obj in existing_repeats:
+        existing_repeat_lookup[obj.name.lower()] = obj 
+        if obj.aliases:
+            for alias in obj.aliases:
+                if alias:
+                    existing_repeat_lookup[alias.lower()] = obj
+
+    missing_genes = set()
+    missing_repeats = set()
+
+    # Load enrichment data from other files and update the lookup dictionary
     for org in Organism.objects.all():
-        en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FOLDER + '/' + str(org.id) + '_mean_ENR.csv')
-        en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-        en_df = en_df.where(pd.notnull(en_df), None)
+        for file_type, data_type in [('ENR', 'motif_enrichment'), ('Qscore', 'motif_q_score')]: 
+            file_name = f"{settings.IMPORT_ENRICHMENT_FOLDER}/{org.id}_mean_{file_type}.csv"
+            print(f"Loading enrichment data from {file_name}")
+            en_df = pd.read_csv(file_name)
+            en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
+            en_df = en_df.where(pd.notnull(en_df), None)
 
-        enrich_lookup = dict()
-        for row in en_df.to_dict(orient="records"):
-            gene = row["Gene"]
-        
-            for key, value in row.items():
-                if key != 'Gene':
-                    lookup_key = gene,key.lower()
-                    enrich_lookup[lookup_key] = value
-               
-    # print(enrich_lookup)
+            for row in en_df.to_dict(orient="records"):
+                # This could be gene name or alias, so we need to look it up in 
+                # the existing_protein_lookup dictionary
+                raw_gene = row["Gene"].strip()
+                # Lookup the protein object by gene name or alias, case-insensitively
+                protein_obj = existing_protein_lookup.get(raw_gene.lower())
+                if not protein_obj:
+                    missing_genes.add(raw_gene)
+                    continue
+                for raw_repeat, value in row.items():
+                    if raw_repeat == 'Gene':
+                        continue
+                    # Lookup the repeat object by name or alias, case-insensitively
+                    repeat_obj = existing_repeat_lookup.get(raw_repeat.lower())
+                    if not repeat_obj:
+                        missing_repeats.add(raw_repeat)
+                        continue
 
-    for org in Organism.objects.all():
-        qs_df = pd.read_csv(settings.IMPORT_QSCORE_FOLDER + '/' + str(org.id) + '_mean_ENR.csv')
-        qs_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-        qs_df = qs_df.where(pd.notnull(qs_df), None)
+                    protein_repeat_obj = get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj)
 
-        qscore_lookup = dict()
-        for row in qs_df.to_dict(orient="records"):
-            gene = row["Gene"]
-        
-            for key, value in row.items():
-                if key != 'Gene':
-                    lookup_key = gene,key.lower()
-                    qscore_lookup[lookup_key] = value              
+                    # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
+                    if not protein_repeat_obj:
+                        print(f"""Creating ProteinRepeat - 
+                        gene: {raw_gene},
+                        repeat: {raw_repeat},
+                        protein_obj:{protein_obj.gene}, 
+                        repeat_obj:{repeat_obj.name}""")
+                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                        protein_repeat_obj.save()
+                    
+                    if data_type == 'motif_enrichment':
+                        protein_repeat_obj.motif_enrichment = value
+                    else:
+                        protein_repeat_obj.motif_q_score = value
 
-    objs = ProteinRepeats.objects.all()
-    for obj in objs:
-        lookup_key = obj.protein.gene, obj.repeat.name.lower()
-        print(lookup_key)
-        enrichment = enrich_lookup.get(lookup_key)
-        # print(f"enrichment:{enrichment}, lookup_key:{lookup_key},  enrichment:{len(enrich_lookup)}")
-        q_score = qscore_lookup.get(lookup_key)
-        # print(f"qscore:{q_score}, lookup_key:{lookup_key}, q_score:{len(qscore_lookup)}")
-        obj.motif_enrichment = enrichment if enrichment else None
-        obj.motif_q_score = q_score if q_score else None
-        print(f"saving protein:{obj.protein.gene}, repeat:{obj.repeat.name}, motif_enrichment:{obj.motif_enrichment}, motif_q_score:{obj.motif_q_score}")
-        obj.save()
+                    print(f"""Updating ProteinRepeat - 
+                        protein_obj:{protein_obj.gene}, 
+                        repeat_obj:{repeat_obj.name}, 
+                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
+                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                    protein_repeat_obj.save()
+
+    if missing_genes:
+        print(f"Missing genes in database: {sorted(missing_genes)}")
+    if missing_repeats:
+        print(f"Missing repeats in database: {sorted(missing_repeats)}")                              
 
 
 def get_proteomic_data(mapper, uniprot_id):
@@ -964,8 +1008,14 @@ def import_proteomics():
         # print(target_list)
         protein_target = target_list['protein']
         protein_obj = get_obj_if_exists(ProteinTF, gene=protein_target)
+        if not protein_obj:
+            print(f"Protein {protein_target} not found in database. Skipped importing this proteomics data.")
+            continue
         repeat_target = target_list['repeat']
         repeat_obj = get_obj_if_exists(Repeat, name=repeat_target)
+        if not repeat_obj:
+            print(f"Repeat {repeat_target} not found in database. Skipped importing this proteomics data.")
+            continue
         print(repeat_target, repeat_obj.name)
         method = row['Method']
         desc = row['Description']
@@ -1142,17 +1192,35 @@ def submit_uniprot_to_pdb_mapping(uniprot_ids):
 def get_uniprot_to_pdb_mapping_results(job_id):
     url = f"https://rest.uniprot.org/idmapping/status/{job_id}"
 
+    max_tries = 5
+    wait_time = 5
+
 
     all_results = []
     while url:
-        print(f"\nCalling URL {url}")
-        response = requests.get(url)
-        print(f"Returned: {response.status_code}")
 
+        tries = 0
+        got_result = False
+        while not got_result and tries < max_tries:
 
-        # Raise an HTTPError for bad responses (4xx or 5xx)
-        response.raise_for_status()
+            try:
 
+                print(f"\nCalling URL {url}")
+                response = requests.get(url)
+                print(f"Returned: {response.status_code}")
+                # Raise an HTTPError for bad responses (4xx or 5xx)
+                response.raise_for_status()
+                got_result = True
+                break
+
+            except requests.exceptions.HTTPError as e:
+                print(f"{tries}/{max_tries}: {e.response.status_code} {e.response.text}. Wait {wait_time} seconds and retrying...")
+                tries += 1
+                time.sleep(wait_time)
+
+        if not got_result:
+            print(f"Failed to get results after {max_tries} tries. Exiting.")
+            break
 
         # Get the JSON response from the server
         response_data = response.json()
@@ -1260,7 +1328,8 @@ def update_PDB_from_uniprot():
 
 def update_microscopy():
     print(f"Updating microscopy data from {settings.IMPORT_MICROSCOPY}")
-    raw_df =  load_dataframe_from_excel(settings.IMPORT_MICROSCOPY, sheet_name='Sheet1', dtype=str)
+    raw_df = pd.read_csv(settings.IMPORT_MICROSCOPY, dtype=str)
+
     raw_df = raw_df.where(pd.notnull(raw_df), None)
     # Filter rows where protein is not null
     df = raw_df[raw_df['protein'].notnull()]
@@ -1273,12 +1342,13 @@ def update_microscopy():
             continue
         uniprot = row['protein']
         channels    = json.loads(row['channels'])
-        # Placeholder if name is empty
-        print(f"Channels: {channels}")
-        # Do we need this?
-        name = f"{uniprot}:{channels['1']}|{channels['2']}"
+
+        url = row['url'].strip()
+
+        # Unique key for the microscopy record is the name, which is derived from the url
+        name = url.split('/')[-1].split('.')[0]
         # This is used to display in dropdown menu
-        display_name = f"{channels['1']}|{channels['2']}"
+        display_name = name
 
         # The protein column in the spreadsheet contains the uniprot id                                
         protein_obj = ProteinTF.objects.get(UNIPROT=uniprot)
@@ -1288,22 +1358,19 @@ def update_microscopy():
             print("Protein {gene} does not exist. Skipped.")
             continue
 
-        if len(Microscopy.objects.filter(proteintf=protein_obj, name=name)) > 0:
-            print(f"Microscopy with name {name} already exists for protein {gene}. Skipped.")
-            continue
-
-        print(f"Adding Microscopy to protein: {gene}, uniprot: {uniprot}")
-
-        display_name = name
-
-        local_tiff_file = row['local_tiff_file'].strip() if row['local_tiff_file'] else None
+        local_tiff_file = row['local_img_file'].strip() if row['local_img_file'] else None
         cell_type = row['cell_type'].strip() if row['cell_type'] else None
         pixel_size = row['pixel_size'].strip() if row['pixel_size'] else None
         magnification = row['magnification'].strip() if row['magnification'] else None
         expression = row['expression'].strip() if row['expression'] else None
         microscopy = row['microscopy'].strip() if row['microscopy'] else None
-        description = row['description'].strip() if row['description'] else None
-        url = row['url'].strip()
+        description = row['description'].strip() if row['description'] else 'N/A'
+
+        existing_microscopy = Microscopy.objects.filter(proteintf=protein_obj, name=name, url=url).first()
+        if existing_microscopy:
+            print(f"Microscopy with name {name} and url {url} already exists for protein {gene}. Skipped.")
+            continue
+
         obj = Microscopy(
             id = shortuuid(),
             proteintf = protein_obj,
@@ -1410,18 +1477,18 @@ def delete_all_records():
     print("FINISHED DELETING")
 
 def update():
-    print("ORGANISMS")
-    import_organisms()
-    print("GENE FAMILY")
-    import_gene_family()
-    print("REPEAT + FAMILIES")
-    import_repeat()
-    update_repeat_families()
-    print("PROTEIN")
-    import_protein()
-    update_PDB_from_uniprot()
-    print("PROTEIN REPEATS")
-    update_proteinrepeats()
+    # print("ORGANISMS")
+    # import_organisms()
+    # print("GENE FAMILY")
+    # import_gene_family()
+    # print("REPEAT + FAMILIES")
+    # import_repeat()
+    # update_repeat_families()
+    # print("PROTEIN")
+    # import_protein()
+    # update_PDB_from_uniprot()
+    # print("PROTEIN REPEATS")
+    # update_proteinrepeats()
     print("PROTEOMICS")
     import_proteomics()
     print("NETWORK DATA")

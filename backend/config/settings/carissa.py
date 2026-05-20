@@ -33,7 +33,7 @@ IMPORT_DATA_FOLDER = Path(__file__).resolve(strict=True).parent.parent.parent.pa
 # IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
 # IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
 # IMPORT_PROTEOMICS = f"{IMPORT_DATA_FOLDER}/HSat3_epithelial.csv"
-IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/microscopy_data.xlsx"
+IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/repeatome_subimages_only_with_urls.csv"
 
 # .env file, should load only in development environment
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)

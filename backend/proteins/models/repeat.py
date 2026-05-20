@@ -57,7 +57,7 @@ class Repeat(models.Model):
         if self.aliases:
             return ", ".join(self.aliases)
         else:
-            return "None"
+            return ""
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
