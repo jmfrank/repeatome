@@ -4,7 +4,7 @@
         "attributes": {
             "node_type": "repeat",
             "label": "(AATAT)n",
-            "aliases": "None",
+            "aliases": "(AATAACATAG)n",
             "dfam_id": null,
             "x": 0,
             "y": 0,
@@ -15,6 +15,22 @@
         }
     },
     {
+        "key": "ATF3_(AATAT)n",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ATF3",
+            "aliases": "",
+            "gene_family": "ATF",
+            "enrichment": 9.605,
+            "x": 63.63961030678928,
+            "y": 63.63961030678927,
+            "size": 43.180787034948665,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000162772-atf3"
+        },
+        "organism": 7227
+    },
+    {
         "key": "D1_(AATAT)n",
         "attributes": {
             "node_type": "protein",
@@ -22,8 +38,8 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 14.88333,
-            "x": 63.63961030678928,
-            "y": 63.63961030678927,
+            "x": -75.95083130759707,
+            "y": -48.28531064086606,
             "size": 50.18506523353572,
             "color": "#292BA5",
             "url": "/proteinTable/fbgn0000412-d1"
@@ -38,27 +54,11 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 0.0,
-            "x": -75.95406416835046,
-            "y": 48.28022510624927,
+            "x": 63.64387127026688,
+            "y": -63.635349058001545,
             "size": 7.0,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000185591-sp1"
-        },
-        "organism": 7227
-    },
-    {
-        "key": "ATF3_(AATAT)n",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ATF3",
-            "aliases": "",
-            "gene_family": "ATF",
-            "enrichment": 9.605,
-            "x": -48.28531064086615,
-            "y": -75.95083130759701,
-            "size": 43.180787034948665,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000162772-atf3"
         },
         "organism": 7227
     }
