@@ -16,6 +16,7 @@ export default function App() {
   useEffect(() => {
     const el = document.getElementById("network-container");
     if (!el) return;
+    const organism = el.getAttribute("data-organism")
 
     const normalize = (json) => {
       if (Array.isArray(json)) return json;
@@ -334,6 +335,15 @@ export default function App() {
 
     const parent = svgRef.current.parentElement;
     if (!parent) {
+      const zoomOut = 1.18;
+      const cx = minX + boxW / 2;
+      const cy = minY + boxH / 2;
+
+      boxW *= zoomOut;
+      boxH *= zoomOut;
+      minX = cx - boxW / 2;
+      minY = cy - boxH / 2;
+
       setView({ x: minX, y: minY, w: boxW, h: boxH });
       setFitDone(true);
       return;
@@ -357,6 +367,16 @@ export default function App() {
       minX -= extraW / 2;
       boxW = targetW;
     }
+
+    const zoomOut = 1.18;
+    const cx = minX + boxW / 2;
+    const cy = minY + boxH / 2;
+
+    boxW *= zoomOut;
+    boxH *= zoomOut;
+    minX = cx - boxW / 2;
+    minY = cy - boxH / 2;
+
 
     setView({ x: minX, y: minY, w: boxW, h: boxH });
     setFitDone(true);
@@ -390,6 +410,10 @@ export default function App() {
   const vb = `${view.x} ${view.y} ${view.w} ${view.h}`;
 
   // ---------- 6) Render ----------
+  if (!repeats.length && !proteinsWithSat.length) {
+    return <p>Enrichment data doesn't exist</p>;
+  }
+
   return (
     <div
       style={{
@@ -399,6 +423,8 @@ export default function App() {
         position: "relative",
         margin: 0,
         padding: 0,
+        width: "100%",
+        height: "600px",
         touchAction: "none",
         overscrollBehavior: "contain",
       }}

@@ -13,11 +13,83 @@
 
   <h5 class='pt-3'><strong>Organism Network</strong></h5>
   <p>Based on motif enrichment</p> 
+  <div class='network-info-containter' style='width: 25%;'>
+      <select class="custom-select" name="network-select" id="network-select" width="100%">
+          {% for org in networks_list %}
+              <option value="{{ org.scientific_name }}"
+                  data-id="{{ org.id }}"
+                  data-url="{{ org.network_url }}"
+                  {% comment %} data-organism="{{ item.org }}"
+                  data-cellLine="{{ item.cell_line_name }}"
+                  data-method="{{ item.method }}"
+                  data-desc="{{ item.description }}"
+                  data-date="{{ item.date_generated }}"
+                  data-xlabel="{{ item.x_label }}"
+                  data-ylabel="{{ item.y_label }}"> {% endcomment %}
+                  >
+                  {{org.scientific_name}}
+              </option>
+          {% endfor %}
+          <option value="N/A" 
+              data-url="N/A" 
+              {% comment %} data-cellType="N/A"
+              data-cellLine="N/A"
+              data-method="N/A"
+              data-desc="N/A"
+              data-date="N/A"
+              data-xlabel="N/A"
+              data-ylabel="N/A" {% endcomment %}
+              >
+              N/A
+          </option>
+      </select>
+  </div>
+
   <div id="network-container"
         style="position: relative; width:100%; height:600px;"
-        data-network="{% static '/network/repeat_network_db_all.json' %}">
+        data-network="{% static 'network/repeat_network_db_all.json' %}">
     </div>
 
   {% render_bundle 'network' %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const select = document.getElementById("network-select");
+  const container = document.getElementById("network-container");
+
+  if (!select || !container) return;
+
+  select.addEventListener("change", function () {
+    const selected = select.options[select.selectedIndex];
+    const url = selected.dataset.url;
+
+    if (!url || url === "N/A") return;
+
+    container.setAttribute("data-network", url);
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const select = document.getElementById("network-select");
+  const container = document.getElementById("network-container");
+
+  if (!select || !container) return;
+
+  // find organism with id 9606
+  const option = select.querySelector('option[data-id="9606"]');
+
+  if (option) {
+    option.selected = true;
+    container.setAttribute("data-network", option.dataset.url);
+  }
+
+  select.addEventListener("change", function () {
+    const selected = select.options[select.selectedIndex];
+    container.setAttribute("data-network", selected.dataset.url);
+  });
+});
+</script>
 
 {% endblock content %}

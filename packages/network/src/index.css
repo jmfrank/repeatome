@@ -6,10 +6,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+/* 
 #network-container {
   height: 60vh;
-}
+} */
 
 .inner-network {
     height: 100%;

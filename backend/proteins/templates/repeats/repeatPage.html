@@ -178,22 +178,31 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     </div>
   {% endif %} {% endcomment %}
   
+  {% with oid=repeat.parental_organism.id|stringformat:"s"  %}
   {% if repeat.karyotype_data_exists %}
-    {% with oid=repeat.parental_organism.id|stringformat:"s"  %}
       <div id='karyotype_div'
         data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.txt' %}"
         data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:repeat.name|add:'_karyotype.bed' %}"
-        data-karyo-parent="{{repeat.name}}">
+        data-karyo-parent="{{repeat.name}}"
+        data-only-repeat="False">
       </div>
-    {% endwith %}
-    {% render_bundle 'karyotypeViewer' %}
-  {% elif repeat.karyoplot_exists %}
+  {% else %}
+      <div id='karyotype_div'
+        data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.txt' %}"
+        data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.bed' %}"
+        data-karyo-parent="{{repeat.name}}"
+        data-only-repeat="True">
+      </div>
+  {% endif %}
+  {% endwith %}
+  {% render_bundle 'karyotypeViewer' %}
+  {% comment %} {% elif repeat.karyoplot_exists %}
     <div id="karyoplot-info" style="overflow: visible;">
       <svg width=auto height="650px" style="display: block; margin: auto; text-align: center;" xmlns="http://www.w3.org/2000/svg" >
         <image { width: 100%; height: auto; } href="{% static '/karyoplot/human_'|add:repeat.repeat_lower|add:'_blocks.svg' %}" />
       </svg>
     </div>
-  {% endif %}
+  {% endif %} {% endcomment %}
   
   <div class="attribute-data">
       {% if repeat.dfam_id %}

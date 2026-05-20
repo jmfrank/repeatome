@@ -34,28 +34,23 @@
       <div id='karyotype_div'
           data-karyo-txt="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.txt' %}"
           data-karyo-bed="{% static 'karyotype_viewer/'|add:oid|add:'/'|add:oid|add:'_karyotype.bed' %}"
-          data-karyo-parent="none">
+          data-karyo-parent="none"
+          data-only-repeat="False">
       </div>
   {% endwith %}
   <br>
   <h5 class='pt-3'><strong>Network Graph</strong></h5>
-  {% with oid=object.id|default:organism.id|stringformat:"s"|default:"" %}
-    <!-- DEBUG: oid renders as “[{{ oid }}]” -->
+  {% with org=organism.scientific_name oid=object.id|default:organism.id|stringformat:"s"|default:"" %}
     {% if oid %}
       {% with json_path='network/repeat_network_db_'|add:oid|add:'.json' %}
         <div id="network-container"
-            style="position: relative; width:100%; height:600px;"
-            data-network="{% static json_path %}">
+            data-network="{% static json_path %}"
+            data-organism={{org}}>
         </div>
       {% endwith %}
-    {% else %}
-      <!-- No object.id / organism.id available here -->
-      <div id="network-container"
-          style="position: relative; width:100%; height:600px;"
-          data-network="">
-      </div>
     {% endif %}
   {% endwith %}
+  {% comment %} style="position: relative; width:100%; height:600px;" {% endcomment %}
 
   <h5 class='pt-3'><strong>Proteins derived from {{ object }}</strong></h5>
   {% with proteins=object.proteinTF.all removebutton=False %}
