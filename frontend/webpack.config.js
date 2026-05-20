@@ -94,6 +94,11 @@ if (!devMode) {
 
 module.exports = {
   context: __dirname,
+  performance: {
+    hints: false,
+    maxEntrypointSize: 500000, // New limit in bytes (e.g., 500 KiB)
+    maxAssetSize: 500000 // New limit in bytes
+  },
   entry: {
     main: "./src/index.js",
     embedscope: "./src/embedscope.js",
@@ -106,7 +111,7 @@ module.exports = {
     network: './src/network.js'
   },
   output: {
-    path: path.resolve("./dist/"),
+    path: path.resolve(__dirname, 'dist'),
     filename: devMode ? "[name].js" : "[name].[contenthash].js",
     publicPath: hotReload ? "http://localhost:8080/static/" : "/static/",
     chunkFilename: devMode ? "[name].js" : "[name].[chunkhash].js",

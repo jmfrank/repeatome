@@ -30,7 +30,7 @@ class Microscopy(models.Model):
             sorted_channels = sorted(self.channels.keys())
             for c in sorted_channels:
                 if channel_str:
-                    channel_str += " <br> "
+                    channel_str += "<br/>"
                 channel_str += f"{c}:{self.channels[c]}"
         return channel_str
     
