@@ -11,6 +11,17 @@
     background: no-repeat center center;
     background-image: url("{% static 'images/home_img_2.png' %}");
   }
+
+  .no-glow img, 
+  .no-glow picture {
+    width: 100%;
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes unwanted bottom whitespace */
+  }
+
+  .logo_pic {
+    display: none;
+  }
 </style>
 {% comment %} <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> {% endcomment %}
@@ -56,17 +67,20 @@
               <p class="m-t-4 advanced-search"><a href="{% url 'proteins:search' %}">advanced search</a></p>
             </div>
             <div class="col-md-4  order-sm-1" id="protein-image">
-              <div style="position: absolute;" class="no-glow"> {% comment %} top:-70px {% endcomment %}
-                {% webp_picture 'images/home_img_2.png' 'img-fluid' "EGFP image" %}
+              <div style="position: absolute; top: 60px;" class="no-glow"> 
+                {% webp_picture 'images/logo_2-cropped.svg'%}
               </div>
-              <div style="display: none; position: absolute; " class="glow"> {% comment %} top:-70px {% endcomment %}
+              {% comment %} <div style="display: none; position: absolute; " class="glow"> 
                 {% webp_picture 'images/home_img_2.png' 'img-fluid' "glowing EGFP image" %}
-              </div>
+              </div> {% endcomment %}
             </div>
           </div>
 
         </main>
     <div class="home-stats">
+        <span class='nimsb_holder'>
+          {% webp_picture 'images/nimsb.png' 'nimsb_icon' %}
+        </span>
         <span>
           {% webp_picture 'images/gfp_white_40.png' 'gfpicon' 'white gfp icon' %} {{stats.proteins}} <a href="{% url 'proteins:proteinTable' %}" class='text-white'>Proteins</a>
         </span>

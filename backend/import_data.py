@@ -225,6 +225,7 @@ def update_repeat_families():
         if child_obj and parent_obj:
             print(f"Updating repeat {child} to have parent {parent}")
             child_obj.parent_repeat = parent_obj
+            child_obj.parental_organism = parent_obj.parental_organism
             child_obj.save()
             child_proteins = child_obj.get_protein_lst()
             for protein in child_proteins:

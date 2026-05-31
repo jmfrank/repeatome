@@ -164,7 +164,8 @@ $search-colors: rgba($white,0.4);
   }
   span {
     margin-left: 20px;
-    @include media-breakpoint-up(sm) {margin-left: 40px;}
+    margin-top: 0px;
+    // @include media-breakpoint-up(sm) {margin-left: 40px;}
   }
 
   .gfpicon {
@@ -174,4 +175,23 @@ $search-colors: rgba($white,0.4);
     filter: brightness(140%);
     opacity: 0.8;
   }
+}
+
+.nimsb_holder {
+  float: left;
+  margin-left: 20px;
+}
+
+.nimsb_icon {
+  display: block;
+  height: 100px;
+  margin-top: -50px;
+}
+
+.footer .nimsb_holder {
+  margin-top: 50px !important;
+}
+
+.footer .col-12 {
+  margin-top: -100px;
 }
