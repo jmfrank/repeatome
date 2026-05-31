@@ -1,2144 +1,1376 @@
 [
     {
-        "key": "Mouse-Minor",
+        "key": "Minor",
         "attributes": {
             "node_type": "repeat",
-            "label": "Mouse-Minor",
-            "aliases": "minor",
+            "label": "Minor",
+            "aliases": "",
             "dfam_id": null,
             "x": 0,
             "y": 0,
             "size": 50,
             "color": "rgb(140, 90, 230)",
             "zIndex": 100,
-            "url": "/repeatTable/mouse-minor"
+            "url": "/repeatTable/minor"
         }
     },
     {
-        "key": "ATF7_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ATF7",
-            "aliases": "",
-            "gene_family": "ATF",
-            "enrichment": 0.0,
-            "x": 63.63961030678928,
-            "y": 63.63961030678927,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000170653-atf7"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "BCL11b_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BCL11b",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 39.57901,
-            "x": 59.59588158694032,
-            "y": 67.44131447321729,
-            "size": 29.350175355272516,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000127152-bcl11b"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ATF3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ATF3",
-            "aliases": "",
-            "gene_family": "ATF",
-            "enrichment": 0.0,
-            "x": 55.32550681194938,
-            "y": 70.98653601917016,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000162772-atf3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "BHLHE40_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "BHLHE40",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.00607,
-            "x": 53.33760058110429,
-            "y": 72.49207104401545,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000134107-bhlhe40"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CDX4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CDX4",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 6.07315,
-            "x": 50.57328893622518,
-            "y": 74.44691025269674,
-            "size": 21.966948122940448,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000131264-cdx4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CEBPA_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CEBPA",
-            "aliases": "",
-            "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 0.54627,
-            "x": 46.938665234042496,
-            "y": 76.79037508728871,
-            "size": 12.479943494530463,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000245848-cebpa"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CEBPB_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CEBPB",
-            "aliases": "",
-            "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 0.00539,
-            "x": 45.05230049763079,
-            "y": 77.9120672288393,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000172216-cebpb"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CEBPD_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CEBPD",
-            "aliases": "",
-            "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 0.37864,
-            "x": 43.298147463977855,
-            "y": 78.90038292801644,
-            "size": 11.036215065764633,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000221869-cebpd"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CEBPE_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CEBPE",
-            "aliases": "",
-            "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 0.00817,
-            "x": 41.52232493276741,
-            "y": 79.84921121825614,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000092067-cebpe"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CREB5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CREB5",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 39.29417823786572,
-            "y": 80.96892957555286,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000146592-creb5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CUX2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CUX2",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 10.78001,
-            "x": 34.82258438854777,
-            "y": 82.99028627798839,
-            "size": 24.22717319029129,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000111249-cux2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "D1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "D1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 30.247464137371104,
-            "y": 84.76491557984617,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/fbgn0000412-d1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "DBP_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DBP",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 26.70760833263028,
-            "y": 85.94593450042194,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000105516-dbp"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CEBPG_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CEBPG",
-            "aliases": "",
-            "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 1.2463,
-            "x": 23.016583580663557,
-            "y": 87.00710821694011,
-            "size": 15.728861327014393,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000153879-cebpg"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CREB1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "CREB1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.00132,
-            "x": 20.491215379069942,
-            "y": 87.63623732388656,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000118260-creb1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "DLX6_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DLX6",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.3409,
-            "x": 17.91325475433317,
-            "y": 88.19929310434614,
-            "size": 16.017041278175476,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000006377-dlx6"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "DMBX1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DMBX1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 11.79449,
-            "x": 12.891783576594072,
-            "y": 89.07189184144602,
-            "size": 24.581437118375998,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000197587-dmbx1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "DUX4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "DUX4",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.12321,
-            "x": 7.916244151763468,
-            "y": 89.65117444032549,
-            "size": 15.31925721530944,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000260596-dux4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "E2F1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "E2F1",
-            "aliases": "",
-            "gene_family": "E2F",
-            "enrichment": 0.0,
-            "x": 4.135626864293503,
-            "y": 89.90493084608504,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000101412-e2f1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "E2F2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "E2F2",
-            "aliases": "",
-            "gene_family": "E2F",
-            "enrichment": 0.0,
-            "x": 0.4051417458062719,
-            "y": 89.99908810741253,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000007968-e2f2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "E2F4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "E2F4",
-            "aliases": "",
-            "gene_family": "E2F",
-            "enrichment": 0.0,
-            "x": -3.3260398856084192,
-            "y": 89.93852043857149,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000205250-e2f4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "EBF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF1",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.05518,
-            "x": -5.622259793316422,
-            "y": 89.82421830896419,
-            "size": 3.44988127920355,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000164330-ebf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "EBF2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF2",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.0,
-            "x": -7.9148108705185685,
-            "y": 89.65130098823954,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000221818-ebf2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "EBF3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF3",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.0,
-            "x": -11.624423529667082,
-            "y": 89.24613592533248,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000108001-ebf3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "EBF4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "EBF4",
-            "aliases": "",
-            "gene_family": "EBF",
-            "enrichment": 0.0817,
-            "x": -14.09198039699756,
-            "y": 88.88990993634,
-            "size": 4.9957304157564595,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000088881-ebf4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ELF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ELF1",
-            "aliases": "",
-            "gene_family": "ETS",
-            "enrichment": 0.02977,
-            "x": -14.83737029551992,
-            "y": 88.76853295348315,
-            "size": 1.0191659774297745,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000120690-elf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ESR1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ESR1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -16.80021855018078,
-            "y": 88.41805616878354,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000091831-esr1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "FOSB::JUN_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "FOSB::JUN",
-            "aliases": "",
-            "gene_family": "AP1",
-            "enrichment": 0.0,
-            "x": -20.451070303141226,
-            "y": 87.64561439944372,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/none-fosbjun"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "GATA3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "GATA3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 4.14975,
-            "x": -24.74417250735316,
-            "y": 86.53164696760571,
-            "size": 20.466885610945575,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000107485-gata3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HES1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HES1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 2.13582,
-            "x": -29.332240347262825,
-            "y": 85.08595463535922,
-            "size": 17.850654083527896,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000114315-hes1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HIF1A_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HIF1A",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 3.24086,
-            "x": -33.72318935275624,
-            "y": 83.4430734086308,
-            "size": 19.4931436306548,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000100644-hif1a"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HLF_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HLF",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.71604,
-            "x": -37.92450989085911,
-            "y": 81.61943120077552,
-            "size": 16.98869135127906,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000108924-hlf"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HOXA7_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA7",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 0.69806,
-            "x": -41.35470900125258,
-            "y": 79.93614979107838,
-            "size": 13.445738021216153,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000122592-hoxa7"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HOXA9_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXA9",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 3.01334,
-            "x": -44.95181602113195,
-            "y": 77.97008552260479,
-            "size": 19.20642990878435,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000078399-hoxa9"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HOXd9_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HOXd9",
-            "aliases": "",
-            "gene_family": "HOX",
-            "enrichment": 3.22522,
-            "x": -49.091775726193745,
-            "y": 75.43207246290595,
-            "size": 19.474088782468424,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000128709-hoxd9"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HSF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF1",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 3.28969,
-            "x": -53.12385392621818,
-            "y": 72.64885507718503,
-            "size": 19.552048884238953,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000185122-hsf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HSF2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF2",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 4.43054,
-            "x": -57.119941783061286,
-            "y": 69.55078900127367,
-            "size": 20.72478109983836,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000025156-hsf2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "HSF4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "HSF4",
-            "aliases": "",
-            "gene_family": "HSF",
-            "enrichment": 1.8013,
-            "x": -60.716197174033034,
-            "y": 66.43450459455495,
-            "size": 17.17968768455348,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000102878-hsf4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IKZF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IKZF1",
-            "aliases": "",
-            "gene_family": "IKAROS",
-            "enrichment": 0.75918,
-            "x": -63.52773159107968,
-            "y": 63.75129268408396,
-            "size": 13.776348101482913,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000185811-ikzf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IKZF2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IKZF2",
-            "aliases": "",
-            "gene_family": "IKAROS",
-            "enrichment": 0.0,
-            "x": -66.02335309642402,
-            "y": 61.16303496316151,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000030419-ikzf2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF1",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 11.55354,
-            "x": -69.28076168628671,
-            "y": 57.44715885200893,
-            "size": 24.500135146847214,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000125347-irf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF2",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.00241,
-            "x": -71.5856603138773,
-            "y": 54.54808188585711,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000168310-irf2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF3",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 1.38361,
-            "x": -73.16306138861172,
-            "y": 52.41341858957716,
-            "size": 16.14054661227454,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000126456-irf3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF4",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": -75.36082974616437,
-            "y": 49.201070516500224,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000137265-irf4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF5",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 2.58368,
-            "x": -77.57470323728717,
-            "y": 45.63075078986568,
-            "size": 18.60048614372858,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000128604-irf5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF6_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF6",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 3.62334,
-            "x": -79.91440879523229,
-            "y": 41.396705991038694,
-            "size": 19.93256163609569,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000117595-irf6"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF8_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF8",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": -81.82890431573001,
-            "y": 37.47039389287363,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000140968-irf8"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "IRF9_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "IRF9",
-            "aliases": "",
-            "gene_family": "IRF",
-            "enrichment": 0.0,
-            "x": -83.31186723415198,
-            "y": 34.046039093542646,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000213928-irf9"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "JDP2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "JDP2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 15.97156,
-            "x": -85.10712282385167,
-            "y": 29.27076433313325,
-            "size": 25.77563271680101,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000140044-jdp2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "JUNB_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "JUNB",
-            "aliases": "",
-            "gene_family": "AP1",
-            "enrichment": 14.08841,
-            "x": -86.97446598393611,
-            "y": 23.139625468212344,
-            "size": 25.28146490725379,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000171223-junb"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "LEF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "LEF1",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 0.96375,
-            "x": -88.12961129958855,
-            "y": 18.25298913009692,
-            "size": 14.71615085286114,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000138795-lef1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "LIN54_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "LIN54",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -88.80755661908047,
-            "y": 14.601982308879089,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000189308-lin54"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "MEIS1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "MEIS1",
-            "aliases": "",
-            "gene_family": "MEIS",
-            "enrichment": 3.107,
-            "x": -89.40274893263395,
-            "y": 10.351255155217604,
-            "size": 19.326994972612695,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000143995-meis1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "JUN_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "JUN",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 17.54389,
-            "x": -89.87913385216929,
-            "y": 4.66275647914811,
-            "size": 26.145483490682935,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000177606-jun"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "MEIS3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "MEIS3",
-            "aliases": "",
-            "gene_family": "MEIS",
-            "enrichment": 0.42856,
-            "x": -89.99997666448692,
-            "y": -0.0648104297805872,
-            "size": 11.524032123784984,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000105419-meis3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "MSANTD3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "MSANTD3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 8.06657,
-            "x": -89.89196660817105,
-            "y": -4.408439555609584,
-            "size": 23.08501895893398,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000066697-msantd3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "MYC_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "MYC",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -89.5327703169798,
-            "y": -9.158768441605016,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000136997-myc"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NANOG_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NANOG",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.23062,
-            "x": -89.17693137054495,
-            "y": -12.143924873496081,
-            "size": 9.083233052232542,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000111704-nanog"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NEUROD1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NEUROD1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0137,
-            "x": -88.92114229931832,
-            "y": -13.893539944318771,
-            "size": 5,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000162992-neurod1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NFAT5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFAT5",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 76.2115,
-            "x": -88.08765055630218,
-            "y": -18.454425471165315,
-            "size": 31.931019474109807,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000102908-nfat5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NFATc1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc1",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 39.25924,
-            "x": -86.19131237752231,
-            "y": -25.90478084524881,
-            "size": 29.31822232183692,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000131196-nfatc1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NFATc2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc2",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 26.81303,
-            "x": -83.85506002689057,
-            "y": -32.68530109830075,
-            "size": 27.816310311740644,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000101096-nfatc2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NFATc3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc3",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 23.9857,
-            "x": -81.09234187252864,
-            "y": -39.038853590095826,
-            "size": 27.377394054920526,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000072736-nfatc3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NFATc4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NFATc4",
-            "aliases": "",
-            "gene_family": "NFAT",
-            "enrichment": 35.71274,
-            "x": -77.7778487062131,
-            "y": -45.28362011404813,
-            "size": 28.945286406966474,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000100968-nfatc4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NKX2-2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NKX2-2",
-            "aliases": "",
-            "gene_family": "NKX",
-            "enrichment": 3.22692,
-            "x": -74.54380946953037,
-            "y": -50.430352663553265,
-            "size": 19.476164432450485,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000125820-nkx2-2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NKX2-4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NKX2-4",
-            "aliases": "",
-            "gene_family": "NKX",
-            "enrichment": 0.0,
-            "x": -72.0434202817752,
-            "y": -53.94205774813844,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000125816-nkx2-4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NR2E3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NR2E3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -69.74537159822025,
-            "y": -56.88218649653134,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000278570-nr2e3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "NRF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "NRF1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -67.32741783588006,
-            "y": -59.72452433927639,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000106459-nrf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ONECUT1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ONECUT1",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 11.6636,
-            "x": -63.94466108478498,
-            "y": -63.33309023529473,
-            "size": 24.53748019401689,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000169856-onecut1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ONECUT2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ONECUT2",
-            "aliases": "",
-            "gene_family": "CUT-containing",
-            "enrichment": 9.51478,
-            "x": -59.53782012561893,
-            "y": -67.49257718215719,
-            "size": 23.73540834086093,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000119547-onecut2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "OSR2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "OSR2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": -55.819105861914686,
-            "y": -70.59906104741309,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000164920-osr2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "OTX2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "OTX2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 5.90948,
-            "x": -52.13078396127608,
-            "y": -73.36471470388719,
-            "size": 21.859338052825088,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000165588-otx2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "PBX3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PBX3",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 7.74372,
-            "x": -47.44850873831329,
-            "y": -76.4763951720412,
-            "size": 22.924128495948054,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000167081-pbx3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "PKNOX1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PKNOX1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 24.65743,
-            "x": -41.9573701336539,
-            "y": -79.62147380868787,
-            "size": 27.486189274196356,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000160199-pknox1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "POU4F1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU4F1",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 2.97985,
-            "x": -36.69058764629513,
-            "y": -82.18151116990691,
-            "size": 19.162407825340786,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000152192-pou4f1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "POU4F3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU4F3",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 3.43369,
-            "x": -32.18087631928084,
-            "y": -84.04993277405491,
-            "size": 19.720801387974355,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000091010-pou4f3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "POU5F1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU5F1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 3.42338,
-            "x": -27.51116551338053,
-            "y": -85.69209865615021,
-            "size": 19.708956543016036,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000204531-pou5f1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "POU6F1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU6F1",
-            "aliases": "",
-            "gene_family": "POU",
-            "enrichment": 4.21115,
-            "x": -22.660558539639894,
-            "y": -87.1005114030426,
-            "size": 20.524739441629087,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000184271-pou6f1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "POU6F2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "POU6F2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 4.85534,
-            "x": -17.569112471164885,
-            "y": -88.2684897739593,
-            "size": 21.0854208947852,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000106536-pou6f2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "PRDM1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PRDM1",
-            "aliases": "",
-            "gene_family": "PRDM",
-            "enrichment": 0.38442,
-            "x": -13.589902103501792,
-            "y": -88.96805359687959,
-            "size": 11.09588924129891,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000057657-prdm1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "PRDM15_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PRDM15",
-            "aliases": "",
-            "gene_family": "PRDM",
-            "enrichment": 37.39947,
-            "x": -8.578781804571655,
-            "y": -89.59020316278756,
-            "size": 29.12706456421638,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000141956-prdm15"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "PRDM4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "PRDM4",
-            "aliases": "",
-            "gene_family": "PRDM",
-            "enrichment": 10.59496,
-            "x": -1.9012727299919363,
-            "y": -89.97991532562247,
-            "size": 24.1589702030606,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000110851-prdm4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX1",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 1.02472,
-            "x": 3.009389411033415,
-            "y": -89.94967245839621,
-            "size": 14.9577760814704,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000132005-rfx1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX2",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.33251,
-            "x": 6.204490736026996,
-            "y": -89.78588026358352,
-            "size": 10.524484390504307,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000087903-rfx2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX3",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.04241,
-            "x": 7.823924922163611,
-            "y": -89.65927837548297,
-            "size": 2.4130886621619734,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000080298-rfx3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX5",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 0.53348,
-            "x": 9.673292187032889,
-            "y": -89.47864224642822,
-            "size": 12.38662308927871,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000143390-rfx5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX6_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX6",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 1.13301,
-            "x": 13.12796068460559,
-            "y": -89.03738904675636,
-            "size": 15.35347535012992,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000185002-rfx6"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RFX7_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RFX7",
-            "aliases": "",
-            "gene_family": "RFX",
-            "enrichment": 8.25626,
-            "x": 17.89265396402866,
-            "y": -88.2034746147992,
-            "size": 23.176572996508384,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000181827-rfx7"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RUNX2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RUNX2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 20.81251,
-            "x": 23.996066185379576,
-            "y": -86.74208210336482,
-            "size": 26.818444904404213,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000124813-runx2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "RXRG_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "RXRG",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 28.996435288290517,
-            "y": -85.20097851886433,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000143171-rxrg"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "SMAD3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SMAD3",
-            "aliases": "",
-            "gene_family": "SMAD",
-            "enrichment": 0.0,
-            "x": 32.50344213870891,
-            "y": -83.92571863937539,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000166949-smad3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "SMAD4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SMAD4",
-            "aliases": "",
-            "gene_family": "SMAD",
-            "enrichment": 0.0,
-            "x": 35.95456961389238,
-            "y": -82.50617506514143,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000141646-smad4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "SMAD5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SMAD5",
-            "aliases": "",
-            "gene_family": "SMAD",
-            "enrichment": 0.0,
-            "x": 39.34388459308584,
-            "y": -80.94478825178273,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000113658-smad5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "SOX1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SOX1",
-            "aliases": "",
-            "gene_family": "SOX",
-            "enrichment": 0.10783,
-            "x": 41.69254322706809,
-            "y": -79.760465390186,
-            "size": 6.088792810933639,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000182968-sox1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "SOX2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SOX2",
-            "aliases": "",
-            "gene_family": "SOX",
-            "enrichment": 34.83827,
-            "x": 45.528929272868325,
-            "y": -77.63450649850333,
-            "size": 28.84763626198145,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000181449-sox2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "STAT4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "STAT4",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 1.26684,
-            "x": 50.27240912155849,
-            "y": -74.65041782277339,
-            "size": 15.793248950810156,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000138378-stat4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ATF4_Mouse-Minor",
+        "key": "ATF4_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "ATF4",
             "aliases": "",
             "gene_family": "ATF",
             "enrichment": 2.57006,
-            "x": 53.79293987141286,
-            "y": -72.15483088463697,
-            "size": 18.579666917502273,
+            "x": 63.63961030678928,
+            "y": 63.63961030678928,
+            "size": 15.176997105001458,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000128272-atf4"
         },
         "organism": 10090
     },
     {
-        "key": "SP1_Mouse-Minor",
+        "key": "CDX4_Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "SP1",
+            "label": "CDX4",
             "aliases": "",
             "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 57.09942830379769,
-            "y": -69.56763103182017,
-            "size": 14.861589598583762,
+            "enrichment": 6.07315,
+            "x": 58.88992952609772,
+            "y": 68.05862326267881,
+            "size": 20.213208040093768,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000185591-sp1"
+            "url": "/proteinTable/ensg00000131264-cdx4"
         },
         "organism": 10090
     },
     {
-        "key": "BCL11A_Mouse-Minor",
+        "key": "CEBPA_Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "BCL11A",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 59.934211327785846,
-            "y": -67.14082448493097,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000119866-bcl11a"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TCF7L2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF7L2",
-            "aliases": "",
-            "gene_family": "TCF7/LEF",
-            "enrichment": 1.34616,
-            "x": 62.771391580652555,
-            "y": -64.49614251277654,
-            "size": 16.03246246880466,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000148737-tcf7l2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TEAD1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD1",
-            "aliases": "TCF13, TEF1",
-            "gene_family": "TEAD",
-            "enrichment": 1.7584,
-            "x": 65.68313109112187,
-            "y": -61.52825602978278,
-            "size": 17.084742292640566,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000187079-tead1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TEAD2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD2",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 1.6205,
-            "x": 68.51421001558438,
-            "y": -58.35925827099242,
-            "size": 16.763051080846445,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000074219-tead2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TEAD3_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD3",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 0.2506,
-            "x": 70.59899887877086,
-            "y": -55.81918449167196,
-            "size": 9.41050631621654,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000007866-tead3"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TEAD4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEAD4",
-            "aliases": "",
-            "gene_family": "TEAD",
-            "enrichment": 1.20573,
-            "x": 72.50313694922436,
-            "y": -53.322557445437845,
-            "size": 15.598506285084943,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000197905-tead4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TEF_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TEF",
+            "label": "CEBPA",
             "aliases": "",
             "gene_family": "CCAAT/enhancer-binding protein",
-            "enrichment": 1.51096,
-            "x": 74.81654828222594,
-            "y": -50.02483486362903,
-            "size": 16.487366756702627,
+            "enrichment": 0.54627,
+            "x": 54.71709839545964,
+            "y": 71.45655423529453,
+            "size": 9.140751690179377,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000167074-tef"
+            "url": "/proteinTable/ensg00000245848-cebpa"
         },
         "organism": 10090
     },
     {
-        "key": "TFAP2E_Mouse-Minor",
+        "key": "CEBPG_Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "TFAP2E",
+            "label": "CEBPG",
             "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 76.93210297637533,
-            "y": -46.70601172903101,
-            "size": 14.861589598583762,
+            "gene_family": "CCAAT/enhancer-binding protein",
+            "enrichment": 1.2463,
+            "x": 51.60921810994866,
+            "y": 73.73254780678441,
+            "size": 11.870442526756793,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000116819-tfap2e"
+            "url": "/proteinTable/ensg00000153879-cebpg"
         },
         "organism": 10090
     },
     {
-        "key": "TFCP2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TFCP2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 11.01879,
-            "x": 79.36854896237342,
-            "y": -42.4338713247723,
-            "size": 24.31346939631314,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000135457-tfcp2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "VEZF1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "VEZF1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 81.56799210614669,
-            "y": -38.03501891377986,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000136451-vezf1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZBED2_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBED2",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 5.19442,
-            "x": 83.38462272582848,
-            "y": -33.867457726721234,
-            "size": 21.351322118380473,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000177494-zbed2"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZBTB17_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB17",
-            "aliases": "",
-            "gene_family": "ZBTB",
-            "enrichment": 2.9398,
-            "x": 85.16246587160697,
-            "y": -29.109352563521185,
-            "size": 19.10910845382761,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000116809-zbtb17"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZBTB24_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB24",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 86.44587044663227,
-            "y": -25.042194047728113,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000112365-zbtb24"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZBTB32_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZBTB32",
-            "aliases": "",
-            "gene_family": "ZBTB",
-            "enrichment": 21.74982,
-            "x": 87.75990658409461,
-            "y": -19.95491910158967,
-            "size": 26.99195991383713,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000011590-zbtb32"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZEB1_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZEB1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 88.7748325025524,
-            "y": -14.799632230017288,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000148516-zeb1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF211_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF211",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 3.64005,
-            "x": 89.38863134575311,
-            "y": -10.472468005825865,
-            "size": 19.950685334361623,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000121417-znf211"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF274_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF274",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.79163745827053,
-            "y": -6.1206080222890735,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000171606-znf274"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF343_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF343",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.96817776107738,
-            "y": -2.3931131087311823,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000088876-znf343"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF382_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF382",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.99004627426721,
-            "y": 1.3384960049417045,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000161298-znf382"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF410_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF410",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.85720540185713,
-            "y": 5.067803998622705,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000119725-znf410"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF692_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF692",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.56988352165786,
-            "y": 8.788399508252022,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000171163-znf692"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF768_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF768",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.0,
-            "x": 89.12857459265034,
-            "y": 12.493886148127265,
-            "size": 14.861589598583762,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000169957-znf768"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "ZNF8_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ZNF8",
-            "aliases": "",
-            "gene_family": "KRAB-ZF",
-            "enrichment": 0.15699,
-            "x": 88.6940552746725,
-            "y": 15.276274380009735,
-            "size": 7.568360530460305,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000278129-znf8"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "CUX1_Mouse-Minor",
+        "key": "CUX1_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "CUX1",
             "aliases": "",
             "gene_family": "CUT-containing",
             "enrichment": 4.3242,
-            "x": 88.02466434619512,
-            "y": 18.752558938440462,
-            "size": 20.629087314589313,
+            "x": 47.01701605320715,
+            "y": 76.74242764893786,
+            "size": 18.080378284965967,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000257923-cux1"
         },
         "organism": 10090
     },
     {
-        "key": "FOXK2_Mouse-Minor",
+        "key": "CUX2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "CUX2",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 10.78001,
+            "x": 40.23362934730668,
+            "y": 80.50624242593578,
+            "size": 24.242696821393853,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000111249-cux2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "DLX6_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "DLX6",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.3409,
+            "x": 34.157055578712324,
+            "y": 83.26641312193505,
+            "size": 12.16598875401859,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000006377-dlx6"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "DMBX1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "DMBX1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 11.79449,
+            "x": 27.774058449808162,
+            "y": 85.60725248030474,
+            "size": 24.922814686382175,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000197587-dmbx1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "DUX4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "DUX4",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.12321,
+            "x": 21.357386401457838,
+            "y": 87.42918303460706,
+            "size": 11.465347739873206,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000260596-dux4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "FOXK2_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "FOXK2",
             "aliases": "",
             "gene_family": "None",
             "enrichment": 2.39398,
-            "x": 86.87694932233106,
-            "y": 23.503099294457357,
-            "size": 18.300112750325713,
+            "x": 16.648090386144432,
+            "y": 88.44682632234333,
+            "size": 14.815079523574553,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000141568-foxk2"
         },
         "organism": 10090
     },
     {
-        "key": "IRF7_Mouse-Minor",
+        "key": "GATA3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "GATA3",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 4.14975,
+            "x": 10.732547821211407,
+            "y": 89.35777759806591,
+            "size": 17.834546710354253,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000107485-gata3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HES1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HES1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 2.13582,
+            "x": 4.872930539934457,
+            "y": 89.86798399849067,
+            "size": 14.250371954260519,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000114315-hes1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HIF1A_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HIF1A",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 3.24086,
+            "x": -0.7475506533111941,
+            "y": 89.9968953243429,
+            "size": 16.416722078284003,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000100644-hif1a"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HLF_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HLF",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.71604,
+            "x": -6.177866121870096,
+            "y": 89.78771614302399,
+            "size": 13.226630468264048,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000108924-hlf"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HOXA7_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXA7",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 0.69806,
+            "x": -10.388217952887095,
+            "y": 89.39846155143451,
+            "size": 9.836633483763379,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000122592-hoxa7"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HOXA9_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXA9",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 3.01334,
+            "x": -15.080483403063576,
+            "y": 88.72755502283337,
+            "size": 16.018190505725087,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000078399-hoxa9"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HOXd9_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HOXd9",
+            "aliases": "",
+            "gene_family": "HOX",
+            "enrichment": 3.22522,
+            "x": -20.901462265874397,
+            "y": 87.53929903276715,
+            "size": 16.38996857482972,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000128709-hoxd9"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HSF1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF1",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 3.28969,
+            "x": -26.71567655604562,
+            "y": 85.94342689323456,
+            "size": 16.49966726649454,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000185122-hsf1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HSF2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF2",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 4.43054,
+            "x": -32.723941443745616,
+            "y": 83.83998840879158,
+            "size": 18.22670441109976,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000025156-hsf2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "HSF4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "HSF4",
+            "aliases": "",
+            "gene_family": "HSF",
+            "enrichment": 1.8013,
+            "x": -38.06199452709661,
+            "y": 81.55540799125015,
+            "size": 13.446757871349133,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000102878-hsf4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IKZF1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IKZF1",
+            "aliases": "",
+            "gene_family": "IKAROS",
+            "enrichment": 0.75918,
+            "x": -41.92852704591264,
+            "y": 79.63666630240226,
+            "size": 10.09731008248633,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000185811-ikzf1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IRF1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IRF1",
+            "aliases": "",
+            "gene_family": "IRF",
+            "enrichment": 11.55354,
+            "x": -47.47419601618801,
+            "y": 76.46045195142753,
+            "size": 24.76556762318936,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000125347-irf1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IRF3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IRF3",
+            "aliases": "",
+            "gene_family": "IRF",
+            "enrichment": 1.38361,
+            "x": -53.10638601497667,
+            "y": 72.66162511551947,
+            "size": 12.295315821402438,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000126456-irf3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IRF5_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IRF5",
+            "aliases": "",
+            "gene_family": "IRF",
+            "enrichment": 2.58368,
+            "x": -57.09168974924521,
+            "y": 69.573981929856,
+            "size": 15.204277922063397,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000128604-irf5"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IRF6_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "IRF6",
+            "aliases": "",
+            "gene_family": "IRF",
+            "enrichment": 3.62334,
+            "x": -61.536115118483465,
+            "y": 65.67576825682933,
+            "size": 17.0442348474398,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000117595-irf6"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "IRF7_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "IRF7",
             "aliases": "",
             "gene_family": "IRF",
             "enrichment": 3.72354,
-            "x": 85.4961889819527,
-            "y": 28.114083117936275,
-            "size": 20.04001021487946,
+            "x": -65.96460327715434,
+            "y": 61.22639230338203,
+            "size": 17.200756822826328,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000185507-irf7"
         },
         "organism": 10090
     },
     {
-        "key": "NFIL3_Mouse-Minor",
+        "key": "JDP2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "JDP2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 15.97156,
+            "x": -71.23820884454393,
+            "y": 55.00106908616542,
+            "size": 27.312351384348435,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000140044-jdp2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "JUN_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "JUN",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 17.54389,
+            "x": -76.97893630710236,
+            "y": 46.62878258143868,
+            "size": 28.082724570268816,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000177606-jun"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "JUNB_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "JUNB",
+            "aliases": "",
+            "gene_family": "AP1",
+            "enrichment": 14.08841,
+            "x": -81.6628761651061,
+            "y": 37.83086909446499,
+            "size": 26.305411743036203,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000171223-junb"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "LEF1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "LEF1",
+            "aliases": "",
+            "gene_family": "TCF7/LEF",
+            "enrichment": 0.96375,
+            "x": -84.29316815909462,
+            "y": 31.538259332160298,
+            "size": 10.900891092013747,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000138795-lef1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "MEIS1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "MEIS1",
+            "aliases": "",
+            "gene_family": "MEIS",
+            "enrichment": 3.107,
+            "x": -85.90427038648087,
+            "y": 26.841317578807228,
+            "size": 16.18472588565894,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000143995-meis1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "MEIS3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "MEIS3",
+            "aliases": "",
+            "gene_family": "MEIS",
+            "enrichment": 0.42856,
+            "x": -87.14712922593162,
+            "y": 22.480610927614386,
+            "size": 8.548265808816925,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000105419-meis3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "MSANTD3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "MSANTD3",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 8.06657,
+            "x": -88.38141518376614,
+            "y": 16.99192308465272,
+            "size": 22.13955756967027,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000066697-msantd3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NANOG_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NANOG",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 0.23062,
+            "x": -89.24502807881244,
+            "y": 11.63292582336795,
+            "size": 7.469936829549261,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000111704-nanog"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFAT5_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NFAT5",
+            "aliases": "",
+            "gene_family": "NFAT",
+            "enrichment": 76.2115,
+            "x": -89.96258701279837,
+            "y": 2.5947905435087844,
+            "size": 42.0,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000102908-nfat5"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFATc1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NFATc1",
+            "aliases": "",
+            "gene_family": "NFAT",
+            "enrichment": 39.25924,
+            "x": -89.25677014475043,
+            "y": -11.542486011565622,
+            "size": 35.2803818981301,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000131196-nfatc1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFATc2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NFATc2",
+            "aliases": "",
+            "gene_family": "NFAT",
+            "enrichment": 26.81303,
+            "x": -86.85492277578858,
+            "y": -23.58436748381863,
+            "size": 31.741635154394906,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000101096-nfatc2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFATc3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NFATc3",
+            "aliases": "",
+            "gene_family": "NFAT",
+            "enrichment": 23.9857,
+            "x": -83.15741126947275,
+            "y": -34.421576822681544,
+            "size": 30.752123142186147,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000072736-nfatc3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFATc4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NFATc4",
+            "aliases": "",
+            "gene_family": "NFAT",
+            "enrichment": 35.71274,
+            "x": -77.87244723451104,
+            "y": -45.12074868293182,
+            "size": 34.379618601372584,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000100968-nfatc4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "NFIL3_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "NFIL3",
             "aliases": "",
             "gene_family": "None",
             "enrichment": 1.23185,
-            "x": 83.98952370932524,
-            "y": 32.338211253572666,
-            "size": 15.682925223925627,
+            "x": -73.28684820845642,
+            "y": -52.24019410062206,
+            "size": 11.824136610720762,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000165030-nfil3"
         },
         "organism": 10090
     },
     {
-        "key": "RBPJ_Mouse-Minor",
+        "key": "NKX2-2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "NKX2-2",
+            "aliases": "",
+            "gene_family": "NKX",
+            "enrichment": 3.22692,
+            "x": -70.16442020573538,
+            "y": -56.36447584421408,
+            "size": 16.392880994445854,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000125820-nkx2-2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ONECUT1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ONECUT1",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 11.6636,
+            "x": -65.18817380892499,
+            "y": -62.05241329277522,
+            "size": 24.837711067859523,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000169856-onecut1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ONECUT2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ONECUT2",
+            "aliases": "",
+            "gene_family": "CUT-containing",
+            "enrichment": 9.51478,
+            "x": -58.7964968648091,
+            "y": -68.13935688298278,
+            "size": 23.32040865507615,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000119547-onecut2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "OTX2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "OTX2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 5.90948,
+            "x": -52.55671465568042,
+            "y": -73.06019261267649,
+            "size": 20.03471677026268,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000165588-otx2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "PKNOX1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PKNOX1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 24.65743,
+            "x": -44.691215158368145,
+            "y": -78.11974966465552,
+            "size": 30.9955135341772,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000160199-pknox1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "POU4F1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "POU4F1",
+            "aliases": "",
+            "gene_family": "POU",
+            "enrichment": 2.97985,
+            "x": -37.0257311914786,
+            "y": -82.03106259055998,
+            "size": 15.957762948921944,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000152192-pou4f1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "POU4F3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "POU4F3",
+            "aliases": "",
+            "gene_family": "POU",
+            "enrichment": 3.43369,
+            "x": -31.483410255436073,
+            "y": -84.3136695838101,
+            "size": 16.73930312425226,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000091010-pou4f3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "POU6F1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "POU6F1",
+            "aliases": "",
+            "gene_family": "POU",
+            "enrichment": 4.21115,
+            "x": -25.456224130023497,
+            "y": -86.32485536067819,
+            "size": 17.92191311183162,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000184271-pou6f1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "POU6F2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "POU6F2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 4.85534,
+            "x": -18.935317992974632,
+            "y": -87.98553138161371,
+            "size": 18.78678668474884,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000106536-pou6f2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "PRDM1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PRDM1",
+            "aliases": "",
+            "gene_family": "PRDM",
+            "enrichment": 0.38442,
+            "x": -14.051178065164567,
+            "y": -88.89636885149493,
+            "size": 8.313953791660229,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000057657-prdm1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "PRDM4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PRDM4",
+            "aliases": "",
+            "gene_family": "PRDM",
+            "enrichment": 10.59496,
+            "x": -8.152109782420608,
+            "y": -89.63003462063017,
+            "size": 24.113270441160314,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000110851-prdm4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RBPJ_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "RBPJ",
             "aliases": "",
             "gene_family": "None",
             "enrichment": 2.6791,
-            "x": 82.34016180442269,
-            "y": 36.33314951970843,
-            "size": 18.743336314470437,
+            "x": -0.9197847999145689,
+            "y": -89.99529985461378,
+            "size": 15.39268934295588,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000168214-rbpj"
         },
         "organism": 10090
     },
     {
-        "key": "STAT6_Mouse-Minor",
+        "key": "RFX1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RFX1",
+            "aliases": "",
+            "gene_family": "RFX",
+            "enrichment": 1.02472,
+            "x": 3.940544372836084,
+            "y": -89.91369256150983,
+            "size": 11.122454329127088,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000132005-rfx1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RFX5_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RFX5",
+            "aliases": "",
+            "gene_family": "RFX",
+            "enrichment": 0.53348,
+            "x": 7.636532395788431,
+            "y": -89.67543349751968,
+            "size": 9.078691722728847,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000143390-rfx5"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RFX6_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RFX6",
+            "aliases": "",
+            "gene_family": "RFX",
+            "enrichment": 1.13301,
+            "x": 11.387988982755413,
+            "y": -89.27661343783511,
+            "size": 11.498515970218381,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000185002-rfx6"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RUNX2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RUNX2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 20.81251,
+            "x": 18.800170726327952,
+            "y": -88.01450778514257,
+            "size": 29.521235313643988,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000124813-runx2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "SOX1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "SOX1",
+            "aliases": "",
+            "gene_family": "SOX",
+            "enrichment": 0.10783,
+            "x": 25.29063442623951,
+            "y": -86.37351336097375,
+            "size": 7.0,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000182968-sox1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "SOX2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "SOX2",
+            "aliases": "",
+            "gene_family": "SOX",
+            "enrichment": 34.83827,
+            "x": 32.4336007388783,
+            "y": -83.95273398234886,
+            "size": 34.14616963132748,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000181449-sox2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "STAT6_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "STAT6",
             "aliases": "",
             "gene_family": "STAT",
             "enrichment": 31.00868,
-            "x": 79.77493711879121,
-            "y": 41.66484618587844,
-            "size": 28.38894975068677,
+            "x": 43.58910041929329,
+            "y": -78.74001730147617,
+            "size": 33.06297698388131,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000166888-stat6"
         },
         "organism": 10090
     },
     {
-        "key": "TBX1_Mouse-Minor",
+        "key": "TBP_Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "TBX1",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 1.69629,
-            "x": 76.98226889891922,
-            "y": 46.62328039911496,
-            "size": 16.9430950204526,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000184058-tbx1"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TBX4_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TBX4",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 0.39998,
-            "x": 75.08929388785761,
-            "y": 49.61449327991721,
-            "size": 11.252181674737075,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000121075-tbx4"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TBX5_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TBX5",
-            "aliases": "",
-            "gene_family": "TBX",
-            "enrichment": 1.67771,
-            "x": 73.08333466308669,
-            "y": 52.52452945551509,
-            "size": 16.899712578703245,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000089225-tbx5"
-        },
-        "organism": 10090
-    },
-    {
-        "key": "TCF12_Mouse-Minor",
-        "attributes": {
-            "node_type": "protein",
-            "label": "TCF12",
+            "label": "TBP",
             "aliases": "",
             "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 70.68503793013491,
-            "y": 55.710191283241784,
-            "size": 14.861589598583762,
+            "enrichment": 2.56906,
+            "x": 51.1043219684881,
+            "y": -74.08338731551834,
+            "size": 15.17499021034681,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000140262-tcf12"
+            "url": "/proteinTable/ensg00000112592-tbp"
         },
         "organism": 10090
     },
     {
-        "key": "TCF7_Mouse-Minor",
+        "key": "TCF7_Minor",
         "attributes": {
             "node_type": "protein",
             "label": "TCF7",
             "aliases": "",
             "gene_family": "TCF7/LEF",
             "enrichment": 6.78549,
-            "x": 67.6945829507564,
-            "y": 59.30803857086458,
-            "size": 22.403811991995187,
+            "x": 56.413307976179965,
+            "y": -70.1251644075411,
+            "size": 20.950293956060868,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000081059-tcf7"
         },
         "organism": 10090
     },
     {
-        "key": "TCF7L1_Mouse-Minor",
+        "key": "TBX1_Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "TCF7L1",
+            "label": "TBX1",
+            "aliases": "",
+            "gene_family": "TBX",
+            "enrichment": 1.69629,
+            "x": 61.148270982333166,
+            "y": -66.03702715803576,
+            "size": 13.174645089860409,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000184058-tbx1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TBX4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TBX4",
+            "aliases": "",
+            "gene_family": "TBX",
+            "enrichment": 0.39998,
+            "x": 63.990442698068,
+            "y": -63.28683309587608,
+            "size": 8.39726200314938,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000121075-tbx4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TBX5_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TBX5",
+            "aliases": "",
+            "gene_family": "TBX",
+            "enrichment": 1.67771,
+            "x": 66.7029825707646,
+            "y": -60.42112309585344,
+            "size": 13.125386120943446,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000089225-tbx5"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TEAD1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD1",
+            "aliases": "TCF13, TEF1",
+            "gene_family": "TEAD",
+            "enrichment": 1.7584,
+            "x": 69.86180547238222,
+            "y": -56.73912350520606,
+            "size": 13.336853303269645,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000187079-tead1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TEAD2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD2",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 1.6205,
+            "x": 72.80105331187752,
+            "y": -52.91508893199714,
+            "size": 12.971502174732283,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000074219-tead2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TEAD3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD3",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 0.2506,
+            "x": 74.95190337363515,
+            "y": -49.82180426950895,
+            "size": 7.578272481800074,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000007866-tead3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TEAD4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEAD4",
+            "aliases": "",
+            "gene_family": "TEAD",
+            "enrichment": 1.20573,
+            "x": 76.85411088031029,
+            "y": -46.834235776800845,
+            "size": 11.739614783683377,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000197905-tead4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TEF_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TEF",
+            "aliases": "",
+            "gene_family": "CCAAT/enhancer-binding protein",
+            "enrichment": 1.51096,
+            "x": 79.086874094062,
+            "y": -42.956563480217845,
+            "size": 12.667033117136244,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000167074-tef"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TFCP2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TFCP2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 11.01879,
+            "x": 82.10279035132231,
+            "y": -36.86640498511914,
+            "size": 24.407156815532648,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000135457-tfcp2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "YY1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "YY1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 2.93987,
+            "x": 84.84912467560406,
+            "y": -30.010432215877827,
+            "size": 15.885000644477365,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000100811-yy1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ZBED2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZBED2",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 5.19442,
+            "x": 86.77610662113975,
+            "y": -23.872731717936798,
+            "size": 19.208468961187187,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000177494-zbed2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ZBTB17_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZBTB17",
+            "aliases": "",
+            "gene_family": "ZBTB",
+            "enrichment": 2.9398,
+            "x": 88.25972634537423,
+            "y": -17.61308335981107,
+            "size": 15.884872642902426,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000116809-zbtb17"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ZBTB32_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZBTB32",
+            "aliases": "",
+            "gene_family": "ZBTB",
+            "enrichment": 21.74982,
+            "x": 89.51654082995998,
+            "y": -9.316056989848617,
+            "size": 29.89983569774339,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000011590-zbtb32"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ZNF211_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZNF211",
+            "aliases": "",
+            "gene_family": "KRAB-ZF",
+            "enrichment": 3.64005,
+            "x": 89.99711474412156,
+            "y": -0.7206509095370589,
+            "size": 17.07055106852112,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000121417-znf211"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "ZNF8_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "ZNF8",
+            "aliases": "",
+            "gene_family": "KRAB-ZF",
+            "enrichment": 0.15699,
+            "x": 89.92338850525098,
+            "y": 3.712707870772279,
+            "size": 7.114730233283928,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000278129-znf8"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "BCL11b_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "BCL11b",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 39.57901,
+            "x": 89.26611552484533,
+            "y": 11.469987755223025,
+            "size": 35.35823705919895,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000127152-bcl11b"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "CEBPD_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "CEBPD",
+            "aliases": "",
+            "gene_family": "CCAAT/enhancer-binding protein",
+            "enrichment": 0.37864,
+            "x": 87.89511860483641,
+            "y": 19.35066214478822,
+            "size": 8.282821228691093,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000221869-cebpd"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "PBX3_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PBX3",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 7.74372,
+            "x": 86.54218836917701,
+            "y": 24.70727893301653,
+            "size": 21.854284660855217,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000167081-pbx3"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "POU5F1_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "POU5F1",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 3.42338,
+            "x": 84.33531628458488,
+            "y": 31.425378711783775,
+            "size": 16.72238552674586,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000204531-pou5f1"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "PRDM15_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "PRDM15",
+            "aliases": "",
+            "gene_family": "PRDM",
+            "enrichment": 37.39947,
+            "x": 80.57731846240019,
+            "y": 40.091093143102775,
+            "size": 34.816851701158726,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000141956-prdm15"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RFX2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RFX2",
+            "aliases": "",
+            "gene_family": "RFX",
+            "enrichment": 0.33251,
+            "x": 76.77533341467857,
+            "y": 46.963264144062,
+            "size": 8.031171412272778,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000087903-rfx2"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "RFX7_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "RFX7",
+            "aliases": "",
+            "gene_family": "RFX",
+            "enrichment": 8.25626,
+            "x": 73.72837146792331,
+            "y": 51.61518420666453,
+            "size": 22.30310221171006,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000181827-rfx7"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "STAT4_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "STAT4",
+            "aliases": "",
+            "gene_family": "None",
+            "enrichment": 1.26684,
+            "x": 69.951694913,
+            "y": 56.628264840082906,
+            "size": 11.93572079761393,
+            "color": "#292BA5",
+            "url": "/proteinTable/ensg00000138378-stat4"
+        },
+        "organism": 10090
+    },
+    {
+        "key": "TCF7L2_Minor",
+        "attributes": {
+            "node_type": "protein",
+            "label": "TCF7L2",
             "aliases": "",
             "gene_family": "TCF7/LEF",
-            "enrichment": 0.00198,
-            "x": 65.37830623074008,
-            "y": 61.852057964141935,
-            "size": 5,
+            "enrichment": 1.34616,
+            "x": 67.08603314898829,
+            "y": 59.99553446993237,
+            "size": 12.182049506034549,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000152284-tcf7l1"
+            "url": "/proteinTable/ensg00000148737-tcf7l2"
         },
         "organism": 10090
     }

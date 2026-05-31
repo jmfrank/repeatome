@@ -1494,8 +1494,8 @@ def update():
     import_proteomics()
     print("NETWORK DATA")
     for org in Organism.objects.all():
-        GetNetworkData(org.id)
-    GetNetworkDataAll()
+        GetNetworkData(org.id, 0.1)
+    # GetNetworkDataAll()
     print("MICROSCOPY")
     update_microscopy()
     print("GENOME REFS")
@@ -1569,8 +1569,8 @@ if __name__ == "__main__":
        
     elif command == 'network_data':
         for org in Organism.objects.all():
-            GetNetworkData(org.id)
-        GetNetworkDataAll()
+            GetNetworkData(org.id, 0.1)
+        # GetNetworkDataAll()
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
 
