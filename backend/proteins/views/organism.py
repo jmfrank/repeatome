@@ -1,7 +1,7 @@
 import math
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Organism, Repeat
+from ..models import Organism, Repeat, ProteinTF
 from django.db.models import Count
 import requests
 from proteins.util.repeat_network_data import GetNetworkData
@@ -34,6 +34,7 @@ class OrganismDetailView(DetailView):
         print(slug)
         if slug:
             shutil.copyfile('frontend/static/network/repeat_network_db_' + str(slug) + '.json', 'frontend/static/network/repeat_network_db.json')  # just write to file, ignore return
+        
         return super().get(request, *args, **kwargs)
 
 # class RepeatDetailView(DetailView):

@@ -9850,11 +9850,7 @@ a {
 }
 .home-stats span {
   margin-left: 20px;
-}
-@media (min-width: 576px) {
-  .home-stats span {
-    margin-left: 40px;
-  }
+  margin-top: 0px;
 }
 .home-stats .gfpicon {
   height: 38px;
@@ -9862,6 +9858,25 @@ a {
   padding-bottom: 3px;
   filter: brightness(140%);
   opacity: 0.8;
+}
+
+.nimsb_holder {
+  float: left;
+  margin-left: 20px;
+}
+
+.nimsb_icon {
+  display: block;
+  height: 100px;
+  margin-top: -50px;
+}
+
+.footer .nimsb_holder {
+  margin-top: 50px !important;
+}
+
+.footer .col-12 {
+  margin-top: -100px;
 }
 
 .dropdown-menu {
@@ -9944,6 +9959,7 @@ a {
   .logo_pic {
     margin-left: -20px;
     margin-top: 0px;
+    display: block !important;
   }
 }
 .navbar .navbar-brand span {

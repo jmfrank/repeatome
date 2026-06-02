@@ -79,6 +79,18 @@ function useHashRoute(){
   return hash;
 }
 
+function getFamilyColor(familyColors, name) {
+  if (!familyColors || !name) return null;
+
+  const target = String(name).trim().toLowerCase();
+
+  const key = Object.keys(familyColors).find(
+    (k) => k.trim().toLowerCase() === target
+  );
+
+  return key ? familyColors[key] : null;
+}
+
 // --------------------------- Viewer Page ---------------------------
 function ViewerPage(){
   const [karyoText, setKaryoText] = useState(null);
@@ -88,6 +100,7 @@ function ViewerPage(){
   const [showDiag, setShowDiag]       = useState(false);
   const [parent, setParent] = useState(null);
   const [familyColors, setColors] = useState(null);
+  const [onlyRepeat, setOnlyRepeat] = useState(null);
 
   const AUTOLOAD_DEFAULTS = false;
 
@@ -189,9 +202,14 @@ function ViewerPage(){
         setColors(familyColorsObj)
         console.log(familyColors)
 
-        const parent_repeat = el.getAttribute("data-karyo-parent")
-        console.log(parent_repeat)
+        const parent_repeat = el.dataset.karyoParent
         setParent(parent_repeat)
+        console.log(parent_repeat, parent)
+
+        const only_repeat_txt = el.dataset.onlyRepeat
+        console.log(only_repeat_txt, typeof(only_repeat_txt))
+        setOnlyRepeat(only_repeat_txt.toString())
+        console.log(onlyRepeat)
 
       } catch (err) {
         console.error("Error loading static files", err);
@@ -204,7 +222,7 @@ function ViewerPage(){
   return (
     <div className="main-grid grid grid-cols-1 lg:grid-cols-12 gap-4">
       <div className="col-left lg:col-span-9">
-        <DataKaryotypeViewer karyoText={karyoText} bedText={bedText} parent={parent} familyColors={familyColors} />
+        <DataKaryotypeViewer karyoText={karyoText} bedText={bedText} parent={parent} onlyRepeat={onlyRepeat} familyColors={familyColors} />
       </div>
       {/* <div className="col-right lg:col-span-3">
         <aside className="bg-white rounded-2xl shadow p-4 space-y-4">
@@ -282,7 +300,7 @@ function ElementPage({elementId}){
 }
 
 // -------------------- Data Karyotype Viewer (no d3) ------------------
-function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
+function DataKaryotypeViewer({karyoText, bedText, parent, onlyRepeat, familyColors}){
   const containerRef = useRef(null);
   const svgRef = useRef(null);
   const gPanRef = useRef(null);
@@ -351,8 +369,8 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
 
   const karyos = useMemo(() => (karyoText ? parseKaryo(karyoText) : []), [karyoText]);
   const beds   = useMemo(() => (bedText ? parseBED(bedText) : []), [bedText]);
-  console.log("RAW BED TEXT:", bedText);
-  console.log("PARSED BEDS:", beds.slice(0, 20));
+  // console.log("RAW BED TEXT:", bedText);
+  // console.log("PARSED BEDS:", beds.slice(0, 20));
 
   useEffect(() => {
     hasFitRef.current = false;
@@ -374,27 +392,43 @@ function DataKaryotypeViewer({karyoText, bedText, parent, familyColors}){
       return true;
     });
   }, [beds, byKey]);
-  console.log("MATCHED: ", matchedBeds)
+  // console.log("MATCHED: ", matchedBeds)
 
-  // families ONLY from rows that are actually matched
+  // families ONLY from rows that are actually matched or only repeat
+  const onlyRepeatEnabled = String(onlyRepeat).toLowerCase() === "true";
   const families = useMemo(() => {
-    return Array.from(
+    const fams = Array.from(
       new Set(
         matchedBeds
           .map((b) => String(b.family || "").trim())
           .filter(Boolean)
       )
     );
-  }, [matchedBeds]);
+
+    return onlyRepeatEnabled && parent
+      ? fams.filter((f) => f === parent)
+      : fams;
+  }, [matchedBeds, onlyRepeatEnabled, parent]);
+
+  // console.log("karyo keys:", karyos.map(k => k.key).slice(0, 30));
+  // console.log("bed keys:", beds.map(b => b.key).slice(0, 30));
+  // console.log("beds count:", beds.length);
+  // console.log("matchedBeds count:", matchedBeds.length);
+  // console.log("all BED families:", Array.from(new Set(beds.map(b => b.family))));
+  // console.log("matched BED families:", Array.from(new Set(matchedBeds.map(b => b.family))));
 
   const [visibleFamilies, setVisibleFamilies] = useState(new Set());
+
+  // console.log("parent:", JSON.stringify(parent));
+  // console.log("familyColors keys:", Object.keys(familyColors || {}));
+  // console.log("direct color:", familyColors?.[parent]);
 
   const familyColor = useMemo(() => {
     const m = new Map();
 
     const parentColor =
-      parent && parent !== "none" && familyColors
-        ? familyColors[parent]
+      parent && parent !== "none"
+        ? getFamilyColor(familyColors, parent)
         : null;
 
     families.forEach((f, i) => {
