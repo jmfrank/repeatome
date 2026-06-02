@@ -79,7 +79,8 @@ class Repeat(models.Model):
             hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
             r = requests.get(hmm_url)
             if r.status_code != 200:
-                raise Exception(f"HMM not found for {self.dfam_id}")
+                # raise Exception(f"HMM not found for {self.dfam_id}")
+                return None
 
             return r.text
         return None
@@ -94,14 +95,14 @@ class Repeat(models.Model):
             return False
         
     def karyotype_data_exists(self):
+        print("KARYOTYPE DATA", self.name)
         if not self.parental_organism:
             return False
-        # Check case-sensitive file path first
+        # Case sensitive
         file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyotype_viewer/{self.parental_organism.id}/{self.name}_karyotype.bed"
         if os.path.exists(file_path):
-            # File or directory exists
             return True
-        # If not found, check case-insensitive file path (works for PC and Mac)
+        # Not case sensitive
         file_path = f"{settings.ROOT_DIR.parent}/frontend/static/karyotype_viewer/{self.parental_organism.id}/{self.repeat_lower()}_karyotype.bed"
         return os.path.exists(file_path)
         

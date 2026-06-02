@@ -40,12 +40,12 @@
 
     {% block twitter_card %}
       <meta name="twitter:card" content="{% block twitter_card_type %}summary{% endblock twitter_card_type %}" />
-      <meta name="twitter:site" content="@FPbase" />
-      <meta property="og:site_name" content="FPbase">
+      <meta name="twitter:site" content="@Repeatome" />
+      <meta property="og:site_name" content="Repeatome">
       <meta property="og:url" content="{{ABSOLUTE_ROOT_URL}}{{ request.get_full_path }}">
-      <meta property="og:title" content="{% block twitter_title %}FPbase: The Fluorescent Protein Database{% endblock twitter_title %}">
-      <meta property="og:description" content="{% block twitter_description %}FPbase is a free and open-source, community-editable database for fluorescent proteins and their properties.{% endblock twitter_description %}">
-      <meta property="og:image" content="{% block twitter_image %}https://www.fpbase.org{% static 'images/square_logo_white_on_green.gif' %}{% endblock twitter_image %}">
+      <meta property="og:title" content="{% block twitter_title %}Repeatome: a multi-omics database for repetitive DNAs{% endblock twitter_title %}">
+      <meta property="og:description" content="{% block twitter_description %}Repeatome serves as a centralized resource for describing the multi-omic state of repetitive DNAs and investigating their biological functions. {% endblock twitter_description %}">
+      <meta property="og:image" content="{% block twitter_image %}https://www.repeatome.org{% static 'logo_2-cropped.svg' %}{% endblock twitter_image %}">
     {% endblock twitter_card %}
 
     <link rel="shortcut icon" href="{% static 'icon_logo.svg' %}">
@@ -142,6 +142,9 @@
     <footer class="footer container-fluid pl-0">
       <div class="container">
         <div class="row">
+          <span class='nimsb_holder'>
+            {% webp_picture 'images/nimsb.png' 'nimsb_icon' %}
+          </span>
           <div class="col-12 text-right">
 
             <p>@RepeatOme, <span id='curyear'>2025</span>

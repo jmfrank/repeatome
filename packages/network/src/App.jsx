@@ -13,9 +13,18 @@ export default function App() {
   // ---------- 1) Load JSON from data-network ----------
   const [dataset, setDataset] = useState(null);
 
+  const containerRef = useRef(null);
+
+  const [threshold, setThreshold] = useState(() => {
+    const el = document.getElementById("network-container");
+    return Number(el?.dataset.threshold || 0.1);
+  });
+
   useEffect(() => {
     const el = document.getElementById("network-container");
+    containerRef.current = el;
     if (!el) return;
+    const organism = el.getAttribute("data-organism")
 
     const normalize = (json) => {
       if (Array.isArray(json)) return json;
@@ -160,28 +169,47 @@ export default function App() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
-  // zoom via non-passive wheel listener
-  useEffect(() => {
+  const handleWheel = (e) => {
+    e.preventDefault();
+
+    const factor = Math.pow(1.0015, e.deltaY);
     const svg = svgRef.current;
     if (!svg) return;
 
-    const handleWheel = (e) => {
-      e.preventDefault();
-      const factor = Math.pow(1.0015, e.deltaY);
-      const rect = svg.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width;
-      const py = (e.clientY - rect.top) / rect.height;
-      setView((v) => {
-        const cx = v.x + px * v.w;
-        const cy = v.y + py * v.h;
-        const newW = Math.max(50, Math.min(10000, v.w * factor));
-        const newH = Math.max(50, Math.min(10000, v.h * factor));
-        return { x: cx - px * newW, y: cy - py * newH, w: newW, h: newH };
-      });
+    const rect = svg.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+
+    setView((v) => {
+      const cx = v.x + px * v.w;
+      const cy = v.y + py * v.h;
+
+      const newW = Math.max(50, Math.min(10000, v.w * factor));
+      const newH = Math.max(50, Math.min(10000, v.h * factor));
+
+      return {
+        x: cx - px * newW,
+        y: cy - py * newH,
+        w: newW,
+        h: newH,
+      };
+    });
+  };
+
+  // listen for slider
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleSettingsChange = () => {
+      setThreshold(Number(container.dataset.threshold || 0));
     };
 
-    svg.addEventListener("wheel", handleWheel, { passive: false });
-    return () => svg.removeEventListener("wheel", handleWheel);
+    container.addEventListener("network-settings-change", handleSettingsChange);
+
+    return () => {
+      container.removeEventListener("network-settings-change", handleSettingsChange);
+    };
   }, []);
 
   // ---------- 4) Layout: d3-force on full graph (more horizontal & tighter) ----------
@@ -210,6 +238,8 @@ export default function App() {
     });
 
     proteinsWithSat.forEach((p) => {
+      if (Number(p.attributes?.enrichment || 0) < threshold) return;
+
       const size = Number(p.attributes?.size ?? 6);
       const node = {
         id: p.key,
@@ -224,9 +254,12 @@ export default function App() {
     // Build links
     const links = [];
 
-    // protein → satellite (binding)
+    // protein -> satellite (binding)
     proteinsWithSat.forEach((p) => {
-      if (!p._satelliteKey || !nodeIndex.has(p._satelliteKey)) return;
+      if (!p._satelliteKey) return;
+      if (!nodeIndex.has(p.key)) return;
+      if (!nodeIndex.has(p._satelliteKey)) return;
+
       links.push({
         source: p.key,
         target: p._satelliteKey,
@@ -236,14 +269,14 @@ export default function App() {
 
     // clone links
     for (const [, clones] of tfClonesByLabel.entries()) {
-      if (clones.length < 2) continue;
-      for (let i = 0; i < clones.length - 1; i++) {
-        const a = clones[i].key;
-        const b = clones[i + 1].key;
-        if (!nodeIndex.has(a) || !nodeIndex.has(b)) continue;
+      const visibleClones = clones.filter((c) => nodeIndex.has(c.key));
+
+      if (visibleClones.length < 2) continue;
+
+      for (let i = 0; i < visibleClones.length - 1; i++) {
         links.push({
-          source: a,
-          target: b,
+          source: visibleClones[i].key,
+          target: visibleClones[i + 1].key,
           kind: "clone",
         });
       }
@@ -300,7 +333,7 @@ export default function App() {
     });
 
     return { satPositions, proteinPositions };
-  }, [repeats, proteinsWithSat, tfClonesByLabel]);
+  }, [repeats, proteinsWithSat, tfClonesByLabel, threshold]);
 
    // ---------- 4.5) Auto-fit view to all satellites on load ----------
   useEffect(() => {
@@ -312,6 +345,11 @@ export default function App() {
     const xs = [];
     const ys = [];
     for (const { x, y } of satPositions.values()) {
+      xs.push(x);
+      ys.push(y);
+    }
+
+    for (const { x, y } of proteinPositions.values()) {
       xs.push(x);
       ys.push(y);
     }
@@ -329,11 +367,20 @@ export default function App() {
     minY -= margin;
     maxY += margin;
 
-    let boxW = maxX - minX || 1;
-    let boxH = maxY - minY || 1;
+    let boxW = Math.max(maxX - minX || 1, 900);
+    let boxH = Math.max(maxY - minY || 1, 500);
 
     const parent = svgRef.current.parentElement;
     if (!parent) {
+      const zoomOut = 1.18;
+      const cx = minX + boxW / 2;
+      const cy = minY + boxH / 2;
+
+      boxW *= zoomOut;
+      boxH *= zoomOut;
+      minX = cx - boxW / 2;
+      minY = cy - boxH / 2;
+
       setView({ x: minX, y: minY, w: boxW, h: boxH });
       setFitDone(true);
       return;
@@ -358,9 +405,19 @@ export default function App() {
       boxW = targetW;
     }
 
+    const zoomOut = 1.18;
+    const cx = minX + boxW / 2;
+    const cy = minY + boxH / 2;
+
+    boxW *= zoomOut;
+    boxH *= zoomOut;
+    minX = cx - boxW / 2;
+    minY = cy - boxH / 2;
+
+
     setView({ x: minX, y: minY, w: boxW, h: boxH });
     setFitDone(true);
-  }, [satPositions, repeats.length, fitDone]);
+  }, [satPositions, proteinPositions, repeats.length, fitDone]);
 
   // ---------- 5) Links based on positions ----------
   const psLinks = useMemo(() => {
@@ -390,6 +447,10 @@ export default function App() {
   const vb = `${view.x} ${view.y} ${view.w} ${view.h}`;
 
   // ---------- 6) Render ----------
+  if (!repeats.length && !proteinsWithSat.length) {
+    return <p>Enrichment data doesn't exist</p>;
+  }
+
   return (
     <div
       style={{
@@ -399,6 +460,8 @@ export default function App() {
         position: "relative",
         margin: 0,
         padding: 0,
+        width: "100%",
+        height: "600px",
         touchAction: "none",
         overscrollBehavior: "contain",
       }}
@@ -406,8 +469,8 @@ export default function App() {
       <svg
         ref={svgRef}
         viewBox={vb}
-        style={{ width: "100%", height: "100%", display: "block" }}
-      >
+        onWheel={handleWheel}
+        style={{ width: "100%", height: "100%", display: "block" }}>
         {/* Pan background */}
         <rect
           x={view.x - view.w}
@@ -516,7 +579,9 @@ export default function App() {
 
         {/* Proteins */}
         <g>
-          {proteinsWithSat.map((p) => {
+          {proteinsWithSat
+            .filter((p) => Number(p.attributes?.enrichment || 0) >= threshold)
+            .map((p) => {
             const pos = proteinPositions.get(p.key) || { x: 0, y: 0 };
             const size = Number(p.attributes?.size ?? 6);
             const color = p.attributes?.color || "#9DD6FB";

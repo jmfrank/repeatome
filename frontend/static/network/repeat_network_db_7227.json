@@ -4,7 +4,7 @@
         "attributes": {
             "node_type": "repeat",
             "label": "(AATAT)n",
-            "aliases": "(AATAACATAG)n",
+            "aliases": "",
             "dfam_id": null,
             "x": 0,
             "y": 0,
@@ -23,8 +23,8 @@
             "gene_family": "ATF",
             "enrichment": 9.605,
             "x": 63.63961030678928,
-            "y": 63.63961030678927,
-            "size": 43.180787034948665,
+            "y": 63.63961030678928,
+            "size": 7.0,
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000162772-atf3"
         },
@@ -38,27 +38,11 @@
             "aliases": "",
             "gene_family": "None",
             "enrichment": 14.88333,
-            "x": -75.95083130759707,
-            "y": -48.28531064086606,
-            "size": 50.18506523353572,
+            "x": -63.639610306789294,
+            "y": -63.63961030678927,
+            "size": 42.0,
             "color": "#292BA5",
             "url": "/proteinTable/fbgn0000412-d1"
-        },
-        "organism": 7227
-    },
-    {
-        "key": "SP1_(AATAT)n",
-        "attributes": {
-            "node_type": "protein",
-            "label": "SP1",
-            "aliases": "",
-            "gene_family": "None",
-            "enrichment": 0.0,
-            "x": 63.64387127026688,
-            "y": -63.635349058001545,
-            "size": 7.0,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000185591-sp1"
         },
         "organism": 7227
     }

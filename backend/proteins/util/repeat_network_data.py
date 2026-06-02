@@ -4,7 +4,7 @@ from proteins.models import Repeat, ProteinRepeats, Organism
 import math
 
 
-def GetEnrichmentData(organism):
+def GetEnrichmentData(organism, threshold):
     # Define data
     data = []
    
@@ -16,8 +16,8 @@ def GetEnrichmentData(organism):
             if protrep.repeat.parental_organism.id == organism:
                 if not protrep.motif_enrichment == None:
                     enrichment_float = float(protrep.motif_enrichment)
-               
-                    if not protrep.repeat.name in enrichment_data.keys():
+                
+                    if (not protrep.repeat.name in enrichment_data.keys()) and enrichment_float > threshold:
                         enrichment_data[protrep.protein.gene + '_' + protrep.repeat.name] = enrichment_float
     # print(enrichment_data)
     # Normalize enrichment from 7 to 35
@@ -30,21 +30,25 @@ def GetEnrichmentData(organism):
     #         enrichment_normalized[k] = 7 + (math.log2(v) - x_min) * (25 - 7) / (x_max - x_min)
     #     else:
     #         enrichment_normalized[k] = 7
-    log_values = [math.log10(v) if v > 0 else 0 for v in enrichment_data.values()]
+    log_values = [math.log2(v) if v > 0 else 0 for v in enrichment_data.values()]
     x_min = 0
     x_max = 0
     if (len(log_values) > 0):
         x_min = min(log_values)
         x_max = max(log_values)
-
+    
+    MIN_SIZE = 7
+    MULTIPLIER = 35
 
     enrichment_normalized = {}
     for k, v in enrichment_data.items():
         log_v = math.log2(v) if v > 0 else 0
-        enrichment_normalized[k] = 7 + (log_v - x_min) * (20 - 7) / (x_max - x_min)
-        if enrichment_normalized[k] < 0.01:
-            # print(enrichment_normalized[k], k)
-            enrichment_normalized[k] = 5
+        # enrichment_normalized[k] = MIN_SIZE + (log_v - x_min) * (MAX_SIZE - MIN_SIZE) / (x_max - x_min)
+        norm = (log_v - x_min) / (x_max - x_min)
+        norm = norm ** 2
+        enrichment_normalized[k] = MIN_SIZE + norm * MULTIPLIER
+        # print(enrichment_normalized[k], k)
+        # enrichment_normalized[k] = 5
     # print(x_min, x_max)
     # print(list(enrichment_normalized.values()))
    
@@ -78,7 +82,9 @@ def GetEnrichmentData(organism):
                 enrichments = []
                 for i in range(len(repeats[repeat_name]['proteins'])):
                     p = repeats[repeat_name]['proteins'][i]
-                    if (not p.gene_type == None and 'TF' in p.gene_type) or p.parent_organism.id == 7227:
+                    # print(p.gene, repeats[repeat_name]['enrichment'][i])
+                    # if (not p.gene_type == None and 'TF' in p.gene_type) or p.parent_organism.id == 7227:
+                    if repeats[repeat_name]['enrichment'][i] > 0.5:
                         protein_lst.append(p)
                         enrichments.append(repeats[repeat_name]['enrichment'][i])
                 if len(protein_lst) == 0:
@@ -126,7 +132,8 @@ def GetEnrichmentData(organism):
                         gene_fam = protein_lst[i].gene_family.gene_family
                     else:
                         gene_fam = 'None'
-                    data.append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#292BA5", 'url': '/proteinTable/' + protein_lst[i].slug}, 'organism': organism})
+                    if enrichment_data[protein_lst[i].gene + '_' + repeat.name] > 0.01:
+                        data.append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#292BA5", 'url': '/proteinTable/' + protein_lst[i].slug}, 'organism': organism})
                     # data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
 
 
@@ -139,8 +146,8 @@ def GetEnrichmentData(organism):
     return data
 
 
-def GetNetworkData(organism):
-    data = GetEnrichmentData(organism)
+def GetNetworkData(organism, threshold):
+    data = GetEnrichmentData(organism, threshold)
     # print(data)
 
 
