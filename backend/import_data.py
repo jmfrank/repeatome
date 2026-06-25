@@ -230,9 +230,7 @@ def update_repeat_families():
             child_proteins = child_obj.get_protein_lst()
             for protein in child_proteins:
                 if not get_obj_if_exists(ProteinRepeats, repeat=parent_obj, protein=protein):
-                    print('new pairing', parent_obj.name, protein.gene)
-                    protein_repeat_obj = ProteinRepeats(protein=protein, repeat=parent_obj)
-                    protein_repeat_obj.save()
+                    protein_repeat_obj =_create_protein_repeat(protein, parent_obj)
         else:
             if not child_obj:
                 print(f"Child repeat {child} does not exist")
@@ -552,9 +550,7 @@ def create_protein_repeats(protein_obj, satellite_str):
         if get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj):
             print(f"Protein {protein_obj.gene} already has repeat {repeat_obj.name}. Skipped.")
         else:
-            print(f"Creating ProteinRepeats: satellite = {satellite}, protein = {protein_obj.gene}")
-            protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-            protein_repeat_obj.save()
+            protein_repeat_obj = _create_protein_repeat(protein_obj, repeat_obj)
 
 
 # Create ProteinTF object for a row in the master_proteins sheet. 
@@ -693,6 +689,27 @@ def import_refs():
         create_protein_references(protein_obj, refs)
 
 
+def _create_protein_repeat(protein_obj, repeat_obj):
+    repeat_organism_id = repeat_obj.parental_organism.id if repeat_obj.parental_organism else None
+    protein_organism_id = protein_obj.parent_organism.id if protein_obj.parent_organism else None
+    if repeat_organism_id and protein_organism_id and (repeat_organism_id != protein_organism_id):
+        print(f"""Organisim mismatch between protein and repeat. Skip creating ProteinRepeats: 
+              repeat = {repeat_obj.name}, 
+              repeat.parental_organism = {repeat_organism_id}, 
+              protein = {protein_obj.gene}, 
+              protein.parent_organism = {protein_organism_id}""")
+        return None
+
+    print(f"""Creating ProteinRepeats: 
+            repeat = {repeat_obj.name}, 
+            repeat.parental_organism = {repeat_organism_id}, 
+            protein = {protein_obj.gene}, 
+            protein.parent_organism = {protein_organism_id}""")
+    protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+    protein_repeat_obj.save()
+    return protein_repeat_obj
+
+
 # Add enrichment and q score data from other files
 def update_proteinrepeats():
 
@@ -752,30 +769,30 @@ def update_proteinrepeats():
 
                     # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
                     if not protein_repeat_obj:
-                        print(f"""Creating ProteinRepeat - 
-                        gene: {raw_gene},
-                        repeat: {raw_repeat},
-                        protein_obj:{protein_obj.gene}, 
-                        repeat_obj:{repeat_obj.name}""")
-                        protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                        protein_repeat_obj.save()
+                        protein_repeat_obj =_create_protein_repeat(protein_obj, repeat_obj)
                     
-                    if data_type == 'motif_enrichment':
-                        protein_repeat_obj.motif_enrichment = value
-                    else:
-                        protein_repeat_obj.motif_q_score = value
+                    if protein_repeat_obj:
+                        if data_type == 'motif_enrichment':
+                            protein_repeat_obj.motif_enrichment = value
+                        else:
+                            protein_repeat_obj.motif_q_score = value
 
-                    print(f"""Updating ProteinRepeat - 
-                        protein_obj:{protein_obj.gene}, 
-                        repeat_obj:{repeat_obj.name}, 
-                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
-                    protein_repeat_obj.save()
+                        print(f"""Updating ProteinRepeat - 
+                            protein_obj:{protein_obj.gene}, 
+                            repeat_obj:{repeat_obj.name}, 
+                            motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
+                            motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                        protein_repeat_obj.save()
 
     if missing_genes:
         print(f"Missing genes in database: {sorted(missing_genes)}")
     if missing_repeats:
-        print(f"Missing repeats in database: {sorted(missing_repeats)}")                              
+        print(f"Missing repeats in database: {sorted(missing_repeats)}")  
+
+    missing_genes_df = pd.DataFrame(sorted(missing_genes), columns=['missing_genes'])
+    missing_repeats_df = pd.DataFrame(sorted(missing_repeats), columns=['missing_repeats'])
+    missing_genes_df.to_csv(f"{settings.IMPORT_DATA_FOLDER}/missing_genes.csv", index=False)
+    missing_repeats_df.to_csv(f"{settings.IMPORT_DATA_FOLDER}/missing_repeats.csv", index=False)
 
 
 def get_proteomic_data(mapper, uniprot_id):
@@ -1478,18 +1495,18 @@ def delete_all_records():
     print("FINISHED DELETING")
 
 def update():
-    # print("ORGANISMS")
-    # import_organisms()
-    # print("GENE FAMILY")
-    # import_gene_family()
-    # print("REPEAT + FAMILIES")
-    # import_repeat()
-    # update_repeat_families()
-    # print("PROTEIN")
-    # import_protein()
-    # update_PDB_from_uniprot()
-    # print("PROTEIN REPEATS")
-    # update_proteinrepeats()
+    print("ORGANISMS")
+    import_organisms()
+    print("GENE FAMILY")
+    import_gene_family()
+    print("REPEAT + FAMILIES")
+    import_repeat()
+    update_repeat_families()
+    print("PROTEIN")
+    import_protein()
+    update_PDB_from_uniprot()
+    print("PROTEIN REPEATS")
+    update_proteinrepeats()
     print("PROTEOMICS")
     import_proteomics()
     print("NETWORK DATA")

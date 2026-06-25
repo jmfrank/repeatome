@@ -200,8 +200,14 @@ class RepeatDetailView(DetailView):
                 })
         # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
         sorted_datapoints = sorted(datapoints, key=lambda d: d['y'])
-        return sorted_datapoints
+        max_datapoints = settings.ENRICHMENT_QSCORE_CHART_MAX_DISPLAY_DATAPOINTS
+        if len(sorted_datapoints) <= max_datapoints:
+            return sorted_datapoints
+        else:
+            first_index = len(sorted_datapoints) - max_datapoints
+            return sorted_datapoints[first_index:first_index + max_datapoints]
     
+
     def get_motif_chart_enrichment_data(self, repeat):
         datapoints = []
         color_lookup = dict()
@@ -216,7 +222,13 @@ class RepeatDetailView(DetailView):
             })
         # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
         sorted_datapoints = sorted(datapoints, key=lambda d: d['y'])
-        return sorted_datapoints
+
+        max_datapoints = settings.ENRICHMENT_QSCORE_CHART_MAX_DISPLAY_DATAPOINTS
+        if len(sorted_datapoints) <= max_datapoints:
+            return sorted_datapoints
+        else:
+            first_index = len(sorted_datapoints) - max_datapoints
+            return sorted_datapoints[first_index:first_index + max_datapoints]
 
 
     
