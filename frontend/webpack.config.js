@@ -108,7 +108,8 @@ module.exports = {
     microscopeForm: "./src/microscope-form.js",
     // blast: "./src/blast-app.js",
     karyotypeViewer: './src/karyotype.js',
-    network: './src/network.js'
+    network: './src/network.js',
+    multi_org_network: './src/multi_org_network.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -127,6 +128,10 @@ module.exports = {
       "@repeatome/network": path.resolve(
         __dirname,
         '../packages/network/src/index.jsx'
+      ),
+      "@repeatome/multi_org_network": path.resolve(
+        __dirname,
+        '../packages/multi_org_network/src/index.jsx'
       )
     //   "@fpbase/spectra": path.resolve(
     //     __dirname,

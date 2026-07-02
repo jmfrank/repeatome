@@ -3,7 +3,6 @@ import sys
 from proteins.models import Repeat, ProteinRepeats, Organism
 import math
 
-
 def GetEnrichmentData(organism, threshold):
     # Define data
     data = []
@@ -32,10 +31,12 @@ def GetEnrichmentData(organism, threshold):
     #         enrichment_normalized[k] = 7
     log_values = [math.log2(v) if v > 0 else 0 for v in enrichment_data.values()]
     x_min = 0
-    x_max = 0
+    x_max = 10
     if (len(log_values) > 0):
         x_min = min(log_values)
         x_max = max(log_values)
+
+    # print(log_values)
     
     MIN_SIZE = 7
     MULTIPLIER = 35
@@ -44,6 +45,9 @@ def GetEnrichmentData(organism, threshold):
     for k, v in enrichment_data.items():
         log_v = math.log2(v) if v > 0 else 0
         # enrichment_normalized[k] = MIN_SIZE + (log_v - x_min) * (MAX_SIZE - MIN_SIZE) / (x_max - x_min)
+        if x_max == x_min:
+           x_min = 1
+           x_max = 10
         norm = (log_v - x_min) / (x_max - x_min)
         norm = norm ** 2
         enrichment_normalized[k] = MIN_SIZE + norm * MULTIPLIER
@@ -133,7 +137,7 @@ def GetEnrichmentData(organism, threshold):
                     else:
                         gene_fam = 'None'
                     if enrichment_data[protein_lst[i].gene + '_' + repeat.name] > 0.01:
-                        data.append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#292BA5", 'url': '/proteinTable/' + protein_lst[i].slug}, 'organism': organism})
+                        data.append({ 'key': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'node_type': 'protein', 'label': protein_lst[i].gene, 'aliases': protein_lst[i].aliases_as_str(), 'gene_family': gene_fam, 'universal_id': protein_lst[i].universal_id or protein_lst[i].gene.upper(), 'enrichment': enrichment_data[protein_lst[i].gene + '_' + repeat.name],'x': x_data[i], 'y': y_data[i], 'size': enrichment_normalized[protein_lst[i].gene + '_' + repeat.name], 'color': "#292BA5", 'url': '/proteinTable/' + protein_lst[i].slug}, 'organism': organism})
                     # data["edges"].append({ 'key': protein_lst[i].gene + '_' + repeat.name + '_edge', 'source': repeat.name, 'target': protein_lst[i].gene + '_' + repeat.name, 'attributes': { 'size': EDGE_SIZE, 'color': 'black' }})
 
 
@@ -157,18 +161,36 @@ def GetNetworkData(organism, threshold):
         json.dump(data, json_file, indent=4, ensure_ascii=False)
 
 
-def GetNetworkDataAll():
+def GetNetworkDataAll(threshold):
     print("GET ALL NETWORK DATA")
-    data = []
+    all_data = []
+    data = {}
+    org_data = []
     for organism in Organism.objects.all():
-        data += GetEnrichmentData(organism.id)
+        one_org_data = GetEnrichmentData(organism.id, threshold)
+        org_data.append(one_org_data)
+        all_data.extend(one_org_data)
+        data[organism.id] = org_data
+    
+    # print(all_data)
 
+    final_data = []
+    for prot_indx in range(0, len(all_data)):
+        for prot_indx2 in range(prot_indx+1, len(all_data)):
+            if all_data[prot_indx]['attributes']['node_type'] != 'repeat' and all_data[prot_indx2]['attributes']['node_type'] != 'repeat':
+                # print(prot_indx)
+                # print(data[org][prot_indx])
+                # print("-----")
+                # print(prot_indx2)
+                # print(data[org][prot_indx2])
+                if all_data[prot_indx]['organism'] != all_data[prot_indx2]['organism'] and all_data[prot_indx]['attributes']['universal_id'] == all_data[prot_indx2]['attributes']['universal_id']:
+                    final_data.append((all_data[prot_indx]['key'], all_data[prot_indx2]['key']))
 
-    # print("ALL", data)
+    # print("ALL", final_data)
 
 
     # Write data to json file
-    file_str = 'frontend/static/network/repeat_network_db_all.json'
+    file_str = 'frontend/static/multi_org_network/repeat_network_db_all.json'
     with open(file_str, 'w', encoding='utf-8') as json_file:
-        json.dump(data, json_file, indent=4, ensure_ascii=False)
+        json.dump(final_data, json_file, indent=4, ensure_ascii=False)
 

@@ -9764,7 +9764,7 @@ a {
   color: white;
   font-size: 1.1rem;
   padding-left: 1.2rem;
-  padding-top: 0.3rem;
+  padding-top: 0.1rem;
   padding-bottom: 0.3rem;
 }
 @media (max-width: 575.98px) {
@@ -9863,12 +9863,13 @@ a {
 .nimsb_holder {
   float: left;
   margin-left: 20px;
+  margin-top: 20px !important;
 }
 
 .nimsb_icon {
   display: block;
-  height: 100px;
-  margin-top: -50px;
+  height: 80px;
+  margin-top: -70px;
 }
 
 .footer .nimsb_holder {
@@ -9876,7 +9877,7 @@ a {
 }
 
 .footer .col-12 {
-  margin-top: -100px;
+  margin-top: -20px;
 }
 
 .dropdown-menu {
