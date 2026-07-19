@@ -14,6 +14,7 @@ class Organism(models.Model):
     # Attributes
     id = models.PositiveIntegerField(
         primary_key=True, verbose_name="Taxonomy ID", help_text="NCBI Taxonomy ID"
+        
     )  # genbank protein accession number
     scientific_name = models.CharField(max_length=128, blank=True)
     division = models.CharField(max_length=128, blank=True)

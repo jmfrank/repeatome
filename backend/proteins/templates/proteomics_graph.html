@@ -81,11 +81,7 @@
 <body>
 
 {% load static %}
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.2/jquery.tipsy.min.js"></script>
 <script type="text/javascript" src="{% static 'colorbrewer.js' %}"></script>
-
 
 
 <div class='fig' style='display: flex; flex-direction: row; align-items: center;'>
@@ -294,6 +290,22 @@
         const COLORS = ["rgb(51, 51, 51)", "rgb(176, 35, 35)"];
         const OPACITY = [0.8, 1];
 
+        // add tooltip
+        const tooltip = d3.select(container)
+            .append("div")
+            .attr("class", "proteomics-tooltip")
+            .style("position", "absolute")
+            .style("display", "none")
+            .style("background", "rgba(0,0,0,0.8)")
+            .style("color", "white")
+            .style("padding", "6px 8px")
+            .style("border-radius", "4px")
+            .style("font-size", "12px")
+            .style("pointer-events", "none")
+            .style("z-index", "9999");
+
+        container.style.position = "relative";
+
         g.selectAll("circle")
             .data(data)
             .enter()
@@ -303,31 +315,37 @@
             .attr("r", 2.5)
             .attr("fill", d => COLORS[d.f] || COLORS[0])
             .attr("opacity", d => OPACITY[d.f] || 1)
-            .on("mouseover", function() { d3.select(this).transition().duration(100).attr("r", 7); })
-            .on("mouseout", function() { d3.select(this).transition().duration(100).attr("r", 2.5); })
-            .on("click", function(d) { window.open("/proteinTable/" + d.slug, "_blank"); });
+            .on("mouseover", function(d) {
+                d3.select(this).transition().duration(100).attr("r", 7);
 
-        // tipsy must target circles inside this plot
-        console.log("tipsy?", typeof $.fn.tipsy, $.fn.tipsy);
-        $('.tipsy').remove();
-        $('#proteomics-chart svg circle').tipsy({
-            gravity: 'w',
-            html: true,
-            title: function () {
-                const d = this.__data__ || {};
-                // pick whatever your data actually has
-                return (
-                d.name ||
-                d.protein ||
-                d.gene ||
-                d.uniprot ||
-                d.symbol ||
-                d.label ||
-                d.slug || // last resort
-                ""
-                );
-            }
-        });
+                const label =
+                    d.name ||
+                    d.protein ||
+                    d.gene ||
+                    d.uniprot ||
+                    d.symbol ||
+                    d.label ||
+                    d.slug ||
+                    "No label";
+
+                tooltip
+                    .style("display", "block")
+                    .html(label);
+            })
+            .on("mousemove", function() {
+                const mouse = d3.mouse(container);
+
+                tooltip
+                    .style("left", mouse[0] + 12 + "px")
+                    .style("top", mouse[1] + 12 + "px");
+            })
+            .on("mouseout", function() {
+                d3.select(this).transition().duration(100).attr("r", 2.5);
+                tooltip.style("display", "none");
+            })
+            .on("click", function(d) {
+                window.open("/proteinTable/" + d.slug, "_blank");
+            });
     }
     
     const initial = document.getElementById("protdata-initial").textContent;

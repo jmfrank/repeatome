@@ -38,6 +38,7 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     STATUS = Choices("pending", "approved", "hidden")
     
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
+    universal_id = models.CharField(max_length=22, blank=True, null=True)
     gene = models.CharField(max_length=200, blank=True, null=True, unique=True)
     slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
     aliases = ArrayField(

@@ -14,41 +14,45 @@
   <h5 class='pt-3'><strong>Organism Network</strong></h5>
   <p>Based on motif enrichment</p> 
   <div class='network-info-containter' style='width: 25%;'>
-      <select class="custom-select" name="network-select" id="network-select" width="100%">
-          {% for org in networks_list %}
-              <option value="{{ org.scientific_name }}"
-                  data-id="{{ org.id }}"
-                  data-url="{{ org.network_url }}"
-                  {% comment %} data-organism="{{ item.org }}"
-                  data-cellLine="{{ item.cell_line_name }}"
-                  data-method="{{ item.method }}"
-                  data-desc="{{ item.description }}"
-                  data-date="{{ item.date_generated }}"
-                  data-xlabel="{{ item.x_label }}"
-                  data-ylabel="{{ item.y_label }}"> {% endcomment %}
-                  >
-                  {{org.scientific_name}}
-              </option>
-          {% endfor %}
-          <option value="N/A" 
-              data-url="N/A" 
-              {% comment %} data-cellType="N/A"
-              data-cellLine="N/A"
-              data-method="N/A"
-              data-desc="N/A"
-              data-date="N/A"
-              data-xlabel="N/A"
-              data-ylabel="N/A" {% endcomment %}
-              >
-              N/A
-          </option>
-      </select>
+    <div id="network-checklist" class="border rounded p-2" style="max-height: 260px; overflow-y: auto;">
+      {% for org in networks_list %}
+        <div class="form-check">
+          <input
+            class="form-check-input network-check"
+            type="checkbox"
+            id="network-org-{{ org.id }}"
+            value="{{ org.scientific_name }}"
+            data-id="{{ org.id }}"
+            data-url="{{ org.network_url }}"
+            {% if org.id == 9606 %}checked{% endif %}
+          >
+          <label class="form-check-label" for="network-org-{{ org.id }}">
+            {{ org.scientific_name }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+    {% comment %} <select class="custom-select" name="network-select" id="network-select" width="100%">
+        {% for org in networks_list %}
+            <option value="{{ org.scientific_name }}"
+                data-id="{{ org.id }}"
+                data-url="{{ org.network_url }}"
+                >
+                {{org.scientific_name}}
+            </option>
+        {% endfor %}
+        <option value="N/A" 
+            data-url="N/A" 
+            >
+            N/A
+        </option>
+    </select> {% endcomment %}
   </div>
 
   <div class="mt-3" style="width: 25%;">
     <label for="enrichment-threshold">
       Enrichment threshold:
-      <span id="enrichment-threshold-value">0.1</span>
+      <span id="enrichment-threshold-value">3</span>
     </label>
 
     <input
@@ -57,50 +61,47 @@
       min="0"
       max="20"
       step="0.1"
-      value="0.1"
+      value="3"
       class="form-control-range"
     >
   </div>
 
   <div id="network-container"
         style="position: relative; width:100%; height:600px;"
-        data-network="{% static 'network/repeat_network_db_all.json' %}"
+        data-network="[]"
         data-threshold="0.1">
     </div>
 
-  {% render_bundle 'network' %}
+  {% render_bundle 'multi_org_network' %}
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const select = document.getElementById("network-select");
   const container = document.getElementById("network-container");
+  const checks = document.querySelectorAll(".network-check");
   const slider = document.getElementById("enrichment-threshold");
   const sliderValue = document.getElementById("enrichment-threshold-value");
 
-  if (!select || !container) return;
+  if (!container) return;
 
-  const option = select.querySelector('option[data-id="9606"]');
+  function updateNetworks() {
+    const selected = Array.from(checks)
+      .filter(check => check.checked)
+      .map(check => check.dataset.id);
 
-  if (option) {
-    option.selected = true;
-    container.setAttribute("data-network", option.dataset.url);
+    container.setAttribute("data-network", JSON.stringify(selected));
+    container.dispatchEvent(new CustomEvent("network-settings-change"));
   }
 
-  select.addEventListener("change", function () {
-    const selected = select.options[select.selectedIndex];
-
-    if (!selected.dataset.url || selected.dataset.url === "N/A") return;
-
-    container.setAttribute("data-network", selected.dataset.url);
-
-    container.dispatchEvent(new CustomEvent("network-settings-change"));
+  checks.forEach(check => {
+    check.addEventListener("change", updateNetworks);
   });
+
+  updateNetworks();
 
   if (slider) {
     slider.addEventListener("input", function () {
       container.setAttribute("data-threshold", slider.value);
       sliderValue.textContent = slider.value;
-
       container.dispatchEvent(new CustomEvent("network-settings-change"));
     });
   }

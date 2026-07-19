@@ -378,6 +378,92 @@ def import_repeat():
         child = Repeat(name=child, parent_repeat=parent_obj, parental_organism=parent_organism_obj)
         child.save()
 
+BASE_URL_ORTHO = "https://v9-1.orthodb.org"
+
+def get_og_for_gene(gene_query: str, level: int = 2759):
+    """
+    Search OrthoDB for a gene and return its best matching OG id.
+    gene_query: gene name, UniProt accession, Ensembl ID, etc.
+    level: NCBI taxon ID for orthology level (default: Eukaryota)
+    """
+    resp = requests.get(f"{BASE_URL_ORTHO}/search", params={
+        "query": gene_query,
+        "level": level,
+        "limit": 1,
+    })
+    resp.raise_for_status()
+    data = resp.json()
+    
+    if data.get("status") != "ok" or not data.get("data"):
+        return None
+    
+    # data["data"] is a list of OG ids like ["2at2759", "15at2759", ...]
+    return data["data"][0]
+
+def get_ortholog_gene_ids(og_id: str) -> list[str]:
+    """
+    Given an OG id, return all gene IDs (across all species) in that group.
+    Returns OrthoDB internal gene ids like "9606_0:001234"
+    """
+    resp = requests.get(f"{BASE_URL_ORTHO}/orthologs", params={"id": og_id})
+    resp.raise_for_status()
+    data = resp.json()
+    
+    if data.get("status") != "ok":
+        return []
+    
+    gene_ids = []
+    for entry in data.get("data", []):
+        # Each entry has "gene_id" dict with "param" being the gene id string
+        gene_ids.append(entry["gene_id"]["param"])
+    return gene_ids
+
+
+def connect_repeats(level: int = 2759):
+    og_to_uuid: dict[str, str] = {}
+    
+    for repeat in Repeat.objects.all():
+        if not repeat.name:
+            continue
+            
+        og_id = get_og_for_gene(repeat.name, level=level)
+        # time.sleep(0.5)
+        
+        if og_id is None:
+            print(f"No OG found for: {repeat.name}")
+            continue
+        
+        if og_id not in og_to_uuid:
+            og_to_uuid[og_id] = shortuuid()
+        
+        repeat.universal_id = og_to_uuid[og_id]
+        repeat.save()
+        print(f"Assigned {repeat.universal_id} to {repeat.name} (OG: {og_id})")
+
+
+def connect_proteins(level: int = 2759):
+    og_to_uuid: dict[str, str] = {}
+    
+    for protein in ProteinTF.objects.all():
+        if not protein.gene:
+            continue
+            
+        og_id = get_og_for_gene(protein.UNIPROT, level=level)
+        # time.sleep(0.5)
+        
+        if og_id is None:
+            print(f"No OG found for: {protein.UNIPROT}")
+            continue
+        
+        if og_id not in og_to_uuid:
+            og_to_uuid[og_id] = shortuuid() 
+        
+        protein.universal_id = og_to_uuid[og_id]
+        protein.save()
+        print(f"Assigned {protein.universal_id} to {protein.UNIPROT} - {protein.gene} (OG: {og_id})")
+    
+
+    # show organism from repeat when hover + add legend of color for each organism
 
 def load_jaspar_from_url(gene, tax_group, tax_id=9606):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
@@ -506,6 +592,15 @@ def get_or_create_reference(ref_str):
     pubmed_record = load_pubmed_data(ref_doi)
 
     pubmed_id = pubmed_record['IdList'][0] if len(pubmed_record['IdList']) > 0 else None
+
+    if pubmed_id:
+        ref = Reference.objects.filter(pmid=pubmed_id).first()
+        if ref:
+            # Optional: populate missing DOI
+            if not ref.doi:
+                ref.doi = ref_doi
+                ref.save(update_fields=["doi"])
+            return ref
 
     prim_ref_obj = Reference(
         id = uuid.uuid4().int % 100000,
@@ -721,10 +816,10 @@ def update_proteinrepeats():
     existing_protein_lookup = dict()
     for obj in existing_proteins:
         existing_protein_lookup[obj.gene.lower()] = obj
-    if obj.aliases:
-        for alias in obj.aliases:
-            if alias:
-                existing_protein_lookup[alias.lower()] = obj
+        if obj.aliases:
+            for alias in obj.aliases:
+                if alias:
+                    existing_protein_lookup[alias.lower()] = obj
 
     existing_repeats = Repeat.objects.all()
     existing_repeat_lookup = dict()
@@ -757,31 +852,63 @@ def update_proteinrepeats():
                     missing_genes.add(raw_gene)
                     continue
                 for raw_repeat, value in row.items():
-                    if raw_repeat == 'Gene':
+                    if raw_repeat == "Gene":
                         continue
+
                     # Lookup the repeat object by name or alias, case-insensitively
                     repeat_obj = existing_repeat_lookup.get(raw_repeat.lower())
                     if not repeat_obj:
                         missing_repeats.add(raw_repeat)
                         continue
 
-                    protein_repeat_obj = get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj)
+                    protein_repeat_obj = get_obj_if_exists(
+                        ProteinRepeats,
+                        protein=protein_obj,
+                        repeat=repeat_obj
+                    )
 
-                    # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
-                    if not protein_repeat_obj:
-                        protein_repeat_obj =_create_protein_repeat(protein_obj, repeat_obj)
-                    
-                    if protein_repeat_obj:
-                        if data_type == 'motif_enrichment':
-                            protein_repeat_obj.motif_enrichment = value
+                    # Only enrichment is allowed to create new ProteinRepeats rows
+                    if data_type == "motif_enrichment":
+                        if value is None:
+                            continue
+
+                        try:
+                            value_float = float(value)
+                        except ValueError:
+                            continue
+
+                        if value_float < 0.00001:
+                            continue
+
+                        if not protein_repeat_obj:
+                            print(f"""Creating ProteinRepeat - 
+                            gene: {raw_gene},
+                            repeat: {raw_repeat},
+                            protein_obj:{protein_obj.gene}, 
+                            repeat_obj:{repeat_obj.name}""")
+                            protein_repeat_obj = ProteinRepeats(
+                                protein=protein_obj,
+                                repeat=repeat_obj
+                            )
                         else:
-                            protein_repeat_obj.motif_q_score = value
-
-                        print(f"""Updating ProteinRepeat - 
+                            protein_repeat_obj.motif_enrichment = value
+                            print(f"""Updating ProteinRepeat - 
                             protein_obj:{protein_obj.gene}, 
                             repeat_obj:{repeat_obj.name}, 
                             motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
                             motif_q_score:{protein_repeat_obj.motif_q_score}""")
+                        protein_repeat_obj.save()
+                    else:
+                        # Qscore should NOT create new connections
+                        if not protein_repeat_obj:
+                            continue
+
+                        protein_repeat_obj.motif_q_score = value
+                        print(f"""Updating ProteinRepeat - 
+                        protein_obj:{protein_obj.gene}, 
+                        repeat_obj:{repeat_obj.name}, 
+                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
+                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
                         protein_repeat_obj.save()
 
     if missing_genes:
@@ -1080,9 +1207,45 @@ def import_proteomics():
             if len(protein_objs) > 0:
                 if float(row[df.keys()[1]]) < SIG_THRESHOLD or float(row[df.keys()[3]]) < LOG_THRESHOLD:
                     data_format = 0
-                else:
+                else: # SIGNIFICANT (red)
                     data_format = 1
-
+                    # Import with UNIPROT
+                    uniprot_arr = row[df.keys()[0]]
+                    uniprot = uniprot_arr[0]
+                    # TODO: Add aliases for uniprots
+                    print(uniprot_arr, uniprot)
+                    mapper = ProtMapper()
+                    result, failed = get_proteomic_data(mapper, uniprot)
+                    print(result)
+                    if len(result) != 0:
+                        alias_lst = result['Gene Names'].values[0].split(' ')
+                        alias_lst = str(alias_lst[1:])
+                        alias_lst = alias_lst.strip("'")
+                        alias_lst = '{' + alias_lst[1:len(alias_lst) - 1] + '}'
+                        if len(result['Gene Names'].values[0].split(' ')) <= 1:
+                            alias_lst = ['null']
+                        print(alias_lst)
+                        print(result['Ensembl'], result['Ensembl'].values)
+                        if result['Ensembl'].values[0] == '' or str(result['Ensembl'].values[0]) == 'nan':
+                            ensembl_str = 'none'
+                        else:
+                            ensembl_str = str(result['Ensembl'].values[0])
+                            print(ensembl_str)
+                            if ensembl_str != 'nan':
+                                ensembl_str = 'E' + ensembl_str.split('E')[1].split(' ')[0].strip(';')
+                        print(ensembl_str)
+                        if result['Gene Names (primary)'].values[0] != '' and type(result['Gene Names (primary)'].values[0]) != np.float64 and len(ProteinTF.objects.filter(gene = result['Gene Names (primary)'].values[0])) == 0:
+                            protein_obj = ProteinTF(
+                                gene=str(result['Gene Names (primary)'].values[0]),
+                                aliases = alias_lst,
+                                UNIPROT = row[df.keys()[0]],
+                                ENSEMBL = ensembl_str,
+                                parent_organism = parent_organism_obj,
+                                # gene_type = '{"TF"}' # for testing
+                            )
+                            protein_obj.save()
+                            protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
+                            protein_repeat_obj.save()
 
                 datapoints.append({
                     "name": protein_objs[0].gene,
@@ -1540,6 +1703,12 @@ if __name__ == "__main__":
     elif command == 'import_repeat':
         import_repeat()
         update_repeat_families()
+    
+    elif command == 'connect_repeats':
+        connect_repeats(2759)
+    
+    elif command == 'connect_proteins':
+        connect_proteins(2759)
    
     elif command == 'import_protein':
         import_protein()
@@ -1586,8 +1755,8 @@ if __name__ == "__main__":
        
     elif command == 'network_data':
         for org in Organism.objects.all():
-            GetNetworkData(org.id, 0.1)
-        # GetNetworkDataAll()
+            GetNetworkData(org.id, 3)
+        GetNetworkDataAll(3)
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
 
@@ -1605,6 +1774,9 @@ if __name__ == "__main__":
         password = sys.argv[4]
         create_user(username, email, password, is_staff=False, is_superuser=False)
 
+
+    # highlighht paths on hover
+    # add gene family nodes
 
     else:
         print(f"Usage: python backend/import_data.py <command>")

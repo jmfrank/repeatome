@@ -12,6 +12,7 @@ import json
 
 class Repeat(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
+    universal_id = models.CharField(max_length=22, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True, unique=True)
     slug = models.SlugField(max_length=200, blank=True, null=True)
     aliases = ArrayField(
