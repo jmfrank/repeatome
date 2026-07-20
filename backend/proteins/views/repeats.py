@@ -139,28 +139,6 @@ class RepeatDetailView(DetailView):
                 threshold_lst[i] = float(threshold_lst[i])
             context["threshold"] = threshold_lst
         context['subrepeats'] = self.object.children.all()
-        # print(context['proteomics_datapoints'])
-        # print(context['threshold'])
-        # proteomics_datapoints = [
-        #     {"name": "aa", "x": 1, "y": 10, "f": 1},
-        #     {"name": "bb", "x": 2, "y": 20, "f": 2},
-        #     {"name": "cc", "x": 3, "y": 30, "f": 3},
-        #     {"name": "dd", "x": 4, "y": 40, "f": 4},
-        #     {"name": "ee", "x": 5, "y": 50, "f": 5},
-        #     {"name": "ff", "x": 6, "y": 60, "f": 1},
-        #     {"name": "gg", "x": 7, "y": 70, "f": 2},
-        #     {"name": "hh", "x": 8, "y": 80, "f": 3},
-        #     {"name": "ii", "x": 9, "y": 90, "f": 4},
-        #     {"name": "jj", "x": 10, "y": 100, "f": 5}
-        # ]
-        # context["proteomics_datapoints"] = proteomics_datapoints
-
-        # protein_names = ProteinTF.objects.filter(repeats__id == context['repeat'].name)
-        # print(context['protein'].satellite)
-        # print(self.object.get_proteins())
-        # print(f"enrichment_datapoints = {enrichment_datapoints}")
-        # print(f"qscore_datapoints = {qscore_datapoints}")
-        # print(f"proteomics_datapoints = {proteomics_datapoints}")
 
         return render(request, 'repeats/repeatPage.html', context)
     

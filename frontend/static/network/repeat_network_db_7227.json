@@ -15,34 +15,17 @@
         }
     },
     {
-        "key": "ATF3_(AATAT)n",
-        "attributes": {
-            "node_type": "protein",
-            "label": "ATF3",
-            "aliases": "",
-            "gene_family": "ATF",
-            "universal_id": "U4P7aXu3thJYkZDJPtMz4M",
-            "enrichment": 9.605,
-            "x": 63.63961030678928,
-            "y": 63.63961030678928,
-            "size": 7.0,
-            "color": "#292BA5",
-            "url": "/proteinTable/ensg00000162772-atf3"
-        },
-        "organism": 7227
-    },
-    {
         "key": "D1_(AATAT)n",
         "attributes": {
             "node_type": "protein",
             "label": "D1",
             "aliases": "",
             "gene_family": "None",
-            "universal_id": "Cmmd4QQrtVm4DRwKKvmn96",
+            "universal_id": "kNLHmVKkF4RH5wS5Etq5sU",
             "enrichment": 14.88333,
-            "x": -63.639610306789294,
-            "y": -63.63961030678927,
-            "size": 42.0,
+            "x": 63.63961030678928,
+            "y": 63.63961030678927,
+            "size": 10.622995498821101,
             "color": "#292BA5",
             "url": "/proteinTable/fbgn0000412-d1"
         },
