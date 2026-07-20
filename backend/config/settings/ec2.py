@@ -21,6 +21,9 @@ IMPORT_QSCORE_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
 IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/repeatome_subimages_only_with_urls.csv"
 IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 
+ENRICHMENT_QSCORE_CHART_MAX_DISPLAY_DATAPOINTS = 30
+
+
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
