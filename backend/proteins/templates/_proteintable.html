@@ -45,8 +45,8 @@
 				<td>{{ protein.gene_type_as_str | safe }}</td>
 				<td>{{ protein.parent_organism.scientific_name | safe }}</td>
 				<td>
-					{% for repeat_name in protein.get_repeats %}
-						{{ repeat_name }} 
+					{% for repeat in protein.filtered_repeats %}
+						<a href="/repeatTable/{{repeat.slug}}">{{repeat.name}}</a> 
 					{% endfor %}
 				</td>
 				<td>{{ protein.dna_binding_domain | safe }}</td>

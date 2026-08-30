@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.urls import reverse
 import requests
+from proteins.models.motif_repeat import MotifRepeat
 
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
@@ -20,7 +21,6 @@ class Repeat(models.Model):
         blank=True,
         null = True
     )
-    motif = models.TextField(blank=True, null=True)
     dfam_id = models.CharField(max_length=100, blank=True, null=True)
     parent_repeat = models.ForeignKey(
         "self", 
@@ -39,16 +39,18 @@ class Repeat(models.Model):
         null=True,
         help_text="Organism from which the protein was engineered",
     )
-    # references = models.ForeignKey(
-    #     "Reference",
-    #     related_name="reference",
-    #     verbose_name="Reference",
-    #     on_delete=models.SET_NULL,
-    #     blank=True,
-    #     null=True,
-    #     help_text="References for repeats",
-    # ),
+
     references = models.TextField(blank=True, null=True)
+
+    @property
+    def filtered_motifs(self):
+        """
+        Returns Motif objects linked to this repeat where has_enr_or_q_score=True,
+        reading strictly from prefetched memory.
+        """
+        # motifrepeat_set.all() accesses the pre-filtered cache from the view
+        return [mr.motif for mr in self.motifrepeat_set.all()]
+
 
     def get_absolute_url(self):
         return reverse("proteins:repeatTable-detail", args=[self.slug])
@@ -63,17 +65,6 @@ class Repeat(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-        
-    def get_proteins(self):
-        return self.proteintf_set.all()
-    
-    def get_protein_lst(self):
-        return list(self.proteintf_set.all())
-
-
-    # def get_HMM(self):
-    #     with pyhmmer.plan7.HMMFile("data/hmms/txt/PKSI-AT.hmm") as hmm_file:
-    #         hmm = hmm_file.read()
     
     def get_hmm(self):
         if self.dfam_id:

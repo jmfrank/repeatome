@@ -23,6 +23,8 @@ class Organism(models.Model):
     genus = models.CharField(max_length=128, blank=True)
     rank = models.CharField(max_length=128, blank=True)
 
+    taxonomy_group = models.CharField(max_length=128, blank=True)
+
     def __str__(self):
         return self.scientific_name
 
