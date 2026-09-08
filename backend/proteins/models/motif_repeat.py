@@ -11,8 +11,16 @@ from ..util.helpers import shortuuid
 
 
 class MotifRepeat(models.Model):
-    motif = models.ForeignKey('Motif', on_delete=models.CASCADE, to_field='motif_id', db_column='motif_id')
-    repeat = models.ForeignKey('Repeat', on_delete=models.CASCADE, to_field='name', db_column='name')
+    motif = models.ForeignKey('Motif',
+                              on_delete=models.CASCADE,
+                              to_field='motif_id',
+                              db_column='motif_id',
+                              related_name="motifrepeat_set")
+    repeat = models.ForeignKey('Repeat',
+                               on_delete=models.CASCADE,
+                               to_field='name',
+                               db_column='name',
+                               related_name='motif_repeats')
     motif_enrichment = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
     motif_q_score = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
 
