@@ -74,7 +74,7 @@ class RepeatDetailView(DetailView):
 
         # 1. Setup the filtered prefetch for MotifRepeat -> Motif
         filtered_motif_repeats = Prefetch(
-            'motifrepeat_set',  # Reverse relation from Repeat to MotifRepeat
+            'motif_repeats',  # Reverse relation from Repeat to MotifRepeat
             queryset=MotifRepeat.objects.filter(
                 has_enr_or_q_score=True
             ).select_related('motif')  # Join the Motif table in the same query
