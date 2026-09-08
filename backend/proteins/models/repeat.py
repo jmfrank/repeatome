@@ -49,7 +49,7 @@ class Repeat(models.Model):
         reading strictly from prefetched memory.
         """
         # motifrepeat_set.all() accesses the pre-filtered cache from the view
-        return [mr.motif for mr in self.motifrepeat_set.all()]
+        return [mr.motif for mr in self.motif_repeats.all()]
 
 
     def get_absolute_url(self):
