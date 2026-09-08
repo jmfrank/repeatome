@@ -16,8 +16,11 @@ import os
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FOLDER = "/Users/isabel/repeatome_data"
 IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database.xlsx"
-IMPORT_ENRICHMENT_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
-IMPORT_QSCORE_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
+# IMPORT_ENRICHMENT_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
+# IMPORT_QSCORE_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
+IMPORT_ENRICHMENT_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_ENR.csv"
+IMPORT_QSCORE_FILE = f"{IMPORT_DATA_FOLDER}/TFs_summary_Qscore.csv"
+IMPORT_PROTEOMICS_FILE = f"{IMPORT_DATA_FOLDER}/proteomics_data/proteomics_datasets.xlsx"
 IMPORT_MICROSCOPY = f"{IMPORT_DATA_FOLDER}/repeatome_subimages_only_with_urls.csv"
 IMPORT_FAMILY_DATA = f"{IMPORT_DATA_FOLDER}/satellite_families.csv"
 
@@ -32,7 +35,7 @@ ENRICHMENT_QSCORE_CHART_MAX_DISPLAY_DATAPOINTS = 30
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fpbase31',  # Replace with your database name
+        'NAME': 'fpbase35',  # Replace with your database name fpbase31 is the old but working version used on AWS
         'USER': 'postgres',      # Replace with your database username
         # 'PASSWORD': 'mypassword', # Replace with your database password
         'HOST': 'localhost',   # Typically 'localhost' for local development

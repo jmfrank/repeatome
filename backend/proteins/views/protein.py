@@ -46,7 +46,7 @@ from references.models import Reference  # breaks application modularity
 from ..forms import (
     ProteinForm,
 )
-from ..models import Excerpt, Organism, ProteinTF, ProteinCollection
+from ..models import Excerpt, Organism, ProteinTF, ProteinCollection, MotifRepeat
 
 from pyjaspar import jaspardb
 
@@ -55,9 +55,26 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+
 def ProteinTable(request):          # Lists all proteins
-  items = ProteinTF.objects.all()
-  return render(request, "proteinTable.html", {"proteins": items})
+
+  # items = ProteinTF.objects.all()
+
+    # 1. Setup the filtered prefetch for MotifRepeat -> Repeat
+    filtered_motif_repeats = Prefetch(
+        'motifs__motifrepeat_set',  # Adjust reverse relation name if customized
+        queryset=MotifRepeat.objects.filter(
+            has_enr_or_q_score=True
+        ).select_related('repeat')
+    )
+
+    # 2. Fetch all records (no pagination)
+    protein_tfs = ProteinTF.objects.prefetch_related(
+        'motifs',
+        filtered_motif_repeats
+    ).order_by('gene')
+
+    return render(request, "proteinTable.html", {"proteins": protein_tfs})
 
 def check_switch_type(object, request):
     suggested = suggested_switch_type(object)
@@ -217,13 +234,26 @@ class ProteinDetailView2(DetailView):
         # print(self.kwargs['slug'])
         if query_set is None:
             query_set = self.get_queryset()
-        # print(self.kwargs['slug'])
-        # print(ProteinTF.objects.get(gene=self.kwargs['slug']))
-        obj = ProteinTF.objects.get(slug=self.kwargs['slug'])
-        # print(query_set.get(gene=self.kwargs['slug']))
-        # obj = query_set.get(gene=self.kwargs['slug'])
-        # obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
-        return obj
+        print(f"slug = {self.kwargs['slug']}")
+
+        # obj = ProteinTF.objects.get(slug=self.kwargs['slug'])
+
+        # 1. Setup filtered prefetch for MotifRepeat -> Repeat
+        filtered_motif_repeats = Prefetch(
+            'motifs__motifrepeat_set',
+            queryset=MotifRepeat.objects.filter(
+                has_enr_or_q_score=True
+            ).select_related('repeat')
+        )
+
+        # 2. Fetch single ProteinTF with prefetched Motifs and filtered MotifRepeats
+        protein = get_object_or_404(
+            ProteinTF.objects.prefetch_related('motifs', filtered_motif_repeats),
+        slug=self.kwargs['slug']
+    )
+        print(f"ProteinTF get obj returned: {protein}")
+
+        return protein
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -231,12 +261,8 @@ class ProteinDetailView2(DetailView):
         context['chart_data'] = get_chart_expression_data(self.object)
         context['organ_data'] = get_chart_organ_data()
         context['collections'] = ProteinCollection.objects.all()
-        #  print(context['protein'].repeats.all()[0].parental_organism)
-        # print(context['protein'].primary_reference)
         return render(request, 'proteins/proteinPage.html', context)
     
-        # context = {'protein': obj}
-        # return render(request, 'proteins/proteinPage.html', context)
     
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

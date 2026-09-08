@@ -246,7 +246,7 @@ window.onload = function () {
          </tr>
        </thead>
        <tbody>
-        {% for repeat in protein.repeats.all %}
+        {% for repeat in protein.filtered_repeats %}
          <tr>
            <td><a href="/repeatTable/{{repeat.slug}}">{{repeat.name | safe}}</td>
            <td>{{ repeat.aliases_as_str | safe }}</td>

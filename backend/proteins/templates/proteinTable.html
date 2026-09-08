@@ -12,7 +12,7 @@
 
 {% block content %}
 
-	<h1 class="name text-center mb-4">RepeatOme Repeat-Binding Proteins</h1>
+	<h1 class="name text-center mb-4">Repeatome Repeat-Binding Proteins</h1>
 
 
       <table class="table table-striped" id="proteinTable" style="width: 100%;">
@@ -36,7 +36,7 @@
                 <td class="protein"><a href="/proteinTable/{{protein.slug}}">{{protein.gene}}</a></td>
                 <td class="text-left">{{protein.aliases_as_str}}</td>
                 <td class="text-left">
-                  {% for repeat in protein.repeats.all %}
+                  {% for repeat in protein.filtered_repeats %}
                     <a href="/repeatTable/{{repeat.slug}}">{{repeat.name}}</a>
                   {% endfor %}
                 </td>
@@ -46,7 +46,11 @@
                 <td class="text-left"> <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank">{{protein.UNIPROT}}</a></td>
                 <td class="text-left"> <a href="https://www.ebi.ac.uk/pdbe/entry/pdb/{{ protein.PDB_lower }}" target="_blank">{{protein.PDB_as_string}}</a></td>
                 <td class="text-left"> <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank">{{protein.ENSEMBL}}</a></td>
-                <td class="text-left"><a href=''>{{protein.get_jaspar_base}}</a></td>
+                <td class="text-left"> 
+                {% for jaspar_base_id in protein.get_jaspar_base_ids %}
+                    <a href="https://jaspar.elixir.no/search?q={{jaspar_base_id}}">{{jaspar_base_id}}</a>
+                  {% endfor %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
