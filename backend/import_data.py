@@ -17,6 +17,7 @@ django.setup()
 from django.conf import settings
 from references.models import Reference
 from proteins.models import Organism, GeneFamily, Repeat, ProteinTF, ProteinRepeats, ProteinReferences, Proteomics, Microscopy, GenomeReferences
+from proteins.models import Motif, MotifRepeat
 from proteins.util.helpers import shortuuid
 from proteins.util.repeat_network_data import GetNetworkData, GetNetworkDataAll
 import json
@@ -73,13 +74,57 @@ def load_dataframe_from_excel(file, sheet_name, dtype=None):
 
 def import_organisms():
 
+    jaspar_group_map = {
+        7227: "Insecta",
+        8355: "Vertebrata",
+        9031: "Vertebrata",
+        9606: "Vertebrata",
+        9986: "Vertebrata",
+        10090: "Vertebrata",
+        10116: "Vertebrata",
+        10117: "Vertebrata",
+    }
+
+    # Get all unique taxonomy ids from master_proteins, repeats sheets, ENR file, Qscore file, and proteomics sheet
+
     # Get all unique taxonomy ids from master_proteins and repeats sheets
-    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins')
-    taxonomy_ids = df['parent_organism'].dropna().unique().tolist()
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+    print(f"Loading taxonomy ids from master_proteins sheet in {settings.IMPORT_DATA_FILE}")
+    taxonomy_ids = set(df['parent_organism'].dropna().unique().tolist())
+    print(f"Found taxonomy ids {sorted(set(taxonomy_ids))}")
 
     # Get all unique taxonomy ids from repeats sheets
-    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
-    taxonomy_ids.extend(df['taxonomy_id'].dropna().unique().tolist())
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats', dtype=str)
+    print(f"Loading taxonomy ids from repeats sheet in {settings.IMPORT_DATA_FILE}")
+    for raw_tax_id in df['taxonomy_id'].dropna().unique().tolist():
+        for tax_id in raw_tax_id.strip().split(':'):
+            clean_tax_id = tax_id.strip()
+            if clean_tax_id and clean_tax_id not in taxonomy_ids:
+                print(f"Found new taxonomy id {clean_tax_id}")
+                taxonomy_ids.add(clean_tax_id)
+
+    # Get all unique taxonomy ids from proteomics sheet
+    print(f"Loading taxonomy ids from {settings.IMPORT_PROTEOMICS_FILE}")
+    df = load_dataframe_from_excel(settings.IMPORT_PROTEOMICS_FILE, sheet_name='Sheet1', dtype=str)
+    df = df.where(pd.notnull(df), None)
+    for raw_tax_id in df['Parent organism'].dropna().unique().tolist():
+        for tax_id in raw_tax_id.strip().split(':'):
+            clean_tax_id = tax_id.strip()
+            if clean_tax_id and clean_tax_id not in taxonomy_ids:
+                print(f"Found new taxonomy id {clean_tax_id}")
+                taxonomy_ids.add(clean_tax_id)
+
+    # Get taxonomy ids from ENR and QScore files
+    for file_name in [settings.IMPORT_ENRICHMENT_FILE, settings.IMPORT_QSCORE_FILE]:
+        print(f"Loading taxonomy ids from {file_name}")
+        df =  pd.read_csv(file_name, dtype=str)
+        df = df.where(pd.notnull(df), None)
+        for raw_tax_id in df['tax_id'].dropna().unique().tolist():
+            for tax_id in raw_tax_id.strip().split(':'):
+                clean_tax_id = tax_id.strip()
+                if clean_tax_id and clean_tax_id not in taxonomy_ids:
+                    print(f"Found new taxonomy id {clean_tax_id}")
+                    taxonomy_ids.add(clean_tax_id)
 
     # Remove duplicates
     taxonomy_ids = set(taxonomy_ids)
@@ -98,7 +143,8 @@ def import_organisms():
         if existing_obj:
             print(f"Organism taxonomy {taxonomy_id} already exists. Skipped.")
         else:
-            item = Organism(id=taxonomy_id)
+            taxonomy_group = jaspar_group_map[taxonomy_id]
+            item = Organism(id=taxonomy_id, taxonomy_group=taxonomy_group)
             print(f"Saving organism taxonomy {taxonomy_id} to db.")
             item.save()
 
@@ -111,6 +157,22 @@ def get_obj_if_exists(model, **kwargs):
     return obj
 
 
+def fix_organisms():
+    jaspar_group_map = {
+        7227: "insects",
+        8355: "vertebrates",
+        9031: "vertebrates",
+        9606: "vertebrates",
+        9986: "vertebrates",
+        10090: "vertebrates",
+        10116: "vertebrates",
+        10117: "vertebrates",
+    }
+    for org in Organism.objects.all():
+        taxonomy_group = jaspar_group_map[org.id]
+        print(f"Updating Organism.taxonomy_group to {taxonomy_group}")
+        org.taxonomy_group = taxonomy_group
+        org.save()
 
 
 # Will raise an exception if obj does not exist
@@ -132,8 +194,8 @@ def get_gene_family_obj(gene_family: str):
 def import_gene_family():
 
 
-    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins')
-
+    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+    df = df.where(pd.notnull(df), None)
     #----------------------------------------
     # Data validations
     # Do not allow typos like these to coexist: "CCAAT/ENHANCER-binding protein" and "CCAAT/enhancer-binding protein"
@@ -189,7 +251,8 @@ def parse_microscopy_result(x):
     return obj
 
 
-def import_repeat_families():
+def load_parent_repeat_lookup_by_child_repeat():
+
     df = load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='repeats')
 
     raw_names = set()
@@ -215,27 +278,48 @@ def import_repeat_families():
 
 def update_repeat_families():
 
-    parent_repeats_dict = import_repeat_families()
+    print("update_repeat_families")
 
-    for child, parent in parent_repeats_dict.items():
-        child_obj = get_obj_if_exists(Repeat, name=child)
+    # A lookup for parent Repeat object for a given child Repeat
+    parent_repeats_dict = load_parent_repeat_lookup_by_child_repeat()
+
+    for child_name, parent_name in parent_repeats_dict.items():
+        child_obj = get_obj_if_exists(Repeat, name=child_name)
         if child_obj.parent_repeat:
             continue
-        parent_obj = get_obj_if_exists(Repeat, name=parent)
-        if child_obj and parent_obj:
-            print(f"Updating repeat {child} to have parent {parent}")
-            child_obj.parent_repeat = parent_obj
-            child_obj.parental_organism = parent_obj.parental_organism
-            child_obj.save()
-            child_proteins = child_obj.get_protein_lst()
-            for protein in child_proteins:
-                if not get_obj_if_exists(ProteinRepeats, repeat=parent_obj, protein=protein):
-                    protein_repeat_obj =_create_protein_repeat(protein, parent_obj)
-        else:
-            if not child_obj:
-                print(f"Child repeat {child} does not exist")
-            if not parent_obj:
-                print(f"Parent repeat {parent} does not exist")
+        repeat_obj = get_obj_if_exists(Repeat, name=parent_name)
+        if not child_obj:
+            print(f"Child repeat {child_name} does not exist")
+            continue
+        if not repeat_obj:
+            print(f"Parent repeat {parent_name} does not exist")
+            continue
+
+        print(f"Updating repeat {child_name} to have parent {parent_name}")
+        child_obj.parent_repeat = repeat_obj
+        child_obj.parental_organism = repeat_obj.parental_organism
+        child_obj.save()
+
+
+def update_protein_repeat_from_repeat_families():
+
+    # A lookup for parent Repeat object for a given child Repeat
+    parent_repeats_dict = load_parent_repeat_lookup_by_child_repeat()
+
+    for child_name, parent_name in parent_repeats_dict.items():
+        child_obj = get_obj_if_exists(Repeat, name=child_name)
+        if not child_obj:
+            print(f"Child repeat {child_name} does not exist")
+            continue
+        
+        repeat_obj = child_obj.parent_repeat
+        if not repeat_obj:
+            print(f"Parent repeat {parent_name} does not exist")
+            continue
+
+        child_proteins = child_obj.get_protein_lst()
+        for protein_obj in child_proteins:
+            protein_repeat_obj = get_or_create_protein_repeat(protein_obj, repeat_obj)
 
 
 def is_valid_repeat_name(name):
@@ -261,7 +345,8 @@ def import_repeat():
     #  We will use this later to set the parent_repeat field of the Repeat objects after 
     # we create them all since we may have cases where the parent repeat is listed 
     # after the child repeat in the input data.
-    parent_repeats_dict = import_repeat_families()
+    # A lookup for parent Repeat object for a given child Repeat
+    parent_repeats_dict = load_parent_repeat_lookup_by_child_repeat()
 
     #----------------------------------
     # Data validations
@@ -378,6 +463,35 @@ def import_repeat():
         child = Repeat(name=child, parent_repeat=parent_obj, parental_organism=parent_organism_obj)
         child.save()
 
+
+# Raise an exception if Repeats that appear in the ENR and QScore files do not exist 
+# (not in the repeats sheet or master_proteins sheet)
+def validate_repeats_in_enr_and_qscore_files():
+
+    existing_repeat_lookup = get_repeat_lookup_by_name_or_alias()
+
+    missing_repeat_names = set()
+
+    for file_name in [settings.IMPORT_ENRICHMENT_FILE, settings.IMPORT_QSCORE_FILE]:
+        print(f"Loading repeats from {file_name}")
+        df = pd.read_csv(file_name, dtype=str)
+        df = df.where(pd.notnull(df), None)
+        for col in df.columns:
+            if col in ['motif_id', 'gene', 'tax_id', 'uniprot_ids']:
+                continue
+
+            # Check if Repeat by this col name exists. Look for name and aliases
+            repeat_name = col
+            repeat_obj = existing_repeat_lookup.get(repeat_name.lower())
+            if not repeat_obj:
+                print(f"Found Repeat {col} in {file_name} but not found in database.")
+                missing_repeat_names.add(repeat_name)
+        
+    if missing_repeat_names:
+        raise Exception(f"The following repeats appear in the ENR and QScore files but do not exist in the database: {missing_repeat_names}. Please add them to the repeats sheet or master_proteins sheet before running the import.")
+
+
+# 
 BASE_URL_ORTHO = "https://v9-1.orthodb.org"
 
 def get_og_for_gene(gene_query: str, level: int = 2759):
@@ -519,6 +633,8 @@ def load_jaspar_from_url(gene, tax_group, tax_id=9606):
 
 
 def get_jaspar_ids(gene, tax_group, use_cache):
+        
+        print(f"get_jaspar_ids: gene={gene}, tax_group={tax_group}")
        
         cache_folder = '.cache'
 
@@ -526,7 +642,8 @@ def get_jaspar_ids(gene, tax_group, use_cache):
         # If use_cache then try to load from cache first
         # If not found in cache then try loading from the url
         if use_cache:
-            cache_file = f"{cache_folder}/jaspar/{slugify(gene)}.json"
+            # cache_file = f"{cache_folder}/jaspar/{slugify(gene)}.json"
+            cache_file = f"{cache_folder}/jaspar/{slugify(f"{tax_group}-{gene}")}.json"
             if os.path.exists(cache_file):
                 print(f"Loading jaspar data from cache")
                 with open(cache_file, 'r') as stream:
@@ -631,7 +748,7 @@ def create_protein_references(protein_obj, refs):
         protein_ref_obj.save()
 
 
-def create_protein_repeats(protein_obj, satellite_str):
+def create_protein_repeats_for_satellite(protein_obj, satellite_str):
     if not satellite_str:
         return
     satellites = [x.strip() for x in satellite_str.split(',')]
@@ -642,10 +759,14 @@ def create_protein_repeats(protein_obj, satellite_str):
             continue
         print(f"Processing satellite {satellite} for protein {protein_obj.gene}")
         repeat_obj = Repeat.objects.filter(name=satellite)[0]
-        if get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj):
-            print(f"Protein {protein_obj.gene} already has repeat {repeat_obj.name}. Skipped.")
-        else:
-            protein_repeat_obj = _create_protein_repeat(protein_obj, repeat_obj)
+        protein_repeat_obj = get_or_create_protein_repeat(protein_obj, repeat_obj)
+
+
+def get_protein_tf(uniprot, gene):
+    if not uniprot or not gene:
+        return None 
+    slug = slugify(uniprot+ '-' + gene)
+    return ProteinTF.objects.get(slug=slug)
 
 
 # Create ProteinTF object for a row in the master_proteins sheet. 
@@ -666,7 +787,8 @@ def create_protein_tf(row):
         parent_organism_obj = get_organism_obj(parent_organism)
 
     # Get list of jaspar matrix_ids either from local .cache folder or from url
-    jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
+    # TODO: This should move to Motif
+    jasper_ids = get_jaspar_ids(gene, tax_group=parent_organism_obj.taxonomy_group, use_cache=True)
 
     # Get References
     prim_ref = row['primary_reference']
@@ -709,13 +831,11 @@ def create_protein_tf(row):
     print(f"Creating ProteinTF: ENSEMBL: {obj.ENSEMBL}, GENE: {obj.gene}")
     obj.save()
 
-    protein_obj = ProteinTF.objects.get(gene=gene)
+    protein_obj = get_protein_tf(row['uniprot'], gene)
 
     # Create many-to-many between ProteinTF and Reference based on references column
-    create_protein_references(protein_obj, row['references'])
-
-    # Create many-to-many between ProteinTF and Repeat based on satellite column
-    create_protein_repeats(protein_obj, row['satellite'])
+    if row.get('references'):
+        create_protein_references(protein_obj, row['references'])
 
 
 def validate_protein_data(row):
@@ -727,9 +847,171 @@ def validate_protein_data(row):
         raise Exception("Missing gene name")
 
 
-def import_protein():
+def import_protein_from_enr_and_qscore_files():
+            
+    count = 0
+
+    complex_protein_rows = []
+    protein_tf_rows = []
+
+    file_name = settings.IMPORT_ENRICHMENT_FILE
+    df = pd.read_csv(file_name, dtype=str)
+    df = df.where(pd.notnull(df), None)
+    df = df[df['gene'].notnull()]
+    num_rows = len(df)
+
+    # df['motif_main_id'] = df['motif_id'].apply(lambda x: x.split('.')[0] if x else None)
+    # g = df.groupby('gene')
+    # g_df = g.first()
+    # g_df['num_motifs'] = g['motif_main_id'].nunique()
+    # g_df['motif_main_ids'] = g['motif_main_id'].unique()
+    # g_df = g_df.reset_index()
+
+    # test_df = g_df[g_df['num_motifs'] > 1][['gene', 'num_motifs', 'motif_main_ids']]
+    # print(test_df)
+    # print(len(test_df))
+
+    for raw_row in df.to_dict(orient='records'):
+        components = []
+        
+        gene_name = raw_row['gene'].strip().upper()
+
+        tax_id = raw_row['tax_id'].strip() if raw_row['tax_id'] else None
+        uniprot_ids = [x.strip().upper() for x in raw_row['uniprot_ids'].strip().split(',')]
+        gene_type = 'tf'
+
+        if len(uniprot_ids) > 1:
+            if '::' in gene_name:
+                genes = gene_name.split('::')
+                gene_type = 'complex'
+            elif '-' in gene_name:
+                genes = gene_name.split('-')
+                gene_type = 'fusion'
+            else:
+                genes = [gene_name]
+        else:
+            genes = [gene_name]
+
+        if len(genes) != len(uniprot_ids):
+            raise Exception(f"Number of genes ({genes}) does not match number of uniprot_ids ({uniprot_ids}) for gene {gene_name}.")
+
+        i = 0
+        for gene in genes:
+            single_protein_tf = {
+                "gene": gene,
+                "gene_type": gene_type,
+                "tax_id": tax_id,
+                "uniprot_id": uniprot_ids[i]
+            }
+            components.append(single_protein_tf)
+            protein_tf_rows.append(single_protein_tf)
+            i += 1
+
+        if len(components) > 1:
+            complex_protein_rows.append({
+                "gene": gene_name,
+                "gene_type": gene_type,
+                "tax_id": tax_id,
+                "components": components
+            })
+
+    debug_rows = []
+    # First create ProteinTF objects for simple proteins
+    for raw_row in protein_tf_rows:
+        gene = raw_row['gene']
+        parent_organism_id = raw_row['tax_id'].split(':')[0]
+        uniprot_id = raw_row['uniprot_id']
+        # print(f"""Processing row {count} out of {num_rows}: protein = {gene}, 
+        #     parent_organism_id = {parent_organism_id}, 
+        #     uniprot_id = {uniprot_id}""")
+
+        existing_obj = get_obj_if_exists(ProteinTF, UNIPROT=uniprot_id, gene=gene)
+        print(f"Checking if ProteinTF exists: UNIPROT={uniprot_id}, gene: {gene} --> existing_obj:{existing_obj}")
+        if existing_obj:
+            print(f"Protein gene: {gene}, UNIPROT: {uniprot_id} already exists. Skipped.")
+            continue
+
+        # Use uniprot-id-mapper instead. It calls the API
+        ensembl, aliases = get_ensemble_id_and_aliases(gene, uniprot_id)
+        if not ensembl:
+            print(f"ERROR: No ENSEMBL ID found for gene {gene} with uniprot ids {uniprot_id} and parent organism id {parent_organism_id}. This protein will be created with ensembl = NONE. Please check if this is correct.")
+
+        debug_rows.append(
+            {
+                "gene": gene,
+                "uniprot": uniprot_id,
+                "ensembl": ensembl,
+                "aliases": aliases
+                }
+        )
+
+        if not ensembl:
+            ensembl = 'NONE'
+        # if not uniprot_id:
+        #     uniprot_id = "NONE" 
+        if not aliases:
+            aliases = None
+
+        print(f"""Creating ProteinTF: protein = {gene}, 
+            parent_organism_id = {parent_organism_id}, 
+            ensembl = {ensembl},
+            aliases = {aliases},
+            uniprot_id = {uniprot_id}""")
+        
+
+        protein_tf_data = {
+            "gene": gene,
+            "gene_family": None,
+            "parent_organism": parent_organism_id,
+            "aliases": aliases if aliases else None,
+            "gene_type": "TF", 
+            "dna_binding_domain": None,
+            "signaling_pathway": None,
+            "validation_grade": None,
+            "prediction_method": None,
+            "microscopy_result": None,
+            "motif_enrichment": None,
+            "motif_q_score": None, 
+            "existing_images": None,
+            "existing_images_link": None,
+            "existing_fusion": None,
+            "cloned_fusion": None,
+            "imaging_results": None,
+            "notes": None,
+            "ensembl": ensembl,
+            "uniprot": uniprot_id,
+            "satellite": None,
+            "PDB": None, # We will populate this later in update_PDB_from_uniprot()
+            "micro_url": None,
+            "AF3": None,
+            "proteomics_url": None,
+            "rna_url": None,
+            "protein_sequence": None,
+            "molecular_weight": None,
+            "cofactor": None,
+            "oligomerization": None,
+            "primary_reference": None,
+            "references": None
+        }
+        print(f"Creating protein {gene}")
+        create_protein_tf(protein_tf_data)
+
+    # Create Complex or Fusion proteins that have multiple genes in the gene column (e.g. gene1::gene2 or gene1-gene2)
+    # Create the individual gene components if not already exist
+    for raw_row in complex_protein_rows:
+        gene = raw_row['gene']
+        tax_id = raw_row['tax_id']
+        components = raw_row['components']
+
+    debug_df = pd.DataFrame(debug_rows)
+    debug_df.to_csv("./debug_gene_uniprot_ensembl.csv", index=False)
+
+
+def import_protein_from_satellite_binders_database():
 
     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+    df = df.where(pd.notnull(df), None)
+    df['gene'] = df['gene'].apply(lambda x: x.upper() if x else x)
     df = df[df['gene'].notnull()]
 
     #----------------------------------
@@ -747,7 +1029,13 @@ def import_protein():
         count += 1
 
         gene = row['gene']
-        print(f"Processing row {count} out of {num_rows}: protein = {gene}")
+
+        gene_type = row['gene_type'].lower() if row['gene_type'] else None
+        if gene_type and ('fusion' in gene_type or 'complex' in gene_type):
+            print(f"Skipping row {count} out of {num_rows}: protein = {gene}, gene_type = {gene_type}")
+            continue
+
+        print(f"Processing row {count} out of {num_rows}: protein = {gene}, gene_type = {gene_type}")
 
         existing_obj = get_obj_if_exists(ProteinTF, gene=row['gene'])
         if existing_obj:
@@ -784,7 +1072,7 @@ def import_refs():
         create_protein_references(protein_obj, refs)
 
 
-def _create_protein_repeat(protein_obj, repeat_obj):
+def TO_DELETE__create_protein_repeat(protein_obj, repeat_obj):
     repeat_organism_id = repeat_obj.parental_organism.id if repeat_obj.parental_organism else None
     protein_organism_id = protein_obj.parent_organism.id if protein_obj.parent_organism else None
     if repeat_organism_id and protein_organism_id and (repeat_organism_id != protein_organism_id):
@@ -804,14 +1092,57 @@ def _create_protein_repeat(protein_obj, repeat_obj):
     protein_repeat_obj.save()
     return protein_repeat_obj
 
+def TO_DELETE_get_or_create_protein_repeat(protein_obj, repeat_obj):
+    protein_repeat_obj = get_obj_if_exists(ProteinRepeats, protein=protein_obj, repeat=repeat_obj)
+    # Create a new ProteinRepeats object if it does not exist
+    if protein_repeat_obj:
+        print(f"get_or_create_protein_repeat: Skipped creating ProteinRepeat: protein={protein_obj.gene}, repeat={repeat_obj.name}. Already exists.")
+    else:
+        print(f"get_or_create_protein_repeat: Creating ProteinRepeat: protein={protein_obj.gene}, repeat={repeat_obj.name}.")
+        protein_repeat_obj =_create_protein_repeat(protein_obj, repeat_obj)
 
-# Add enrichment and q score data from other files
-def update_proteinrepeats():
+    return protein_repeat_obj
 
-    # Need to get all ProteinTF, Repeat objects in the database
-    # so that we can lookup these objects by name and by aliases case-insensitively.
-    # This is because the spreadsheet we are importing may use name or aliases
-    # and it is case-insensitive.
+
+def _create_motif_repeat(motif_obj, repeat_obj):
+    repeat_organism_id = repeat_obj.parental_organism.id if repeat_obj.parental_organism else None
+    protein_organism_id = motif_obj.protein.parent_organism.id if motif_obj.protein.parent_organism else None
+    # This is allowed
+    # if repeat_organism_id and protein_organism_id and (repeat_organism_id != protein_organism_id):
+    #     print(f"""Organisim mismatch between protein and repeat. Skip creating MotifRepeat: 
+    #           repeat = {repeat_obj.name}, 
+    #           repeat.parental_organism = {repeat_organism_id}, 
+    #           motif = {motif_obj.motif_id}, 
+    #           protein.uniprot = {motif_obj.protein.UNIPROT},
+    #           protein.gene = {motif_obj.protein.gene},
+    #           protein.parent_organism = {protein_organism_id}""")
+    #     return None
+
+    print(f"""Creating MotifRepeat: 
+            repeat = {repeat_obj.name}, 
+            repeat.parental_organism = {repeat_organism_id}, 
+            motif = {motif_obj.motif_id}, 
+            protein.uniprot = {motif_obj.protein.UNIPROT},
+            protein.gene = {motif_obj.protein.gene},
+            protein.parent_organism = {protein_organism_id}""")
+    motif_repeat_obj = MotifRepeat(motif=motif_obj, repeat=repeat_obj)
+    motif_repeat_obj.save()
+    return motif_repeat_obj
+
+
+def get_or_create_motif_repeat(motif_obj, repeat_obj):
+    motif_repeat_obj = get_obj_if_exists(MotifRepeat, motif=motif_obj, repeat=repeat_obj)
+    # Create a new ProteinRepeats object if it does not exist
+    if motif_repeat_obj:
+        print(f"get_or_create_motif_repeat: Skipped creating MotifRepeat: motif={motif_obj.motif_id}, repeat={repeat_obj.name}. Already exists.")
+    else:
+        print(f"get_or_create_motif_repeat: Creating MotifRepeat: motif={motif_obj.motif_id}, repeat={repeat_obj.name}.")
+        motif_repeat_obj = _create_motif_repeat(motif_obj, repeat_obj)
+
+    return motif_repeat_obj
+
+
+def get_protein_lookup_by_gene_or_alias():
     existing_proteins = ProteinTF.objects.all()
     existing_protein_lookup = dict()
     for obj in existing_proteins:
@@ -820,7 +1151,11 @@ def update_proteinrepeats():
             for alias in obj.aliases:
                 if alias:
                     existing_protein_lookup[alias.lower()] = obj
+    return existing_protein_lookup
 
+
+# Case insensitive lookup of Repeat objects by name or alias.
+def get_repeat_lookup_by_name_or_alias():
     existing_repeats = Repeat.objects.all()
     existing_repeat_lookup = dict()
     for obj in existing_repeats:
@@ -829,116 +1164,185 @@ def update_proteinrepeats():
             for alias in obj.aliases:
                 if alias:
                     existing_repeat_lookup[alias.lower()] = obj
+    return existing_repeat_lookup
 
-    missing_genes = set()
-    missing_repeats = set()
+
+def update_motif_repeats():
+
+    print("update_motif_repeats: deleting all objetcs")
+    MotifRepeat.objects.all().delete()
+    print("update_motif_repeats: done deleting all objetcs")
+
+    existing_repeat_lookup = get_repeat_lookup_by_name_or_alias()
+
+    motif_repeats = dict()
+
+    en_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE)
+    en_df = en_df.where(pd.notnull(en_df), None)
+    for row in en_df.to_dict(orient='records'):
+        # This could be gene name or alias, so we need to look it up in 
+        # the existing_protein_lookup dictionary
+        motif_id = row["motif_id"].strip()
+        # gene = row["gene"].strip()
+        # tax_id = row["tax_id"].strip()
+        uniprot_ids = row["uniprot_ids"].strip().split(',')
+
+        # TODO Skip for now
+        if len(uniprot_ids) > 1:
+            continue
+
+        # Lookup the protein object by gene name or alias, case-insensitively
+        motif_obj = get_obj_if_exists(Motif, motif_id=motif_id)
+        if motif_obj is None:
+            raise Exception(f"Missing motif {motif_id}")
+
+        for raw_repeat, value in row.items():
+            if raw_repeat in ['motif_id', 'gene', 'tax_id', 'uniprot_ids']:
+                continue
+            # Lookup the repeat object by name or alias, case-insensitively
+            repeat_name_lower = raw_repeat.lower()
+            repeat_obj = existing_repeat_lookup.get(repeat_name_lower)
+            if not repeat_obj:
+                raise Exception(f"Missing repeat obj {raw_repeat}")
+            
+            key = motif_id, repeat_name_lower
+            if motif_repeats.get(key):
+                raise Exception(f"Found duplicate motif_id in ENR file: motif_id={motif_id}, repeat={repeat_name_lower}")
+
+            # Create a new ProteinRepeats object if it does not exist, otherwise update the existing one
+            motif_repeat_obj = get_or_create_motif_repeat(motif_obj, repeat_obj)
+            
+            if not motif_repeat_obj:
+                raise Exception(f"Failed to get or create MotifRepeat: motif={motif_id}, repeat={raw_repeat}")
+
+            motif_repeats[key] = motif_repeat_obj    
 
     # Load enrichment data from other files and update the lookup dictionary
-    for org in Organism.objects.all():
-        for file_type, data_type in [('ENR', 'motif_enrichment'), ('Qscore', 'motif_q_score')]: 
-            file_name = f"{settings.IMPORT_ENRICHMENT_FOLDER}/{org.id}_mean_{file_type}.csv"
-            print(f"Loading enrichment data from {file_name}")
-            en_df = pd.read_csv(file_name)
-            en_df.rename(columns={"Unnamed: 0": "Gene"}, inplace=True)
-            en_df = en_df.where(pd.notnull(en_df), None)
+    for data_type, file_name in [('ENR', settings.IMPORT_ENRICHMENT_FILE), ('Qscore', settings.IMPORT_QSCORE_FILE)]: 
+        print(f"Loading enrichment data from {file_name}")
+        df = pd.read_csv(file_name)
+        df = df.where(pd.notnull(df), None)
 
-            for row in en_df.to_dict(orient="records"):
-                # This could be gene name or alias, so we need to look it up in 
-                # the existing_protein_lookup dictionary
-                raw_gene = row["Gene"].strip()
-                # Lookup the protein object by gene name or alias, case-insensitively
-                protein_obj = existing_protein_lookup.get(raw_gene.lower())
-                if not protein_obj:
-                    missing_genes.add(raw_gene)
+        for row in df.to_dict(orient="records"):
+            # This could be gene name or alias, so we need to look it up in 
+            # the existing_protein_lookup dictionary
+            motif_id = row["motif_id"].strip()
+
+            for raw_repeat, value in row.items():
+                if raw_repeat in ['motif_id', 'gene', 'tax_id', 'uniprot_ids']:
                     continue
-                for raw_repeat, value in row.items():
-                    if raw_repeat == "Gene":
+
+                # Ignore if no data
+                if value is None:
+                    continue
+
+                # ENR and Qscore should be numeric values, so we will try to convert them to float
+                value_float = None
+                try:
+                    value_float = float(value)
+                except ValueError:
+                    pass
+
+                if math.isnan(value_float):
+                    value_float = None
+
+                # Lookup the repeat object by name or alias, case-insensitively
+                repeat_name_lower = raw_repeat.lower()
+
+                key = motif_id,repeat_name_lower
+                motif_repeat_obj = motif_repeats.get(key)
+                if not motif_repeat_obj:
+                    # These are complex protein
+                    print(f"Skip missing MotifRepeat obj: data_type={data_type}, motif_id={motif_id}, repeat={repeat_name_lower}")
+                    continue
+                
+                if data_type == 'ENR':
+                    if value_float is not None and value_float < 0.00001:
                         continue
+                    motif_repeat_obj.motif_enrichment = value_float
+                else:
+                    motif_repeat_obj.motif_q_score = value_float
 
-                    # Lookup the repeat object by name or alias, case-insensitively
-                    repeat_obj = existing_repeat_lookup.get(raw_repeat.lower())
-                    if not repeat_obj:
-                        missing_repeats.add(raw_repeat)
-                        continue
+                print(f"value_float type = {type(value_float)}, value_float = {value_float}")
+                print(f"""Updating MotifRepeat - 
+                    data_type: {data_type},
+                    motif_obj:{motif_obj.motif_id}, 
+                    UNIPROT: {motif_obj.protein.UNIPROT},
+                    gene: {motif_obj.protein.gene},
+                    organisim: {motif_obj.protein.parent_organism.id},
+                    repeat_obj:{repeat_obj.name}, 
+                    motif_enrichment:{motif_repeat_obj.motif_enrichment}, 
+                    motif_q_score:{motif_repeat_obj.motif_q_score}""")
+                motif_repeat_obj.save()
 
-                    protein_repeat_obj = get_obj_if_exists(
-                        ProteinRepeats,
-                        protein=protein_obj,
-                        repeat=repeat_obj
-                    )
 
-                    # Only enrichment is allowed to create new ProteinRepeats rows
-                    if data_type == "motif_enrichment":
-                        if value is None:
-                            continue
-
-                        try:
-                            value_float = float(value)
-                        except ValueError:
-                            continue
-
-                        if value_float < 0.00001:
-                            continue
-
-                        if not protein_repeat_obj:
-                            print(f"""Creating ProteinRepeat - 
-                            gene: {raw_gene},
-                            repeat: {raw_repeat},
-                            protein_obj:{protein_obj.gene}, 
-                            repeat_obj:{repeat_obj.name}""")
-                            protein_repeat_obj = ProteinRepeats(
-                                protein=protein_obj,
-                                repeat=repeat_obj
-                            )
-                        else:
-                            protein_repeat_obj.motif_enrichment = value
-                            print(f"""Updating ProteinRepeat - 
-                            protein_obj:{protein_obj.gene}, 
-                            repeat_obj:{repeat_obj.name}, 
-                            motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                            motif_q_score:{protein_repeat_obj.motif_q_score}""")
-                        protein_repeat_obj.save()
-                    else:
-                        # Qscore should NOT create new connections
-                        if not protein_repeat_obj:
-                            continue
-
-                        protein_repeat_obj.motif_q_score = value
-                        print(f"""Updating ProteinRepeat - 
-                        protein_obj:{protein_obj.gene}, 
-                        repeat_obj:{repeat_obj.name}, 
-                        motif_enrichment:{protein_repeat_obj.motif_enrichment}, 
-                        motif_q_score:{protein_repeat_obj.motif_q_score}""")
-                        protein_repeat_obj.save()
-
-    if missing_genes:
-        print(f"Missing genes in database: {sorted(missing_genes)}")
-    if missing_repeats:
-        print(f"Missing repeats in database: {sorted(missing_repeats)}")  
-
-    missing_genes_df = pd.DataFrame(sorted(missing_genes), columns=['missing_genes'])
-    missing_repeats_df = pd.DataFrame(sorted(missing_repeats), columns=['missing_repeats'])
-    missing_genes_df.to_csv(f"{settings.IMPORT_DATA_FOLDER}/missing_genes.csv", index=False)
-    missing_repeats_df.to_csv(f"{settings.IMPORT_DATA_FOLDER}/missing_repeats.csv", index=False)
+def update_motif_repeat_has_enr_or_qscore():
+    objs = MotifRepeat.objects.all()
+    for obj in objs:
+        obj.has_enr_or_q_score = obj.motif_enrichment is not None \
+            or obj.motif_q_score is not None
+        obj.save()
 
 
 def get_proteomic_data(mapper, uniprot_id):
+    print(f"get_proteomic_data: uniprot_id = {uniprot_id}")
     proteomics_cache_folder = '.cache/proteomics'
     cache_file = f"{proteomics_cache_folder}/{uniprot_id}.csv"
     if os.path.exists(cache_file):
-        print(f"Loading proteomic data from cache: {cache_file}")
-        result_df = pd.read_csv(cache_file)
-        return result_df, []
+        print(f"get_proteomic_data: loading proteomic data from cache: {cache_file}")
+        result_df = pd.read_csv(cache_file, dtype=str)
+        result_df = result_df.where(pd.notnull(result_df), None)
+        if len(result_df) > 0:
+            return result_df, []
    
-    print(f"Loading proteomic data using ProtMapper for {uniprot_id}")
+    print(f"get_proteomic_data: loading proteomic data using ProtMapper for {uniprot_id}")
     if not os.path.exists(proteomics_cache_folder):
         os.makedirs(proteomics_cache_folder)
     # Use ProtMapper to get the data
-    result_df, failed = mapper.get(ids=[uniprot_id], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
-    print(f"***type failed = {type(failed)}, failed = {failed}")
+    try:
+        result_df, failed = mapper.get(ids=[uniprot_id], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
+        print(f"ProtMapper returned type(failed) = {type(failed)}, failed = {failed}")
+        print(result_df)
+        result_df.to_csv(cache_file, index=False)
+        return result_df, failed
+    except Exception as e:
+        print(f"ERROR ProtMapper failed: {e}")
+
+    return None, None
+
+def get_ensemble_id_and_aliases(gene, uniprot_id):
+
+    # Get it from cache
+    if not uniprot_id:
+        return None, None
+
+    mapper = ProtMapper()
+    print(f"get_ensemble_id_and_aliases: gene = {gene}, uniprot_id = {uniprot_id}")
+    result_df, failed = get_proteomic_data(mapper, uniprot_id)
+    if result_df is None:
+        return None, None
+    # result_df['Ensembl'] = result_df['Ensembl'].apply(lambda x: x.split(' ')[0].split('.')[0] if pd.notnull(x) and x != '' else None)
+    result_df = result_df.where(pd.notnull(result_df), None)
+    if len(result_df) == 0:
+        return None, None
+    
+    print(f"get_proteomic_data returned {len(result_df)} results:")
     print(result_df)
-    result_df.to_csv(cache_file, index=False)
-    return result_df, failed
+    for row in result_df.to_dict(orient='records'):
+        primary_gene = row['Gene Names (primary)']
+        if primary_gene.lower() != gene.lower():
+            print(f"Gene name mismatch for uniprot_id {uniprot_id}: gene from spreadsheet = {gene}, gene from proteomics data = {row['Gene Names (primary)']}. Skipping this uniprot_id.")
+            continue
+        aliases = [x.strip() for x in row['Gene Names'].split(' ') if x.strip()]
+        ensembl = None
+        raw_ensembl = row['Ensembl']
+        if raw_ensembl:
+            ensembl = raw_ensembl.split(' ')[0].split('.')[0]
+
+        print(f"Raw ensembl: {raw_ensembl}, parsed ensembl: {ensembl}, aliases = {aliases}")
+        return ensembl, ','.join(aliases)
+    
+    return None, None
 
 
 def update_proteomics():
@@ -1024,11 +1428,8 @@ def update_proteomics():
                         # gene_type = '{"TF"}' # for testing
                     )
                     protein_obj.save()
-                    protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                    protein_repeat_obj.save()
-            # print(obj.gene)
-            # print(obj.aliases)
-            # print(obj.ENSEMBL.values[0].split(' ')[0])
+                    protein_repeat_obj = get_or_create_protein_repeat(protein_obj, repeat_obj)
+
         log2C_vals[row[df.keys()[0]]] = row[df.keys()[2]]
         significance[row[df.keys()[0]]] = row[df.keys()[1]]
 
@@ -1244,8 +1645,7 @@ def import_proteomics():
                                 # gene_type = '{"TF"}' # for testing
                             )
                             protein_obj.save()
-                            protein_repeat_obj = ProteinRepeats(protein=protein_obj, repeat=repeat_obj)
-                            protein_repeat_obj.save()
+                            protein_repeat_obj = get_or_create_protein_repeat(protein_obj, repeat_obj)
 
                 datapoints.append({
                     "name": protein_objs[0].gene,
@@ -1311,23 +1711,23 @@ def import_proteomics():
             obj.save()
 
 
-def update_jaspar():
-    df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
+# def update_jaspar():
+#     df =  load_dataframe_from_excel(settings.IMPORT_DATA_FILE, sheet_name='master_proteins', dtype=str)
 
 
-    for gene in sorted(set(df[df['gene'].notnull()]['gene'].values)):
-        if not gene:
-            continue
+#     for gene in sorted(set(df[df['gene'].notnull()]['gene'].values)):
+#         if not gene:
+#             continue
 
 
-        print(f"\n***Updating protein {gene}")
-        # Get list of jaspar matrix_ids
-        jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
-        if jasper_ids:
-            protein_obj = ProteinTF.objects.get(gene=gene)
-            protein_obj.jaspar = jasper_ids
-            print(f"Updating protein: {protein_obj}")
-            protein_obj.save()
+#         print(f"\n***Updating protein {gene}")
+#         # Get list of jaspar matrix_ids
+#         jasper_ids = get_jaspar_ids(gene, tax_group='vertebrates', use_cache=True)
+#         if jasper_ids:
+#             protein_obj = ProteinTF.objects.get(gene=gene)
+#             protein_obj.jaspar = jasper_ids
+#             print(f"Updating protein: {protein_obj}")
+#             protein_obj.save()
 
 
 def save_proteins():
@@ -1335,14 +1735,18 @@ def save_proteins():
         protein.save()
 
 
-
+def submit_uniprot_to_ensembl_mapping(uniprot_ids):
+    return submit_uniprot_to_pdb_or_ensembl_mapping(uniprot_ids, mapping_type="Ensembl")
 
 def submit_uniprot_to_pdb_mapping(uniprot_ids):
+    return submit_uniprot_to_pdb_or_ensembl_mapping(uniprot_ids, mapping_type="PDB")
+
+def submit_uniprot_to_pdb_or_ensembl_mapping(uniprot_ids, mapping_type):
     # The data you want to send as a Python dictionary
     uniprot_ids_str = ','.join(uniprot_ids)
     payload = {
         "from": "UniProtKB_AC-ID",
-        "to": "PDB",
+        "to": mapping_type,
         "ids": uniprot_ids_str
     }
     print(f"Payload: {json.dumps(payload, indent=2)}")
@@ -1368,11 +1772,8 @@ def submit_uniprot_to_pdb_mapping(uniprot_ids):
     return job_id
 
 
-
-
-def get_uniprot_to_pdb_mapping_results(job_id):
-    url = f"https://rest.uniprot.org/idmapping/status/{job_id}"
-
+def get_uniprot_to_pdb_or_ensembl_mapping_results(job_id):
+    url = f'https://rest.uniprot.org/idmapping/status/{job_id}'
     max_tries = 5
     wait_time = 5
 
@@ -1430,6 +1831,42 @@ def get_uniprot_to_pdb_mapping_results(job_id):
     print(f"Got total {len(all_results)} results")
     return all_results
 
+def get_uniprot_to_ensembl_mapping(uniprot_ids, use_cache=True):
+
+    cache_folder = '.cache/uniprot'
+
+    lookup = dict()
+
+    uniprot_ids_to_fetch = []
+    if use_cache:
+        if not os.path.exists(cache_folder):
+            os.makedirs(cache_folder)
+        for uniprot_id in uniprot_ids:
+            cache_file = f"{cache_folder}/{uniprot_id}_ensembl.json"
+            if os.path.exists(cache_file):
+                print(f"Loading UniProt to Ensembl mapping from cache: {cache_file}")
+                with open(cache_file, 'r') as stream:
+                    uniprot_json = json.load(stream)
+                    lookup[uniprot_id] = uniprot_json
+            else:
+                uniprot_ids_to_fetch.append(uniprot_id)
+    else:
+        uniprot_ids_to_fetch = uniprot_ids
+
+    if uniprot_ids_to_fetch:
+        print(f"Fetching UniProt to Ensembl mapping for {len(uniprot_ids_to_fetch)} uniprot ids")
+        job_id = submit_uniprot_to_ensembl_mapping(uniprot_ids_to_fetch)
+        time.sleep(5) # wait for the job to start processing
+        new_results = get_uniprot_to_pdb_or_ensembl_mapping_results(job_id)
+        for result in new_results:
+            unipro_id = result['from']
+            cache_file = f"{cache_folder}/{unipro_id}_ensembl.json"
+            with open(cache_file, 'w') as stream:
+                json.dump(result, stream, indent=2)
+            lookup[unipro_id] = result
+    
+    return lookup
+
 
 def get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True):
 
@@ -1457,7 +1894,7 @@ def get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True):
         print(f"Fetching UniProt to PDB mapping for {len(uniprot_ids_to_fetch)} uniprot ids")
         job_id = submit_uniprot_to_pdb_mapping(uniprot_ids_to_fetch)
         time.sleep(5) # wait for the job to start processing
-        new_results = get_uniprot_to_pdb_mapping_results(job_id)
+        new_results = get_uniprot_to_pdb_or_ensembl_mapping_results(job_id)
         for result in new_results:
             unipro_id = result['from']
             cache_file = f"{cache_folder}/{unipro_id}.json"
@@ -1485,21 +1922,22 @@ def update_PDB_from_uniprot():
     print(f"Searching PDB for {len(uniprot_ids)} unique uniprot ids")
 
     # Get uniport to PDB mapping for the given uniprot ids, using cache if available
-    lookup = get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True)
+    pdb_lookup = get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True)
 
-    print(f"Got {len(lookup)} unique uniprot ids with PDB mappings")
+    print(f"Got {len(pdb_lookup)} unique uniprot ids with PDB mappings")
 
     saved_count = 0
     for protein in protein_objs:
         if protein.PDB:
             print(f"Protein {protein.gene} already has PDB id {protein.PDB}. Skipped.")
             continue
-        result = lookup.get(protein.UNIPROT)
+
+        result = pdb_lookup.get(protein.UNIPROT)
         if not result or not result.get('to'):
             print(f"No PDB mapping found for protein {protein.gene} with uniprot id {protein.UNIPROT}")
             continue
         pdb_id = result['to']
-        print(f"Updating protein {protein.gene} with unipro = {protein.UNIPROT}: set PDB to {pdb_id}")
+        print(f"Updating protein {protein.gene} with uniprot = {protein.UNIPROT}: set PDB to {pdb_id}")
         protein.PDB = pdb_id
         protein.save()
         saved_count += 1
@@ -1513,62 +1951,87 @@ def update_microscopy():
 
     raw_df = raw_df.where(pd.notnull(raw_df), None)
     # Filter rows where protein is not null
-    df = raw_df[raw_df['protein'].notnull()]
-    print(f"Found {len(df)} microscopy records to process")
+    all_df = raw_df[raw_df['protein'].notnull() & raw_df['protein_name'].notnull()]
+    print(f"Found {len(all_df)} microscopy records to process")
 
-    for row in df.to_dict(orient='records'):
-        print(f"Processing microscopy for protein {row['protein']}")
-        if len(ProteinTF.objects.filter(UNIPROT = row['protein'])) == 0:
-            print(f"Protein with UNIPROT {row['protein']} does not exist. Skipped.")
-            continue
-        uniprot = row['protein']
-        channels    = json.loads(row['channels'])
+    uniprot_gene_mapping = all_df[['protein', 'protein_name']].drop_duplicates()
 
-        url = row['url'].strip()
+    unique_proteins = set(all_df['protein'].values)
+    print(f"Unique proteins in microscopy data: {len(unique_proteins)}")
 
-        # Unique key for the microscopy record is the name, which is derived from the url
-        name = url.split('/')[-1].split('.')[0]
-        # This is used to display in dropdown menu
-        display_name = name
+    for uniprot, gene in uniprot_gene_mapping.to_dict(orient='records'):
+        df = all_df[(all_df['protein'] == uniprot) & (all_df['protein_name'] == gene)].copy(deep=True)
+        cell_index_lookup = dict()
+        for row in df.to_dict(orient='records'):
+            print(f"Processing microscopy for : uniprot = {row['protein']}, gene = {row['gene']}")
+            if len(ProteinTF.objects.filter(UNIPROT = row['protein'])) == 0:
+                print(f"Protein with UNIPROT {row['protein']} does not exist. Skipped.")
+                continue
 
-        # The protein column in the spreadsheet contains the uniprot id                                
-        protein_obj = ProteinTF.objects.get(UNIPROT=uniprot)
-        gene = protein_obj.gene
+            uniprot = row['protein']
+            gene = row['gene']
 
-        if not protein_obj:
-            print("Protein {gene} does not exist. Skipped.")
-            continue
+            channels    = json.loads(row['channels'])
 
-        local_tiff_file = row['local_img_file'].strip() if row['local_img_file'] else None
-        cell_type = row['cell_type'].strip() if row['cell_type'] else None
-        pixel_size = row['pixel_size'].strip() if row['pixel_size'] else None
-        magnification = row['magnification'].strip() if row['magnification'] else None
-        expression = row['expression'].strip() if row['expression'] else None
-        microscopy = row['microscopy'].strip() if row['microscopy'] else None
-        description = row['description'].strip() if row['description'] else 'N/A'
+            channel_key = ""
+            for channel_index, channel_name in channels.items():
+                if channel_name:
+                    if channel_key:
+                        channel_key += ', '
+                    channel_key += channel_name
+            
+            if channel_key in cell_index_lookup:
+                cell_index_lookup[channel_key] += 1
+            else:
+                cell_index_lookup[channel_key] = 1
 
-        existing_microscopy = Microscopy.objects.filter(proteintf=protein_obj, name=name, url=url).first()
-        if existing_microscopy:
-            print(f"Microscopy with name {name} and url {url} already exists for protein {gene}. Skipped.")
-            continue
+            # This is used to display in dropdown menu
+            display_name = f"Cell {cell_index_lookup[channel_key]}: {channel_key}"   
 
-        obj = Microscopy(
-            id = shortuuid(),
-            proteintf = protein_obj,
-            name = name,
-            display_name = display_name,
-            url = url,
-            local_tiff_file = local_tiff_file,
-            cell_type = cell_type,
-            pixel_size = pixel_size,
-            magnification = magnification,
-            channels = channels,
-            expression = expression,
-            microscopy = microscopy,
-            description = description
-        )
-        print(f"Adding Microscopy: {obj}")
-        obj.save()
+            url = row['url'].strip()
+
+            # Unique key for the microscopy record is the name, which is derived from the url
+            name = url.split('/')[-1].split('.')[0]
+
+            # The protein column in the spreadsheet contains the uniprot id  
+            protein_obj = get_protein_tf(uniprot, gene)
+
+            if not protein_obj:
+                print("Protein: uniprot = {uniprot}, gene = {gene} does not exist. Skipped.")
+                continue
+
+            gene = protein_obj.gene
+
+            local_tiff_file = row['local_img_file'].strip() if row['local_img_file'] else None
+            cell_type = row['cell_type'].strip() if row['cell_type'] else None
+            pixel_size = row['pixel_size'].strip() if row['pixel_size'] else None
+            magnification = row['magnification'].strip() if row['magnification'] else None
+            expression = row['expression'].strip() if row['expression'] else None
+            microscopy = row['microscopy'].strip() if row['microscopy'] else None
+            description = row['description'].strip() if row['description'] else 'N/A'
+
+            existing_microscopy = Microscopy.objects.filter(proteintf=protein_obj, name=name, url=url).first()
+            if existing_microscopy:
+                print(f"Microscopy with name {name} and url {url} already exists for protein {gene}. Skipped.")
+                continue
+
+            obj = Microscopy(
+                id = shortuuid(),
+                proteintf = protein_obj,
+                name = name,
+                display_name = display_name,
+                url = url,
+                local_tiff_file = local_tiff_file,
+                cell_type = cell_type,
+                pixel_size = pixel_size,
+                magnification = magnification,
+                channels = channels,
+                expression = expression,
+                microscopy = microscopy,
+                description = description
+            )
+            print(f"Adding Microscopy: {obj}")
+            obj.save()
 
 
 def import_genome_references():
@@ -1616,6 +2079,80 @@ def import_genome_references():
         obj.save()
 
 
+def create_or_update_motif_from_jaspar():
+            
+    proteins = ProteinTF.objects.all()
+    for protein in proteins:
+        jaspars = protein.jaspar
+        for jaspar_id in jaspars:
+            if not get_obj_if_exists(Motif, motif_id=jaspar_id):
+                print(f"Creating motif: motif_id={jaspar_id}, gene={protein.gene}")
+                motif = Motif(motif_id=jaspar_id, protein=protein)
+                motif.save()
+
+
+def create_or_update_motif_from_enr_file():
+    # motif_gene_mapping = dict()
+    enr_df = pd.read_csv(settings.IMPORT_ENRICHMENT_FILE, dtype=str)
+    enr_df = enr_df.where(pd.notnull(enr_df), None)
+    for row in enr_df[enr_df['motif_id'].notnull()].to_dict(orient='records'):
+        motif_id = row['motif_id']
+        if get_obj_if_exists(Motif, motif_id=motif_id):
+            continue
+       
+        motif_id = row['motif_id']
+        gene_name = row['gene']
+        tax_id = row['tax_id'].strip() if row['tax_id'] else None
+        uniprot_ids = [x.strip().upper() for x in row['uniprot_ids'].strip().split(',')]
+        gene_type = 'tf'
+
+        # TODO: Skip complex protein for now
+        if len(uniprot_ids) > 1:
+            continue
+        
+        uniprot_id = uniprot_ids[0]
+        protein_obj = get_protein_tf(uniprot=uniprot_id, gene=gene_name)
+        print(f"Creating motif: motif_id={motif_id}, uniprot={gene_name}, gene={gene_name}")
+        motif = Motif(motif_id=motif_id, protein=protein_obj)
+        motif.save()
+
+        # TODO: Create Motif for complex protein
+        # if len(uniprot_ids) > 1:
+        #     if '::' in gene_name:
+        #         genes = gene_name.split('::')
+        #         gene_type = 'complex'
+        #     elif '-' in gene_name:
+        #         genes = gene_name.split('-')
+        #         gene_type = 'fusion'
+        #     else:
+        #         genes = [gene_name]
+        # else:
+        #     genes = [gene_name]
+
+        # if len(genes) != len(uniprot_ids):
+        #     raise Exception(f"Number of genes ({genes}) does not match number of uniprot_ids ({uniprot_ids}) for gene {gene_name}.")
+        # index = 0
+        # for uniprot_id in uniprot_ids:
+        #     gene = genes[index]
+        #     # Assume that protein has been created
+        #     protein_obj = get_protein_tf(uniprot=uniprot_id, gene=gene)
+        #     print(f"Creating motif: motif_id={motif_id}, uniprot={gene}, gene={gene}")
+        #     motif = Motif(motif_id=motif_id, protein=protein_obj)
+        #     motif.save()
+        #     index += 1        
+    
+
+def fix_protein_jaspars():
+    proteins = ProteinTF.objects.all()
+    for protein in proteins:
+        # Taxonomy id
+        tax_group = protein.parent_organism.taxonomy_group
+        if tax_group != 'vertebrates':
+            jasper_ids = get_jaspar_ids(protein.gene, tax_group=tax_group, use_cache=True)
+            protein.jaspar = jasper_ids
+            protein.save()
+
+
 def create_user(username, email, password, is_staff=False, is_superuser=False):
 
 
@@ -1640,6 +2177,9 @@ def create_user(username, email, password, is_staff=False, is_superuser=False):
         return None
 
 
+def import_protein():
+    import_protein_from_satellite_binders_database()
+    import_protein_from_enr_and_qscore_files()
 
 
 def delete_all_records():
@@ -1657,29 +2197,82 @@ def delete_all_records():
     Organism.objects.all().delete()
     print("FINISHED DELETING")
 
+################################################
+'''
+We should be able to indepently create the following records in phases:
+
+STEP 1: 
+- Organism
+- Author
+- GenomeReferences (What for??)
+
+STEP 2:
+- Reference
+- GeneFamily (Organism)
+- Satellite??
+
+STEP 3:
+- ProteinTF (Organism, GeneFamily, Reference)
+- Repeat (Organism, Satellite)
+
+STEP 4:
+- ProteinReference (Reference, ProteinTF)
+- ProteinComplex (ProteinTF)
+- Motif (ProteinTF, ProteinComplex)
+- Proteomic (ProteinTF, Repeat, Organism)
+- Microscopy (ProteinTF)
+
+STEP 5:
+- ProteinRepeat (ProteinTF, Repeat)
+- MotifRepeat (Motif, Repeat)
+'''
+################################################
 def update():
+
+    # STEP 1: Import Organisms
     print("ORGANISMS")
     import_organisms()
+
+    # print("GENOME REFS")
+    import_genome_references()
+
+    # # STEP 2: Import Gene Families
     print("GENE FAMILY")
     import_gene_family()
-    print("REPEAT + FAMILIES")
+
+    # # STEP 3: ProteinTF and Repeat
+    print("REPEAT")
     import_repeat()
-    update_repeat_families()
+
+    # validate_repeats_in_enr_and_qscore_files()
+
     print("PROTEIN")
     import_protein()
+    import_protein_from_satellite_binders_database()
+    import_protein_from_enr_and_qscore_files()
     update_PDB_from_uniprot()
-    print("PROTEIN REPEATS")
-    update_proteinrepeats()
+
+    # STEP 4: ProteinReference, ProteinComplex, Motif, Proteomics, Microscopy
     print("PROTEOMICS")
     import_proteomics()
     print("NETWORK DATA")
     for org in Organism.objects.all():
         GetNetworkData(org.id, 0.1)
-    # GetNetworkDataAll()
+    # Don't call this
+    ## GetNetworkDataAll()
     print("MICROSCOPY")
     update_microscopy()
-    print("GENOME REFS")
-    import_genome_references()
+
+    # For each existing Uniprot/gene, get all associated jaspaer (motif)
+    # create_or_update_motif_from_jaspar()
+    # Get motif/uniprot from enr file
+    print("MOTIF_REPEATS")
+    create_or_update_motif_from_enr_file()
+
+    # STEP 5: MotifRepeat
+    # validate_repeats_in_enr_and_qscore_files()
+    update_protein_repeat_from_repeat_families()
+    update_motif_repeats()
 
 
 if __name__ == "__main__":
@@ -1720,12 +2313,12 @@ if __name__ == "__main__":
     elif command == 'import_genome_references':
         import_genome_references()
    
-    elif command == 'update_jaspar':
-        update_jaspar()
+    # elif command == 'update_jaspar':
+    #     update_jaspar()
 
 
-    elif command == 'update_proteinrepeats':
-        update_proteinrepeats()
+    elif command == 'update_motif_repeats':
+        update_motif_repeats()
      
     # elif command == 'update_proteomics':
     #     update_proteomics()
@@ -1786,7 +2379,7 @@ if __name__ == "__main__":
         print("- import_protein to import protein data from table")
         print("- update_proteomics to update proteomics data in Proteomics table")
         print("- update_jaspar to download jaspar data and update jaspar column in Proteintf table")
-        print("- update_proteinrepeats to download enirchmend and motif data in ProteinRepeats table")
+        print("- update_motif_repeats to download enirchmend and motif data in MotifReoeat table")
         print("- update_microscopy overwrite microscopy table")
         print("- get_proteomics_without_proteins to import proteomics data without creating new ProteinTF objects")
         print("- create_user <username> <email> <password> to create a new user with the least privileges")

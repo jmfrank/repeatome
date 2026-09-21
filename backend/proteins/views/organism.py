@@ -1,8 +1,8 @@
 import math
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Organism, Repeat, ProteinTF
-from django.db.models import Count
+from ..models import Organism, Repeat, ProteinTF, Motif, MotifRepeat
+from django.db.models import Count, Prefetch
 import requests
 from proteins.util.repeat_network_data import GetNetworkData
 import shutil
@@ -18,14 +18,48 @@ def microscopy_viewer(request):
 class OrganismListView(ListView):
     """renders html for single reference page"""
 
-    queryset = Organism.objects.annotate(num_prot=Count("proteinTF", distinct=True), num_repeat=Count("repeat", distinct=True))
+    queryset = Organism.objects.annotate(
+        num_prot=Count("proteinTF", distinct=True),
+        num_motif=Count("proteinTF__motifs", distinct=True),
+        num_repeat=Count("proteinTF__motifs__motifrepeat_set__repeat", distinct=True),
+    )
+
+    # repeat_count_subquery = (
+    #     Repeat.objects.filter(
+    #         motif_repeats__motif__protein__parent_organism=OuterRef("pk")
+    #     )
+    #     .values("motif_repeats__motif__protein__parent_organism")
+    #     .annotate(total=Count("pk", distinct=True))
+    #     .values("total")
+    # )
+    #
+    # queryset = Organism.objects.annotate(
+    #     num_prot=Count("proteinTF", distinct=True),
+    #     num_motif=Count("proteinTF__motifs", distinct=True),
+    #     num_repeat=Subquery(repeat_count_subquery),
+    # )
+
     template_name = "organismTable.html"
+
 
 class OrganismDetailView(DetailView):
     """renders html for single reference page"""
 
     model = Organism
-    queryset = Organism.objects.all().prefetch_related("proteinTF__repeats")
+    # queryset = Organism.objects.all().prefetch_related("proteinTF__motifs__motif_repeats__repeat")
+
+    queryset = Organism.objects.all().prefetch_related(
+        Prefetch(
+            "proteinTF__motifs",
+            queryset=Motif.objects.prefetch_related(
+                Prefetch(
+                    "motifrepeat_set",
+                    queryset=MotifRepeat.objects.select_related("repeat"),
+                )
+            ),
+        )
+    )
+
     template_name = "organisms/organismPage.html"
     # json_filename = f"repeat_network_db_{organism.id}.json"
     
@@ -33,7 +67,8 @@ class OrganismDetailView(DetailView):
         slug = kwargs.get("pk")
         print(slug)
         if slug:
-            shutil.copyfile('frontend/static/network/repeat_network_db_' + str(slug) + '.json', 'frontend/static/network/repeat_network_db.json')  # just write to file, ignore return
+            shutil.copyfile('frontend/static/network/repeat_network_db_' + str(slug) + '.json',
+                            'frontend/static/network/repeat_network_db.json')  # just write to file, ignore return
         
         return super().get(request, *args, **kwargs)
 

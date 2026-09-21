@@ -96,9 +96,8 @@ def protein_search(request):
         # stateprefetch = Prefetch("states", queryset=State.objects.order_by("-is_dark", "em_max"))
         f = ProteinFilter(
             request.GET,
-            # queryset = ProteinTF.objects.all()
-            queryset=ProteinTF.objects.annotate(nrepeats=Count("repeats"))
-            .order_by("-nrepeats"),
+            queryset = ProteinTF.objects.all()
+            # queryset=ProteinTF.objects.annotate(nrepeats=Count("motifs")).order_by("-nmotifs"),
             # .select_related("default_state") # select_related only works with ForeignKeys
             # .prefetch_related(stateprefetch)
         )

@@ -9,9 +9,9 @@ class Microscopy(models.Model):
     proteintf = models.ForeignKey(
         "ProteinTF",
         verbose_name="ProteinTF",
-        on_delete=models.CASCADE,
-        to_field='gene', 
-        db_column='gene'
+        on_delete=models.CASCADE
+        # to_field='gene', 
+        # db_column='gene'
     )
     local_tiff_file = models.TextField(blank=True, null=True)
     url = models.TextField(blank=False, null=False)

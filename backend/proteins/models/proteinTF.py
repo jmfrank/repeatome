@@ -13,10 +13,12 @@ from references.models import Reference
 from proteins.models.gene_family import GeneFamily
 from proteins.models.organism import Organism
 from proteins.models.repeat import Repeat
+from proteins.models.motif import Motif
 from references.models import Reference
 
 class ProteinRepeats(models.Model):
-    protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
+    # protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
+    protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE)
     repeat = models.ForeignKey(Repeat, on_delete=models.CASCADE, to_field='name', db_column='name')
     motif_enrichment = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
     motif_q_score = models.DecimalField(decimal_places=5, max_digits=10, blank=True, null=True)
@@ -27,7 +29,8 @@ class ProteinRepeats(models.Model):
     
 
 class ProteinReferences(models.Model):
-    protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
+    # protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
+    protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE)
     reference = models.ForeignKey(Reference, on_delete=models.CASCADE, to_field='doi', db_column='doi')
     # date_published = models.DateField() # Example of an extra field
 
@@ -39,7 +42,8 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
     universal_id = models.CharField(max_length=22, blank=True, null=True)
-    gene = models.CharField(max_length=200, blank=True, null=True, unique=True)
+    gene = models.CharField(max_length=200, blank=True, null=True, unique=False)
+    # EMBL-gene (i.e. uniprot and gene)
     slug = models.SlugField(max_length=200, blank=True, null=True, unique=True)
     aliases = ArrayField(
         models.TextField(blank=True, null=True),
@@ -116,12 +120,25 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
         null=True,
         through=ProteinReferences
     )
-    repeats = models.ManyToManyField(
-        Repeat,
-        blank=True,
-        null=True,
-        through=ProteinRepeats
-    )
+    # repeats = models.ManyToManyField(
+    #     Repeat,
+    #     blank=True,
+    #     null=True,
+    #     through=ProteinRepeats
+    # )
+
+    @property
+    def filtered_repeats(self):
+        """
+        Extracts unique Repeat objects from prefetched MotifRepeats
+        without triggering additional database hits.
+        """
+        repeats = {}
+        for motif in self.motifs.all():
+            # Reading motifrepeat_set.all() stays in prefetched memory
+            for mr in motif.motifrepeat_set.all():
+                repeats[mr.repeat.name] = mr.repeat
+        return repeats.values()
     
     # Meta
     class Meta:
@@ -129,7 +146,9 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
     
     def save(self, *args, **kwargs):
         # print(self.ENSEMBL + '-' + self.gene)
-        self.slug = slugify(self.ENSEMBL + '-' + self.gene)
+        # Cannot use ENSEMBL since many are null
+        # self.slug = slugify(self.ENSEMBL + '-' + self.gene)
+        self.slug = slugify(self.UNIPROT + '-' + self.gene)
         # print(self.gene + ": " + self.slug)
         super().save(*args, **kwargs)
     
@@ -181,12 +200,7 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
       return len(self.jaspars)
     
     def repeats_length(self):
-        if not self.repeats:
-            return 0
-        return len(self.repeats)
-
-    def get_repeats(self):
-        return [p.name for p in self.repeats.all()]
+        return 0
     
     def get_jaspar_base(self):
         if not self.jaspar == None and not len(self.jaspar) == 0:
@@ -205,3 +219,13 @@ class ProteinTF(Authorable, StatusModel, TimeStampedModel):
         from proteins.util.history import get_history
 
         return get_history(self, ignoreKeys)
+
+    def get_motifs(self):
+        return self.motifs.all()
+    
+    def get_jaspar_base_ids(self):
+        jaspar_base_ids = set()
+        for motif in self.motifs.all():
+            jaspar_base_ids.add(motif.get_jaspar_base())
+        return sorted(jaspar_base_ids)
+    
