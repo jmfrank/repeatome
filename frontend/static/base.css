@@ -9853,7 +9853,7 @@ a {
   margin-top: 0px;
 }
 .home-stats .gfpicon {
-  height: 38px;
+  height: 38px !important;
   margin-bottom: 0;
   padding-bottom: 3px;
   filter: brightness(140%);

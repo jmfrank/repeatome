@@ -87,7 +87,7 @@ window.onload = function () {
       shared: true,
       contentFormatter: function(e) {
         var yValue = (e.entries[0].dataPoint.y) * -1; // Get the absolute value
-        return e.entries[0].dataPoint.label + "<br/>Motif Q-Score: " + yValue;
+        return e.entries[0].dataPoint.tooltip + "<br/>Motif Q-Score: " + yValue;
       }
     },
     legend: {
@@ -135,7 +135,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
       shared: true,
       contentFormatter: function(e) {
         var yValue = (e.entries[0].dataPoint.y); // Get the absolute value
-        return e.entries[0].dataPoint.label + "<br/>Motif Enrichment: " + yValue;
+        return e.entries[0].dataPoint.tooltip + "<br/>Motif Enrichment: " + yValue;
       }
     },
     legend: {
@@ -240,25 +240,27 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
      <table class="table" id="repeatProteins" style="width:100%">
        <thead>
          <tr class="table-header">
+           <th>Motif</th>
            <th>Protein</th>
            <th>Gene Family</th>
            <th>Gene Type</th>
-           <th>Organism</th>
+           <th>Motif Origin</th>
            <th>DNA Binding Domain</th>
            <th>Signaling Pathway</th>
          </tr>
        </thead>
        <tbody>
-        {% for protein in repeat.get_proteins %}
+        {% for motif in repeat.filtered_motifs %}
          <tr>
-           <td><a href="/proteinTable/{{protein.slug}}">{{ protein.gene | safe}}</a></td>
-           <td>{{ protein.gene_family.gene_family | safe }}</td>
-           <td>{{ protein.gene_type_as_str | safe }}</td>
-           <td>{{ protein.parent_organism.scientific_name | safe }}</td>
-           <td>{{ protein.dna_binding_domain | safe }}</td>
-           <td>{{ protein.signaling_pathway | safe }}</td>
+           <td>{{ motif.motif_id | safe }}</td>
+           <td><a href="/proteinTable/{{protein.slug}}">{{ motif.protein.gene | safe}}</a></td>
+           <td>{{ motif.protein.gene_family.gene_family | safe }}</td>
+           <td>{{ motif.protein.gene_type_as_str | safe }}</td>
+           <td>{{ motif.protein.parent_organism.scientific_name | safe }}</td>
+           <td>{{ motif.protein.dna_binding_domain | safe }}</td>
+           <td>{{ motif.protein.signaling_pathway | safe }}</td>
          </tr>
-         {% endfor %}
+        {% endfor %}
        </tbody>
      </table>
    </div>
@@ -272,62 +274,59 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
   {% endif %}
   <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-
-
      {% comment %} <div class="sequence mt-3">
 			<div class="row">
 			  	<div class="col">
-				  <h3 class='d-inline'>{{ protein.gene | safe }} Sequence</h3>
+				  <h3 class='d-inline'>{{ motif.protein.gene | safe }} Sequence</h3>
         </div>
       </div>
-      {% if protein.protein_sequence %}
+      {% if motif.protein.protein_sequence %}
         <div class="mt-2">
-          {% if protein.seq_comment %}
-          <p class='text-info small mb-1'><span class='font-weight-bold'>Note</span>: {{ protein.seq_comment | safe}}</p>
+          {% if motif.protein.seq_comment %}
+          <p class='text-info small mb-1'><span class='font-weight-bold'>Note</span>: {{ motif.protein.seq_comment | safe}}</p>
           {% endif %}
-          <div class='aminosequence container'>{{ protein.protein_sequence }}</div>
+          <div class='aminosequence container'>{{ motif.protein.protein_sequence }}</div>
         </div>
       {% else %}
           <p>no sequence available ... <a href="{% url 'proteins:update' slug=repeat.slug %}" class='text-secondary'>add one!</a></p>
       {% endif %} {% endcomment %}
 
     <div class="sequence mt-3">
-        {% if protein.ENSEMBL or protein.UNIPROT or protein.PDB or protein.AF3 or protein.jaspar %}
+        {% if motif.protein.ENSEMBL or motif.protein.UNIPROT or motif.protein.PDB or motif.protein.AF3 or motif.protein.jaspar %}
         <div class="row text-right justify-content-end">
-            {% if protein.ENSEMBL %}
+            {% if motif.protein.ENSEMBL %}
             <div class="col-md-3 col-sm-6">
-                <small>Ensembl: <a href="https://www.ncbi.nlm.nih.gov/protein/{{ protein.ENSEMBL }}" target="_blank" rel="noopener">{{ protein.ENSEMBL | default:''}}</a></small>
+                <small>Ensembl: <a href="https://www.ncbi.nlm.nih.gov/protein/{{ motif.protein.ENSEMBL }}" target="_blank" rel="noopener">{{ motif.protein.ENSEMBL | default:''}}</a></small>
             </div>
             {% endif %}
 
-            {% if protein.ENSEMBL %}
+            {% if motif.protein.ENSEMBL %}
             <div class="col-md-3 col-sm-6">
-                <small>proteinatlas: <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank" rel="noopener">{{ protein.ENSEMBL | default:''}}</a></small>
+                <small>proteinatlas: <a href="https://www.proteinatlas.org/{{ motif.protein.ENSEMBL }}" target="_blank" rel="noopener">{{ motif.protein.ENSEMBL | default:''}}</a></small>
             </div>
             {% endif %}
 
-
-            {% if protein.UNIPROT %}
+            {% if motif.protein.UNIPROT %}
             <div class="col-md-3 col-sm-6">
-                <small>UniProt: <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank" rel="noopener">{{ protein.UNIPROT | default:''}}</a></small>
+                <small>UniProt: <a href="https://www.uniprot.org/uniprot/{{ motif.protein.UNIPROT }}" target="_blank" rel="noopener">{{ motif.protein.UNIPROT | default:''}}</a></small>
             </div>
             {% endif %}
 
-            {% if protein.PDB %}
+            {% if motif.protein.PDB %}
             <div class="col-md-3 col-sm-6">
-                <small>PDB: <a href="https://www.rcsb.org/structure/{{ protein.PDB }}" target="_blank" rel="noopener">{{ protein.PDB | default:''}}</a></small>
+                <small>PDB: <a href="https://www.rcsb.org/structure/{{ motif.protein.PDB }}" target="_blank" rel="noopener">{{ motif.protein.PDB | default:''}}</a></small>
             </div>
             {% endif %}
 
-            {% if protein.AF3 %}
+            {% if motif.protein.AF3 %}
             <div class="col-md-3 col-sm-6">
-                <small>AF3: <a href="https://alphafold.ebi.ac.uk/entry/{{ protein.AF3 }}" target="_blank" rel="noopener">{{ protein.AF3 | default:''}}</a></small>
+                <small>AF3: <a href="https://alphafold.ebi.ac.uk/entry/{{ motif.protein.AF3 }}" target="_blank" rel="noopener">{{ motif.protein.AF3 | default:''}}</a></small>
             </div>
             {% endif %}
 
-            {% if protein.jaspar %}
+            {% if motif.motif_id %}
             <div class="col-md-3 col-sm-6">
-                <small>Jaspar: <a href="https://jaspar.elixir.no/matrix/{{ protein.jaspar }}" target="_blank" rel="noopener">{{ protein.jaspar | default:''}}</a></small>
+                <small>Jaspar: <a href="https://jaspar.elixir.no/matrix/{{ motif.motif_id }}" target="_blank" rel="noopener">{{ motif.motif_id | default:''}}</a></small>
             </div>
             {% endif %}
 
@@ -336,8 +335,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
     </div>
 
 
-   {% comment %} {% if protein.PDB %}
-     {% include "proteins/_structure_section.html" with protein=protein %}
+   {% comment %} {% if motif.protein.PDB %}
+     {% include "proteins/_structure_section.html" with protein=motif.protein %}
    {% endif %} {% endcomment %}
 
    {% comment %} <div class="excerpts">
@@ -359,7 +358,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
      {% else %}
 
 
-       <p class='text-muted'>No excerpts have been added for {{protein.name | safe }}<br><em class='text-muted small'>Excerpts are snippets from publications that capture key information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).</em></p>
+       <p class='text-muted'>No excerpts have been added for {{motif.protein.name | safe }}<br><em class='text-muted small'>Excerpts are snippets from publications that capture key information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).</em></p>
 
 
      {% endif %}
@@ -371,8 +370,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
 
        <div class="primary-ref references mt-2">
            <h3>Primary Reference</h3>
-           {% if protein.references %}
-               {% include "_reference.html" with ref=protein.references %}
+           {% if motif.protein.references %}
+               {% include "_reference.html" with ref=motif.protein.references %}
            {% endif %}
        </div>
 
@@ -380,8 +379,8 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
        <div class="additional-ref references">
            <h3>Additional References</h3>
            <ol>
-               {% if protein.additional_references %}
-               {% for ref in protein.additional_references %}
+               {% if motif.protein.additional_references %}
+               {% for ref in motif.protein.additional_references %}
                    <li class="mt-2 mb-2">{% include "_reference.html" %}</li>
                {% endfor %}
                {% else %}
@@ -394,7 +393,7 @@ var enrichmentScoreChart = new CanvasJS.Chart("enrichmentChartContainer", {
    <div class="external-resources">
      <h3>External Resources</h3>
      <ul>
-     {#             <li>Search <a href="https://bionumbers.hms.harvard.edu/search.aspx?task=searchbytrmorg&trm={{ protein.gene | urlencode }}" target="_blank" rel="noopener">BioNumbers</a> for {{ protein.name }}</li> #}
+     {#             <li>Search <a href="https://bionumbers.hms.harvard.edu/search.aspx?task=searchbytrmorg&trm={{ motif.protein.gene | urlencode }}" target="_blank" rel="noopener">BioNumbers</a> for {{ motif.protein.name }}</li> #}
        <li>Search <a href="https://www.addgene.org/search/advanced/?q={{ repeat.name | urlencode }}" target="_blank" rel="noopener">Addgene</a> for {{ repeat.name | safe}}</li>
        <li>Search <a href="https://knowledge.brc.riken.jp/resource/dna/list?query={{ repeat.name | urlencode }}" target="_blank" rel="noopener">RIKEN BRC</a> for {{ repeat.name | safe}}</li>
      </ul>

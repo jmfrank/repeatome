@@ -54,11 +54,11 @@
             data-expression="{{ item.expression }}"
             data-celltype="{{ item.cell_type }}"
             data-pixelsize="{{ item.pixel_size }}"
-            daata-channels="{{ item.channels_as_str }}"
+            data-channels="{{ item.channels_as_str|safe }}"
             data-magnification="{{ item.magnification }}"
             data-description="{{ item.description }}"
             data-url="{{ item.url }}"
-            data-miscroscopy="{{ item.microscopy }}">
+            data-microscopy="{{ item.microscopy }}">
             {{ item.display_name }}
           </option>
         {% endfor %}

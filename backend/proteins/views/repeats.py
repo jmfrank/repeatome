@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
 from django.conf import settings
+from django.db.models import Prefetch
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
-from ..models import Repeat, ProteinTF, ProteinRepeats, Proteomics
+from ..models import Repeat, ProteinTF, MotifRepeat, Proteomics
 from proteins.models.proteomics import get_proteomics, get_proteomics_list
 import os
 import pandas as pd
@@ -66,15 +67,27 @@ class RepeatDetailView(DetailView):
         # print(self.kwargs['slug'])
         if query_set is None:
             query_set = self.get_queryset()
-        # print(self.kwargs['slug'].lower())
-        # print(Repeat.objects.all()[2].slug)
-        # print(Repeat.objects.get(slug=self.kwargs['slug']))
-        obj = Repeat.objects.filter(slug=self.kwargs['slug'].lower())[0]
-        # print(query_set.get(gene=self.kwargs['slug']))
-        # obj = query_set.get(gene=self.kwargs['slug'])
-        # obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
-        return obj
+
+        # There maybe multitple results??
+        # Pick the first one
+        # obj = Repeat.objects.filter(slug=self.kwargs['slug'].lower())[0]
+
+        # 1. Setup the filtered prefetch for MotifRepeat -> Motif
+        filtered_motif_repeats = Prefetch(
+            'motif_repeats',  # Reverse relation from Repeat to MotifRepeat
+            queryset=MotifRepeat.objects.filter(
+                has_enr_or_q_score=True
+            ).select_related('motif')  # Join the Motif table in the same query
+        )
+
+        # 2. Fetch the single Repeat with prefetched relationships
+        repeat = get_object_or_404(
+            Repeat.objects.prefetch_related(filtered_motif_repeats),
+            slug=self.kwargs['slug'].lower()
+        )
+        return repeat
     
+
     def get_int(self, str_val, def_val):
         try:
             return int(str_val)
@@ -130,6 +143,7 @@ class RepeatDetailView(DetailView):
         context["proteomics_datapoints"] = self.get_proteomics_data(self.object)
         proteomics_objs = self.get_proteomics_objs(self.object)
         context["proteomics_list"] = proteomics_objs
+
         if (proteomics_objs != None and len(proteomics_objs) > 0):
             context["proteomics_first_obj"] = proteomics_objs[0]
         # print(self.get_proteomics_obj(self.object))
@@ -139,28 +153,6 @@ class RepeatDetailView(DetailView):
                 threshold_lst[i] = float(threshold_lst[i])
             context["threshold"] = threshold_lst
         context['subrepeats'] = self.object.children.all()
-        # print(context['proteomics_datapoints'])
-        # print(context['threshold'])
-        # proteomics_datapoints = [
-        #     {"name": "aa", "x": 1, "y": 10, "f": 1},
-        #     {"name": "bb", "x": 2, "y": 20, "f": 2},
-        #     {"name": "cc", "x": 3, "y": 30, "f": 3},
-        #     {"name": "dd", "x": 4, "y": 40, "f": 4},
-        #     {"name": "ee", "x": 5, "y": 50, "f": 5},
-        #     {"name": "ff", "x": 6, "y": 60, "f": 1},
-        #     {"name": "gg", "x": 7, "y": 70, "f": 2},
-        #     {"name": "hh", "x": 8, "y": 80, "f": 3},
-        #     {"name": "ii", "x": 9, "y": 90, "f": 4},
-        #     {"name": "jj", "x": 10, "y": 100, "f": 5}
-        # ]
-        # context["proteomics_datapoints"] = proteomics_datapoints
-
-        # protein_names = ProteinTF.objects.filter(repeats__id == context['repeat'].name)
-        # print(context['protein'].satellite)
-        # print(self.object.get_proteins())
-        # print(f"enrichment_datapoints = {enrichment_datapoints}")
-        # print(f"qscore_datapoints = {qscore_datapoints}")
-        # print(f"proteomics_datapoints = {proteomics_datapoints}")
 
         return render(request, 'repeats/repeatPage.html', context)
     
@@ -183,19 +175,22 @@ class RepeatDetailView(DetailView):
         if index < len(bar_chart_colors):
             color_lookup[color_key] = bar_chart_colors[index]
         else:
-            color_lookup[color_key] = self.string_to_hex_color(index, color_key)
+            color_lookup[color_key] = self.string_to_hex_color(color_key)
         return color_lookup[color_key]
 
     def get_motif_chart_qscore_data(self, repeat):
         datapoints = []
         color_lookup = dict()
-        for obj in ProteinRepeats.objects.filter(repeat=repeat):
+        for obj in MotifRepeat.objects.filter(repeat=repeat):
+            motif = obj.motif
             if obj.motif_q_score:
-                color_key = obj.protein.gene_family.id if obj.protein.gene_family else obj.protein.id
+                color_key = motif.protein.gene_family.id if motif.protein.gene_family else motif.protein.id
                 color = self.get_color_and_update_cache(color_lookup, color_key)
+                val = float(obj.motif_q_score * -1)
                 datapoints.append({
-                    "label": obj.protein.gene, # + ':' + obj.protein.gene_family.gene_family if obj.protein.gene_family else '',
-                    "y": float(obj.motif_q_score * -1),
+                    "label": f"{motif.protein.gene}", 
+                    "tooltip": f"{motif.protein.gene} | {motif.motif_id}",
+                    "y": val,
                     "color": color
                 })
         # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
@@ -211,13 +206,16 @@ class RepeatDetailView(DetailView):
     def get_motif_chart_enrichment_data(self, repeat):
         datapoints = []
         color_lookup = dict()
-        for obj in ProteinRepeats.objects.filter(repeat=repeat):
+        for obj in MotifRepeat.objects.filter(repeat=repeat):
+            motif = obj.motif
             if obj.motif_enrichment:
-                color_key = obj.protein.gene_family.id if obj.protein.gene_family else obj.protein.id
+                color_key = motif.protein.gene_family.id if motif.protein.gene_family else motif.protein.id
                 color = self.get_color_and_update_cache(color_lookup, color_key)
+                val = float(obj.motif_enrichment)
                 datapoints.append({
-                "label": obj.protein.gene, # + ':' + obj.protein.gene_family.gene_family if obj.protein.gene_family else '',
-                "y": float(obj.motif_enrichment),
+                "label": f"{motif.protein.gene}", 
+                "tooltip": f"{motif.protein.gene} | {motif.motif_id}", 
+                "y": val,
                 "color": color
             })
         # Want to sort datapoints by y value (enrichment score) so that the chart colors are consistent
