@@ -212,7 +212,7 @@ export default function App() {
     };
   }, []);
 
-  // ---------- 4) Layout: d3-force on full graph (more horizontal & tighter) ----------
+  // ---------- 4) Layout: optimize satellites first, then proteins ----------
   const { satPositions, proteinPositions } = useMemo(() => {
     const satPositions = new Map();
     const proteinPositions = new Map();
@@ -221,113 +221,302 @@ export default function App() {
       return { satPositions, proteinPositions };
     }
 
-    // Build nodes
+    const visibleProteins = proteinsWithSat.filter(
+      (p) => Number(p.attributes?.enrichment || 0) >= threshold
+    );
+
+    // Build a weighted satellite graph. An edge is stronger when two satellites
+    // share more same-name proteins. We use this graph to decide satellite order.
+    const satelliteWeights = new Map();
+    const satelliteEdges = [];
+    const edgeKey = (a, b) => (a < b ? `${a}|||${b}` : `${b}|||${a}`);
+
+    for (const [, clones] of tfClonesByLabel.entries()) {
+      const sats = [...new Set(
+        clones
+          .filter((p) => Number(p.attributes?.enrichment || 0) >= threshold)
+          .map((p) => p._satelliteKey)
+          .filter(Boolean)
+      )];
+
+      for (let i = 0; i < sats.length; i++) {
+        for (let j = i + 1; j < sats.length; j++) {
+          const k = edgeKey(sats[i], sats[j]);
+          satelliteWeights.set(k, (satelliteWeights.get(k) || 0) + 1);
+        }
+      }
+    }
+
+    for (const [k, weight] of satelliteWeights.entries()) {
+      const [a, b] = k.split('|||');
+      satelliteEdges.push({ a, b, weight });
+    }
+
+    const satKeys = repeats.map((s) => s.key);
+    const degree = new Map(satKeys.map((k) => [k, 0]));
+    for (const e of satelliteEdges) {
+      degree.set(e.a, (degree.get(e.a) || 0) + e.weight);
+      degree.set(e.b, (degree.get(e.b) || 0) + e.weight);
+    }
+
+    // Start with a greedy order that keeps strongly connected satellites adjacent.
+    const unused = new Set(satKeys);
+    const order = [];
+    if (unused.size) {
+      let current = [...unused].sort((a, b) => (degree.get(b) || 0) - (degree.get(a) || 0))[0];
+      order.push(current);
+      unused.delete(current);
+
+      while (unused.size) {
+        let best = null;
+        let bestScore = -Infinity;
+        for (const candidate of unused) {
+          const direct = satelliteWeights.get(edgeKey(current, candidate)) || 0;
+          const score = direct * 100 + (degree.get(candidate) || 0);
+          if (score > bestScore) {
+            bestScore = score;
+            best = candidate;
+          }
+        }
+        order.push(best);
+        unused.delete(best);
+        current = best;
+      }
+    }
+
+    const circularDistance = (i, j, n) => {
+      const d = Math.abs(i - j);
+      return Math.min(d, n - d);
+    };
+
+    const edgesCrossInOrder = (edge1, edge2, positions) => {
+      if (
+        edge1.a === edge2.a || edge1.a === edge2.b ||
+        edge1.b === edge2.a || edge1.b === edge2.b
+      ) return false;
+
+      const n = positions.size;
+      const a = positions.get(edge1.a);
+      const b = positions.get(edge1.b);
+      const c = positions.get(edge2.a);
+      const d = positions.get(edge2.b);
+      if ([a, b, c, d].some((v) => v == null)) return false;
+
+      const between = (x, start, end) => {
+        if (start < end) return x > start && x < end;
+        return x > start || x < end;
+      };
+      return between(c, a, b) !== between(d, a, b) &&
+             between(a, c, d) !== between(b, c, d);
+    };
+
+    const orderScore = (candidateOrder) => {
+      if (candidateOrder.length < 2) return 0;
+      const pos = new Map(candidateOrder.map((k, i) => [k, i]));
+      let score = 0;
+
+      // Prefer short weighted satellite-to-satellite clone routes.
+      for (const e of satelliteEdges) {
+        score += e.weight * circularDistance(pos.get(e.a), pos.get(e.b), candidateOrder.length) * 10;
+      }
+
+      // Strongly penalize chord crossings between satellite groups.
+      for (let i = 0; i < satelliteEdges.length; i++) {
+        for (let j = i + 1; j < satelliteEdges.length; j++) {
+          if (edgesCrossInOrder(satelliteEdges[i], satelliteEdges[j], pos)) {
+            score += satelliteEdges[i].weight * satelliteEdges[j].weight * 45;
+          }
+        }
+      }
+      return score;
+    };
+
+    // Small deterministic local search. Swapping satellite positions often removes
+    // several clone crossings at once without making the layout unstable.
+    let bestScore = orderScore(order);
+    let improved = true;
+    let passes = 0;
+    while (improved && passes < 8) {
+      improved = false;
+      passes += 1;
+      for (let i = 0; i < order.length - 1; i++) {
+        for (let j = i + 1; j < order.length; j++) {
+          [order[i], order[j]] = [order[j], order[i]];
+          const candidateScore = orderScore(order);
+          if (candidateScore + 0.001 < bestScore) {
+            bestScore = candidateScore;
+            improved = true;
+          } else {
+            [order[i], order[j]] = [order[j], order[i]];
+          }
+        }
+      }
+    }
+
+    // Place satellites on a wide ellipse. Fixed satellite positions make the
+    // topology readable and prevent large satellites from drifting into routes.
+    const nSat = Math.max(order.length, 1);
+    const ellipseRX = Math.max(310, nSat * 72);
+    const ellipseRY = Math.max(190, Math.min(390, nSat * 34));
+    const satNodePos = new Map();
+
+    order.forEach((key, i) => {
+      const angle = -Math.PI / 2 + (i * 2 * Math.PI) / nSat;
+      const x = Math.cos(angle) * ellipseRX;
+      const y = Math.sin(angle) * ellipseRY;
+      satNodePos.set(key, { x, y, angle });
+    });
+
     const nodes = [];
     const nodeIndex = new Map();
 
     repeats.forEach((s) => {
       const size = Number(s.attributes?.size ?? 40);
+      const fixed = satNodePos.get(s.key) || { x: 0, y: 0, angle: 0 };
       const node = {
         id: s.key,
-        type: "repeat",
+        type: 'repeat',
         raw: s,
         size,
+        x: fixed.x,
+        y: fixed.y,
+        fx: fixed.x,
+        fy: fixed.y,
       };
       nodes.push(node);
       nodeIndex.set(s.key, node);
     });
 
-    proteinsWithSat.forEach((p) => {
-      if (Number(p.attributes?.enrichment || 0) < threshold) return;
+    // For each clone, record which other satellites it wants to reach.
+    const cloneTargets = new Map();
+    for (const [, clones] of tfClonesByLabel.entries()) {
+      const visible = clones.filter(
+        (p) => Number(p.attributes?.enrichment || 0) >= threshold && p._satelliteKey
+      );
+      for (const p of visible) {
+        const targets = cloneTargets.get(p.key) || [];
+        for (const other of visible) {
+          if (other.key !== p.key && other._satelliteKey !== p._satelliteKey) {
+            targets.push(other._satelliteKey);
+          }
+        }
+        cloneTargets.set(p.key, targets);
+      }
+    }
 
-      const size = Number(p.attributes?.size ?? 6);
-      const node = {
-        id: p.key,
-        type: "protein",
-        raw: p,
-        size,
-      };
-      nodes.push(node);
-      nodeIndex.set(p.key, node);
-    });
+    // Spread proteins around each satellite. Clone proteins are preferentially
+    // placed on the side facing their clone partners; ordinary proteins fill the
+    // remaining angular space around the satellite.
+    const proteinsPerSat = new Map();
+    for (const p of visibleProteins) {
+      if (!p._satelliteKey) continue;
+      const list = proteinsPerSat.get(p._satelliteKey) || [];
+      list.push(p);
+      proteinsPerSat.set(p._satelliteKey, list);
+    }
 
-    // Build links
+    for (const [satKey, list] of proteinsPerSat.entries()) {
+      const sat = nodeIndex.get(satKey);
+      if (!sat) continue;
+
+      list.sort((a, b) => {
+        const ac = (cloneTargets.get(a.key) || []).length;
+        const bc = (cloneTargets.get(b.key) || []).length;
+        if (bc !== ac) return bc - ac;
+        return String(a.key).localeCompare(String(b.key));
+      });
+
+      list.forEach((p, idx) => {
+        const targets = cloneTargets.get(p.key) || [];
+        let preferredAngle;
+
+        if (targets.length) {
+          let vx = 0;
+          let vy = 0;
+          for (const targetKey of targets) {
+            const target = satNodePos.get(targetKey);
+            if (!target) continue;
+            vx += target.x - sat.x;
+            vy += target.y - sat.y;
+          }
+          preferredAngle = Math.atan2(vy, vx);
+          // Fan same-satellite clone proteins so their dotted lines do not stack.
+          preferredAngle += ((idx % 5) - 2) * 0.10;
+        } else {
+          const satAngle = satNodePos.get(satKey)?.angle ?? 0;
+          preferredAngle = satAngle + ((idx / Math.max(list.length, 1)) - 0.5) * Math.PI * 1.35;
+        }
+
+        const radialDistance = Number(sat.size || 40) + 54 + (idx % 3) * 9;
+        const size = Number(p.attributes?.size ?? 6);
+        const node = {
+          id: p.key,
+          type: 'protein',
+          raw: p,
+          size,
+          x: sat.x + Math.cos(preferredAngle) * radialDistance,
+          y: sat.y + Math.sin(preferredAngle) * radialDistance,
+        };
+        nodes.push(node);
+        nodeIndex.set(p.key, node);
+      });
+    }
+
     const links = [];
 
-    // protein -> satellite (binding)
-    proteinsWithSat.forEach((p) => {
+    visibleProteins.forEach((p) => {
       if (!p._satelliteKey) return;
-      if (!nodeIndex.has(p.key)) return;
-      if (!nodeIndex.has(p._satelliteKey)) return;
-
-      links.push({
-        source: p.key,
-        target: p._satelliteKey,
-        kind: "binding",
-      });
+      if (!nodeIndex.has(p.key) || !nodeIndex.has(p._satelliteKey)) return;
+      links.push({ source: p.key, target: p._satelliteKey, kind: 'binding' });
     });
 
-    // clone links
     for (const [, clones] of tfClonesByLabel.entries()) {
       const visibleClones = clones.filter((c) => nodeIndex.has(c.key));
-
       if (visibleClones.length < 2) continue;
-
       for (let i = 0; i < visibleClones.length - 1; i++) {
         links.push({
           source: visibleClones[i].key,
           target: visibleClones[i + 1].key,
-          kind: "clone",
+          kind: 'clone',
         });
       }
     }
 
-    // Force simulation (tweaked)
     const sim = forceSimulation(nodes)
       .force(
-        "charge",
-        forceManyBody().strength((d) => (d.type === "repeat" ? -100 : -120)) // less repulsion
+        'charge',
+        forceManyBody().strength((d) => (d.type === 'repeat' ? -40 : -52))
       )
       .force(
-        "collide",
-        forceCollide().radius((d) => {
-          const base =
-            d.type === "repeat"
-              ? Number(d.size || 40)
-              : Number(d.size || 6);
-          const pad = d.type === "repeat" ? 15 : 4; // smaller padding
-          return base + pad;
-        })
+        'collide',
+        forceCollide()
+          .radius((d) => Number(d.size || (d.type === 'repeat' ? 40 : 6)) + (d.type === 'repeat' ? 24 : 7))
+          .strength(1)
+          .iterations(2)
       )
       .force(
-        "link",
+        'link',
         forceLink(links)
           .id((d) => d.id)
-          .distance((lnk) =>
-            lnk.kind === "binding"
-              ? 90 // closer TFs to sats
-              : 60 // clones closer too
-          )
-          .strength((lnk) =>
-            lnk.kind === "binding" ? 0.7 : 0.2
-          )
+          .distance((lnk) => {
+            if (lnk.kind === 'clone') return 145;
+            const sat = lnk.source.type === 'repeat' ? lnk.source : lnk.target;
+            return Number(sat?.size || 40) + 55;
+          })
+          .strength((lnk) => (lnk.kind === 'binding' ? 0.88 : 0.055))
       )
-      .force("center", forceCenter(0, 0))
-      // strong vertical compression → horizontal band
-      .force("y", forceY(0).strength(0.02))
+      .force('center', forceCenter(0, 0))
       .stop();
 
-    const iterations = 280;
-    for (let i = 0; i < iterations; i++) {
-      sim.tick();
-    }
+    const iterations = 360;
+    for (let i = 0; i < iterations; i++) sim.tick();
 
     repeats.forEach((s) => {
       const node = nodeIndex.get(s.key);
       if (node) satPositions.set(s.key, { x: node.x, y: node.y });
     });
 
-    proteinsWithSat.forEach((p) => {
+    visibleProteins.forEach((p) => {
       const node = nodeIndex.get(p.key);
       if (node) proteinPositions.set(p.key, { x: node.x, y: node.y });
     });
@@ -433,16 +622,154 @@ export default function App() {
     return links;
   }, [proteinsBySatellite, satPositions, proteinPositions]);
 
-  const cloneLinks = useMemo(() => {
-    const links = [];
-    for (const [, clones] of tfClonesByLabel.entries()) {
-      const pts = clones.map((c) => proteinPositions.get(c.key)).filter(Boolean);
-      for (let i = 0; i < pts.length - 1; i++) {
-        links.push({ a: pts[i], b: pts[i + 1] });
+  // Sample a quadratic Bezier so route candidates can be scored against
+  // satellites and against curves that have already been chosen.
+  const sampleQuadratic = (a, c, b, steps = 24) => {
+    const pts = [];
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const mt = 1 - t;
+      pts.push({
+        x: mt * mt * a.x + 2 * mt * t * c.x + t * t * b.x,
+        y: mt * mt * a.y + 2 * mt * t * c.y + t * t * b.y,
+      });
+    }
+    return pts;
+  };
+
+  const segmentsIntersect = (a, b, c, d) => {
+    const orient = (p, q, r) => (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
+    const o1 = orient(a, b, c);
+    const o2 = orient(a, b, d);
+    const o3 = orient(c, d, a);
+    const o4 = orient(c, d, b);
+    return o1 * o2 < 0 && o3 * o4 < 0;
+  };
+
+  // Try several Bezier bends on both sides of the link and choose the route
+  // with the fewest satellite hits and fewest intersections with earlier clone
+  // routes. This is intentionally deterministic so rebuilding does not shuffle it.
+  const curvedPath = (a, b, satelliteObstacles, routedSamples = []) => {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const distance = Math.hypot(dx, dy) || 1;
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2;
+    const nx = -dy / distance;
+    const ny = dx / distance;
+
+    const bendFractions = [0.12, -0.12, 0.22, -0.22, 0.34, -0.34, 0.48, -0.48, 0.64, -0.64];
+    let best = null;
+
+    for (const fraction of bendFractions) {
+      const bend = Math.max(22, Math.min(260, distance * Math.abs(fraction))) * Math.sign(fraction);
+      const c = { x: mx + nx * bend, y: my + ny * bend };
+      const samples = sampleQuadratic(a, c, b, 28);
+      let score = Math.abs(bend) * 0.018; // prefer simpler curves when equally clean
+
+      // Satellite intersections are the most visually confusing, so penalize
+      // them much more heavily than dotted-line crossings.
+      for (const obstacle of satelliteObstacles) {
+        let minClearance = Infinity;
+        for (let i = 2; i < samples.length - 2; i++) {
+          const p = samples[i];
+          const clearance = Math.hypot(p.x - obstacle.x, p.y - obstacle.y) - obstacle.r;
+          minClearance = Math.min(minClearance, clearance);
+        }
+        if (minClearance < 0) score += 5000 + Math.abs(minClearance) * 120;
+        else if (minClearance < 28) score += (28 - minClearance) * 18;
+      }
+
+      // Count proper crossings with routes already accepted.
+      for (const other of routedSamples) {
+        let crossings = 0;
+        for (let i = 0; i < samples.length - 1; i++) {
+          for (let j = 0; j < other.length - 1; j++) {
+            if (segmentsIntersect(samples[i], samples[i + 1], other[j], other[j + 1])) {
+              crossings += 1;
+              break;
+            }
+          }
+        }
+        score += crossings * 420;
+      }
+
+      if (!best || score < best.score) {
+        best = {
+          score,
+          path: `M ${a.x} ${a.y} Q ${c.x} ${c.y} ${b.x} ${b.y}`,
+          samples,
+        };
       }
     }
-    return links;
-  }, [tfClonesByLabel, proteinPositions]);
+
+    return best;
+  };
+
+  const cloneLinks = useMemo(() => {
+    const rawLinks = [];
+    for (const [label, clones] of tfClonesByLabel.entries()) {
+      const visible = clones
+        .map((c) => ({ node: c, pos: proteinPositions.get(c.key) }))
+        .filter((item) => item.pos);
+
+      // Connect clones in nearest-neighbor order instead of arbitrary data order.
+      // This avoids unnecessarily long dotted links before curve routing even begins.
+      if (visible.length > 1) {
+        const remaining = visible.slice(1);
+        const ordered = [visible[0]];
+        while (remaining.length) {
+          const last = ordered[ordered.length - 1].pos;
+          let bestIndex = 0;
+          let bestDistance = Infinity;
+          remaining.forEach((item, idx) => {
+            const d = Math.hypot(item.pos.x - last.x, item.pos.y - last.y);
+            if (d < bestDistance) {
+              bestDistance = d;
+              bestIndex = idx;
+            }
+          });
+          ordered.push(remaining.splice(bestIndex, 1)[0]);
+        }
+
+        for (let i = 0; i < ordered.length - 1; i++) {
+          rawLinks.push({ a: ordered[i].pos, b: ordered[i + 1].pos, label });
+        }
+      }
+    }
+
+    // Route harder/longer links first; shorter links then adapt around them.
+    rawLinks.sort((u, v) =>
+      Math.hypot(v.b.x - v.a.x, v.b.y - v.a.y) -
+      Math.hypot(u.b.x - u.a.x, u.b.y - u.a.y)
+    );
+
+    const satelliteObstacles = repeats.map((s) => {
+      const pos = satPositions.get(s.key) || { x: 0, y: 0 };
+      return {
+        x: pos.x,
+        y: pos.y,
+        r: Number(s.attributes?.size ?? 30) + 12,
+      };
+    });
+
+    const routedSamples = [];
+    return rawLinks.map((lnk) => {
+      const routed = curvedPath(lnk.a, lnk.b, satelliteObstacles, routedSamples);
+      routedSamples.push(routed.samples);
+      return { ...lnk, path: routed.path };
+    });
+  }, [tfClonesByLabel, proteinPositions, repeats, satPositions]);
+
+  const hoveredProteinLabel =
+    hover?.type === "protein"
+      ? hover.node.attributes?.label || hover.node.key
+      : null;
+
+  const isProteinHighlighted = (p) => {
+    if (!hoveredProteinLabel) return false;
+    return (p.attributes?.label || p.key) === hoveredProteinLabel;
+  };
 
   const vb = `${view.x} ${view.y} ${view.w} ${view.h}`;
 
@@ -506,21 +833,23 @@ export default function App() {
           onMouseLeave={() => setIsPanning(false)}
         />
 
-        {/* Dotted clone connectors */}
+        {/* Curved dotted connectors between same-name proteins */}
         <g>
-          {cloneLinks.map((lnk, i) => (
-            <line
-              key={`clone-${i}`}
-              x1={lnk.a.x}
-              y1={lnk.a.y}
-              x2={lnk.b.x}
-              y2={lnk.b.y}
-              stroke="#888"
-              strokeDasharray="4 4"
-              strokeWidth="1"
-              opacity="0.6"
-            />
-          ))}
+          {cloneLinks.map((lnk, i) => {
+            const active = hoveredProteinLabel === lnk.label;
+            return (
+              <path
+                key={`clone-${i}`}
+                d={lnk.path}
+                fill="none"
+                stroke={active ? "#FFD700" : "#888"}
+                strokeDasharray="4 4"
+                strokeWidth={active ? 2.5 : 1}
+                opacity={active ? 1 : 0.6}
+                pointerEvents="none"
+              />
+            );
+          })}
         </g>
 
         {/* Protein → Satellite connectors */}
@@ -552,6 +881,8 @@ export default function App() {
                   r={size}
                   fill={color}
                   opacity="1"
+                  stroke={hover?.type === "repeat" && hover.node.key === s.key ? "#FFD700" : "none"}
+                  strokeWidth={hover?.type === "repeat" && hover.node.key === s.key ? 4 : 0}
                   style={{ cursor: url ? "pointer" : "default" }}
                   onMouseEnter={() => setHover({ type: "repeat", node: s })}
                   onMouseLeave={() => setHover(null)}
@@ -593,6 +924,8 @@ export default function App() {
                 cy={pos.y}
                 r={size}
                 fill={color}
+                stroke={isProteinHighlighted(p) ? "#FFD700" : "none"}
+                strokeWidth={isProteinHighlighted(p) ? 3 : 0}
                 style={{ cursor: url ? "pointer" : "default" }}
                 onMouseEnter={() => setHover({ type: "protein", node: p })}
                 onMouseLeave={() => setHover(null)}

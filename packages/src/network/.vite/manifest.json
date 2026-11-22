@@ -1,6 +1,6 @@
 {
   "src/index.jsx": {
-    "file": "network.mjs",
+    "file": "multi_org_network.mjs",
     "name": "index",
     "src": "src/index.jsx",
     "isEntry": true

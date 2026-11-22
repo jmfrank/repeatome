@@ -29,7 +29,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000170653-atf7"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CREB5_BetaSat",
@@ -46,7 +46,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000146592-creb5"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "DBP_BetaSat",
@@ -63,7 +63,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000105516-dbp"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ESR1_BetaSat",
@@ -80,7 +80,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000091831-esr1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HLF_BetaSat",
@@ -97,7 +97,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000108924-hlf"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "JDP2_BetaSat",
@@ -114,7 +114,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000140044-jdp2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "MEIS3_BetaSat",
@@ -131,7 +131,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000105419-meis3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFIL3_BetaSat",
@@ -148,7 +148,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000165030-nfil3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "SMAD3_BetaSat",
@@ -165,7 +165,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000166949-smad3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "SMAD4_BetaSat",
@@ -182,7 +182,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000141646-smad4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ZEB1_BetaSat",
@@ -199,7 +199,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000148516-zeb1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CEBPE_BetaSat",
@@ -216,7 +216,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000092067-cebpe"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "FOSB::JUN_BetaSat",
@@ -233,7 +233,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/none-fosbjun"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "GATA3_BetaSat",
@@ -250,7 +250,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000107485-gata3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IRF3_BetaSat",
@@ -267,7 +267,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000126456-irf3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NRF1_BetaSat",
@@ -284,7 +284,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000106459-nrf1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "RXRG_BetaSat",
@@ -301,7 +301,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000143171-rxrg"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "SMAD5_BetaSat",
@@ -318,7 +318,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000113658-smad5"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TP53_BetaSat",
@@ -335,7 +335,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000141510-tp53"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ATF4_BetaSat",
@@ -352,7 +352,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000128272-atf4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEF_BetaSat",
@@ -369,7 +369,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000167074-tef"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HSat2",
@@ -401,7 +401,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000260596-dux4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HOXA9_HSat2",
@@ -418,7 +418,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000078399-hoxa9"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ATF4_HSat2",
@@ -435,7 +435,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000128272-atf4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CUX1_HSat2",
@@ -452,7 +452,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000257923-cux1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CUX2_HSat2",
@@ -469,7 +469,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000111249-cux2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "FOSB::JUN_HSat2",
@@ -486,7 +486,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/none-fosbjun"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HSF1_HSat2",
@@ -503,7 +503,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000185122-hsf1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HSF4_HSat2",
@@ -520,7 +520,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000102878-hsf4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IKZF1_HSat2",
@@ -537,7 +537,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000185811-ikzf1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IRF2_HSat2",
@@ -554,7 +554,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000168310-irf2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IRF3_HSat2",
@@ -571,7 +571,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000126456-irf3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "JUN_HSat2",
@@ -588,7 +588,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000177606-jun"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "LIN54_HSat2",
@@ -605,7 +605,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000189308-lin54"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "LEF1_HSat2",
@@ -622,7 +622,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000138795-lef1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFATc4_HSat2",
@@ -639,7 +639,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000100968-nfatc4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NKX2-2_HSat2",
@@ -673,7 +673,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000125816-nkx2-4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NANOG_HSat2",
@@ -1385,7 +1385,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000011590-zbtb32"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEAD3_HSat1B",
@@ -1402,7 +1402,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000007866-tead3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ZNF410_HSat1B",
@@ -1436,7 +1436,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000278129-znf8"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ATF7_HSat1B",
@@ -1453,7 +1453,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000170653-atf7"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CDX4_HSat1B",
@@ -1504,7 +1504,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000171223-junb"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "RFX1_HSat1B",
@@ -1521,7 +1521,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000132005-rfx1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "RFX2_HSat1B",
@@ -1555,7 +1555,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000080298-rfx3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TBP_HSat1B",
@@ -1572,7 +1572,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000112592-tbp"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "GammaSat",
@@ -1840,7 +1840,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000025156-hsf2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "LIN54_HSat3",
@@ -1857,7 +1857,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000189308-lin54"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFATc4_HSat3",
@@ -1874,7 +1874,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000100968-nfatc4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NKX2-2_HSat3",
@@ -1891,7 +1891,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000125820-nkx2-2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NKX2-4_HSat3",
@@ -1908,7 +1908,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000125816-nkx2-4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFAT5_HSat3",
@@ -1925,7 +1925,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000102908-nfat5"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFATc2_HSat3",
@@ -1942,7 +1942,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000101096-nfatc2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ONECUT2_HSat3",
@@ -1959,7 +1959,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000119547-onecut2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "SOX1_HSat3",
@@ -1993,7 +1993,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000187079-tead1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEAD2_HSat3",
@@ -2010,7 +2010,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000074219-tead2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEAD3_HSat3",
@@ -2027,7 +2027,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000007866-tead3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "BCL11b_HSat3",
@@ -2044,7 +2044,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000127152-bcl11b"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CDX4_HSat3",
@@ -2061,7 +2061,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000131264-cdx4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HSF4_HSat3",
@@ -2078,7 +2078,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000102878-hsf4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "MSANTD3_HSat3",
@@ -2095,7 +2095,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000066697-msantd3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFATc1_HSat3",
@@ -2112,7 +2112,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000131196-nfatc1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEAD4_HSat3",
@@ -2129,7 +2129,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000197905-tead4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "DUX4_HSat3",
@@ -2146,7 +2146,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000260596-dux4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HOXd9_HSat3",
@@ -2163,7 +2163,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000128709-hoxd9"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IRF3_HSat3",
@@ -2180,7 +2180,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000126456-irf3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFATc3_HSat3",
@@ -2197,7 +2197,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000072736-nfatc3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ZBTB17_HSat3",
@@ -2214,7 +2214,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000116809-zbtb17"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HSat1A",
@@ -2246,7 +2246,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000138795-lef1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TCF7_HSat1A",
@@ -2263,7 +2263,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000081059-tcf7"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TCF7L2_HSat1A",
@@ -2280,7 +2280,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000148737-tcf7l2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TEF_HSat1A",
@@ -2297,7 +2297,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000167074-tef"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ATF4_HSat1A",
@@ -2314,13 +2314,13 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000128272-atf4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
-        "key": "DBP_HSat1A",
+        "key": "TFCP2_Mouse-Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "DBP",
+            "label": "TFCP2",
             "aliases": "",
             "gene_family": "None",
             "universal_id": "JUKtZCKztWZJnrbFWTxAsT",
@@ -2329,9 +2329,9 @@
             "y": -170.67701610079027,
             "size": 7.000386437841093,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000105516-dbp"
+            "url": "/proteinTable/ensg00000135457-tfcp2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "CREB5_HSat1A",
@@ -2348,7 +2348,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000146592-creb5"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "EBF3_HSat1A",
@@ -2365,7 +2365,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000108001-ebf3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "EBF2_HSat1A",
@@ -2399,7 +2399,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000141568-foxk2"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "HLF_HSat1A",
@@ -2416,7 +2416,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000108924-hlf"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "IRF6_HSat1A",
@@ -2433,7 +2433,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000117595-irf6"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "NFIL3_HSat1A",
@@ -2450,7 +2450,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000165030-nfil3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "POU4F1_HSat1A",
@@ -2467,7 +2467,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000152192-pou4f1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "RBPJ_HSat1A",
@@ -2484,7 +2484,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000168214-rbpj"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "POU4F3_HSat1A",
@@ -2501,7 +2501,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000091010-pou4f3"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "TCF7L1_HSat1A",
@@ -2518,7 +2518,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000152284-tcf7l1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ZBTB32_HSat1A",
@@ -2535,7 +2535,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000011590-zbtb32"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "ZNF211_HSat1A",
@@ -2552,7 +2552,7 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000121417-znf211"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
         "key": "POU5F1_HSat1A",
@@ -2586,28 +2586,13 @@
             "color": "#292BA5",
             "url": "/proteinTable/ensg00000112592-tbp"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
-        "key": "censat",
-        "attributes": {
-            "node_type": "repeat",
-            "label": "censat",
-            "aliases": "",
-            "dfam_id": "DF000004163",
-            "x": 225,
-            "y": -210,
-            "size": 50,
-            "color": "rgb(140, 90, 230)",
-            "zIndex": 100,
-            "url": "/repeatTable/censat"
-        }
-    },
-    {
-        "key": "HSF2_censat",
+        "key": "POU5F1_Mouse-Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "HSF2",
+            "label": "POU5F1",
             "aliases": "",
             "gene_family": "HSF",
             "universal_id": "iP2pt2XBUSg7eoTUChs3tn",
@@ -2616,15 +2601,15 @@
             "y": -146.36038969321072,
             "size": 7.294388896499243,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000025156-hsf2"
+            "url": "/proteinTable/ensg00000204531-pou5f1"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
-        "key": "NKX2-2_censat",
+        "key": "PRDM4_Mouse-Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "NKX2-2",
+            "label": "PRDM4",
             "aliases": "",
             "gene_family": "NKX",
             "universal_id": "iZzybfNHagqWLNXmbgkAad",
@@ -2633,15 +2618,15 @@
             "y": -185.60780655647335,
             "size": 7.0039235501356725,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000125820-nkx2-2"
+            "url": "/proteinTable/ensg00000110851-prdm4"
         },
-        "organism": 9606
+        "organism": 10090
     },
     {
-        "key": "ZNF382_censat",
+        "key": "RFX7_Mouse-Minor",
         "attributes": {
             "node_type": "protein",
-            "label": "ZNF382",
+            "label": "RFX7",
             "aliases": "",
             "gene_family": "KRAB-ZF",
             "universal_id": "J6jwMdNVnuwLhMS8Hd9jo7",
@@ -2650,8 +2635,8 @@
             "y": -297.54040237984947,
             "size": 7.279564281887033,
             "color": "#292BA5",
-            "url": "/proteinTable/ensg00000161298-znf382"
+            "url": "/proteinTable/ensg00000181827-rfx7"
         },
-        "organism": 9606
+        "organism": 10090
     }
 ]
