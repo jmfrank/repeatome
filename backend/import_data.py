@@ -2176,6 +2176,16 @@ def create_user(username, email, password, is_staff=False, is_superuser=False):
         return None
 
 
+def delete_user(username):
+    User = get_user_model()
+    users = User.objects.filter(username=username)
+    if not users:
+        print(f"User {username} does not exist. Skipped.")
+    for user in users:
+        print(f"Deleting user = {user}")
+        user.delete()
+
+
 def import_protein():
     import_protein_from_satellite_binders_database()
     import_protein_from_enr_and_qscore_files()
@@ -2369,6 +2379,13 @@ if __name__ == "__main__":
         email = sys.argv[3]
         password = sys.argv[4]
         create_user(username, email, password, is_staff=False, is_superuser=False)
+
+    elif command == 'delete_user':
+        if len(sys.argv) != 3:
+            print("Usage: python backend/import_data.py delete_user <username>")
+            sys.exit(1)
+        username = sys.argv[2]
+        delete_user(username)
 
 
     # highlighht paths on hover
