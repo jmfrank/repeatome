@@ -458,7 +458,7 @@ def import_repeat():
         if not parent_obj:
             raise Exception(f"Parent repeat {parent} does not exist for child repeat {child}. Skipping setting parent_repeat for this child.")
 
-        parent_organism_obj = get_organism_obj(parent_organism_id)
+        parent_organism_obj = get_organism_obj(parent_obj.parental_organism.id)
         print('Adding Child Repeat: ', child, parent)
         child = Repeat(name=child, parent_repeat=parent_obj, parental_organism=parent_organism_obj)
         child.save()
@@ -549,11 +549,10 @@ def connect_repeats(level: int = 2759):
         
         if og_id not in og_to_uuid:
             og_to_uuid[og_id] = shortuuid()
-        
+
+        print(f"Assigning universal_id {og_to_uuid[og_id]} to Repeat{repeat.name} (OG: {og_id})")
         repeat.universal_id = og_to_uuid[og_id]
         repeat.save()
-        print(f"Assigned {repeat.universal_id} to {repeat.name} (OG: {og_id})")
-
 
 def connect_proteins(level: int = 2759):
     og_to_uuid: dict[str, str] = {}
@@ -572,10 +571,10 @@ def connect_proteins(level: int = 2759):
         if og_id not in og_to_uuid:
             og_to_uuid[og_id] = shortuuid() 
         
+        print(f"Assigning universal_id {og_to_uuid[og_id]} to Protein {protein.gene} (OG: {og_id})")
         protein.universal_id = og_to_uuid[og_id]
         protein.save()
-        print(f"Assigned {protein.universal_id} to {protein.UNIPROT} - {protein.gene} (OG: {og_id})")
-    
+
 
     # show organism from repeat when hover + add legend of color for each organism
 
@@ -2255,11 +2254,13 @@ def update():
     # STEP 4: ProteinReference, ProteinComplex, Motif, Proteomics, Microscopy
     print("PROTEOMICS")
     import_proteomics()
+
     print("NETWORK DATA")
-    for org in Organism.objects.all():
-        GetNetworkData(org.id, 0.1)
-    # Don't call this
-    ## GetNetworkDataAll()
+    connect_repeats(2759)
+    connect_proteins(2759)
+    # Multi organism network data needs universal id created by connect_repeats and connect_proteins
+    GetNetworkDataAll(0.1)
+
     print("MICROSCOPY")
     update_microscopy()
 
@@ -2347,9 +2348,11 @@ if __name__ == "__main__":
         save_proteins()
        
     elif command == 'network_data':
-        for org in Organism.objects.all():
-            GetNetworkData(org.id, 3)
         GetNetworkDataAll(3)
+        # organism_id = 10090
+        # threshold = 3
+        # GetNetworkData(organism_id, threshold)
+
     elif command == 'test_jaspar':
         load_jaspar_from_url('TCF7', 'vertebrates')
 
