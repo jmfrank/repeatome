@@ -2259,7 +2259,7 @@ def update():
     connect_repeats(2759)
     connect_proteins(2759)
     # Multi organism network data needs universal id created by connect_repeats and connect_proteins
-    GetNetworkDataAll(0.1)
+    GetNetworkDataAll(3)
 
     print("MICROSCOPY")
     update_microscopy()
