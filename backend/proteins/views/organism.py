@@ -20,24 +20,10 @@ class OrganismListView(ListView):
 
     queryset = Organism.objects.annotate(
         num_prot=Count("proteinTF", distinct=True),
-        num_motif=Count("proteinTF__motifs", distinct=True),
-        num_repeat=Count("proteinTF__motifs__motifrepeat_set__repeat", distinct=True),
+        num_repeat=Count("repeat", distinct=True),
+        # num_motif=Count("proteinTF__motifs", distinct=True),
+        # num_repeat=Count("proteinTF__motifs__motifrepeat_set__repeat", distinct=True),
     )
-
-    # repeat_count_subquery = (
-    #     Repeat.objects.filter(
-    #         motif_repeats__motif__protein__parent_organism=OuterRef("pk")
-    #     )
-    #     .values("motif_repeats__motif__protein__parent_organism")
-    #     .annotate(total=Count("pk", distinct=True))
-    #     .values("total")
-    # )
-    #
-    # queryset = Organism.objects.annotate(
-    #     num_prot=Count("proteinTF", distinct=True),
-    #     num_motif=Count("proteinTF__motifs", distinct=True),
-    #     num_repeat=Subquery(repeat_count_subquery),
-    # )
 
     template_name = "organismTable.html"
 
@@ -46,7 +32,6 @@ class OrganismDetailView(DetailView):
     """renders html for single reference page"""
 
     model = Organism
-    # queryset = Organism.objects.all().prefetch_related("proteinTF__motifs__motif_repeats__repeat")
 
     queryset = Organism.objects.all().prefetch_related(
         Prefetch(
@@ -54,7 +39,9 @@ class OrganismDetailView(DetailView):
             queryset=Motif.objects.prefetch_related(
                 Prefetch(
                     "motifrepeat_set",
-                    queryset=MotifRepeat.objects.select_related("repeat"),
+                    queryset=MotifRepeat.objects.filter(
+                        has_enr_or_q_score=True
+                    ).select_related('repeat')
                 )
             ),
         )
