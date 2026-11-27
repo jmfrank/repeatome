@@ -143,6 +143,8 @@ def import_organisms():
         if existing_obj:
             print(f"Organism taxonomy {taxonomy_id} already exists. Skipped.")
         else:
+            print(f"Processing organism taxonomy {taxonomy_id}, type = {type(taxonomy_id)}")
+            print(f"jaspar_group_map = {jaspar_group_map}")
             taxonomy_group = jaspar_group_map[taxonomy_id]
             item = Organism(id=taxonomy_id, taxonomy_group=taxonomy_group)
             print(f"Saving organism taxonomy {taxonomy_id} to db.")
@@ -634,15 +636,17 @@ def load_jaspar_from_url(gene, tax_group, tax_id=9606):
 def get_jaspar_ids(gene, tax_group, use_cache):
         
         print(f"get_jaspar_ids: gene={gene}, tax_group={tax_group}")
-       
-        cache_folder = '.cache'
 
+        jaspar_cache_folder = f"{cache_folder}/jaspar"
+        if not os.path.exists(jaspar_cache_folder):
+            os.makedirs(jaspar_cache_folder)
+        
         jaspar_json = None
+        cache_file = f"{jaspar_cache_folder}/{slugify(f"{tax_group}-{gene}")}.json"
+
         # If use_cache then try to load from cache first
         # If not found in cache then try loading from the url
         if use_cache:
-            # cache_file = f"{cache_folder}/jaspar/{slugify(gene)}.json"
-            cache_file = f"{cache_folder}/jaspar/{slugify(f"{tax_group}-{gene}")}.json"
             if os.path.exists(cache_file):
                 print(f"Loading jaspar data from cache")
                 with open(cache_file, 'r') as stream:
@@ -650,13 +654,10 @@ def get_jaspar_ids(gene, tax_group, use_cache):
 
 
         if jaspar_json is None:
-            if not os.path.exists(cache_folder):
-                os.makedirs(cache_folder)
             print(f"Loading jaspar data from url")
             jaspar_json = load_jaspar_from_url(gene, tax_group)
             with open(cache_file, 'w') as stream:
                 json.dump(jaspar_json, stream, indent=2)
-
 
         jaspar_ids = [entry['matrix_id'] for entry in jaspar_json.get('results', [])]
         return jaspar_ids
@@ -664,12 +665,15 @@ def get_jaspar_ids(gene, tax_group, use_cache):
 
 def load_pubmed_data(ref_doi, use_cache=True):
 
-    cache_folder = '.cache/pubmed/'
+    pubmed_cache_folder = f"{cache_folder}/pubmed"
+    if not os.path.exists(pubmed_cache_folder):
+        os.makedirs(pubmed_cache_folder)
 
     pubmed_json = None
+    cache_file = f"{pubmed_cache_folder}/{slugify(ref_doi)}.json"
+
     # If use_cache then try to load from cache first
     # If not found in cache then try loading from the url
-    cache_file = f"{cache_folder}/{slugify(ref_doi)}.json"
     if use_cache:
         if os.path.exists(cache_file):
             print(f"Loading pubmed data from cache")
@@ -677,8 +681,6 @@ def load_pubmed_data(ref_doi, use_cache=True):
                 pubmed_json = json.load(stream)
 
     if not pubmed_json:
-        if not os.path.exists(cache_folder):
-            os.makedirs(cache_folder)
         print(f"Loading pubmed data from url")
         pubmed_json = Entrez.read(Entrez.esearch(db="pubmed", term=ref_doi))
         with open(cache_file, 'w') as stream:
@@ -1285,8 +1287,12 @@ def update_motif_repeat_has_enr_or_qscore():
 
 def get_proteomic_data(mapper, uniprot_id):
     print(f"get_proteomic_data: uniprot_id = {uniprot_id}")
-    proteomics_cache_folder = '.cache/proteomics'
+    proteomics_cache_folder = f"{cache_folder}/proteomics"
+    if not os.path.exists(proteomics_cache_folder):
+        os.makedirs(proteomics_cache_folder)
+
     cache_file = f"{proteomics_cache_folder}/{uniprot_id}.csv"
+
     if os.path.exists(cache_file):
         print(f"get_proteomic_data: loading proteomic data from cache: {cache_file}")
         result_df = pd.read_csv(cache_file, dtype=str)
@@ -1295,8 +1301,7 @@ def get_proteomic_data(mapper, uniprot_id):
             return result_df, []
    
     print(f"get_proteomic_data: loading proteomic data using ProtMapper for {uniprot_id}")
-    if not os.path.exists(proteomics_cache_folder):
-        os.makedirs(proteomics_cache_folder)
+
     # Use ProtMapper to get the data
     try:
         result_df, failed = mapper.get(ids=[uniprot_id], fields=['gene_primary', 'gene_names', 'xref_ensembl'])
@@ -1832,16 +1837,16 @@ def get_uniprot_to_pdb_or_ensembl_mapping_results(job_id):
 
 def get_uniprot_to_ensembl_mapping(uniprot_ids, use_cache=True):
 
-    cache_folder = '.cache/uniprot'
-
+    uniprot_cache_folder = f"{cache_folder}/uniprot"
+    if not os.path.exists(uniprot_cache_folder):
+        os.makedirs(uniprot_cache_folder)
+    
     lookup = dict()
-
     uniprot_ids_to_fetch = []
+
     if use_cache:
-        if not os.path.exists(cache_folder):
-            os.makedirs(cache_folder)
         for uniprot_id in uniprot_ids:
-            cache_file = f"{cache_folder}/{uniprot_id}_ensembl.json"
+            cache_file = f"{uniprot_cache_folder}/{uniprot_id}_ensembl.json"
             if os.path.exists(cache_file):
                 print(f"Loading UniProt to Ensembl mapping from cache: {cache_file}")
                 with open(cache_file, 'r') as stream:
@@ -1859,7 +1864,7 @@ def get_uniprot_to_ensembl_mapping(uniprot_ids, use_cache=True):
         new_results = get_uniprot_to_pdb_or_ensembl_mapping_results(job_id)
         for result in new_results:
             unipro_id = result['from']
-            cache_file = f"{cache_folder}/{unipro_id}_ensembl.json"
+            cache_file = f"{uniprot_cache_folder}/{unipro_id}_ensembl.json"
             with open(cache_file, 'w') as stream:
                 json.dump(result, stream, indent=2)
             lookup[unipro_id] = result
@@ -1869,16 +1874,16 @@ def get_uniprot_to_ensembl_mapping(uniprot_ids, use_cache=True):
 
 def get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True):
 
-    cache_folder = '.cache/uniprot'
-
+    uniprot_cache_folder = f"{cache_folder}/uniprot"
+    if not os.path.exists(uniprot_cache_folder):
+        os.makedirs(uniprot_cache_folder)
+    
     lookup = dict()
-
     uniprot_ids_to_fetch = []
+
     if use_cache:
-        if not os.path.exists(cache_folder):
-            os.makedirs(cache_folder)
         for uniprot_id in uniprot_ids:
-            cache_file = f"{cache_folder}/{uniprot_id}.json"
+            cache_file = f"{uniprot_cache_folder}/{uniprot_id}.json"
             if os.path.exists(cache_file):
                 print(f"Loading UniProt to PDB mapping from cache: {cache_file}")
                 with open(cache_file, 'r') as stream:
@@ -1896,7 +1901,7 @@ def get_uniprot_to_pdb_mapping(uniprot_ids, use_cache=True):
         new_results = get_uniprot_to_pdb_or_ensembl_mapping_results(job_id)
         for result in new_results:
             unipro_id = result['from']
-            cache_file = f"{cache_folder}/{unipro_id}.json"
+            cache_file = f"{uniprot_cache_folder}/{unipro_id}.json"
             with open(cache_file, 'w') as stream:
                 json.dump(result, stream, indent=2)
             lookup[unipro_id] = result

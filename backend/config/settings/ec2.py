@@ -15,6 +15,7 @@ import os
 # Data to import
 # ------------------------------------------------------------------------------
 IMPORT_DATA_FOLDER = "/data/repeatome_data"
+IMPORT_CACHE_FOLDER = f"{IMPORT_DATA_FOLDER}/cache"
 IMPORT_DATA_FILE = f"{IMPORT_DATA_FOLDER}/satellite_binders_database.xlsx"
 IMPORT_ENRICHMENT_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
 IMPORT_QSCORE_FOLDER = f"{IMPORT_DATA_FOLDER}/Enrichment_Qscore"
