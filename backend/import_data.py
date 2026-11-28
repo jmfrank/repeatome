@@ -126,8 +126,8 @@ def import_organisms():
                     print(f"Found new taxonomy id {clean_tax_id}")
                     taxonomy_ids.add(clean_tax_id)
 
-    # Remove duplicates
-    taxonomy_ids = set(taxonomy_ids)
+    # Remove duplicates and convert to integers
+    taxonomy_ids = [int(tax_id_str) for tax_id_str in set(taxonomy_ids)]
 
     #-----------------------------------------
     # Validation: Check if taxonomy ids are valid integers
@@ -2287,7 +2287,7 @@ def update():
 
     # STEP 5: MotifRepeat
     # validate_repeats_in_enr_and_qscore_files()
-    update_protein_repeat_from_repeat_families()
+    # update_protein_repeat_from_repeat_families()
     update_motif_repeats()
 
 
