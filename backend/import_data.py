@@ -32,6 +32,10 @@ from pyjaspar import jaspardb
 from django.contrib.auth import get_user_model
 
 
+if settings.IMPORT_CACHE_FOLDER:
+    cache_folder = settings.IMPORT_CACHE_FOLDER
+else:
+    cache_folder = '.cache'
 
 
 def slugify(value, allow_unicode=False):
