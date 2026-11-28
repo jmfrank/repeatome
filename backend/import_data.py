@@ -571,7 +571,7 @@ def connect_repeats(level: int = 2759):
         # time.sleep(0.5)
         
         if og_id is None:
-            print(f"No OG found for: {repeat.name}")
+            print(f"No OG found for Repeat: {repeat.name}")
             continue
         
         if og_id not in og_to_uuid:
@@ -596,7 +596,7 @@ def connect_proteins(level: int = 2759):
         # time.sleep(0.5)
         
         if og_id is None:
-            print(f"No OG found for: {protein.UNIPROT}")
+            print(f"No OG found for Protein: {protein.UNIPROT}")
             continue
         
         if og_id not in og_to_uuid:
