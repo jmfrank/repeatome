@@ -516,6 +516,7 @@ def get_og_for_gene(gene_query: str, level: int = 2759, use_cache: bool = True):
         if os.path.exists(file_name):
             with open(file_name, 'r') as stream:
                 data = json.load(stream)
+            print(f"Found OrthoDB entry for {gene_query} in file {file_name}")
 
     if not data:
         resp = requests.get(f"{BASE_URL_ORTHO}/search", params={
@@ -528,8 +529,9 @@ def get_og_for_gene(gene_query: str, level: int = 2759, use_cache: bool = True):
         if data.get("status") != "ok" or not data.get("data"):
             return None
 
-    with open(f"{orthodb_cache_folder}/{gene_query}.json", 'w') as stream:
-        json.dump(data, stream, indent=4)
+        print(f"Saving OrthoDB entry for {gene_query} to file {file_name}")
+        with open(file_name, 'w') as stream:
+            json.dump(data, stream, indent=4)
     
     # data["data"] is a list of OG ids like ["2at2759", "15at2759", ...]
     return data["data"][0]
@@ -560,6 +562,10 @@ def connect_repeats(level: int = 2759):
     for repeat in Repeat.objects.all():
         if not repeat.name:
             continue
+
+        if repeat.universal_id is not None:
+            print(f"Repeat {repeat.name} already has universal id (OG: {repeat.universal_id})")
+            continue
             
         og_id = get_og_for_gene(repeat.name, level=level)
         # time.sleep(0.5)
@@ -580,6 +586,10 @@ def connect_proteins(level: int = 2759):
     
     for protein in ProteinTF.objects.all():
         if not protein.gene:
+            continue
+
+        if protein.universal_id is not None:
+            print(f"Protein {protein.gene} already has universal id (OG: {protein.universal_id})")
             continue
             
         og_id = get_og_for_gene(protein.UNIPROT, level=level)
