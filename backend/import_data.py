@@ -32,6 +32,10 @@ from pyjaspar import jaspardb
 from django.contrib.auth import get_user_model
 
 
+if settings.IMPORT_CACHE_FOLDER:
+    cache_folder = settings.IMPORT_CACHE_FOLDER
+else:
+    cache_folder = '.cache'
 
 
 def slugify(value, allow_unicode=False):
@@ -126,8 +130,8 @@ def import_organisms():
                     print(f"Found new taxonomy id {clean_tax_id}")
                     taxonomy_ids.add(clean_tax_id)
 
-    # Remove duplicates
-    taxonomy_ids = set(taxonomy_ids)
+    # Remove duplicates and convert to integers
+    taxonomy_ids = [int(tax_id_str) for tax_id_str in set(taxonomy_ids)]
 
     #-----------------------------------------
     # Validation: Check if taxonomy ids are valid integers
@@ -496,26 +500,43 @@ def validate_repeats_in_enr_and_qscore_files():
 # 
 BASE_URL_ORTHO = "https://v9-1.orthodb.org"
 
-def get_og_for_gene(gene_query: str, level: int = 2759):
+def get_og_for_gene(gene_query: str, level: int = 2759, use_cache: bool = True):
     """
     Search OrthoDB for a gene and return its best matching OG id.
     gene_query: gene name, UniProt accession, Ensembl ID, etc.
     level: NCBI taxon ID for orthology level (default: Eukaryota)
     """
-    resp = requests.get(f"{BASE_URL_ORTHO}/search", params={
-        "query": gene_query,
-        "level": level,
-        "limit": 1,
-    })
-    resp.raise_for_status()
-    data = resp.json()
-    
-    if data.get("status") != "ok" or not data.get("data"):
-        return None
+    orthodb_cache_folder = f"{cache_folder}/orthodb"
+    if not os.path.exists(orthodb_cache_folder):
+        os.makedirs(orthodb_cache_folder)
+
+    file_name = f"{orthodb_cache_folder}/{gene_query}.json"
+    data = None
+    if use_cache:
+        if os.path.exists(file_name):
+            with open(file_name, 'r') as stream:
+                data = json.load(stream)
+            print(f"Found OrthoDB entry for {gene_query} in file {file_name}")
+
+    if not data:
+        resp = requests.get(f"{BASE_URL_ORTHO}/search", params={
+            "query": gene_query,
+            "level": level,
+            "limit": 1,
+        })
+        resp.raise_for_status()
+        data = resp.json()
+        if data.get("status") != "ok" or not data.get("data"):
+            return None
+
+        print(f"Saving OrthoDB entry for {gene_query} to file {file_name}")
+        with open(file_name, 'w') as stream:
+            json.dump(data, stream, indent=4)
     
     # data["data"] is a list of OG ids like ["2at2759", "15at2759", ...]
     return data["data"][0]
 
+# Never called
 def get_ortholog_gene_ids(og_id: str) -> list[str]:
     """
     Given an OG id, return all gene IDs (across all species) in that group.
@@ -541,18 +562,22 @@ def connect_repeats(level: int = 2759):
     for repeat in Repeat.objects.all():
         if not repeat.name:
             continue
+
+        if repeat.universal_id is not None:
+            print(f"Repeat {repeat.name} already has universal id (OG: {repeat.universal_id})")
+            continue
             
         og_id = get_og_for_gene(repeat.name, level=level)
         # time.sleep(0.5)
         
         if og_id is None:
-            print(f"No OG found for: {repeat.name}")
+            print(f"No OG found for Repeat: {repeat.name}")
             continue
         
         if og_id not in og_to_uuid:
             og_to_uuid[og_id] = shortuuid()
 
-        print(f"Assigning universal_id {og_to_uuid[og_id]} to Repeat{repeat.name} (OG: {og_id})")
+        print(f"Assigning universal_id {og_to_uuid[og_id]} to Repeat {repeat.name} (OG: {og_id})")
         repeat.universal_id = og_to_uuid[og_id]
         repeat.save()
 
@@ -562,12 +587,16 @@ def connect_proteins(level: int = 2759):
     for protein in ProteinTF.objects.all():
         if not protein.gene:
             continue
+
+        if protein.universal_id is not None:
+            print(f"Protein {protein.gene} already has universal id (OG: {protein.universal_id})")
+            continue
             
         og_id = get_og_for_gene(protein.UNIPROT, level=level)
         # time.sleep(0.5)
         
         if og_id is None:
-            print(f"No OG found for: {protein.UNIPROT}")
+            print(f"No OG found for Protein: {protein.UNIPROT}")
             continue
         
         if og_id not in og_to_uuid:
@@ -1038,7 +1067,7 @@ def import_protein_from_satellite_binders_database():
 
         print(f"Processing row {count} out of {num_rows}: protein = {gene}, gene_type = {gene_type}")
 
-        existing_obj = get_obj_if_exists(ProteinTF, gene=row['gene'])
+        existing_obj = get_obj_if_exists(ProteinTF, gene=row['gene'], UNIPROT=row['uniprot'])
         if existing_obj:
             print(f"Protein {gene} already exists. Skipped.")
         else:
@@ -1061,7 +1090,7 @@ def import_refs():
             parent_organism_obj = get_organism_obj(parent_organism)
 
 
-        protein_obj = get_obj_if_exists(ProteinTF, gene=gene)
+        protein_obj = get_obj_if_exists(ProteinTF, gene=gene, UNIPROT=row['uniprot'])
 
         # Get References
         prim_ref = row['primary_reference']
@@ -2247,7 +2276,7 @@ def update():
     print("ORGANISMS")
     import_organisms()
 
-    # print("GENOME REFS")
+    print("GENOME REFS")
     import_genome_references()
 
     # # STEP 2: Import Gene Families
@@ -2287,7 +2316,6 @@ def update():
 
     # STEP 5: MotifRepeat
     # validate_repeats_in_enr_and_qscore_files()
-    update_protein_repeat_from_repeat_families()
     update_motif_repeats()
 
 
